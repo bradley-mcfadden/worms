@@ -1,5 +1,5 @@
 extends Area2D
-# Yes i changed it to Area2D because kinematic isnt needed.
+# Yes i changed it to Area2D because kinematic isnt nessesery.
 var j1
 var j2
 var base
