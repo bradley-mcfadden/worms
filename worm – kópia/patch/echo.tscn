@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://patch/echo.gd" type="Script" id=1]
+
+[node name="echo" type="Node2D"]
+script = ExtResource( 1 )
+pos = Vector2( -30, 300 )
+amplitude = 1
+speed = 0.2
+decay = 0.02
