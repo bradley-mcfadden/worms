@@ -7,8 +7,11 @@
 [ext_resource path="res://worm/SegmentRigid.tscn" type="PackedScene" id=5]
 [ext_resource path="res://worm/TailRigid.tscn" type="PackedScene" id=6]
 
-[node name="spawn" type="Position2D"]
+[node name="spawn" type="RigidBody2D"]
 scale = Vector2( 0.5, 0.5 )
+mode = 2
+custom_integrator = true
+linear_damp = 0.0
 script = ExtResource( 4 )
 Segment = ExtResource( 5 )
 Head = ExtResource( 2 )
@@ -16,6 +19,7 @@ Tail = ExtResource( 6 )
 segment_number = 30
 offset = 2
 tdelta = 0.75
+speed_decay = 0.95
 
 [node name="AbilitiesContainer" type="Node" parent="."]
 

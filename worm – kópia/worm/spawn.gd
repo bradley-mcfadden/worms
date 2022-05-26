@@ -1,4 +1,4 @@
-extends Position2D
+extends RigidBody2D
 
 const MAX_SPEED = 400
 const ACC = 20
@@ -18,7 +18,8 @@ export (float) var speed_decay = 0.95
 var body = []
 var rot = 0
 var heading = 0
-var vel = Vector2()
+# If initial velocity is not nonzero, then the worm collapses to a single point
+var vel = Vector2(10, 0)
 #base is deafult distance betveen joints. 
 var base = 40
 var j1 = Vector2()
@@ -67,11 +68,33 @@ func _process(_delta):
 
 # Do not touch this function.
 func _physics_process(delta):
+#	_control(delta)
+#	if vel.length() > 0 :
+#		var vel_ = vel.rotated(heading) * delta
+#		var ivel = Vector2(vel.y, vel.x).normalized()
+#
+#		var i = counter
+#		for segment in body :
+#			vel_ = Vector2(vel_.length(), 0).rotated(
+#					(segment.j1 - segment.j2).angle_to(vel_))
+#			segment.theta = i
+#			segment.move(vel_, ivel)
+#			vel_ = Vector2(
+#					segment.base + vel_.x - sqrt(
+#						segment.base * segment.base - vel_.y * vel_.y), 0
+#						).rotated(segment.rotation)
+#			i += tdelta
+#
+#		counter += 0.2
+	pass
+
+func _integrate_forces(state):
+	var delta = state.get_step()
 	_control(delta)
 	if vel.length() > 0 :
 		var vel_ = vel.rotated(heading) * delta
 		var ivel = Vector2(vel.y, vel.x).normalized()
-		
+
 		var i = counter
 		for segment in body :
 			vel_ = Vector2(vel_.length(), 0).rotated(
@@ -83,9 +106,9 @@ func _physics_process(delta):
 						segment.base * segment.base - vel_.y * vel_.y), 0
 						).rotated(segment.rotation)
 			i += tdelta
-			
-		counter += 0.2
 
+		counter += 0.2
+	print('a')
 
 func _control(delta):
 #	This is just example just make sure you dont alaut beckvard movement.
@@ -102,7 +125,7 @@ func _control(delta):
 		add_segment()
 		# split()
 	if Input.is_action_just_pressed("scale_up"):
-		scale(1.1)
+		scale_segments(1.1)
 	for i in range(0, 4):
 		if Input.is_action_pressed("ability" + str(i + 1)):
 			$AbilitiesContainer.get_child(i).invoke()
@@ -129,11 +152,14 @@ func add_segment():
 	move_child(new_tail, 0)
 
 
-func scale(factor):
+func scale_segments(factor):
 	var j2 = null
 	for segment in body:
 		segment.base *= factor
-		segment.scale *= factor
+		if segment.has_method("scale_children"):
+			segment.scale_children(factor)
+		else:
+			segment.scale *= factor
 		
 		if j2 == null:
 			j1 = segment.j1

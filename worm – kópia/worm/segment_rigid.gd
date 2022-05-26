@@ -51,3 +51,6 @@ func _integrate_forces(state):
 		rotate_target = null
 	state.set_transform(xform)
 
+func scale_children(factor):
+	for child in get_children():
+		child.scale *= factor
