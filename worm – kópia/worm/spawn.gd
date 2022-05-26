@@ -107,6 +107,7 @@ func _control(delta):
 		if Input.is_action_pressed("ability" + str(i + 1)):
 			$AbilitiesContainer.get_child(i).invoke()
 
+
 func add_segment():
 	var last2 = body[body.size() - 2]
 	var new_seg = Segment.instance()
@@ -126,7 +127,7 @@ func add_segment():
 	body.append(new_tail)
 	add_child(new_tail)
 	move_child(new_tail, 0)
-	
+
 
 func scale(factor):
 	var j2 = null
@@ -141,6 +142,7 @@ func scale(factor):
 		segment.j2 = segment.j1 + (segment.j2 - segment.j1) * factor
 		j2 = segment.j2
 
+
 func split():
 	var destroyed_parts = []
 	for _i in range(5):
@@ -148,10 +150,12 @@ func split():
 		
 	return destroyed_parts
 
+
 func apply_boost_speed():
 	max_speed = max_speed * 2
 	acc = acc * 2
 	$BoostTimer.start()
+
 
 func reset_boost_speed():
 	max_speed *= 0.5

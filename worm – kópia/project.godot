@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Segment",
 "language": "GDScript",
 "path": "res://worm/segment.gd"
+}, {
+"base": "RigidBody2D",
+"class": "SegmentRigid",
+"language": "GDScript",
+"path": "res://worm/segment_rigid.gd"
 } ]
 _global_script_class_icons={
 "Ability": "",
-"Segment": ""
+"Segment": "",
+"SegmentRigid": ""
 }
 
 [application]
@@ -95,6 +101,10 @@ ability4={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[physics]
+
+2d/default_gravity_vector=Vector2( 0, 0 )
 
 [rendering]
 
