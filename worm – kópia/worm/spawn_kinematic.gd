@@ -68,6 +68,28 @@ func _process(_delta):
 
 # Do not touch this function.
 func _physics_process(delta):
+#	_control(delta)
+#	if vel.length() > 0 :
+#		var vel_ = vel.rotated(heading) * delta
+#		var ivel = Vector2(vel.y, vel.x).normalized()
+#
+#		var i = counter
+#		for segment in body :
+#			vel_ = Vector2(vel_.length(), 0).rotated(
+#					(segment.j1 - segment.j2).angle_to(vel_))
+#			segment.theta = i
+#			segment.move(vel_, ivel)
+#			vel_ = Vector2(
+#					segment.base + vel_.x - sqrt(
+#						segment.base * segment.base - vel_.y * vel_.y), 0
+#						).rotated(segment.rotation)
+#			i += tdelta
+#
+#		counter += 0.2
+	pass
+
+func _integrate_forces(state):
+	var delta = state.get_step()
 	_control(delta)
 	if vel.length() > 0 :
 		var vel_ = vel.rotated(heading) * delta
@@ -84,6 +106,7 @@ func _physics_process(delta):
 						segment.base * segment.base - vel_.y * vel_.y), 0
 						).rotated(segment.rotation)
 			i += tdelta
+
 		counter += 0.2
 
 

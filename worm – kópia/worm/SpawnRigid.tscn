@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://abilities/Boost.tscn" type="PackedScene" id=1]
+[ext_resource path="res://abilities/DummyAbility.tscn" type="PackedScene" id=2]
+[ext_resource path="res://worm/spawn_rigid.gd" type="Script" id=3]
+
+[node name="SpawnRigid" type="RigidBody2D"]
+scale = Vector2( 0.5, 0.5 )
+mode = 2
+custom_integrator = true
+linear_damp = 0.0
+script = ExtResource( 3 )
+
+[node name="AbilitiesContainer" type="Node" parent="."]
+
+[node name="BoostAbility" parent="AbilitiesContainer" instance=ExtResource( 1 )]
+
+[node name="DummyAbility3" parent="AbilitiesContainer" instance=ExtResource( 2 )]
+
+[node name="DummyAbility2" parent="AbilitiesContainer" instance=ExtResource( 2 )]
+
+[node name="DummyAbility" parent="AbilitiesContainer" instance=ExtResource( 2 )]
