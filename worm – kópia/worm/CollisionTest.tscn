@@ -1,18 +1,25 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://worm/Spawn.tscn" type="PackedScene" id=1]
-[ext_resource path="res://worm/WormCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://worm/SpawnRigid.tscn" type="PackedScene" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 100.0
 
 [node name="CollisionTest" type="Node2D"]
 
-[node name="StaticBody2D" type="RigidBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 377, 314 )
 collision_layer = 3
 collision_mask = 3
-mass = 102.041
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PoolVector2Array( -62, -26, 506, -42, 502, 36, -65, 56 )
 
-[node name="spawn" parent="." instance=ExtResource( 1 )]
-camera = ExtResource( 2 )
+[node name="StaticBody2D2" type="RigidBody2D" parent="."]
+position = Vector2( -8, 583 )
+mass = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource( 1 )
+
+[node name="SpawnRigid" parent="." instance=ExtResource( 1 )]

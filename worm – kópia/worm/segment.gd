@@ -1,6 +1,5 @@
 extends Area2D
 
-class_name Segment
 
 # Yes i changed it to Area2D because kinematic isnt nessesery.
 var j1

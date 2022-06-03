@@ -1,13 +1,13 @@
 extends Position2D
 
-const MAX_SPEED = 400
-const ACC = 20
+const MAX_SPEED := 400
+const ACC := 20
 
 # fill this with camera2D node 
-export (PackedScene) var camera
-export (PackedScene) var Segment
-export (PackedScene) var Head
-export (PackedScene) var Tail
+export (PackedScene) var camera_scn
+export (PackedScene) var segment_scn
+export (PackedScene) var head_scn
+export (PackedScene) var tail_scn
 export (int) var segment_number = 30
 export (int) var offset = 2
 export (float) var tdelta = 0.75
@@ -19,7 +19,7 @@ var body = []
 var rot = 0
 var heading = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
-var vel = Vector2(0.001, 0)
+var vel = Vector2(0.000, 0)
 #base is deafult distance betveen joints. 
 var base = 40
 var j1 = Vector2()
@@ -33,41 +33,30 @@ func _ready():
 	for i in range(segment_number):
 		var segment
 		if i == 0:
-			segment = Head.instance()
+			segment = head_scn.instance()
 			head = segment
 		elif i == segment_number - 1:
-			segment = Tail.instance()
+			segment = tail_scn.instance()
 			tail = segment
 		else:
-			segment = Segment.instance()
+			segment = segment_scn.instance()
 		add_child(segment)
-		segment.base = base
-		segment.j1 = j1 
-		j1 = Vector2(j1.x - base, 0)
-		segment.j2 = j1
-		print("j1: " + str(segment.j1) + " j2: " + str(segment.j2))
+		segment.position = j1
+		j1 -= Vector2(segment.base, 0)
+		# segment.j2 = j1
+		print("j1: " + str(segment.j1.global_position) + " j2: " + str(segment.j2.global_position))
 		body.append(segment)
 #	this reverses order of segments in three 
 	for i in body:
 		move_child(i, 0)
-	if camera:
+	if camera_scn:
 #		you can also manipulate with segments this way
-		body[0].add_camera(camera.instance())
+		body[0].add_camera(camera_scn.instance())
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
 
 
-func _draw():
-	for segment in body:
-		draw_line(segment.j1, segment.j2, Color.red)
-
-
-func _process(_delta):
-	update()
-
-
-# Do not touch this function.
 func _physics_process(delta):
 	_control(delta)
 	if vel.length() > 0 :
@@ -77,38 +66,21 @@ func _physics_process(delta):
 		var i = counter
 		for segment in body :
 			vel_ = Vector2(vel_.length(), 0).rotated(
-					(segment.j1 - segment.j2).angle_to(vel_))
+					(segment.j1.position - segment.j2.position).angle_to(vel_))
 			segment.theta = i
-			var j2 = segment.move(vel_, ivel, delta)
-#			vel_ = Vector2(
-#					segment.base + vel_.x - sqrt(
-#						segment.base * segment.base - vel_.y * vel_.y), 0
-#						).rotated(segment.rotation)
-			vel_ = j2
+			segment.move(vel_, ivel)
+			vel_ = Vector2(
+					segment.base + vel_.x - sqrt(
+						segment.base * segment.base - vel_.y * vel_.y), 0
+						).rotated(segment.rotation)
 			i += tdelta
 
 		counter += 0.2
 
-#func _integrate_forces(state):
-#	var delta = state.get_step()
-#	_control(delta)
-#	if vel.length() > 0 :
-#		var vel_ = vel.rotated(heading) * delta
-#		var ivel = Vector2(vel.y, vel.x).normalized()
-#
-#		var i = counter
-#		for segment in body :
-#			vel_ = Vector2(vel_.length(), 0).rotated(
-#					(segment.j1 - segment.j2).angle_to(vel_))
-#			segment.theta = i
-#			segment.move(vel_, ivel)
-#			vel_ = Vector2(
-#					segment.base + vel_.x - sqrt(
-#						segment.base * segment.base - vel_.y * vel_.y), 0
-#						).rotated(segment.rotation)
-#			i += tdelta
-#
-#		counter += 0.2
+
+# Do not touch this function.
+func _process(delta):
+	update()
 
 
 func _control(delta):
@@ -134,7 +106,7 @@ func _control(delta):
 
 func add_segment():
 	var last2 = body[body.size() - 2]
-	var new_seg = Segment.instance()
+	var new_seg = segment_scn.instance()
 	new_seg.base = base
 	new_seg.j1 = last2.j2
 	new_seg.j2 = new_seg.j1 + last2.j2 - last2.j1
@@ -144,7 +116,7 @@ func add_segment():
 	move_child(new_seg, 0)
 
 	var last = body.back()
-	var new_tail = Tail.instance()
+	var new_tail = tail_scn.instance()
 	new_tail.base = base
 	new_tail.j1 = last.j2
 	new_tail.j2 = new_tail.j1 + last.j2 - last.j1

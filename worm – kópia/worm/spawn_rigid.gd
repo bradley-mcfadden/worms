@@ -26,6 +26,7 @@ var j1 = Vector2()
 var counter = 0
 var head
 var tail
+var wide_camera
 
 func _ready():
 # This loop will set segment's properties.
@@ -49,21 +50,39 @@ func _ready():
 #	this reverses order of segments in three 
 	for i in body:
 		move_child(i, 0)
-	if camera:
+	# if camera:
 #		you can also manipulate with segments this way
-		body[0].add_camera(camera.instance())
+#		body[0].add_camera(camera.instance())
+
+	if camera:
+		wide_camera = camera.instance()
+		var zoom_factor = segment_number / 10
+		print(zoom_factor)
+		wide_camera.zoom = Vector2(zoom_factor, zoom_factor)
+		add_child(wide_camera)
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
 
 
 func _draw():
-	for segment in body:
-		draw_line(segment.j1, segment.j2, Color.red)
+	#for segment in body:
+	#	draw_line(segment.j1, segment.j2, Color.red)
+	pass
 
 
 func _process(_delta):
 	update()
+	update_camera_position()
+
+
+func update_camera_position():
+	var sum := Vector2.ZERO
+	for segment in body:
+		sum += segment.position
+		
+	var avg = sum / len(body)
+	wide_camera.position = avg
 
 
 # Do not touch this function.
@@ -108,7 +127,6 @@ func _integrate_forces(state):
 			i += tdelta
 
 		counter += 0.2
-	print('a')
 
 func _control(delta):
 #	This is just example just make sure you dont alaut beckvard movement.
@@ -122,7 +140,7 @@ func _control(delta):
 	elif Input.is_action_pressed("ui_right"):
 		heading += PI * delta * 3
 	if Input.is_action_just_pressed("add_segment"):
-		add_segment()
+		call_deferred("add_segment")
 		# split()
 	if Input.is_action_just_pressed("scale_up"):
 		scale_segments(1.1)
@@ -137,6 +155,7 @@ func add_segment():
 	new_seg.base = base
 	new_seg.j1 = last2.j2
 	new_seg.j2 = new_seg.j1 + last2.j2 - last2.j1
+	new_seg.position = last2.position
 	body.pop_back().free()
 	body.append(new_seg)
 	add_child(new_seg)
@@ -147,9 +166,13 @@ func add_segment():
 	new_tail.base = base
 	new_tail.j1 = last.j2
 	new_tail.j2 = new_tail.j1 + last.j2 - last.j1
+	new_tail.position = last2.position
 	body.append(new_tail)
 	add_child(new_tail)
 	move_child(new_tail, 0)
+	
+	if camera:
+		wide_camera.zoom += Vector2(0.1, 0.1)
 
 
 func scale_segments(factor):

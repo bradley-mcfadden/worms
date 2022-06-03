@@ -7,6 +7,7 @@
 
 [node name="TailRigid" type="RigidBody2D"]
 collision_layer = 2
+custom_integrator = true
 script = ExtResource( 4 )
 
 [node name="colision" type="CollisionPolygon2D" parent="."]

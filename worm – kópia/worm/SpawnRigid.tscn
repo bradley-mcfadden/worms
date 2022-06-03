@@ -1,15 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://abilities/Boost.tscn" type="PackedScene" id=1]
 [ext_resource path="res://abilities/DummyAbility.tscn" type="PackedScene" id=2]
 [ext_resource path="res://worm/spawn_rigid.gd" type="Script" id=3]
+[ext_resource path="res://worm/TailRigid.tscn" type="PackedScene" id=4]
+[ext_resource path="res://worm/SegmentRigid.tscn" type="PackedScene" id=5]
+[ext_resource path="res://worm/HeadRigid.tscn" type="PackedScene" id=6]
+[ext_resource path="res://worm/WormCamera.tscn" type="PackedScene" id=7]
 
 [node name="SpawnRigid" type="RigidBody2D"]
 scale = Vector2( 0.5, 0.5 )
 mode = 2
 custom_integrator = true
-linear_damp = 0.0
+linear_damp = 30.0
 script = ExtResource( 3 )
+camera = ExtResource( 7 )
+Segment = ExtResource( 5 )
+Head = ExtResource( 6 )
+Tail = ExtResource( 4 )
+acc = 30
 
 [node name="AbilitiesContainer" type="Node" parent="."]
 

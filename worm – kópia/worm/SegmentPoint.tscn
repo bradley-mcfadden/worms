@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://img/worm/segment.png" type="Texture" id=1]
+[ext_resource path="res://worm/worm.tres" type="Material" id=2]
+[ext_resource path="res://img/worm/segment_n.png" type="Texture" id=3]
+[ext_resource path="res://worm/segment_point.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 35.0
+height = 46.0
+
+[node name="SegmentPoint" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 4 )
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Image" type="Sprite" parent="."]
+visible = false
+material = ExtResource( 2 )
+rotation = 3.14159
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 1 )
+normal_map = ExtResource( 3 )
+flip_h = true
+
+[node name="Joint1" type="Position2D" parent="."]
+position = Vector2( 35, 0 )
+__meta__ = {
+"_gizmo_extents_": 20.0
+}
+
+[node name="Joint2" type="Position2D" parent="."]
+position = Vector2( -35, 0 )
+__meta__ = {
+"_gizmo_extents_": 20.0
+}

@@ -24,10 +24,14 @@ func move(vel, oscvel):
 	# move_to(j1 + (j2 - j1) * 0.5)
 	var pos = j1 + (j2 - j1) / 2
 	wait_pos = pos
-	set_position(pos)
+	
+	# linear_velocity = vel
+	
+	
+	# set_position(pos)
 	#rotation = rot
 	# rotate_to(rot)
-	set_rotation(rot)
+	# set_rotation(rot)
 	
 	var osc_offset = oscvel * int(sin(theta) * vel.length())
 	j1 += vel.rotated(rot)
@@ -62,7 +66,10 @@ func _integrate_forces(state):
 	# var xrotd = 
 	# var yrot = atan2(xform.y.y, xform.y.x)
 	if wait_pos != null:
-		set_position(wait_pos)
+		# set_position(wait_pos)
+		set_linear_velocity(wait_pos - position)
+	else:
+		set_linear_velocity(Vector2.ZERO)
 	if wait_rot != null:
 		set_rotation(wait_rot)
 
