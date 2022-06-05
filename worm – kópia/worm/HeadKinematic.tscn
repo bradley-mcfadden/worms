@@ -87,7 +87,6 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="image" type="Sprite" parent="."]
-visible = false
 material = ExtResource( 2 )
 rotation = 3.14159
 texture = ExtResource( 1 )

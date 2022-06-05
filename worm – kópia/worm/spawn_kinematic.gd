@@ -9,23 +9,27 @@ export (PackedScene) var Segment
 export (PackedScene) var Head
 export (PackedScene) var Tail
 export (int) var segment_number = 30
-export (int) var offset = 2
+# difference between two segments' theta along sin curve
+# controls oscillation
 export (float) var tdelta = 0.75
 export (int) var max_speed = MAX_SPEED
-export (int) var acc = ACC
+export (int) var acceleration = ACC
 export (float) var speed_decay = 0.95
+
 
 var body = []
 var rot = 0
 var heading = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
 var vel = Vector2(0.001, 0)
-#base is deafult distance betveen joints. 
+# base is default distance betveen joints. 
 var base = 40
 var j1 = Vector2()
 var counter = 0
 var head
 var tail
+var wide_camera
+
 
 func _ready():
 # This loop will set segment's properties.
@@ -47,12 +51,13 @@ func _ready():
 		segment.j2 = j1
 		print("j1: " + str(segment.j1) + " j2: " + str(segment.j2))
 		body.append(segment)
-#	this reverses order of segments in three 
+#	this reverses the order of segments in the tree 
 	for i in body:
 		move_child(i, 0)
 	if camera:
-#		you can also manipulate with segments this way
-		body[0].add_camera(camera.instance())
+		wide_camera = camera.instance()
+		scale_camera()
+		add_child(wide_camera)
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
@@ -65,6 +70,16 @@ func _draw():
 
 func _process(_delta):
 	update()
+	update_camera_position()
+
+
+func update_camera_position():
+	var sum := Vector2.ZERO
+	for segment in body:
+		sum += segment.position
+		
+	var avg = sum / len(body)
+	wide_camera.position = avg
 
 
 # Do not touch this function.
@@ -80,41 +95,16 @@ func _physics_process(delta):
 					(segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
 			var j2 = segment.move(vel_, ivel, delta)
-#			vel_ = Vector2(
-#					segment.base + vel_.x - sqrt(
-#						segment.base * segment.base - vel_.y * vel_.y), 0
-#						).rotated(segment.rotation)
 			vel_ = j2
 			i += tdelta
 
 		counter += 0.2
 
-#func _integrate_forces(state):
-#	var delta = state.get_step()
-#	_control(delta)
-#	if vel.length() > 0 :
-#		var vel_ = vel.rotated(heading) * delta
-#		var ivel = Vector2(vel.y, vel.x).normalized()
-#
-#		var i = counter
-#		for segment in body :
-#			vel_ = Vector2(vel_.length(), 0).rotated(
-#					(segment.j1 - segment.j2).angle_to(vel_))
-#			segment.theta = i
-#			segment.move(vel_, ivel)
-#			vel_ = Vector2(
-#					segment.base + vel_.x - sqrt(
-#						segment.base * segment.base - vel_.y * vel_.y), 0
-#						).rotated(segment.rotation)
-#			i += tdelta
-#
-#		counter += 0.2
-
 
 func _control(delta):
-#	This is just example just make sure you dont alaut beckvard movement.
+#	This is just example just make sure you dont allow beckvard movement.
 	if Input.is_action_pressed("ui_up"):
-		vel.x += acc
+		vel.x += acceleration
 		vel.x = vel.x if vel.x <= max_speed else vel.x * speed_decay
 	else:
 		vel *= speed_decay
@@ -151,6 +141,8 @@ func add_segment():
 	body.append(new_tail)
 	add_child(new_tail)
 	move_child(new_tail, 0)
+	
+	scale_camera()
 
 
 func scale_segments(factor):
@@ -179,11 +171,16 @@ func split():
 
 
 func apply_boost_speed():
-	max_speed = max_speed * 2
-	acc = acc * 2
+	max_speed *= 2
+	acceleration *= 2
 	$BoostTimer.start()
 
 
 func reset_boost_speed():
 	max_speed *= 0.5
-	acc *= 0.5
+	acceleration *= 0.5
+
+
+func scale_camera():
+	if camera:
+		wide_camera.zoom = Vector2(0.1, 0.1) * len(body)

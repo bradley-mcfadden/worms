@@ -17,7 +17,6 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="image" type="Sprite" parent="."]
-visible = false
 material = ExtResource( 3 )
 rotation = 3.14159
 scale = Vector2( 0.7, 0.7 )

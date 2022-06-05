@@ -67,7 +67,7 @@ func _integrate_forces(state):
 	# var yrot = atan2(xform.y.y, xform.y.x)
 	if wait_pos != null:
 		# set_position(wait_pos)
-		set_linear_velocity(wait_pos - position)
+		state.set_linear_velocity(wait_pos - position)
 	else:
 		set_linear_velocity(Vector2.ZERO)
 	if wait_rot != null:

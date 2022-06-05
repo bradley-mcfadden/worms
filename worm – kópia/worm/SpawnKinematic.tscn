@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://abilities/Boost.tscn" type="PackedScene" id=1]
 [ext_resource path="res://abilities/DummyAbility.tscn" type="PackedScene" id=2]
@@ -6,9 +6,11 @@
 [ext_resource path="res://worm/TailKinematic.tscn" type="PackedScene" id=4]
 [ext_resource path="res://worm/HeadKinematic.tscn" type="PackedScene" id=5]
 [ext_resource path="res://worm/SegmentKinematic.tscn" type="PackedScene" id=6]
+[ext_resource path="res://worm/WormCamera.tscn" type="PackedScene" id=7]
 
 [node name="SpawnKinematic" type="Position2D"]
 script = ExtResource( 3 )
+camera = ExtResource( 7 )
 Segment = ExtResource( 6 )
 Head = ExtResource( 5 )
 Tail = ExtResource( 4 )
