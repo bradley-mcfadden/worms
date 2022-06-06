@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://abilities/ability.gd"
 }, {
-"base": "Area2D",
-"class": "Segment",
-"language": "GDScript",
-"path": "res://worm/segment.gd"
-}, {
 "base": "RigidBody2D",
 "class": "SegmentRigid",
 "language": "GDScript",
@@ -26,7 +21,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Ability": "",
-"Segment": "",
 "SegmentRigid": ""
 }
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=1]
+
+[node name="DcTest" type="RigidBody2D"]
+collision_layer = 4
+
+[node name="DepthController" parent="." instance=ExtResource( 1 )]
