@@ -3,6 +3,10 @@ extends Position2D
 const MAX_SPEED = 400
 const ACC = 20
 
+enum SegmentState { ALIVE, DEAD }
+
+signal segment_changed(segment, state)
+
 # fill this with camera2D node 
 export (PackedScene) var camera
 export (PackedScene) var Segment
@@ -51,6 +55,7 @@ func _ready():
 		segment.j2 = j1
 		print("j1: " + str(segment.j1) + " j2: " + str(segment.j2))
 		body.append(segment)
+		emit_signal("segment_changed", segment, SegmentState.ALIVE)
 #	this reverses the order of segments in the tree 
 	for i in body:
 		move_child(i, 0)
@@ -128,7 +133,8 @@ func add_segment():
 	new_seg.base = base
 	new_seg.j1 = last2.j2
 	new_seg.j2 = new_seg.j1 + last2.j2 - last2.j1
-	body.pop_back().free()
+	var old_tail = body.pop_back()
+	old_tail.free()
 	body.append(new_seg)
 	add_child(new_seg)
 	move_child(new_seg, 0)
@@ -143,6 +149,10 @@ func add_segment():
 	move_child(new_tail, 0)
 	
 	scale_camera()
+	
+	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
+	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
+	emit_signal("segment_changed", new_tail, SegmentState.ALIVE)
 
 
 func scale_segments(factor):
@@ -165,7 +175,9 @@ func scale_segments(factor):
 func split():
 	var destroyed_parts = []
 	for _i in range(5):
-		destroyed_parts.append(body.pop_back())
+		var tail = body.pop_back()
+		destroyed_parts.append(tail)
+		emit_signal("segment_changed", tail, SegmentState.DEAD)
 		
 	return destroyed_parts
 
@@ -184,3 +196,11 @@ func reset_boost_speed():
 func scale_camera():
 	if camera:
 		wide_camera.zoom = Vector2(0.1, 0.1) * len(body)
+
+
+func get_entity_positions() -> Array:
+	var pts := []
+	for segment in body:
+		pts.append(segment)
+	
+	return pts

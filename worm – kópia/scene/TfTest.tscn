@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scene/TargetFollow.tscn" type="PackedScene" id=1]
+[ext_resource path="res://script/tf_test.gd" type="Script" id=2]
+[ext_resource path="res://scene/MockPlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://script/players.gd" type="Script" id=4]
+[ext_resource path="res://script/enemies.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 33.1361
+
+[node name="TfTest" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Enemies" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="TargetFollow" parent="Enemies" instance=ExtResource( 1 )]
+position = Vector2( 290, 170 )
+idle_patrol = [ Vector2( 50, 50 ), Vector2( 500, 50 ), Vector2( 500, 500 ), Vector2( 50, 500 ) ]
+
+[node name="Players" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="MockPlayer" parent="Players" instance=ExtResource( 3 )]
+position = Vector2( 604, 350 )
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Obstacles"]
+position = Vector2( 98, 330 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/StaticBody2D2"]
+shape = SubResource( 1 )
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Obstacles"]
+position = Vector2( 13, 111 )
+rotation = 1.34024
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D4"]
+polygon = PoolVector2Array( -130, -44, -126, -4, -26, 11, -69, 56, 24, 89, 10, 182, 54, 96, 44, 54, -25, 40, 26, -18 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Obstacles"]
+position = Vector2( 396, 506 )
+rotation = 1.98421
+scale = Vector2( 1, 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D3"]
+polygon = PoolVector2Array( -130, -44, -126, -4, -26, 11, -69, 56, 24, 89, 10, 182, 54, 96, 44, 54, -25, 40, 26, -18 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles"]
+position = Vector2( 451, 110 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D"]
+polygon = PoolVector2Array( -130, -44, -126, -4, -26, 11, -69, 56, 24, 89, 10, 182, 54, 96, 44, 54, -25, 40, 26, -18 )
+
+[connection signal="all_enemies_dead" from="Enemies" to="." method="_on_all_enemies_dead"]
+[connection signal="bullet_created" from="Enemies/TargetFollow" to="." method="attach_bullet"]
+[connection signal="died" from="Enemies/TargetFollow" to="Enemies" method="_on_Enemy_died"]
+[connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
+[connection signal="died" from="Players/MockPlayer" to="Players" method="_on_Player_died"]
