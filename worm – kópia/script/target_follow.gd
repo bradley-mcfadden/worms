@@ -13,7 +13,8 @@ export (Dictionary) var ent_state_prop = {
 		color = Color.aquamarine, speed = 250, threshold = 32, fov = 90},
 	EntityState.CHASE : {
 		color = Color.red, speed = 350, threshold = 200, fov = 360},
-	EntityState.DEAD : {color = Color.black},
+	EntityState.DEAD : {
+		color = Color.black, speed = 0, threshold = 0, fov = 0},
 }
 
 export (float) var steer_force := 0.5
@@ -27,7 +28,10 @@ export (bool) var has_ranged_attack := true
 export (bool) var has_melee_attack := false
 export (int) var ranged_damage := 20
 export (int) var melee_damage := 50
-export (PackedScene) var bullet 
+export (PackedScene) var bullet
+export (int) var start_health = 100
+export var melee_thresh := 50
+export var ranged_thresh := 200
 
 # context array
 var ray_directions := []
@@ -41,8 +45,8 @@ var patrol_idx := 0
 var current_state = EntityState.PATROL
 var target = null
 var rot = 0
-var melee_thresh = 50
-var ranged_thresh = 200
+var start_transform
+var health = start_health
 
 
 func _ready():
@@ -66,6 +70,8 @@ func _ready():
 		if angle > PI / 2 or angle < 3 * PI / 2:
 			ray_directions[i] *= 0.5
 		print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
+		
+	start_transform = transform
 
 
 func _physics_process(delta:float):
@@ -90,7 +96,7 @@ func _physics_process(delta:float):
 			did_attack = check_ranged_attack(dist_to_player)
 		EntityState.PATROL:
 			pass
-		EntityState.DIE:
+		EntityState.DEAD:
 			pass
 
 
@@ -123,6 +129,20 @@ func _draw_semicircle(radius:float, f:float, color:Color):
 
 func _process(_delta):
 	update()
+
+
+func reset():
+	# context array
+	chosen_dir = Vector2.ZERO
+	velocity = Vector2.ZERO
+	acceleration = Vector2.ZERO
+	collision_layer = 2147483647
+	patrol_idx = 0
+	current_state = EntityState.PATROL
+	target = null
+	rot = 0
+	transform = start_transform
+	health = start_health
 
 
 func set_interest():
@@ -187,14 +207,15 @@ func choose_direction():
 
 
 func get_target():
-	check_for_player()
+	if current_state != EntityState.DEAD:
+		check_for_player()
 	match current_state:
 		EntityState.PATROL:
 			return get_patrol_target()
 		EntityState.CHASE:
 			return target
 		EntityState.DEAD:
-			pass
+			return position
 		_:
 			return null
 
@@ -217,11 +238,9 @@ func get_next_patrol_target():
 # acquire it as target and reduce our reaction time
 func check_for_player():
 	if not get_parent().has_method("get_players"): return
-	
 	var players = get_parent().get_players()
 	
 	# Prefer finding a player
-
 	var space_state = get_world_2d().direct_space_state
 	for player in players:
 		var angle_to_player = (player.position - position).rotated(-rotation).angle()
@@ -232,14 +251,17 @@ func check_for_player():
 		#	and collide['collider'] == player #and player.is_alive() 
 		#and 
 		angle_to_player < f * 0.5 
-		and dist_to_player < look_distance):
+		and dist_to_player < look_distance
+		and player.is_alive()):
 			## Add reaction time here probably ##
 			if reaction_time > 0:
 				reaction_time -= 1
-				print(reaction_time)
 			else:
 				current_state = EntityState.CHASE
 				target = player.position
+		else:
+			target = global_position
+			current_state = EntityState.PATROL
 
 
 func check_ranged_attack(dist_to_player):
@@ -260,8 +282,10 @@ func start_ranged_attack():
 	# launch a projectile
 	look_at(target)
 	var new_bullet = bullet.instance()
-	new_bullet.setup(self, (target - global_position).normalized() * 400, 
+	new_bullet.setup(self, (target - global_position).normalized() * 1000, 
 		ranged_damage, 10, collision_layer)
+	new_bullet.position = global_position
+	new_bullet.rotation = (target - global_position).angle()
 	emit_signal("bullet_created", new_bullet)
 
 
@@ -297,6 +321,26 @@ func end_melee_attack():
 	$AnimationPlayer.play("idle")
 
 
+func take_damage(how_much, from):
+	print("Enemy is taking " + str(how_much) + " damage")
+	if health > 0: health -= how_much
+	if health < start_health * -0.25:
+		emit_signal("died", self, from, true)
+		current_state = EntityState.DEAD
+	elif health <= 0:
+		emit_signal("died", self, from, false)
+		current_state = EntityState.DEAD
+
+
+func is_alive() -> bool:
+	return health > 0
+
+
 func _on_MeleeAttack_body_entered(body):
 	if body.has_method("take_damage"):
 		body.take_damage(melee_damage, self)
+
+
+func _on_Timer_timeout():
+	if is_alive():
+		take_damage(10, null)

@@ -77,4 +77,8 @@ monitoring = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MeleeAttack"]
 polygon = PoolVector2Array( 0, 0, -11, -21, 11, -21 )
 
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

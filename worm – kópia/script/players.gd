@@ -3,6 +3,19 @@ extends Node
 signal all_players_dead()
 
 
+func reset_all_players():
+	for child in get_players():
+		child.reset()
+
+
+func get_alive_players() -> int:
+	var alive = 0
+	for child in get_players():
+		if child.is_alive():
+			alive += 1
+	return alive
+
+
 func get_players() -> Array:
 	var players := []
 	for child in get_children():
@@ -11,7 +24,10 @@ func get_players() -> Array:
 	return players
 
 
-func _on_Player_died(node, _killer, _overkill):
-	node.queue_free()
-	if get_child_count() == 0:
+func _on_Player_died(node, killer, _overkill):
+	print("Player " + str(node) + " was killed by " + str(killer));
+	# remove_child(node)
+	# node.queue_free()
+	if get_alive_players() == 0:
+		print("All players are dead")
 		emit_signal("all_players_dead")

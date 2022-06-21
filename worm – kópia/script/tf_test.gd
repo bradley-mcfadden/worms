@@ -7,6 +7,8 @@ var target = null
 func _input(event):
 	if event.is_action_pressed("mouse_lmb"):
 		target = get_global_mouse_position()
+	if Input.is_action_just_released("reset"):
+		reset()
 
 
 func _process(_delta):
@@ -29,6 +31,11 @@ func get_players() -> Array:
 
 func attach_bullet(bullet):
 	add_child(bullet)
+
+
+func reset():
+	$Enemies.reset_all_enemies()
+	$Players.reset_all_players()
 
 
 func _on_all_enemies_dead():

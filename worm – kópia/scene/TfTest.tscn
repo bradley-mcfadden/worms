@@ -43,7 +43,6 @@ polygon = PoolVector2Array( -130, -44, -126, -4, -26, 11, -69, 56, 24, 89, 10, 1
 [node name="StaticBody2D3" type="StaticBody2D" parent="Obstacles"]
 position = Vector2( 396, 506 )
 rotation = 1.98421
-scale = Vector2( 1, 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D3"]
 polygon = PoolVector2Array( -130, -44, -126, -4, -26, 11, -69, 56, 24, 89, 10, 182, 54, 96, 44, 54, -25, 40, 26, -18 )

@@ -15,7 +15,7 @@ func setup(shot_by, velocity, damage, lifetime, cmask):
 
 
 func _ready():
-	look_at(velocity)
+	# look_at(velocity)
 	$Timer.wait_time = lifetime
 	$Timer.start()
 

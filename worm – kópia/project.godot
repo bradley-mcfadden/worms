@@ -30,15 +30,12 @@ config/name="worm"
 run/main_scene="res://worm/Spawn.tscn"
 config/icon="res://icon.png"
 
-[debug]
-
-settings/fps/force_fps=10
-settings/stdout/print_fps=true
-
 [global]
 
 frame=false
 framerate=false
+fps=false
+"frame rate"=false
 
 [input]
 
@@ -108,6 +105,11 @@ ability4={
 mouse_lmb={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+reset={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
 
