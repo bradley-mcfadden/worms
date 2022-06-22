@@ -53,6 +53,15 @@ func set_collision_layer(layer:int):
 	parent.collision_layer = int(pow(2, layer)) 
 
 
+# Reset parent's collision layer and mask to match its initial depth value.
+func reset():
+	if parent.has_method("set_collision_mask"):
+		set_collision_layer(start_layer + 4 * depth_layer)
+		set_collision_mask(start_mask + 4 * depth_layer)
+		
+		depth_layer = start_layer
+
+
 # Finds the base 2 log for a number.
 func log2(val:int) -> int:
 	var counter := 0

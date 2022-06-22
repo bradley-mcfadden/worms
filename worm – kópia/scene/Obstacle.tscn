@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://script/obstacle.gd" type="Script" id=1]
+[ext_resource path="res://img/worm/segment.png" type="Texture" id=2]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
+
+[node name="Obstacle" type="Node2D"]
+position = Vector2( 83, 71 )
+script = ExtResource( 1 )
+texture = ExtResource( 2 )
+uvs = PoolVector2Array( 0, 0, 1, 1, 0.5, 0, 0, 0, 0, 0 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+build_mode = 1
+polygon = PoolVector2Array( -14, -68, 180, -116, 54, 33, 14, 78, 23, -1 )
+
+[node name="DepthController" parent="." instance=ExtResource( 3 )]

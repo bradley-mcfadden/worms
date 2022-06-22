@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://script/target_follow.gd" type="Script" id=1]
 [ext_resource path="res://scene/Bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -61,6 +62,26 @@ tracks/0/keys = {
 
 [node name="TargetFollow" type="Node2D"]
 script = ExtResource( 1 )
+ent_state_prop = {
+0: {
+"color": Color( 0.5, 1, 0.83, 1 ),
+"fov": 90,
+"speed": 250,
+"threshold": 32
+},
+1: {
+"color": Color( 1, 0, 0, 1 ),
+"fov": 360,
+"speed": 350,
+"threshold": 200
+},
+2: {
+"color": Color( 0, 0, 0, 1 ),
+"fov": 0,
+"speed": 0,
+"threshold": 0
+}
+}
 bullet = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -79,6 +100,8 @@ polygon = PoolVector2Array( 0, 0, -11, -21, 11, -21 )
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="DepthController" parent="." instance=ExtResource( 3 )]
 
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

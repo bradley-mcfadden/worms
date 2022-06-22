@@ -15,31 +15,35 @@ func _ready():
 
 # Add an item to the specified layer.
 func add(layer:int, item:Node):
-	if not item.has_method("get_depth_controller"): return
-	while len(layers) <= layer: layers.append([])
-	var dc = item.get_depth_controller()
-	layers[layer].add(dc)
-	dc.set_layer(layer)
-	dc.set_active(layer != current_layer)
+	if not item.has_method("get_depth_controllers"): return
+	while len(layers) <= layer: 
+		layers.append([])
+	var controllers = item.get_depth_controllers()
+	for dc in controllers:
+		layers[layer].add(dc)
+		dc.set_layer(layer)
+		dc.set_active(layer != current_layer)
 
 
 # Switch the position of item to the layer `to`.
 # Cause item to become active or inactive depending on whether the new layer is
 # active.
 func switch(to:int, item:Node):
-	if not item.has_method("get_depth_controller"): return
-	var dc = item.get_depth_controller()
-	layers[item.get_layer()].remove(dc)
-	layers[to].add(dc)
-	dc.set_layer(to)
-	dc.set_active(to != current_layer)
+	if not item.has_method("get_depth_controllers"): return
+	var controllers = item.get_depth_controllers()
+	for dc in controllers:
+		layers[item.get_layer()].remove(dc)
+		layers[to].add(dc)
+		dc.set_layer(to)
+		dc.set_active(to != current_layer)
 
 
 # Remove an item from the layers
 func remove(item:Node):
-	if not item.has_method("get_depth_controller"): return
-	var dc = item.get_depth_controller()
-	layers[item.get_layer()].remove(dc)
+	if not item.has_method("get_depth_controllers"): return
+	var controllers = item.get_depth_controllers()
+	for dc in controllers:
+		layers[item.get_layer()].remove(dc)
 
 
 # Switch the active layer. All elements in old layer are inactive.

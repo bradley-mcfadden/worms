@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 signal bullet_created(bullet)
@@ -20,7 +21,7 @@ export (Dictionary) var ent_state_prop = {
 export (float) var steer_force := 0.5
 export (int) var look_ahead := 125
 export (int) var num_rays := 12
-export (Array) var idle_patrol := []
+export (PoolVector2Array) var idle_patrol := PoolVector2Array()
 export (float) var fov := 90.0
 export (int) var look_distance := 300
 export (int) var reaction_time = 12
@@ -32,6 +33,7 @@ export (PackedScene) var bullet
 export (int) var start_health = 100
 export var melee_thresh := 50
 export var ranged_thresh := 200
+export var layer := 0
 
 # context array
 var ray_directions := []
@@ -50,12 +52,14 @@ var health = start_health
 
 
 func _ready():
+	if Engine.editor_hint: return
 	if has_ranged_attack:
 		ent_state_prop[EntityState.CHASE]["threshold"] = ranged_thresh
 	else:
 		ent_state_prop[EntityState.CHASE]["threshold"] = melee_thresh
 		
 	$AnimationPlayer.play("idle")
+	$DepthController.set_layer(layer)
 	
 	num_rays += 1
 	fov = deg2rad(fov)
@@ -75,6 +79,7 @@ func _ready():
 
 
 func _physics_process(delta:float):
+	if Engine.editor_hint: return
 	var state = set_interest()
 	
 	match state:
@@ -106,12 +111,22 @@ func _draw():
 	draw_arc(Vector2.ZERO, 20, 0, PI * 2, 20, color)
 	draw_line(Vector2.ZERO, Vector2(20, 0), color)
 	var f = deg2rad(ent_state_prop[current_state]["fov"])
-	match current_state:
-		EntityState.PATROL:
-			_draw_semicircle(look_distance, f, Color.black)
-		EntityState.CHASE:
-			_draw_semicircle(melee_thresh, f, Color.red)
-			_draw_semicircle(ranged_thresh, f, Color.red)
+	
+	if !Engine.editor_hint:
+		match current_state:
+			EntityState.PATROL:
+				_draw_semicircle(look_distance, f, Color.black)
+			EntityState.CHASE:
+				_draw_semicircle(melee_thresh, f, Color.red)
+				_draw_semicircle(ranged_thresh, f, Color.red)
+	else:
+		_draw_semicircle(look_distance, f, Color.black)
+		_draw_semicircle(melee_thresh, f, Color.red)
+		_draw_semicircle(ranged_thresh, f, Color.red)
+		# translate(-global_position)
+		
+		_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
+		# translate(global_position)
 
 
 # draw a semicircle with radius, which travels around the arc for f,
@@ -120,11 +135,19 @@ func _draw_semicircle(radius:float, f:float, color:Color):
 	var f2 = f / 2
 	var cosf2 = cos(f2) # cos(x) = -cos(x)
 	var sinf2 = sin(f2) # sin(-x) = -sin(x)
-	draw_arc(Vector2.ZERO, radius, -f2, f2, 20, Color.black)
+	draw_arc(Vector2.ZERO, radius, -f2, f2, 20, color)
 	draw_line(Vector2(20 * cosf2, 20 * -sinf2),
-		Vector2(radius * cosf2, radius * -sinf2), Color.black)
+		Vector2(radius * cosf2, radius * -sinf2), color)
 	draw_line(Vector2(20 * cosf2, 20 * sinf2),
-		Vector2(radius * cosf2, radius * sinf2), Color.black)
+		Vector2(radius * cosf2, radius * sinf2), color)
+
+
+func _draw_polyline(points, color, xform):
+	var p2 := []
+	for p in points:
+		p2.append(xform * p)
+	p2.append(p2.front())
+	draw_polyline(p2, color)
 
 
 func _process(_delta):
@@ -334,6 +357,18 @@ func take_damage(how_much, from):
 
 func is_alive() -> bool:
 	return health > 0
+
+
+func get_layer() -> int:
+	return layer
+
+
+func set_layer(new_layer:int):
+	$DepthController.set_layer(new_layer)
+
+
+func get_depth_controllers() -> Array:
+	return [$DepthController,]
 
 
 func _on_MeleeAttack_body_entered(body):

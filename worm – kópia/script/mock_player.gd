@@ -1,3 +1,4 @@
+tool
 extends KinematicBody2D
 
 signal died(node, killer, overkill)
@@ -5,6 +6,7 @@ signal died(node, killer, overkill)
 enum State {PLAYER_ALIVE=20, PLAYER_DEAD=40}
 
 export (int) var start_health = 100
+export (int) var layer = 0
 
 var vel := Vector2.ZERO
 var health = start_health
@@ -14,6 +16,7 @@ var start_transform
 
 func _ready():
 	start_transform = get_transform()
+	$DepthController.set_layer(layer)
 	randomize()
 
 
@@ -36,6 +39,7 @@ func _draw():
 
 
 func _physics_process(delta):
+	if Engine.editor_hint: return
 	match current_state:
 		State.PLAYER_ALIVE: 
 			move_and_collide(vel)
@@ -79,3 +83,15 @@ func take_damage(how_much, from):
 
 func is_alive() -> bool:
 	return health > 0
+
+
+func get_layer() -> int:
+	return layer
+
+
+func set_layer(new_layer:int):
+	$DepthController.set_layer(new_layer)
+
+
+func get_depth_controllers() -> Array:
+	return [$DepthController,]
