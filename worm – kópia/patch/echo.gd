@@ -17,32 +17,22 @@ func _ready():
 	tdelta = 0.0
 
 func _draw():
-	var view := get_viewport_rect()
-	var vt := get_viewport_transform()
+	var v_rect: Rect2 = get_viewport_transform().affine_inverse().xform(get_viewport_rect())
 	var vpos = Vector2()
-	vpos.x = clamp(pos.x, -vt.origin.x,  -vt.origin.x + view.size.x)
-	vpos.y = clamp(pos.y, -vt.origin.y, -vt.origin.y + view.size.y)
-	view_pos = vpos
+	vpos.x = clamp(pos.x, v_rect.position.x,  v_rect.position.x + v_rect.size.x)
+	vpos.y = clamp(pos.y, v_rect.position.y,  v_rect.position.y + v_rect.size.y)
+	view_pos = get_viewport_transform() * get_global_transform() * vpos
 	xpos = pos
-	#print(vpos, vt.origin)
 
 	color.a *= 1 - decay
 	draw_arc(vpos, average + tdelta * amplitude, 0, PI * 2, 30, color)
 	# draw_arc(pos, average + (1 + cos(tdelta)) * amplitude, 0, PI*2, 20, Color.red)
 	tdelta += speed
-	
+
 	if color.a < 0.1:
 		tdelta = 0.0
 		color.a = 1.0
 
 
-func _process(delta):
+func _process(_delta):
 	update()
-
-
-func _input(event):
-	if Input.is_action_just_pressed("add_segment"):
-		var vt := get_viewport_transform()
-		print(-vt.origin)
-		print(xpos)
-		print(view_pos)

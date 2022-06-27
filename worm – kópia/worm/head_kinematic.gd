@@ -1,6 +1,5 @@
 extends "res://worm/segment_kinematic.gd"
 
-
 var anim_player:AnimationPlayer
 
 const IDLE = "idle"
@@ -14,7 +13,7 @@ func _ready():
 	anim_player.play(IDLE)
 
 
-func move(vel:Vector2, oscvel:Vector2, delta:float) -> Vector2:
+func move(vel:Vector2, oscvel:Vector2, _delta:float) -> Vector2:
 	var rot = (j1 - j2).angle()
 	var next_pos = j1 + (j2 - j1) / 2
 	
@@ -39,3 +38,17 @@ func move(vel:Vector2, oscvel:Vector2, delta:float) -> Vector2:
 	
 	# return collider != null
 	return delta_j2
+
+
+func set_layer(new_layer:int):
+	$DepthController.set_layer(new_layer)
+
+
+func set_collision_layer(layer:int):
+	collision_layer = layer
+	print("cl ", collision_layer)
+
+
+func set_collision_mask(mask:int):
+	collision_mask = mask
+	print("cm ", collision_mask)

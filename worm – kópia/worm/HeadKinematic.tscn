@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://img/worm/ss.png" type="Texture" id=1]
 [ext_resource path="res://worm/worm.tres" type="Material" id=2]
 [ext_resource path="res://img/worm/ss_n.png" type="Texture" id=3]
 [ext_resource path="res://worm/head_kinematic.gd" type="Script" id=4]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 62.0
@@ -101,3 +102,7 @@ anims/chomp_to_idle = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/mouth_chomp = SubResource( 4 )
 anims/mouth_open_wide = SubResource( 5 )
+
+[node name="DepthController" parent="." instance=ExtResource( 5 )]
+
+[node name="Tween" type="Tween" parent="."]

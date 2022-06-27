@@ -2,6 +2,7 @@ tool
 extends KinematicBody2D
 
 signal died(node, killer, overkill)
+signal switch_layer_pressed(new_layer, node)
 
 enum State {PLAYER_ALIVE=20, PLAYER_DEAD=40}
 
@@ -15,6 +16,8 @@ var start_transform
 
 
 func _ready():
+	set_layer(layer)
+	print("Player", collision_layer, " ", collision_mask)
 	start_transform = get_transform()
 	$DepthController.set_layer(layer)
 	randomize()
@@ -45,6 +48,13 @@ func _physics_process(delta):
 			move_and_collide(vel)
 			look_at(position+vel)
 		State.PLAYER_DEAD: pass
+
+
+func _input(event):
+	if Input.is_action_just_pressed("layer_up"):
+		emit_signal("switch_layer_pressed", get_layer()+1, self)
+	elif Input.is_action_just_pressed("layer_down"):
+		emit_signal("switch_layer_pressed", get_layer()-1, self)
 
 
 func _on_Timer_timeout():
@@ -86,7 +96,7 @@ func is_alive() -> bool:
 
 
 func get_layer() -> int:
-	return layer
+	return $DepthController.get_layer()
 
 
 func set_layer(new_layer:int):

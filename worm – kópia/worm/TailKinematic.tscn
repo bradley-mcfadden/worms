@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://worm/segment_kinematic.gd" type="Script" id=1]
 [ext_resource path="res://img/worm/tail_n.png" type="Texture" id=2]
 [ext_resource path="res://img/worm/tail.png" type="Texture" id=3]
 [ext_resource path="res://worm/worm.tres" type="Material" id=4]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=5]
 
 [node name="TailKinematic" type="KinematicBody2D"]
 collision_layer = 2
@@ -22,3 +23,7 @@ scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )
 normal_map = ExtResource( 2 )
 flip_h = true
+
+[node name="DepthController" parent="." instance=ExtResource( 5 )]
+
+[node name="Tween" type="Tween" parent="."]

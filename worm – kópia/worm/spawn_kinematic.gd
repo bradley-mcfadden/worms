@@ -6,6 +6,7 @@ const ACC = 20
 enum SegmentState { ALIVE, DEAD }
 
 signal segment_changed(segment, state)
+signal switch_layer_pressed(new_layer, node)
 
 # fill this with camera2D node 
 export (PackedScene) var camera
@@ -19,10 +20,10 @@ export (float) var tdelta = 0.75
 export (int) var max_speed = MAX_SPEED
 export (int) var acceleration = ACC
 export (float) var speed_decay = 0.95
+export (int) var layer := 0
 
 
 var body = []
-var rot = 0
 var heading = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
 var vel = Vector2(0.001, 0)
@@ -33,6 +34,11 @@ var counter = 0
 var head
 var tail
 var wide_camera
+var iter
+
+var start_transform:Transform2D
+var start_layer:int
+var is_switch_depth := false
 
 
 func _ready():
@@ -66,6 +72,20 @@ func _ready():
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
+		
+	start_transform = transform
+	start_layer = layer
+
+
+func reset():
+	transform = start_transform
+	layer = start_layer
+	heading = 0
+	vel = Vector2(0.001, 0)
+	for segment in body:
+		segment.queue_free()
+	_ready()
+	
 
 
 func _draw():
@@ -108,20 +128,26 @@ func _physics_process(delta):
 
 func _control(delta):
 #	This is just example just make sure you dont allow beckvard movement.
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("move_forward"):
 		vel.x += acceleration
 		vel.x = vel.x if vel.x <= max_speed else vel.x * speed_decay
+		#print("Moving forward")
 	else:
 		vel *= speed_decay
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("move_left"):
 		heading -= PI * delta * 3
-	elif Input.is_action_pressed("ui_right"):
+	elif Input.is_action_pressed("move_right"):
 		heading += PI * delta * 3
 	if Input.is_action_just_pressed("add_segment"):
 		add_segment()
 		# split()
 	if Input.is_action_just_pressed("scale_up"):
 		scale_segments(1.1)
+	if !is_switch_depth:
+		if Input.is_action_just_pressed("layer_down"):
+			emit_signal("switch_layer_pressed", layer-1, self)
+		elif Input.is_action_just_pressed("layer_up"):
+			emit_signal("switch_layer_pressed", layer+1, self)
 	for i in range(0, 4):
 		if Input.is_action_pressed("ability" + str(i + 1)):
 			$AbilitiesContainer.get_child(i).invoke()
@@ -134,7 +160,6 @@ func add_segment():
 	new_seg.j1 = last2.j2
 	new_seg.j2 = new_seg.j1 + last2.j2 - last2.j1
 	var old_tail = body.pop_back()
-	old_tail.free()
 	body.append(new_seg)
 	add_child(new_seg)
 	move_child(new_seg, 0)
@@ -149,6 +174,9 @@ func add_segment():
 	move_child(new_tail, 0)
 	
 	scale_camera()
+	
+	new_seg.layer = head.get_layer()
+	new_tail.layer = head.get_layer()
 	
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
@@ -204,3 +232,40 @@ func get_entity_positions() -> Array:
 		pts.append(segment)
 	
 	return pts
+
+
+func get_layer() -> int:
+	return head.get_layer()
+
+
+func set_active(is_active:bool):
+	for segment in body:
+		segment.set_modulate(Color(1, 1, 1, 1) if is_active else Color(1, 1, 1, 0.3))
+		#segment.visible = true
+
+
+func set_layer(new_layer:int):
+	set_active(false)
+	layer = new_layer
+	iter = Iterator.new()
+	iter.data = body
+	$DiveTimer.start()
+	is_switch_depth = true
+
+
+func get_depth_controllers() -> Array:
+	var dcs := []
+	for segment in body:
+		dcs.append_array(segment.get_depth_controllers())
+	return dcs
+
+
+func _on_DiveTimer_timeout():
+	var segment = iter.next()
+	if segment != null:
+		segment.set_layer(layer)
+		#segment.visible = true
+		$DiveTimer.start()
+		segment.fade_in($DiveTimer.wait_time)
+	else:
+		is_switch_depth = false

@@ -17,6 +17,14 @@ func get_alive_enemies() -> int:
 	return num_alive
 
 
+func get_enemies() -> Array:
+	var enemies := []
+	for child in get_children():
+		enemies.append(child)
+	
+	return enemies
+
+
 func get_players() -> Array:
 	return get_parent().get_players()
 

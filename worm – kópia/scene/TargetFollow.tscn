@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://script/target_follow.gd" type="Script" id=1]
 [ext_resource path="res://scene/Bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://patch/echo.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -103,5 +104,14 @@ autostart = true
 
 [node name="DepthController" parent="." instance=ExtResource( 3 )]
 
+[node name="Tween" type="Tween" parent="."]
+
+[node name="echo" parent="." instance=ExtResource( 4 )]
+pos = Vector2( 0, 0 )
+speed = 2.0
+decay = 0.05
+
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="hide" from="DepthController" to="." method="_on_hide"]
+[connection signal="show" from="DepthController" to="." method="_on_show"]

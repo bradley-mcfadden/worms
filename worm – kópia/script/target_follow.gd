@@ -13,7 +13,7 @@ export (Dictionary) var ent_state_prop = {
 	EntityState.PATROL : {
 		color = Color.aquamarine, speed = 250, threshold = 32, fov = 90},
 	EntityState.CHASE : {
-		color = Color.red, speed = 350, threshold = 200, fov = 360},
+		color = Color.crimson, speed = 350, threshold = 200, fov = 360},
 	EntityState.DEAD : {
 		color = Color.black, speed = 0, threshold = 0, fov = 0},
 }
@@ -48,19 +48,21 @@ var current_state = EntityState.PATROL
 var target = null
 var rot = 0
 var start_transform
+var start_layer 
 var health = start_health
+var is_hidden
 
 
 func _ready():
+	set_layer(layer)
+	print("Enemy ", collision_layer)
 	if Engine.editor_hint: return
 	if has_ranged_attack:
 		ent_state_prop[EntityState.CHASE]["threshold"] = ranged_thresh
 	else:
 		ent_state_prop[EntityState.CHASE]["threshold"] = melee_thresh
-		
-	$AnimationPlayer.play("idle")
-	$DepthController.set_layer(layer)
 	
+	$AnimationPlayer.play("idle")
 	num_rays += 1
 	fov = deg2rad(fov)
 	
@@ -76,6 +78,7 @@ func _ready():
 		print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
 		
 	start_transform = transform
+	start_layer = layer
 
 
 func _physics_process(delta:float):
@@ -103,6 +106,10 @@ func _physics_process(delta:float):
 			pass
 		EntityState.DEAD:
 			pass
+	if is_hidden and !current_state == EntityState.DEAD:
+		$echo.set_visible(true)
+	else:
+		$echo.set_visible(false)
 
 
 func _draw():
@@ -117,12 +124,12 @@ func _draw():
 			EntityState.PATROL:
 				_draw_semicircle(look_distance, f, Color.black)
 			EntityState.CHASE:
-				_draw_semicircle(melee_thresh, f, Color.red)
-				_draw_semicircle(ranged_thresh, f, Color.red)
+				_draw_semicircle(melee_thresh, f, Color.black)
+				_draw_semicircle(ranged_thresh, f, Color.black)
 	else:
 		_draw_semicircle(look_distance, f, Color.black)
-		_draw_semicircle(melee_thresh, f, Color.red)
-		_draw_semicircle(ranged_thresh, f, Color.red)
+		_draw_semicircle(melee_thresh, f, Color.black)
+		_draw_semicircle(ranged_thresh, f, Color.black)
 		# translate(-global_position)
 		
 		_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
@@ -166,6 +173,7 @@ func reset():
 	rot = 0
 	transform = start_transform
 	health = start_health
+	layer = start_layer
 
 
 func set_interest():
@@ -266,32 +274,37 @@ func check_for_player():
 	# Prefer finding a player
 	var space_state = get_world_2d().direct_space_state
 	for player in players:
-		var angle_to_player = (player.position - position).rotated(-rotation).angle()
-		var dist_to_player = position.distance_to(player.position)
-		var f = deg2rad(ent_state_prop[current_state]["fov"])
-		if (
-		#	collide.has('collider') 
-		#	and collide['collider'] == player #and player.is_alive() 
-		#and 
-		angle_to_player < f * 0.5 
-		and dist_to_player < look_distance
-		and player.is_alive()):
-			## Add reaction time here probably ##
-			if reaction_time > 0:
-				reaction_time -= 1
+		var entities:Array = player.get_entity_positions()
+		for ent in entities:
+			var angle_to_player = (ent.position - position).rotated(-rotation).angle()
+			var dist_to_player = position.distance_to(ent.position)
+			var f = deg2rad(ent_state_prop[current_state]["fov"])
+			if (
+			#	collide.has('collider') 
+			#	and collide['collider'] == player #and player.is_alive() 
+			#and 
+			angle_to_player < f * 0.5 
+			and ent.get_layer() == get_layer()
+			and dist_to_player < look_distance
+			and ent.is_alive()):
+				## Add reaction time here probably ##
+				if reaction_time > 0:
+					reaction_time -= 1
+				else:
+					current_state = EntityState.CHASE
+					target = ent.position
 			else:
-				current_state = EntityState.CHASE
-				target = player.position
-		else:
-			target = global_position
-			current_state = EntityState.PATROL
+				target = global_position
+				current_state = EntityState.PATROL
 
 
 func check_ranged_attack(dist_to_player):
+	#print("Check ranged attack")
 	if !has_ranged_attack: return false
 	var space_state = get_world_2d().direct_space_state
 	var hit:Dictionary = space_state.intersect_ray(
 		global_position, target, [self], collision_layer)
+	# print(hit)
 	if (dist_to_player < ranged_thresh 
 	and $AnimationPlayer.assigned_animation == "idle"
 	and hit.has("collider") and hit["collider"].has_method("take_damage")):
@@ -306,7 +319,7 @@ func start_ranged_attack():
 	look_at(target)
 	var new_bullet = bullet.instance()
 	new_bullet.setup(self, (target - global_position).normalized() * 1000, 
-		ranged_damage, 10, collision_layer)
+		ranged_damage, 10, collision_layer, layer)
 	new_bullet.position = global_position
 	new_bullet.rotation = (target - global_position).angle()
 	emit_signal("bullet_created", new_bullet)
@@ -360,7 +373,7 @@ func is_alive() -> bool:
 
 
 func get_layer() -> int:
-	return layer
+	return $DepthController.get_layer()
 
 
 func set_layer(new_layer:int):
@@ -379,3 +392,15 @@ func _on_MeleeAttack_body_entered(body):
 func _on_Timer_timeout():
 	if is_alive():
 		take_damage(10, null)
+
+
+func _on_hide():
+	is_hidden = true
+	$Tween.interpolate_property(self, "self_modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
+	$Tween.start()
+
+
+func _on_show():
+	is_hidden = false
+	$Tween.interpolate_property(self, "self_modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
+	$Tween.start()

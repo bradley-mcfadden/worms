@@ -25,3 +25,9 @@ speed_decay = 0.9
 [node name="DummyAbility2" parent="AbilitiesContainer" instance=ExtResource( 2 )]
 
 [node name="DummyAbility" parent="AbilitiesContainer" instance=ExtResource( 2 )]
+
+[node name="DiveTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="timeout" from="DiveTimer" to="." method="_on_DiveTimer_timeout"]

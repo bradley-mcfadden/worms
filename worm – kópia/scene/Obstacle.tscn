@@ -8,12 +8,20 @@
 position = Vector2( 83, 71 )
 script = ExtResource( 1 )
 texture = ExtResource( 2 )
-uvs = PoolVector2Array( 0, 0, 1, 1, 0.5, 0, 0, 0, 0, 0 )
+uvs = PoolVector2Array( 0.25, 0.5, 0.75, 0.5, 0.75, 0.75 )
+points = PoolVector2Array( 0, 0, 50, 0, 50, 50 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+visible = false
+modulate = Color( 0, 0, 0, 1 )
 build_mode = 1
-polygon = PoolVector2Array( -14, -68, 180, -116, 54, 33, 14, 78, 23, -1 )
+polygon = PoolVector2Array( 0, 0, 50, 0, 50, 50 )
 
 [node name="DepthController" parent="." instance=ExtResource( 3 )]
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="hide" from="DepthController" to="." method="_on_hide"]
+[connection signal="show" from="DepthController" to="." method="_on_show"]

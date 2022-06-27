@@ -21,6 +21,7 @@ func get_players() -> Array:
 	for child in get_children():
 		if child.has_method("get_entity_positions"):
 			players.append(child)
+			# print(players)
 	return players
 
 
