@@ -43,6 +43,16 @@ func set_active(is_active:bool):
 	active = is_active
 
 
+func start_peek():
+	if parent.has_method("_on_peek_start"):
+		parent._on_peek_start()
+
+
+func end_peek():
+	if parent.has_method("_on_peek_end"):
+		parent._on_peek_end()
+
+
 func get_layer() -> int:
 	return depth_layer
 

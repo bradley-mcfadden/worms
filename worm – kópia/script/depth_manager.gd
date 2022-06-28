@@ -94,3 +94,12 @@ func _on_segment_changed(segment, state):
 		SegmentState.DEAD:
 			remove(segment)
 			segment.queue_free()
+
+
+func _on_layer_visibility_changed(layer, is_visible):
+	var f = "start_peek" if is_visible else "end_peek"
+	var arr := []
+	if layer >= 0 and layer < len(layers):
+		arr = layers[layer]
+	for item in arr:
+		item.call(f)

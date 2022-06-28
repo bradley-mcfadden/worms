@@ -7,6 +7,7 @@ enum SegmentState { ALIVE, DEAD }
 
 signal segment_changed(segment, state)
 signal switch_layer_pressed(new_layer, node)
+signal layer_visibility_changed(layer, is_visible)
 
 # fill this with camera2D node 
 export (PackedScene) var camera
@@ -144,7 +145,15 @@ func _control(delta):
 	if Input.is_action_just_pressed("scale_up"):
 		scale_segments(1.1)
 	if !is_switch_depth:
-		if Input.is_action_just_pressed("layer_down"):
+		if Input.is_action_just_pressed("peek_layer_up"):
+			emit_signal("layer_visibility_changed", layer+1, true)
+		elif Input.is_action_just_released("peek_layer_up"):
+			emit_signal("layer_visibility_changed", layer+1, false)
+		elif Input.is_action_just_pressed("peek_layer_down"):
+			emit_signal("layer_visibility_changed", layer-1, true)
+		elif Input.is_action_just_released("peek_layer_down"):
+			emit_signal("layer_visibility_changed", layer-1, false)
+		elif Input.is_action_just_pressed("layer_down"):
 			emit_signal("switch_layer_pressed", layer-1, self)
 		elif Input.is_action_just_pressed("layer_up"):
 			emit_signal("switch_layer_pressed", layer+1, self)

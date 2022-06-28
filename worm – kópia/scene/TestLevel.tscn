@@ -78,5 +78,6 @@ script = ExtResource( 9 )
 [connection signal="bullet_created" from="Enemies/TargetFollow" to="." method="attach_bullet"]
 [connection signal="died" from="Enemies/TargetFollow" to="Enemies" method="_on_Enemy_died"]
 [connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
+[connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
 [connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
 [connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]

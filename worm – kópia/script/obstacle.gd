@@ -5,6 +5,7 @@ export var layer := 0
 export (Texture) var texture = null
 export (PoolVector2Array) var uvs := PoolVector2Array()
 export (PoolVector2Array) var points := PoolVector2Array()
+export (float) var peek_alpha = 0.3
 
 var colors = PoolColorArray()
 var active 
@@ -63,10 +64,20 @@ func copy(pool:PoolVector2Array) -> PoolVector2Array:
 
 
 func _on_hide():
-	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.2), 0.1)
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
 	$Tween.start()
 
 
 func _on_show():
-	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.2), Color(1, 1, 1, 1), 0.1)
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
+	$Tween.start()
+
+
+func _on_peek_start():
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, peek_alpha), 0.1)
+	$Tween.start()
+
+
+func _on_peek_end():
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, peek_alpha), Color(1, 1, 1, 0), 0.1)
 	$Tween.start()

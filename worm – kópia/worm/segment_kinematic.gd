@@ -63,9 +63,9 @@ func take_damage(how_much, from):
 	print("Player is taking " + str(how_much) + " damage")
 	if health > 0: health -= how_much
 	if health < start_health * -0.25:
-		emit_signal("died", self, from, true)
+		emit_signal("segment_died", self, from, true)
 	elif health <= 0:
-		emit_signal("died", self, from, false)
+		emit_signal("segment_died", self, from, false)
 
 
 func is_alive() -> bool:
