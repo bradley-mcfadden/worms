@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://script/target_follow.gd" type="Script" id=1]
 [ext_resource path="res://scene/Bullet.tscn" type="PackedScene" id=2]
@@ -61,7 +61,10 @@ tracks/0/keys = {
 } ]
 }
 
-[node name="TargetFollow" type="Node2D"]
+[sub_resource type="CircleShape2D" id=4]
+radius = 20.3961
+
+[node name="TargetFollow" type="Area2D"]
 script = ExtResource( 1 )
 ent_state_prop = {
 0: {
@@ -99,9 +102,6 @@ monitoring = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MeleeAttack"]
 polygon = PoolVector2Array( 0, 0, -11, -21, 11, -21 )
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
 [node name="DepthController" parent="." instance=ExtResource( 3 )]
 
 [node name="Tween" type="Tween" parent="."]
@@ -111,7 +111,9 @@ pos = Vector2( 0, 0 )
 speed = 2.0
 decay = 0.05
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="hide" from="DepthController" to="." method="_on_hide"]
 [connection signal="show" from="DepthController" to="." method="_on_show"]

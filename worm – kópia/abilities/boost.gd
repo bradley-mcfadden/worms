@@ -5,11 +5,11 @@ var is_ready = true
 export (int) var factor = 2
 
 func invoke():
-	if is_ready:
-		parent.max_speed *= 2
-		parent.acceleration *= 2
-		is_ready = false
-		$Duration.start()
+	parent.max_speed *= 2
+	parent.acceleration *= 2
+	is_ready = false
+	$Duration.start()
+	emit_signal("is_ready_changed", self, is_ready)
 
 
 func _on_Duration_timeout():
@@ -20,3 +20,4 @@ func _on_Duration_timeout():
 
 func _on_Cooldown_timeout():
 	is_ready = true
+	emit_signal("is_ready_changed", self, is_ready)

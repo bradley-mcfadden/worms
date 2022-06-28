@@ -1,5 +1,5 @@
 tool
-extends Node2D
+extends Area2D
 
 signal bullet_created(bullet)
 signal died(node, from, overkill)
@@ -42,7 +42,6 @@ var danger := []
 var chosen_dir := Vector2.ZERO
 var velocity := Vector2.ZERO
 var acceleration := Vector2.ZERO
-var collision_layer := 2147483647
 var patrol_idx := 0
 var current_state = EntityState.PATROL
 var target = null
@@ -385,13 +384,9 @@ func get_depth_controllers() -> Array:
 
 
 func _on_MeleeAttack_body_entered(body):
+	if body == self: return
 	if body.has_method("take_damage"):
 		body.take_damage(melee_damage, self)
-
-
-func _on_Timer_timeout():
-	if is_alive():
-		take_damage(10, null)
 
 
 func _on_hide():
@@ -404,3 +399,13 @@ func _on_show():
 	is_hidden = false
 	$Tween.interpolate_property(self, "self_modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
 	$Tween.start()
+
+
+func set_collision_layer(layer:int):
+	collision_layer = layer
+	$MeleeAttack.collision_layer = layer
+
+
+func set_collision_mask(mask:int):
+	collision_mask = mask
+	$MeleeAttack.collision_mask = mask

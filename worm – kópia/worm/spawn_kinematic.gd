@@ -50,6 +50,7 @@ func _ready():
 		if i == 0:
 			segment = Head.instance()
 			head = segment
+			head.connect("changed_animation", self, "_on_head_animation_changed")
 		elif i == segment_number - 1:
 			segment = Tail.instance()
 			tail = segment
@@ -63,6 +64,7 @@ func _ready():
 		print("j1: " + str(segment.j1) + " j2: " + str(segment.j2))
 		body.append(segment)
 		emit_signal("segment_changed", segment, SegmentState.ALIVE)
+		segment.connect("segment_died", self, "_on_segment_died")
 #	this reverses the order of segments in the tree 
 	for i in body:
 		move_child(i, 0)
@@ -73,6 +75,7 @@ func _ready():
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
+		ability.connect("is_ready_changed", self, "_on_ability_is_ready_changed")
 		
 	start_transform = transform
 	start_layer = layer
@@ -158,8 +161,9 @@ func _control(delta):
 		elif Input.is_action_just_pressed("layer_up"):
 			emit_signal("switch_layer_pressed", layer+1, self)
 	for i in range(0, 4):
-		if Input.is_action_pressed("ability" + str(i + 1)):
-			$AbilitiesContainer.get_child(i).invoke()
+		var ability = $AbilitiesContainer.get_child(i)
+		if (Input.is_action_pressed("ability" + str(i + 1)) and ability.is_ready):
+			ability.invoke()
 
 
 func add_segment():
@@ -269,6 +273,10 @@ func get_depth_controllers() -> Array:
 	return dcs
 
 
+func get_head() -> Node:
+	return head
+
+
 func _on_DiveTimer_timeout():
 	var segment = iter.next()
 	if segment != null:
@@ -278,3 +286,18 @@ func _on_DiveTimer_timeout():
 		segment.fade_in($DiveTimer.wait_time)
 	else:
 		is_switch_depth = false
+
+
+func _on_ability_is_ready_changed(ability, is_ready:bool):
+	pass
+
+
+func _on_head_animation_changed(from:String, to:String):
+	$AbilitiesContainer/Bite.set_is_ready(to == "idle")
+
+
+func _on_segment_died(segment, from, overkill):
+	var idx = body.find(segment)
+	if idx != -1:
+		body.remove(segment)
+		emit_signal("segment_changed", segment, SegmentState.DEAD)
