@@ -66,6 +66,7 @@ func remove(item:Node):
 		var idx = layers[item_l].find(dc)
 		if idx != -1:
 			layers[item_l].remove(idx)
+			item.queue_free()
 
 
 # Switch the active layer. All elements in old layer are inactive.
@@ -88,12 +89,12 @@ func _on_switch_layer_pressed(new_layer, node):
 
 
 func _on_segment_changed(segment, state):
+	if segment == null: return
 	match state:
 		SegmentState.ALIVE:
 			add(segment.get_layer(), segment)
 		SegmentState.DEAD:
 			remove(segment)
-			segment.queue_free()
 
 
 func _on_layer_visibility_changed(layer, is_visible):
