@@ -14,10 +14,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://abilities/ability.gd"
 }, {
+"base": "Object",
+"class": "EntityState",
+"language": "GDScript",
+"path": "res://script/entity_state.gd"
+}, {
+"base": "Object",
+"class": "Fsm",
+"language": "GDScript",
+"path": "res://script/fsm.gd"
+}, {
 "base": "Node",
 "class": "Iterator",
 "language": "GDScript",
 "path": "res://script/iterator.gd"
+}, {
+"base": "EntityState",
+"class": "PatrolState",
+"language": "GDScript",
+"path": "res://script/patrol_state.gd"
 }, {
 "base": "RigidBody2D",
 "class": "SegmentRigid",
@@ -26,7 +41,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Ability": "",
+"EntityState": "",
+"Fsm": "",
 "Iterator": "",
+"PatrolState": "",
 "SegmentRigid": ""
 }
 

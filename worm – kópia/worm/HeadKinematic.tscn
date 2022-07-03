@@ -140,7 +140,6 @@ normal_map = ExtResource( 3 )
 flip_h = true
 hframes = 9
 vframes = 9
-frame = 32
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/chomp_to_idle = SubResource( 2 )

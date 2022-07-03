@@ -77,6 +77,7 @@ func _on_chomp_to_idle_end():
 
 
 func _change_animation(to:String):
+	anim_player.play(to)
 	emit_signal("changed_animation", anim_player.current_animation, to) 
 
 
