@@ -54,7 +54,7 @@ var is_hidden
 
 func _ready():
 	set_layer(layer)
-	print("Enemy ", collision_layer)
+	# print("Enemy ", collision_layer)
 	if Engine.editor_hint: return
 	if has_ranged_attack:
 		ent_state_prop[EntityState.CHASE]["threshold"] = ranged_thresh
@@ -74,7 +74,7 @@ func _ready():
 		ray_directions[i] = Vector2.RIGHT.rotated(angle)
 		if angle > PI / 2 or angle < 3 * PI / 2:
 			ray_directions[i] *= 0.5
-		print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
+		# print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
 		
 	start_transform = transform
 	start_layer = layer
@@ -86,6 +86,7 @@ func _physics_process(delta:float):
 	
 	match state:
 		SeekState.REACHED_TARGET:
+			# print("reached target")
 			pass
 		_:
 			set_danger()
@@ -181,13 +182,22 @@ func set_interest():
 		# var path_direction = owner.get_path_direction(position)
 	# if owner and owner.has_method("get_target"):
 	var path_target = get_target()
+	# print(path_target, " " , position)
 	if path_target == null: 
 		set_default_interest()
 		return SeekState.NO_TARGET
 	var threshold = ent_state_prop[current_state]["threshold"]
-	if position.distance_to(path_target) < threshold:
+	var space_state := get_world_2d().direct_space_state
+	var result := space_state.intersect_ray(position,
+			path_target,
+			[self])
+	# print(collision_layer)
+	var distance_to = global_position.distance_to(path_target)
+	if (distance_to
+	and (result.has("collider") and not result["collider"] is StaticBody2D)):
 		return SeekState.REACHED_TARGET
-	var path_direction = (path_target - position)
+	var path_direction = (path_target - global_position).normalized()
+	var tmp_pos = global_position
 	rot = path_direction.angle()
 	for i in num_rays:
 		var d = ray_directions[i].rotated(rot).dot(path_direction)
@@ -213,7 +223,7 @@ func set_danger():
 		var result := space_state.intersect_ray(position,
 				position + ray_directions[i].rotated(rot) * look_ahead,
 				[self], collision_layer)
-		if result:
+		if result.has("collider") and result["collider"] is StaticBody2D:
 			danger[i] = 1.0 #- result.position.distance_to(position) / look_ahead
 		else:
 			danger[i] = 0.0
@@ -226,9 +236,9 @@ func set_parent(parent):
 func choose_direction():
 	# Eliminate interest in slots with danger
 	for i in num_rays:
-		# if danger[i] > 0.0:
-		# 	interest[i] = 0.0
-		interest[i] = max(0.0, 1.0 - danger[i])
+		if danger[i] > 0.0:
+			interest[i] = 0.0
+		# interest[i] = max(0.0, 1.0 - danger[i])
 	# Choose direction based on remaining interest
 	chosen_dir = Vector2.ZERO
 	for i in num_rays:
@@ -272,6 +282,7 @@ func check_for_player():
 	
 	# Prefer finding a player
 	var space_state = get_world_2d().direct_space_state
+	var found_target = false
 	for player in players:
 		var entities:Array = player.get_entity_positions()
 		for ent in entities:
@@ -287,14 +298,15 @@ func check_for_player():
 			and dist_to_player < look_distance
 			and ent.is_alive()):
 				## Add reaction time here probably ##
+				found_target = true
 				if reaction_time > 0:
 					reaction_time -= 1
 				else:
 					current_state = EntityState.CHASE
 					target = ent.position
-			else:
-				target = global_position
-				current_state = EntityState.PATROL
+	if not found_target:
+		target = global_position
+		current_state = EntityState.PATROL
 
 
 func check_ranged_attack(dist_to_player):
@@ -304,6 +316,7 @@ func check_ranged_attack(dist_to_player):
 	var hit:Dictionary = space_state.intersect_ray(
 		global_position, target, [self], collision_layer)
 	# print(hit)
+	# print(typeof(hit["collider"]))
 	if (dist_to_player < ranged_thresh 
 	and $AnimationPlayer.assigned_animation == "idle"
 	and hit.has("collider") and hit["collider"].has_method("take_damage")):
@@ -315,7 +328,7 @@ func check_ranged_attack(dist_to_player):
 
 func start_ranged_attack():
 	# launch a projectile
-	look_at(target)
+	# look_at(target)
 	var new_bullet = bullet.instance()
 	new_bullet.setup(self, (target - global_position).normalized() * 1000, 
 		ranged_damage, 10, collision_layer, layer)
@@ -402,7 +415,8 @@ func _on_show():
 
 
 func set_collision_layer(layer:int):
-	collision_layer = layer
+	collision_layer = layer << 2
+	collision_layer -= 1
 	$MeleeAttack.collision_layer = layer
 
 
