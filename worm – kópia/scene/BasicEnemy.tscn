@@ -3,7 +3,7 @@
 [ext_resource path="res://patch/echo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scene/Bullet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://script/target_follow2.gd" type="Script" id=4]
+[ext_resource path="res://script/basic_enemy.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -64,28 +64,8 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=4]
 radius = 20.3961
 
-[node name="TargetFollow2" type="Area2D"]
+[node name="BasicEnemy" type="Area2D"]
 script = ExtResource( 4 )
-ent_state_prop = {
-0: {
-"color": Color( 0.5, 1, 0.83, 1 ),
-"fov": 90,
-"speed": 250,
-"threshold": 32
-},
-1: {
-"color": Color( 1, 0, 0, 1 ),
-"fov": 360,
-"speed": 350,
-"threshold": 200
-},
-2: {
-"color": Color( 0, 0, 0, 1 ),
-"fov": 0,
-"speed": 0,
-"threshold": 0
-}
-}
 bullet = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

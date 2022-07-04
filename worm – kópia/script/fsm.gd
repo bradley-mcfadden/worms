@@ -8,9 +8,8 @@ var stack := []
 # calls on_exit() for the previous top, and on_enter() for the new state.
 # Does not remove the previous state from the stack.
 func push(state:EntityState):
-	var current_state = stack.back()
-	if current_state != null:
-		current_state.on_exit()
+	if !stack.empty():
+		stack.back().on_exit()
 	stack.push_back(state)
 	state.on_enter()
 
@@ -18,8 +17,8 @@ func push(state:EntityState):
 # pop the current state from the stack.
 # calls on_exit() for the top.
 func pop():
-	var current_state = stack.pop_back()
-	if current_state != null:
+	if !stack.empty():
+		var current_state = stack.pop_back()
 		current_state.on_exit()
 		current_state.queue_free()
 
@@ -28,13 +27,16 @@ func pop():
 # the stack remains the same size.
 # on_enter() is called on state, and on_exit() is called for the previous top.
 func replace(state:EntityState):
-	var current_state = stack.pop_back()
-	if current_state != null:
-		current_state.on_exit()
+	if !stack.empty():
+		stack.pop_back().on_exit()
 	stack.push_back(state)
 	state.on_enter()
 
 
 # top of the stack is returned without removing it.
 func top() -> EntityState:
-	return stack.back()
+	return stack.back() if stack != null else null
+
+
+func clear():
+	stack.clear()

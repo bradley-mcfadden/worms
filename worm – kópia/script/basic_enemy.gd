@@ -8,13 +8,8 @@ enum SeekState {REACHED_TARGET, NO_TARGET, SEEK_TARGET}
 
 const DRAW_ME = true
 
-export (Dictionary) var ent_state_prop = {
-	typeof(PatrolState) : {
-		color = Color.aquamarine, speed = 250, threshold = 32, fov = 90},
-	# EntityState.CHASE : {
-	# 	color = Color.crimson, speed = 350, threshold = 200, fov = 360},
-	# EntityState.DEAD : {
-	# 	color = Color.black, speed = 0, threshold = 0, fov = 0},
+var ent_state_prop := {
+	
 }
 
 export (float) var steer_force := 0.5
@@ -42,7 +37,6 @@ var chosen_dir := Vector2.ZERO
 var velocity := Vector2.ZERO
 var acceleration := Vector2.ZERO
 var patrol_idx := 0
-var current_state = EntityState.PATROL
 var target = null
 var rot = 0
 var start_transform
@@ -56,10 +50,6 @@ func _ready():
 	set_layer(layer)
 	print("Enemy ", collision_layer)
 	if Engine.editor_hint: return
-	if has_ranged_attack:
-		ent_state_prop[EntityState.CHASE]["threshold"] = ranged_thresh
-	else:
-		ent_state_prop[EntityState.CHASE]["threshold"] = melee_thresh
 	
 	$AnimationPlayer.play("idle")
 	num_rays += 1
@@ -81,26 +71,51 @@ func _ready():
 	
 	fsm = Fsm.new()
 	fsm.push(PatrolState.new(fsm, self))
+	
+	ent_state_prop[PatrolState.NAME] = PatrolState.PROPERTIES
+	ent_state_prop[ChaseState.NAME] = ChaseState.PROPERTIES
+	ent_state_prop[DeadState.NAME] = DeadState.PROPERTIES
+	# ent_state_prop[typeof(MeleeAttackState)] = MeleeAttackState.PROPERTIES
+	# ent_state_prop[typeof(RangedAttackState)] = RangedAttackState.PROPERTIES
+	
+	if has_ranged_attack:
+		ent_state_prop[ChaseState.NAME]["threshold"] = ranged_thresh
+	else:
+		ent_state_prop[ChaseState.NAME]["threshold"] = melee_thresh
 
 
 func _physics_process(delta:float):
 	if Engine.editor_hint: return
 	var current_estate = fsm.top()
-	if current_estate != null: current_estate._physics_process()
+	if current_estate != null: current_estate._physics_process(delta)
+
+
+func move(delta:float):
+	var speed = ent_state_prop[fsm.top().NAME]["speed"]
+	var desired_velocity = chosen_dir.rotated(rot) * speed
+	velocity = velocity.linear_interpolate(desired_velocity, steer_force)
+	rotation = velocity.angle()
+	position += velocity * delta
+	
+	if is_hidden and !fsm.top().NAME == DeadState.NAME:
+		$echo.set_visible(true)
+	else:
+		$echo.set_visible(false)
 
 
 func _draw():
-	if not DRAW_ME: return
-	var color = ent_state_prop[current_state]["color"]
+	if not DRAW_ME or fsm == null: return
+	var state = fsm.top().NAME
+	var color = ent_state_prop[state]["color"]
 	draw_arc(Vector2.ZERO, 20, 0, PI * 2, 20, color)
 	draw_line(Vector2.ZERO, Vector2(20, 0), color)
-	var f = deg2rad(ent_state_prop[current_state]["fov"])
-	
+	var f = deg2rad(ent_state_prop[state]["fov"])
+	# print(ent_state_prop)
 	if !Engine.editor_hint:
-		match current_state:
-			EntityState.PATROL:
+		match state:
+			PatrolState.NAME:
 				_draw_semicircle(look_distance, f, Color.black)
-			EntityState.CHASE:
+			ChaseState.NAME:
 				_draw_semicircle(melee_thresh, f, Color.black)
 				_draw_semicircle(ranged_thresh, f, Color.black)
 	else:
@@ -145,7 +160,8 @@ func reset():
 	acceleration = Vector2.ZERO
 	collision_layer = 2147483647
 	patrol_idx = 0
-	current_state = EntityState.PATROL
+	fsm.clear()
+	fsm.push(PatrolState.new(fsm, self))
 	target = null
 	rot = 0
 	transform = start_transform
@@ -158,14 +174,14 @@ func set_interest():
 	# if owner and owner.has_method("get_path_direction"):
 		# var path_direction = owner.get_path_direction(position)
 	# if owner and owner.has_method("get_target"):
-	var path_target = get_target()
-	if path_target == null: 
+	if target == null: 
+		print("null target")
 		set_default_interest()
 		return SeekState.NO_TARGET
-	var threshold = ent_state_prop[current_state]["threshold"]
-	if position.distance_to(path_target) < threshold:
+	var threshold = ent_state_prop[fsm.top().NAME]["threshold"]
+	if position.distance_to(target) < threshold:
 		return SeekState.REACHED_TARGET
-	var path_direction = (path_target - position)
+	var path_direction = (target - position)
 	rot = path_direction.angle()
 	for i in num_rays:
 		var d = ray_directions[i].rotated(rot).dot(path_direction)
@@ -215,27 +231,33 @@ func choose_direction():
 
 
 func get_target():
-	if current_state != EntityState.DEAD:
-		check_for_player()
-	match current_state:
-		EntityState.PATROL:
-			return get_patrol_target()
-		EntityState.CHASE:
-			return target
-		EntityState.DEAD:
-			return position
-		_:
-			return null
+	pass
+#	if current_state != EntityState.DEAD:
+#		check_for_player()
+#	match current_state:
+#		EntityState.PATROL:
+#			return get_patrol_target()
+#		EntityState.CHASE:
+#			return target
+#		EntityState.DEAD:
+#			return position
+#		_:
+#			return null
+
+
+func set_target(_target):
+	target = _target
 
 
 # set target to closest point in patrol
 func get_patrol_target():
-	var n = len(idle_patrol)
-	if n == 0: return null
-	var threshold = ent_state_prop[current_state]["threshold"]
-	if position.distance_to(idle_patrol[patrol_idx]) < threshold:
-		patrol_idx = patrol_idx + 1 if patrol_idx  < n - 1 else 0
-	return idle_patrol[patrol_idx]
+	pass
+#	var n = len(idle_patrol)
+#	if n == 0: return null
+#	var threshold = ent_state_prop[current_state]["threshold"]
+#	if position.distance_to(idle_patrol[patrol_idx]) < threshold:
+#		patrol_idx = patrol_idx + 1 if patrol_idx  < n - 1 else 0
+#	return idle_patrol[patrol_idx]
 
 func get_next_patrol_target():
 	var n = len(idle_patrol)
@@ -244,35 +266,26 @@ func get_next_patrol_target():
 
 # check for the player, and if we find an active player in the field of view,
 # acquire it as target and reduce our reaction time
-func check_for_player():
-	if not get_parent().has_method("get_players"): return
+func check_for_player() -> Node:
+	if not get_parent().has_method("get_players"): return null
 	var players = get_parent().get_players()
-	
+
 	# Prefer finding a player
 	var space_state = get_world_2d().direct_space_state
 	for player in players:
 		var entities:Array = player.get_entity_positions()
 		for ent in entities:
-			var angle_to_player = (ent.position - position).rotated(-rotation).angle()
+			var angle_to_player = abs((ent.position - position).angle() - rotation)
 			var dist_to_player = position.distance_to(ent.position)
-			var f = deg2rad(ent_state_prop[current_state]["fov"])
+			var f = deg2rad(ent_state_prop[fsm.top().NAME]["fov"])
 			if (
-			#	collide.has('collider') 
-			#	and collide['collider'] == player #and player.is_alive() 
-			#and 
 			angle_to_player < f * 0.5 
 			and ent.get_layer() == get_layer()
 			and dist_to_player < look_distance
 			and ent.is_alive()):
-				## Add reaction time here probably ##
-				if reaction_time > 0:
-					reaction_time -= 1
-				else:
-					current_state = EntityState.CHASE
-					target = ent.position
-			else:
-				target = global_position
-				current_state = EntityState.PATROL
+				print(angle_to_player, " ", f * 0.5)
+				return ent
+	return null
 
 
 func check_ranged_attack(dist_to_player):
@@ -339,10 +352,10 @@ func take_damage(how_much, from):
 	if health > 0: health -= how_much
 	if health < start_health * -0.25:
 		emit_signal("died", self, from, true)
-		current_state = EntityState.DEAD
+		fsm.replace(DeadState.new(fsm, self))
 	elif health <= 0:
 		emit_signal("died", self, from, false)
-		current_state = EntityState.DEAD
+		fsm.replace(DeadState.new(fsm, self))
 
 
 func is_alive() -> bool:

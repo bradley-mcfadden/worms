@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://script/decorations.gd" type="Script" id=1]
+[ext_resource path="res://script/enemies.gd" type="Script" id=2]
+[ext_resource path="res://script/tf_test.gd" type="Script" id=3]
+[ext_resource path="res://script/obstacles.gd" type="Script" id=4]
+[ext_resource path="res://script/players.gd" type="Script" id=5]
+[ext_resource path="res://scene/BasicEnemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scene/Obstacle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=8]
+[ext_resource path="res://worm/SpawnKinematic.tscn" type="PackedScene" id=9]
+
+[node name="TestLevel2" type="Node2D"]
+position = Vector2( 1, -4 )
+script = ExtResource( 3 )
+
+[node name="Enemies" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="BasicEnemy" parent="Enemies" instance=ExtResource( 6 )]
+idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+
+[node name="Players" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="SpawnKinematic" parent="Players" instance=ExtResource( 9 )]
+position = Vector2( -246, -377 )
+max_speed = 600
+
+[node name="Obstacles" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Obstacle2" parent="Obstacles" instance=ExtResource( 7 )]
+position = Vector2( 46, 210 )
+uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
+points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
+
+[node name="Obstacle3" parent="Obstacles" instance=ExtResource( 7 )]
+position = Vector2( 423, 138 )
+rotation = -1.1331
+layer = 1
+uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
+points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
+
+[node name="Obstacle4" parent="Obstacles" instance=ExtResource( 7 )]
+position = Vector2( 389, 483 )
+rotation = 0.894925
+uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
+points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
+
+[node name="Decorations" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="DepthManager" parent="." instance=ExtResource( 8 )]
+
+[connection signal="all_enemies_dead" from="Enemies" to="." method="_on_all_enemies_dead"]
+[connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
+[connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
+[connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
+[connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]
