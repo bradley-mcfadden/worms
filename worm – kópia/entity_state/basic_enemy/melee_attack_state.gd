@@ -1,6 +1,6 @@
 extends EntityState
 
-class_name MeleeAttackState
+class_name BasicEnemyMeleeAttackState
 
 
 const NAME := "MeleeAttackState"
@@ -11,6 +11,8 @@ const PROPERTIES := {
 	fov = 360,
 }
 
+var aplayer
+
 
 func _init(_fsm, _entity):
 	fsm = _fsm
@@ -18,11 +20,18 @@ func _init(_fsm, _entity):
 
 
 func on_enter():
-	pass
+	aplayer = entity.get_animation_player()
+	aplayer.connect("animation_finished", self, "_on_animation_finished")
+	aplayer.play("melee_attack")
 
 
 func _physics_process(_delta):
 	pass
+
+
+func _on_animation_finished(_name):
+	fsm.pop()
+	# aplayer.disconnect()
 
 
 func on_exit():

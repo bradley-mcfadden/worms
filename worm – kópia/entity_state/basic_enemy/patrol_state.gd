@@ -1,6 +1,6 @@
 extends EntityState
 
-class_name PatrolState
+class_name BasicEnemyPatrolState
 
 const NAME := "PatrolState"
 const START_REACTION_TIME := 30
@@ -23,7 +23,7 @@ func on_enter():
 
 func _physics_process(delta):
 	if react_to_player():
-		fsm.push(ChaseState.new(fsm, entity))
+		fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
 		print("reacted to player")
 		return
 	entity.set_target(get_target())

@@ -1,6 +1,8 @@
 tool
 extends Area2D
 
+class_name BasicEnemy
+
 signal bullet_created(bullet)
 signal died(node, from, overkill)
 
@@ -26,7 +28,7 @@ export (int) var melee_damage := 50
 export (PackedScene) var bullet
 export (int) var start_health = 100
 export var melee_thresh := 50
-export var ranged_thresh := 200
+export var ranged_thresh := 300
 export var layer := 0
 
 # context array
@@ -70,18 +72,18 @@ func _ready():
 	start_layer = layer
 	
 	fsm = Fsm.new()
-	fsm.push(PatrolState.new(fsm, self))
+	fsm.push(BasicEnemyStateLoader.patrol(fsm, self))
 	
-	ent_state_prop[PatrolState.NAME] = PatrolState.PROPERTIES
-	ent_state_prop[ChaseState.NAME] = ChaseState.PROPERTIES
-	ent_state_prop[DeadState.NAME] = DeadState.PROPERTIES
+	ent_state_prop[BasicEnemyPatrolState.NAME] = BasicEnemyPatrolState.PROPERTIES
+	ent_state_prop[BasicEnemyChaseState.NAME] = BasicEnemyChaseState.PROPERTIES
+	ent_state_prop[BasicEnemyDeadState.NAME] = BasicEnemyDeadState.PROPERTIES
 	# ent_state_prop[typeof(MeleeAttackState)] = MeleeAttackState.PROPERTIES
 	# ent_state_prop[typeof(RangedAttackState)] = RangedAttackState.PROPERTIES
 	
 	if has_ranged_attack:
-		ent_state_prop[ChaseState.NAME]["threshold"] = ranged_thresh
+		ent_state_prop[BasicEnemyChaseState.NAME]["threshold"] = ranged_thresh
 	else:
-		ent_state_prop[ChaseState.NAME]["threshold"] = melee_thresh
+		ent_state_prop[BasicEnemyChaseState.NAME]["threshold"] = melee_thresh
 
 
 func _physics_process(delta:float):
@@ -91,13 +93,13 @@ func _physics_process(delta:float):
 
 
 func move(delta:float):
-	var speed = ent_state_prop[fsm.top().NAME]["speed"]
+	var speed = fsm.top().PROPERTIES["speed"]
 	var desired_velocity = chosen_dir.rotated(rot) * speed
 	velocity = velocity.linear_interpolate(desired_velocity, steer_force)
 	rotation = velocity.angle()
 	position += velocity * delta
 	
-	if is_hidden and !fsm.top().NAME == DeadState.NAME:
+	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME:
 		$echo.set_visible(true)
 	else:
 		$echo.set_visible(false)
@@ -105,17 +107,20 @@ func move(delta:float):
 
 func _draw():
 	if not DRAW_ME or fsm == null: return
-	var state = fsm.top().NAME
-	var color = ent_state_prop[state]["color"]
+	var current_state = fsm.top()
+	var prop = current_state.PROPERTIES
+	var state = current_state.NAME
+	var color = prop["color"]
 	draw_arc(Vector2.ZERO, 20, 0, PI * 2, 20, color)
 	draw_line(Vector2.ZERO, Vector2(20, 0), color)
-	var f = deg2rad(ent_state_prop[state]["fov"])
+	var f = deg2rad(prop["fov"])
 	# print(ent_state_prop)
 	if !Engine.editor_hint:
 		match state:
-			PatrolState.NAME:
+			BasicEnemyPatrolState.NAME:
 				_draw_semicircle(look_distance, f, Color.black)
-			ChaseState.NAME:
+			BasicEnemyChaseState.NAME:
+				_draw_semicircle(look_distance, f, Color.black)
 				_draw_semicircle(melee_thresh, f, Color.black)
 				_draw_semicircle(ranged_thresh, f, Color.black)
 	else:
@@ -161,7 +166,7 @@ func reset():
 	collision_layer = 2147483647
 	patrol_idx = 0
 	fsm.clear()
-	fsm.push(PatrolState.new(fsm, self))
+	fsm.push(BasicEnemyStateLoader.patrol(fsm, self))
 	target = null
 	rot = 0
 	transform = start_transform
@@ -277,38 +282,45 @@ func check_for_player() -> Node:
 		for ent in entities:
 			var angle_to_player = abs((ent.position - position).angle() - rotation)
 			var dist_to_player = position.distance_to(ent.position)
-			var f = deg2rad(ent_state_prop[fsm.top().NAME]["fov"])
+			var f = deg2rad(fsm.top().PROPERTIES["fov"])
+			var hit = space_state.intersect_ray(position, position + (ent.position-position).normalized() * look_distance)
 			if (
 			angle_to_player < f * 0.5 
 			and ent.get_layer() == get_layer()
 			and dist_to_player < look_distance
 			and ent.is_alive()):
-				print(angle_to_player, " ", f * 0.5)
+			#and hit.has("collider")
+			#and hit["collider"].has_method("take_damage")):
+				# print(angle_to_player, " ", f * 0.5)
 				return ent
 	return null
 
 
-func check_ranged_attack(dist_to_player):
+func check_ranged_attack(dist_to_player, ppos):
 	#print("Check ranged attack")
 	if !has_ranged_attack: return false
 	var space_state = get_world_2d().direct_space_state
 	var hit:Dictionary = space_state.intersect_ray(
-		global_position, target, [self], collision_layer)
-	# print(hit)
-	if (dist_to_player < ranged_thresh 
-	and $AnimationPlayer.assigned_animation == "idle"
-	and hit.has("collider") and hit["collider"].has_method("take_damage")):
-		$AnimationPlayer.play("ranged_attack")
-		print("Doing ranged attack!")
-		return true
+		position, ppos - position, [self])
+	print(hit)
+	if (#dist_to_player < ranged_thresh 
+	# and $AnimationPlayer.assigned_animation == "idle"
+	#and 
+	hit.has("collider")): 
+		if hit["collider"].has_method("take_damage"):
+		#$AnimationPlayer.play("ranged_attack")
+			print("Doing ranged attack!")
+			look_at(hit["position"])
+			return true
+		else:
+			print(hit["collider"].has_method("take_damage"))
 	return false
 
 
 func start_ranged_attack():
 	# launch a projectile
-	look_at(target)
 	var new_bullet = bullet.instance()
-	new_bullet.setup(self, (target - global_position).normalized() * 1000, 
+	new_bullet.setup(self, Vector2.RIGHT.rotated(rotation) * 1000, 
 		ranged_damage, 10, collision_layer, layer)
 	new_bullet.position = global_position
 	new_bullet.rotation = (target - global_position).angle()
@@ -318,16 +330,19 @@ func start_ranged_attack():
 func end_ranged_attack():
 	# cooldown period is over
 	$AnimationPlayer.play("idle")
+	fsm.pop()
 
 
-func check_melee_attack(dist_to_player):
+func check_melee_attack(dist_to_player, ppos):
 	if !has_melee_attack: return false
 	# check if I'm close enough to attack
-	var current_anim = $AnimationPlayer.current_animation
-	if dist_to_player < melee_thresh and current_anim == "idle": 
-		$AnimationPlayer.play("melee_attack")
+	#var current_anim = $AnimationPlayer.current_animation
+	if dist_to_player < melee_thresh: # and current_anim == "idle": 
+		# $AnimationPlayer.play("melee_attack")
 		print("Doing melee attacK!", dist_to_player)
 		return true
+	else:
+		print("Not close enough to melee! ", dist_to_player, melee_thresh)
 	#else:
 	#	print($AnimationPlayer.assigned_animation)
 	return false
@@ -352,10 +367,10 @@ func take_damage(how_much, from):
 	if health > 0: health -= how_much
 	if health < start_health * -0.25:
 		emit_signal("died", self, from, true)
-		fsm.replace(DeadState.new(fsm, self))
+		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
 	elif health <= 0:
 		emit_signal("died", self, from, false)
-		fsm.replace(DeadState.new(fsm, self))
+		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
 
 
 func is_alive() -> bool:
@@ -372,6 +387,10 @@ func set_layer(new_layer:int):
 
 func get_depth_controllers() -> Array:
 	return [$DepthController,]
+
+
+func get_animation_player():
+	return $AnimationPlayer
 
 
 func _on_MeleeAttack_body_entered(body):
@@ -392,9 +411,9 @@ func _on_show():
 	$Tween.start()
 
 
-func set_collision_layer(layer:int):
-	collision_layer = layer
-	$MeleeAttack.collision_layer = layer
+func set_collision_layer(_layer:int):
+	collision_layer = _layer
+	$MeleeAttack.collision_layer = _layer
 
 
 func set_collision_mask(mask:int):

@@ -1,7 +1,7 @@
 extends EntityState
 
 
-class_name DeadState
+class_name BasicEnemyDeadState
 
 const NAME := "DeadState"
 const PROPERTIES := {

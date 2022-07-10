@@ -1,5 +1,6 @@
 extends EntityState
 
+class_name BasicEnemySearchState
 
 const NAME := "SearchState"
 const PROPERTIES := {

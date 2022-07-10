@@ -1,6 +1,6 @@
 extends EntityState
 
-class_name RangedAttackState
+class_name BasicEnemyRangedAttackState
 
 
 const NAME := "RangedAttackState"
@@ -12,17 +12,28 @@ const PROPERTIES := {
 }
 
 
+var aplayer
+
+
 func _init(_fsm, _entity):
 	fsm = _fsm
 	entity = _entity
 
 
 func on_enter():
-	pass
+	aplayer = entity.get_animation_player()
+	aplayer.connect("animation_finished", self, "_on_animation_finished")
+	aplayer.play("ranged_attack")
 
 
 func _physics_process(_delta):
 	pass
+
+
+func _on_animation_finished(_name):
+	print("Animation finished")
+	fsm.pop()
+	# aplayer.disconnect()
 
 
 func on_exit():

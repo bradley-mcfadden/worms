@@ -29,7 +29,7 @@ func get_players() -> Array:
 	return get_parent().get_players()
 
 
-func _on_Enemy_died(node, from, overkill):
+func _on_Enemy_died(node, _from, _overkill):
 	print("Enemy " + str(node) + " has died")
 	# add a corpse or something
 	if get_alive_enemies() == 0:

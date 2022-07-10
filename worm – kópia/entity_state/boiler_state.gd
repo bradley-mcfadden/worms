@@ -31,6 +31,7 @@ func on_enter():
 func _physics_process(_delta):
 	pass
 
+
 # on_exit is called when switching out of this state
 func on_exit():
 	pass

@@ -1,5 +1,7 @@
 extends Position2D
 
+signal died(from, overkill)
+
 const MAX_SPEED = 400
 const ACC = 20
 
@@ -22,6 +24,7 @@ export (int) var max_speed = MAX_SPEED
 export (int) var acceleration = ACC
 export (float) var speed_decay = 0.95
 export (int) var layer := 0
+export (int) var minimum_length = 5
 
 
 var body = []
@@ -236,7 +239,14 @@ func reset_boost_speed():
 
 func scale_camera():
 	if camera:
-		wide_camera.zoom = Vector2(0.1, 0.1) * len(body)
+		var new_zoom = Vector2(0.1, 0.1) * len(body)
+		new_zoom.x = max(new_zoom.x, 1.5)
+		new_zoom.y = max(new_zoom.y, 1.5)
+		print("changing zoom to ", new_zoom)
+		if (wide_camera.has_method("zoom_to")):
+			wide_camera.zoom_to(new_zoom)
+		# else:
+		# wide_camera.zoom = new_zoom
 
 
 func get_entity_positions() -> Array:
@@ -299,5 +309,9 @@ func _on_head_animation_changed(from:String, to:String):
 func _on_segment_died(segment, from, overkill):
 	var idx = body.find(segment)
 	if idx != -1:
-		body.remove(segment)
-		emit_signal("segment_changed", segment, SegmentState.DEAD)
+		for i in range(len(body) - 2, idx, -1):
+			var old_segment = body.pop_back()
+			emit_signal("segment_changed", old_segment, SegmentState.DEAD)
+		if len(body) < minimum_length || segment == head:
+			emit_signal("died", from, overkill)
+		call_deferred("add_segment")

@@ -14,20 +14,50 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://abilities/ability.gd"
 }, {
-"base": "EntityState",
-"class": "BoilerState",
+"base": "Area2D",
+"class": "BasicEnemy",
 "language": "GDScript",
-"path": "res://entity_state/boiler_state.gd"
+"path": "res://entity_state/basic_enemy/basic_enemy.gd"
 }, {
 "base": "EntityState",
-"class": "ChaseState",
+"class": "BasicEnemyChaseState",
 "language": "GDScript",
 "path": "res://entity_state/basic_enemy/chase_state.gd"
 }, {
 "base": "EntityState",
-"class": "DeadState",
+"class": "BasicEnemyDeadState",
 "language": "GDScript",
 "path": "res://entity_state/basic_enemy/dead_state.gd"
+}, {
+"base": "EntityState",
+"class": "BasicEnemyMeleeAttackState",
+"language": "GDScript",
+"path": "res://entity_state/basic_enemy/melee_attack_state.gd"
+}, {
+"base": "EntityState",
+"class": "BasicEnemyPatrolState",
+"language": "GDScript",
+"path": "res://entity_state/basic_enemy/patrol_state.gd"
+}, {
+"base": "EntityState",
+"class": "BasicEnemyRangedAttackState",
+"language": "GDScript",
+"path": "res://entity_state/basic_enemy/ranged_attack_state.gd"
+}, {
+"base": "EntityState",
+"class": "BasicEnemySearchState",
+"language": "GDScript",
+"path": "res://entity_state/basic_enemy/search_state.gd"
+}, {
+"base": "Object",
+"class": "BasicEnemyStateLoader",
+"language": "GDScript",
+"path": "res://entity_state/basic_enemy/basic_enemy_state_loader.gd"
+}, {
+"base": "EntityState",
+"class": "BoilerState",
+"language": "GDScript",
+"path": "res://entity_state/boiler_state.gd"
 }, {
 "base": "Object",
 "class": "EntityState",
@@ -44,21 +74,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/iterator.gd"
 }, {
-"base": "EntityState",
-"class": "MeleeAttackState",
-"language": "GDScript",
-"path": "res://entity_state/basic_enemy/melee_attack_state.gd"
-}, {
-"base": "EntityState",
-"class": "PatrolState",
-"language": "GDScript",
-"path": "res://script/patrol_state.gd"
-}, {
-"base": "EntityState",
-"class": "RangedAttackState",
-"language": "GDScript",
-"path": "res://entity_state/basic_enemy/ranged_attack_state.gd"
-}, {
 "base": "RigidBody2D",
 "class": "SegmentRigid",
 "language": "GDScript",
@@ -66,15 +81,18 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Ability": "",
+"BasicEnemy": "",
+"BasicEnemyChaseState": "",
+"BasicEnemyDeadState": "",
+"BasicEnemyMeleeAttackState": "",
+"BasicEnemyPatrolState": "",
+"BasicEnemyRangedAttackState": "",
+"BasicEnemySearchState": "",
+"BasicEnemyStateLoader": "",
 "BoilerState": "",
-"ChaseState": "",
-"DeadState": "",
 "EntityState": "",
 "Fsm": "",
 "Iterator": "",
-"MeleeAttackState": "",
-"PatrolState": "",
-"RangedAttackState": "",
 "SegmentRigid": ""
 }
 
@@ -90,6 +108,7 @@ frame=false
 framerate=false
 fps=false
 "frame rate"=false
+color=false
 
 [input]
 
@@ -208,4 +227,5 @@ peek_layer_down={
 
 [rendering]
 
+environment/default_clear_color=Color( 0.231373, 0.176471, 0.113725, 1 )
 environment/default_environment="res://default_env.tres"

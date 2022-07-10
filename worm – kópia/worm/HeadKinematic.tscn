@@ -152,9 +152,9 @@ anims/mouth_open_wide = SubResource( 5 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="BiteHitbox" type="Area2D" parent="."]
-collision_layer = 2
 monitoring = false
 monitorable = false
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BiteHitbox"]
 position = Vector2( 19, 2 )

@@ -20,7 +20,10 @@ func pop():
 	if !stack.empty():
 		var current_state = stack.pop_back()
 		current_state.on_exit()
-		current_state.queue_free()
+		current_state.free()
+	if !stack.empty():
+		var new_state = stack.back()
+		new_state.on_enter()
 
 
 # replace the top of the stack with the current state.
