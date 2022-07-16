@@ -27,6 +27,7 @@ export (int) var layer := 0
 export (int) var minimum_length = 5
 
 
+var dead = false
 var body = []
 var heading = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
@@ -78,19 +79,27 @@ func _ready():
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
-		ability.connect("is_ready_changed", self, "_on_ability_is_ready_changed")
+		if not ability.is_connected("is_ready_changed", self, "_on_ability_is_ready_changed"):
+			ability.connect("is_ready_changed", self, "_on_ability_is_ready_changed")
 		
-	start_transform = transform
+	#start_transform = transform
 	start_layer = layer
 
 
 func reset():
-	transform = start_transform
+	dead = false
+	# transform = start_transform
 	layer = start_layer
 	heading = 0
 	vel = Vector2(0.001, 0)
+	j1 = Vector2()
+	if wide_camera:
+		remove_child(wide_camera)
+		wide_camera.queue_free()
 	for segment in body:
+		remove_child(segment)
 		segment.queue_free()
+	body.clear()
 	_ready()
 	
 
@@ -134,6 +143,8 @@ func _physics_process(delta):
 
 
 func _control(delta):
+	if not is_alive():
+		return
 #	This is just example just make sure you dont allow beckvard movement.
 	if Input.is_action_pressed("move_forward"):
 		vel.x += acceleration
@@ -287,6 +298,10 @@ func get_head() -> Node:
 	return head
 
 
+func is_alive() -> bool:
+	return not dead
+
+
 func _on_DiveTimer_timeout():
 	var segment = iter.next()
 	if segment != null:
@@ -312,6 +327,9 @@ func _on_segment_died(segment, from, overkill):
 		for i in range(len(body) - 2, idx, -1):
 			var old_segment = body.pop_back()
 			emit_signal("segment_changed", old_segment, SegmentState.DEAD)
-		if len(body) < minimum_length || segment == head:
-			emit_signal("died", from, overkill)
+	
 		call_deferred("add_segment")
+
+		if (len(body) < minimum_length || segment == head) and is_alive():
+			dead = true
+			emit_signal("died", self, from, overkill)

@@ -279,7 +279,9 @@ func check_for_player() -> Node:
 	var space_state = get_world_2d().direct_space_state
 	for player in players:
 		var entities:Array = player.get_entity_positions()
+		if !player.is_alive(): continue
 		for ent in entities:
+			if ent == null: continue
 			var angle_to_player = abs((ent.position - position).angle() - rotation)
 			var dist_to_player = position.distance_to(ent.position)
 			var f = deg2rad(fsm.top().PROPERTIES["fov"])

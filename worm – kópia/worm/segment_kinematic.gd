@@ -60,6 +60,7 @@ func get_layer() -> int:
 
 
 func take_damage(how_much, from):
+	if not is_alive(): return
 	print("Player is taking " + str(how_much) + " damage")
 	if health > 0: health -= how_much
 	if health < start_health * -0.25:
