@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://worm/SpawnKinematic.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scene/DeathScreen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://script/background_noise.gd" type="Script" id=11]
+[ext_resource path="res://scene/AllEnemiesDead.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
@@ -91,6 +92,7 @@ script = ExtResource( 1 )
 [node name="DepthManager" parent="." instance=ExtResource( 8 )]
 
 [node name="DeathScreen" parent="." instance=ExtResource( 10 )]
+visible = false
 modulate = Color( 1, 1, 1, 0 )
 margin_left = -158.0
 margin_top = -37.0
@@ -98,6 +100,11 @@ margin_right = 154.0
 margin_bottom = 35.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AllEnemiesDead" parent="." instance=ExtResource( 12 )]
+visible = false
+margin_right = 456.0
+margin_bottom = 72.0
 
 [node name="Background" type="ParallaxBackground" parent="."]
 script = ExtResource( 11 )

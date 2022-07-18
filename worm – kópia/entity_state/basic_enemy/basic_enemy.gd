@@ -365,8 +365,9 @@ func end_melee_attack():
 
 
 func take_damage(how_much, from):
+	if health <= 0: return 
 	print("Enemy is taking " + str(how_much) + " damage")
-	if health > 0: health -= how_much
+	health -= how_much
 	if health < start_health * -0.25:
 		emit_signal("died", self, from, true)
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
