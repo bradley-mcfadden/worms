@@ -44,6 +44,7 @@ var iter
 var start_transform:Transform2D
 var start_layer:int
 var is_switch_depth := false
+var background = null
 
 
 func _ready():
@@ -74,8 +75,9 @@ func _ready():
 		move_child(i, 0)
 	if camera:
 		wide_camera = camera.instance()
-		scale_camera()
+		#scale_camera()
 		add_child(wide_camera)
+		call_deferred("scale_camera")
 	
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
@@ -121,6 +123,9 @@ func update_camera_position():
 		
 	var avg = sum / len(body)
 	wide_camera.position = avg
+	
+	if background:
+		background.set_noise_offset(avg)
 
 
 # Do not touch this function.
@@ -152,6 +157,7 @@ func _control(delta):
 		#print("Moving forward")
 	else:
 		vel *= speed_decay
+	
 	if Input.is_action_pressed("move_left"):
 		heading -= PI * delta * 3
 	elif Input.is_action_pressed("move_right"):

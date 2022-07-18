@@ -1,8 +1,8 @@
 extends Node2D
 
 
-var death_screen 
-
+var death_screen
+var primary_player
 
 func _ready():
 	$DepthManager.add_items($Players.get_players())
@@ -11,6 +11,8 @@ func _ready():
 	$DepthManager.add_items($Decorations.get_decorations())
 	$DepthManager.set_current_layer(0)
 	death_screen = $DeathScreen
+	primary_player = $Players/SpawnKinematic
+	primary_player.background = $Background
 
 
 func _input(_event):

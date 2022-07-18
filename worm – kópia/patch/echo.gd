@@ -25,7 +25,7 @@ func _draw():
 	xpos = pos
 
 	color.a *= 1 - decay
-	draw_arc(vpos, average + tdelta * amplitude, 0, PI * 2, 30, color)
+	draw_arc(vpos, average + tdelta * amplitude, 0, PI * 2, 30, color, 10)
 	# draw_arc(pos, average + (1 + cos(tdelta)) * amplitude, 0, PI*2, 20, Color.red)
 	tdelta += speed
 

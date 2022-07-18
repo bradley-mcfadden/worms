@@ -6,6 +6,8 @@ extends Node
 
 enum SegmentState { ALIVE, DEAD }
 
+signal layer_changed(to)
+
 export (int) var collision_offset = 4
 
 var layers := []
@@ -29,6 +31,8 @@ func add(layer:int, item:Node):
 	var controllers = item.get_depth_controllers()
 	for dc in controllers:
 		layers[layer].append(dc)
+		if not dc.is_connected("tree_exited", self, "_on_dc_tree_exited"):
+			dc.connect("tree_exited", self, "_on_dc_tree_exited", [layer, dc])
 		dc.set_layer(layer)
 		dc.set_active(layer == current_layer)
 
@@ -76,6 +80,7 @@ func set_current_layer(new_layer:int):
 	for item in layers[current_layer]: item.set_active(false)
 	for item in layers[new_layer]: item.set_active(true)
 	current_layer = new_layer
+	emit_signal("layer_changed", new_layer)
 
 
 func is_switch_valid(to:int):
@@ -105,3 +110,9 @@ func _on_layer_visibility_changed(layer, is_visible):
 		arr = layers[layer]
 	for item in arr:
 		item.call(f)
+
+
+func _on_dc_tree_exited(layer, dc):
+	var idx = layers[layer].find(dc)
+	if idx == -1: return
+	layers[layer].remove(idx)

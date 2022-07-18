@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://img/dirt.jpg" type="Texture" id=1]
+[ext_resource path="res://script/background.gd" type="Script" id=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec2 scroll_speed;
+
+void fragment() {
+    vec2 shifteduv = UV;
+    shifteduv.x += TIME * scroll_speed.x;
+	shifteduv.y += TIME * scroll_speed.y;
+    vec4 color = texture(TEXTURE, shifteduv);
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/scroll_speed = null
+
+[node name="Background" type="Sprite"]
+material = SubResource( 2 )
+position = Vector2( -5, 139 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 19584, 13984 )
+script = ExtResource( 2 )
