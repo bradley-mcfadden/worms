@@ -1,8 +1,13 @@
 extends Node2D
 
 
+signal next_level()
+
+
 var death_screen
+var enemies_dead_screen
 var primary_player
+
 
 func _ready():
 	$DepthManager.add_items($Players.get_players())
@@ -11,6 +16,7 @@ func _ready():
 	$DepthManager.add_items($Decorations.get_decorations())
 	$DepthManager.set_current_layer(0)
 	death_screen = $DeathScreen
+	enemies_dead_screen = $AllEnemiesDead
 	primary_player = $Players/SpawnKinematic
 	primary_player.background = $Background
 
@@ -37,8 +43,17 @@ func attach_bullet(bullet):
 
 func reset():
 	death_screen.visible = false
+	enemies_dead_screen.visible = false
 	$Enemies.reset_all_enemies()
 	$Players.reset_all_players()
+
+
+func to_main_menu():
+	pass
+
+
+func quit_to_desktop():
+	pass
 
 
 func get_current_camera2D():
@@ -53,8 +68,19 @@ func get_current_camera2D():
 	return null
 
 
+func _on_lay_eggs():
+	# for now, emit "next_level" signal
+	# in future, probably play an animation and wait for it finish before that
+	emit_signal("next_level")
+
+
 func _on_all_enemies_dead():
-	pass # Replace with function body.
+	var camera = get_current_camera2D()
+	var screen_parent = enemies_dead_screen.get_parent()
+	if screen_parent != camera:
+		camera.add_child(enemies_dead_screen)
+	enemies_dead_screen.visible = true
+	enemies_dead_screen.fade_in()
 
 
 func _on_all_players_dead():
