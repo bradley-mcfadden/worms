@@ -12,14 +12,69 @@
 [ext_resource path="res://scene/DeathScreen.tscn" type="PackedScene" id=10]
 [ext_resource path="res://script/background_noise.gd" type="Script" id=11]
 [ext_resource path="res://scene/AllEnemiesDead.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scene/PauseMenu.tscn" type="PackedScene" id=13]
+[ext_resource path="res://img/morgan-padgett-dirt-texture.jpg" type="Texture" id=14]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform vec3 color = vec3(1f, 1f, 1f);
 uniform int layer = 1;
+uniform vec2 offset;
+
+// psrdnoise (c) Stefan Gustavson and Ian McEwan,
+// ver. 2021-12-02, published under the MIT license:
+// https://github.com/stegu/psrdnoise/
+float psrdnoise(vec2 x, vec2 period, float alpha, out vec2 gradient) {
+	vec2 uv = vec2(x.x+x.y*0.5, x.y);
+	vec2 i0 = floor(uv), f0 = fract(uv);
+	float cmp = step(f0.y, f0.x);
+	vec2 o1 = vec2(cmp, 1.0-cmp);
+	vec2 i1 = i0 + o1, i2 = i0 + 1.0;
+	vec2 v0 = vec2(i0.x - i0.y*0.5, i0.y);
+	vec2 v1 = vec2(v0.x + o1.x - o1.y*0.5, v0.y + o1.y);
+	vec2 v2 = vec2(v0.x + 0.5, v0.y + 1.0);
+	vec2 x0 = x - v0, x1 = x - v1, x2 = x - v2;
+	vec3 iu, iv, xw, yw;
+	if(any(greaterThan(period, vec2(0.0)))) {
+		xw = vec3(v0.x, v1.x, v2.x);
+		yw = vec3(v0.y, v1.y, v2.y);
+		if(period.x > 0.0)
+			xw = mod(vec3(v0.x, v1.x, v2.x), period.x);
+		if(period.y > 0.0)
+			yw = mod(vec3(v0.y, v1.y, v2.y), period.y);
+		iu = floor(xw + 0.5*yw + 0.5); iv = floor(yw + 0.5);
+	} else {
+		iu = vec3(i0.x, i1.x, i2.x); iv = vec3(i0.y, i1.y, i2.y);
+	}
+	vec3 hash = mod(iu, 289.0);
+	hash = mod((hash*51.0 + 2.0)*hash + iv, 289.0);
+	hash = mod((hash*34.0 + 10.0)*hash, 289.0);
+	vec3 psi = hash*0.07482 + alpha;
+	vec3 gx = cos(psi); vec3 gy = sin(psi);
+	vec2 g0 = vec2(gx.x, gy.x);
+	vec2 g1 = vec2(gx.y, gy.y);
+	vec2 g2 = vec2(gx.z, gy.z);
+	vec3 w = 0.8 - vec3(dot(x0, x0), dot(x1, x1), dot(x2, x2));
+	w = max(w, 0.0); vec3 w2 = w*w; vec3 w4 = w2*w2;
+	vec3 gdotx = vec3(dot(g0, x0), dot(g1, x1), dot(g2, x2));
+	float n = dot(w4, gdotx);
+	vec3 w3 = w2*w; vec3 dw = -8.0*w3*gdotx;
+	vec2 dn0 = w4.x*g0 + dw.x*x0;
+	vec2 dn1 = w4.y*g1 + dw.y*x1;
+	vec2 dn2 = w4.z*g2 + dw.z*x2;
+	gradient = 10.9*(dn0 + dn1 + dn2);
+	return 10.9*n;
+}
+
+float aastep(float threshold, float value) {
+  float afwidth = 0.7 * length(vec2(dFdx(value), dFdy(value)));
+//  float afwidth = fwidth(value);  // fwidth(v) is |dFdx(v)| + |dFdy(v)|
+  return smoothstep(threshold-afwidth, threshold+afwidth, value);
+}
 
 void fragment() {
+	/*
 	COLOR = texture(TEXTURE, UV);
 	float l_off = float(layer) * 0.1;
 	COLOR.x = max(COLOR.x, 0.1) + l_off;
@@ -28,24 +83,34 @@ void fragment() {
 	COLOR.x *= color.x;
 	COLOR.y *= color.y;
 	COLOR.z *= color.z;
+	*/
+	const float scale = 12.0;
+	vec2 v = scale * UV.xy;
+	const vec2 p = vec2(0.0);
+	float alpha = 0.0;
+	vec2 g;
+	vec2 newv = v + offset * 0.01;
+	float n = psrdnoise(newv, p, TIME*0.5, g);
+	float l_off = float(layer) * 0.05 + 0.025;
+	// float n = 0.5 + 0.5 * psrdnoise(v + offset * 0.01, p, TIME*2.5, g);
+	vec3 ncolor = vec3(g, 0.0);
+	vec3 texcol = texture(TEXTURE, newv).xyz;
+	texcol -= l_off;
+	// color = texcol;
+	vec3 xcolor = vec3(texcol + l_off);
+	vec3 ycolor = vec3(texcol - l_off);
+	vec3 mixcol = mix(texcol, xcolor, aastep(0.6, g.x));
+	mixcol = mix(mixcol, ycolor, aastep(0.6, g.y));
+	// vec3 ncolor = vec3(n);
+	// ncolor = max(ncolor, vec3(0.1)) * color + l_off;
+	COLOR = vec4(mixcol, 1.0);
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/color = Vector3( 1, 1, 1 )
+shader_param/color = Vector3( 1, 0, 0 )
 shader_param/layer = 1
-
-[sub_resource type="OpenSimplexNoise" id=3]
-octaves = 1
-period = 32.0
-persistence = 1.0
-lacunarity = 1.0
-
-[sub_resource type="NoiseTexture" id=4]
-flags = 2
-width = 4096
-height = 2048
-noise = SubResource( 3 )
+shader_param/offset = null
 
 [node name="TestLevel2" type="Node2D"]
 position = Vector2( 1, -4 )
@@ -90,20 +155,43 @@ script = ExtResource( 1 )
 
 [node name="DepthManager" parent="." instance=ExtResource( 8 )]
 
-[node name="DeathScreen" parent="." instance=ExtResource( 10 )]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="AllEnemiesDead" parent="CanvasLayer" instance=ExtResource( 12 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -228.0
+margin_top = -36.0
+margin_right = 228.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DeathScreen" parent="CanvasLayer" instance=ExtResource( 10 )]
 visible = false
 modulate = Color( 1, 1, 1, 0 )
-margin_left = -158.0
-margin_top = -37.0
-margin_right = 154.0
-margin_bottom = 35.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -668.0
+margin_top = -336.0
+margin_right = 668.0
+margin_bottom = 336.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="AllEnemiesDead" parent="." instance=ExtResource( 12 )]
+[node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 13 )]
 visible = false
-margin_right = 456.0
-margin_bottom = 72.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -512.0
+margin_right = 512.0
 
 [node name="Background" type="ParallaxBackground" parent="."]
 script = ExtResource( 11 )
@@ -113,8 +201,8 @@ motion_mirroring = Vector2( 0.5, 0.5 )
 
 [node name="Sprite" type="Sprite" parent="Background/ParallaxLayer"]
 material = SubResource( 2 )
-position = Vector2( 1969, 956 )
-texture = SubResource( 4 )
+position = Vector2( 1974, 956 )
+texture = ExtResource( 14 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 4096, 2048 )
 
@@ -127,5 +215,5 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
 [connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]
 [connection signal="layer_changed" from="DepthManager" to="Background" method="_on_layer_changed"]
-[connection signal="restart" from="DeathScreen" to="." method="_on_restart"]
-[connection signal="lay_eggs" from="AllEnemiesDead" to="." method="_on_lay_eggs"]
+[connection signal="lay_eggs" from="CanvasLayer/AllEnemiesDead" to="." method="_on_lay_eggs"]
+[connection signal="restart" from="CanvasLayer/DeathScreen" to="." method="_on_restart"]

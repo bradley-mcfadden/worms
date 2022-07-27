@@ -107,8 +107,9 @@ func reset():
 
 
 func _draw():
-	for segment in body:
-		draw_line(segment.j1, segment.j2, Color.red)
+	pass
+	#for segment in body:
+	# 	draw_line(segment.j1, segment.j2, Color.red)
 
 
 func _process(_delta):

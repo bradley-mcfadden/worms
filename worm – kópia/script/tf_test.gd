@@ -15,8 +15,9 @@ func _ready():
 	$DepthManager.add_items($Obstacles.get_obstacles())
 	$DepthManager.add_items($Decorations.get_decorations())
 	$DepthManager.set_current_layer(0)
-	death_screen = $DeathScreen
-	enemies_dead_screen = $AllEnemiesDead
+	$Background._on_layer_changed(0)
+	death_screen = $CanvasLayer/DeathScreen
+	enemies_dead_screen = $CanvasLayer/AllEnemiesDead
 	primary_player = $Players/SpawnKinematic
 	primary_player.background = $Background
 
@@ -75,19 +76,20 @@ func _on_lay_eggs():
 
 
 func _on_all_enemies_dead():
-	var camera = get_current_camera2D()
-	var screen_parent = enemies_dead_screen.get_parent()
-	if screen_parent != camera:
-		camera.add_child(enemies_dead_screen)
+	# var camera = get_current_camera2D()
+	# var screen_parent = enemies_dead_screen.get_parent()
+	# if screen_parent != camera:
+	# 	enemies_dead_screen.get_parent().remove_child(enemies_dead_screen)
+	# 	camera.add_child(enemies_dead_screen)
 	enemies_dead_screen.visible = true
 	enemies_dead_screen.fade_in()
 
 
 func _on_all_players_dead():
-	var camera = get_current_camera2D()
-	if death_screen.get_parent() != camera:
-		death_screen.get_parent().remove_child(death_screen)
-		camera.add_child(death_screen)
+	# var camera = get_current_camera2D()
+	# if death_screen.get_parent() != camera:
+	# 	death_screen.get_parent().remove_child(death_screen)
+	# 	camera.add_child(death_screen)
 	death_screen.visible = true
 	death_screen.fade_in()
 
