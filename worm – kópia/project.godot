@@ -108,6 +108,10 @@ config/name="worm"
 run/main_scene="res://worm/Spawn.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Configuration="*res://script/Configuration.gd"
+
 [global]
 
 frame=false
