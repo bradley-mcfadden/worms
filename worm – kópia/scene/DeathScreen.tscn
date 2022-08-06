@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://script/death_screen.gd" type="Script" id=3]
+[ext_resource path="res://script/rich_text_siny.gd" type="Script" id=4]
+[ext_resource path="res://script/rich_text_siny.gd" type="Script" id=5]
+
+[sub_resource type="RichTextEffect" id=1]
+script = ExtResource( 4 )
+
+[sub_resource type="RichTextEffect" id=2]
+script = ExtResource( 5 )
 
 [node name="DeathScreen" type="VBoxContainer"]
 anchor_right = 1.0
@@ -12,20 +20,29 @@ margin_bottom = -1.0
 alignment = 1
 script = ExtResource( 3 )
 
-[node name="Message" type="Label" parent="."]
-margin_top = 264.0
+[node name="Message" type="RichTextLabel" parent="."]
+margin_top = 263.0
 margin_right = 1024.0
 margin_bottom = 308.0
-custom_fonts/font = ExtResource( 2 )
+grow_horizontal = 2
+size_flags_horizontal = 13
+size_flags_vertical = 5
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center][siny period=2.0 offset=5.0 animate=1.0]the cycle yet continues[/siny][/center]"
 text = "the cycle yet continues"
-align = 1
+fit_content_height = true
+custom_effects = [ SubResource( 1 ) ]
 
-[node name="RestartPrompt" type="Label" parent="."]
+[node name="RestartPrompt" type="RichTextLabel" parent="."]
 margin_top = 312.0
 margin_right = 1024.0
-margin_bottom = 336.0
-custom_fonts/font = ExtResource( 1 )
+margin_bottom = 337.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "press 'R' to restart"
 text = "press 'R' to restart"
-align = 1
+fit_content_height = true
+custom_effects = [ SubResource( 2 ) ]
 
 [node name="Tween" type="Tween" parent="."]

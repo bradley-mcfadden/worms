@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=3]
 [ext_resource path="res://script/pause_menu.gd" type="Script" id=4]
+[ext_resource path="res://script/rich_text_siny.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.054902, 0.054902, 0.0941176, 0.309804 )
@@ -11,6 +12,9 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="RichTextEffect" id=2]
+script = ExtResource( 5 )
 
 [node name="PauseScreen" type="MarginContainer"]
 anchor_top = 0.5
@@ -31,30 +35,32 @@ custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 456.0
-margin_top = 218.0
+margin_top = 217.0
 margin_right = 568.0
 margin_bottom = 382.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="RichTextLabel" parent="VBoxContainer"]
 margin_right = 112.0
-margin_bottom = 44.0
-custom_fonts/font = ExtResource( 1 )
+margin_bottom = 45.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "pause"
 text = "pause"
-align = 1
-valign = 3
+fit_content_height = true
+custom_effects = [ SubResource( 2 ) ]
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 48.0
+margin_top = 49.0
 margin_right = 112.0
-margin_bottom = 52.0
+margin_bottom = 53.0
 
 [node name="Resume" type="Button" parent="VBoxContainer"]
-margin_top = 56.0
+margin_top = 57.0
 margin_right = 112.0
-margin_bottom = 80.0
+margin_bottom = 81.0
 focus_mode = 0
 theme = ExtResource( 3 )
 custom_colors/font_color_disabled = Color( 0.870588, 0.870588, 0.870588, 1 )
@@ -64,9 +70,9 @@ enabled_focus_mode = 0
 text = "resume"
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
-margin_top = 84.0
+margin_top = 85.0
 margin_right = 112.0
-margin_bottom = 108.0
+margin_bottom = 109.0
 focus_mode = 0
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
@@ -74,9 +80,9 @@ enabled_focus_mode = 0
 text = "settings"
 
 [node name="QuitToMenu" type="Button" parent="VBoxContainer"]
-margin_top = 112.0
+margin_top = 113.0
 margin_right = 112.0
-margin_bottom = 136.0
+margin_bottom = 137.0
 focus_mode = 0
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
@@ -84,9 +90,9 @@ enabled_focus_mode = 0
 text = "quit to menu"
 
 [node name="QuitToDesktop" type="Button" parent="VBoxContainer"]
-margin_top = 140.0
+margin_top = 141.0
 margin_right = 112.0
-margin_bottom = 164.0
+margin_bottom = 165.0
 focus_mode = 0
 theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
