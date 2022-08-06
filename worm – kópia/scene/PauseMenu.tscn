@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=3]
+[ext_resource path="res://script/pause_menu.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.054902, 0.054902, 0.0941176, 0.309804 )
@@ -21,9 +22,7 @@ margin_bottom = 300.0
 grow_horizontal = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 4 )
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 1024.0
@@ -93,3 +92,8 @@ theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "quit to desktop"
+
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_QuitToMenu_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
