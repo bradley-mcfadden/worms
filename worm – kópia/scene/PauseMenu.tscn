@@ -7,7 +7,7 @@
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.054902, 0.054902, 0.0941176, 0.309804 )
+bg_color = Color( 0, 0, 0, 0.117647 )
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
