@@ -4,7 +4,7 @@
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=4]
-[ext_resource path="res://scene/title_screen.gd" type="Script" id=5]
+[ext_resource path="res://script/title_screen.gd" type="Script" id=5]
 
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
