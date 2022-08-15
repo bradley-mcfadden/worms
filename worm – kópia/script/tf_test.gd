@@ -70,9 +70,8 @@ func get_current_camera2D():
 
 
 func _on_lay_eggs():
-	# for now, emit "next_level" signal
 	# in future, probably play an animation and wait for it finish before that
-	emit_signal("next_level")
+	Levels.next_level_or_main(get_tree())
 
 
 func _on_all_enemies_dead():

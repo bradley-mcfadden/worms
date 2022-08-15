@@ -36,8 +36,18 @@ func wrap_string(string, start, end):
 func _on_StartGame_pressed():
 	# var first = Levels.first()
 	# get_tree().change_scene(first)
-	pass
-
+	Levels.reset_index()
+	print("Start level %d" % Levels.level_idx)
+	var idx = Levels.next_index()
+	print("Start level %d" % idx)
+	print(str(idx))
+	var first = Levels.scene_from_index(idx)
+	var file = File.new()
+	if file.file_exists(first):
+		get_tree().change_scene(first)
+	else:
+		# Definitely an error
+		pass
 
 func _on_Settings_pressed():
 	# Settings.show()

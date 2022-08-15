@@ -111,6 +111,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Configuration="*res://script/Configuration.gd"
+Levels="*res://script/Levels.gd"
 
 [global]
 
