@@ -34,16 +34,17 @@ margin_bottom = 600.0
 custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 456.0
+margin_left = 452.0
 margin_top = 217.0
-margin_right = 568.0
+margin_right = 572.0
 margin_bottom = 382.0
+rect_min_size = Vector2( 120, 0 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
 
 [node name="Label" type="RichTextLabel" parent="VBoxContainer"]
-margin_right = 112.0
+margin_right = 120.0
 margin_bottom = 45.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
@@ -54,12 +55,12 @@ custom_effects = [ SubResource( 2 ) ]
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 49.0
-margin_right = 112.0
+margin_right = 120.0
 margin_bottom = 53.0
 
 [node name="Resume" type="Button" parent="VBoxContainer"]
 margin_top = 57.0
-margin_right = 112.0
+margin_right = 120.0
 margin_bottom = 81.0
 focus_mode = 0
 theme = ExtResource( 3 )
@@ -71,7 +72,7 @@ text = "resume"
 
 [node name="Settings" type="Button" parent="VBoxContainer"]
 margin_top = 85.0
-margin_right = 112.0
+margin_right = 120.0
 margin_bottom = 109.0
 focus_mode = 0
 theme = ExtResource( 3 )
@@ -81,7 +82,7 @@ text = "settings"
 
 [node name="QuitToMenu" type="Button" parent="VBoxContainer"]
 margin_top = 113.0
-margin_right = 112.0
+margin_right = 120.0
 margin_bottom = 137.0
 focus_mode = 0
 theme = ExtResource( 3 )
@@ -91,7 +92,7 @@ text = "quit to menu"
 
 [node name="QuitToDesktop" type="Button" parent="VBoxContainer"]
 margin_top = 141.0
-margin_right = 112.0
+margin_right = 120.0
 margin_bottom = 165.0
 focus_mode = 0
 theme = ExtResource( 3 )
