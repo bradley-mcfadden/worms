@@ -29,11 +29,15 @@ func _input(_event):
 
 func init_labels():
 	var animate = Configuration.use_text_animations
-	set_text($Header, $Header.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, animate)
+	set_text(
+		$Header, $Header.text, ANIMATION_OPEN_HEADER, 
+		ANIMATION_CLOSE_HEADER, true, animate)
 	var action = InputMap.get_action_list("lay_eggs")
 	var key_string = OS.get_scancode_string(action[0].scancode)
 	var rp_text = "press %s to lay eggs" % key_string
-	set_text($Message, rp_text, ANIMATION_OPEN_MSG, ANIMATION_CLOSE_MSG, animate)
+	set_text(
+		$Message, rp_text, ANIMATION_OPEN_MSG, 
+		ANIMATION_CLOSE_MSG, true, animate)
 
 
 func set_text(label, msg, start, end, center=true, animate=true):

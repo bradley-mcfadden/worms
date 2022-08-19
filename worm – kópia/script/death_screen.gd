@@ -16,11 +16,15 @@ func _ready():
 
 func init_labels():
 	var animate = Configuration.use_text_animations
-	set_text($Message, random_message(), ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, animate)
+	set_text(
+		$Message, random_message(), ANIMATION_OPEN_HEADER, 
+		ANIMATION_CLOSE_HEADER, true, animate)
 	var action = InputMap.get_action_list("reset")
 	var key_string = OS.get_scancode_string(action[0].scancode)
 	var rp_text = "press %s to restart" % key_string
-	set_text($RestartPrompt, $RestartPrompt.text, ANIMATION_OPEN_MSG, ANIMATION_CLOSE_MSG, animate)
+	set_text(
+		$RestartPrompt, $RestartPrompt.text, ANIMATION_OPEN_MSG, 
+		ANIMATION_CLOSE_MSG, true, animate)
 
 
 func fade_in():

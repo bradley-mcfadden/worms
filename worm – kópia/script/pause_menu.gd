@@ -22,7 +22,9 @@ func _input(event):
 
 
 func init_labels():
-	set_text($VBoxContainer/Label, $VBoxContainer/Label.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, Configuration.use_text_animations)
+	set_text(
+		$VBoxContainer/Label, $VBoxContainer/Label.text, ANIMATION_OPEN_HEADER, 
+		ANIMATION_CLOSE_HEADER, true, Configuration.use_text_animations)
 
 
 func pause():
