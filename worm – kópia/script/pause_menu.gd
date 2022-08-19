@@ -1,12 +1,13 @@
 extends MarginContainer
 
-signal show_settings_pressed()
 
 const ANIMATION_OPEN_HEADER = "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_HEADER = "[/siny]"
 const ANIMATION_OPEN_MSG = "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_MSG = "[/siny]"
 
+const MAIN_MENU_PATH = "res://Scene/TitleScreen.tscn"
+const SETTINGS_PATH = "res://Scene/SettingsMenu.tscn"
 
 func _ready():
 	init_labels()
@@ -40,12 +41,20 @@ func _on_Resume_pressed():
 
 
 func _on_Settings_pressed():
-	pass
+	var settings = load(SETTINGS_PATH)
+	var menu = settings.instance()
+	menu.connect("tree_exited", self, "_on_Settings_exited")
+	get_parent().add_child(menu)
+	$VBoxContainer.hide()
+
+
+func _on_Settings_exited():
+	init_labels()
+	$VBoxContainer.show()
 
 
 func _on_QuitToMenu_pressed():
-	# get_tree().change_scene('something')
-	pass
+	get_tree().change_scene(MAIN_MENU_PATH)
 
 
 func _on_QuitToDesktop_pressed():

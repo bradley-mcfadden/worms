@@ -8,6 +8,9 @@ const ANIMATION_CLOSE_MSG = "[/siny]"
 const LEVEL_SELECT_PATH = ""
 const CREDITS_PATH = ""
 
+const SETTINGS_PATH = "res://Scene/SettingsMenu.tscn"
+
+
 func _ready():
 	init_labels()
 
@@ -49,9 +52,18 @@ func _on_StartGame_pressed():
 		# Definitely an error
 		pass
 
+
 func _on_Settings_pressed():
-	# Settings.show()
-	pass
+	var settings = load(SETTINGS_PATH)
+	var menu = settings.instance()
+	menu.connect("tree_exited", self, "_on_Settings_exited")
+	get_parent().add_child(menu)
+	$VBoxContainer.hide()
+
+
+func _on_Settings_exited():
+	init_labels()
+	$VBoxContainer.show()
 
 
 func _on_LevelSelect_pressed():
