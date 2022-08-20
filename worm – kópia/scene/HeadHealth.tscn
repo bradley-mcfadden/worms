@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scene/partial_fill.tres" type="Shader" id=1]
+[ext_resource path="res://img/head_health.png" type="Texture" id=2]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/fillColor = Color( 0.505882, 0.227451, 0.227451, 1 )
+shader_param/gradColor = Color( 0.188235, 0.152941, 0.152941, 1 )
+shader_param/proportion = 0.608
+shader_param/lowerLimit = 0.01
+
+[node name="HeadHealth" type="Sprite"]
+material = SubResource( 2 )
+position = Vector2( -17, 2 )
+texture = ExtResource( 2 )

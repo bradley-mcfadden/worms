@@ -177,6 +177,7 @@ margin_bottom = -4.0
 [node name="Cols" type="HBoxContainer" parent="Menu/Tabs/controls"]
 visible = false
 margin_right = 4.0
+margin_bottom = 12.0
 
 [node name="LeftColumn" type="VBoxContainer" parent="Menu/Tabs/controls/Cols"]
 
@@ -206,6 +207,7 @@ margin_bottom = -4.0
 [node name="Cols" type="HBoxContainer" parent="Menu/Tabs/graphics"]
 visible = false
 margin_right = 4.0
+margin_bottom = 12.0
 
 [node name="L" type="VBoxContainer" parent="Menu/Tabs/graphics/Cols"]
 
@@ -235,6 +237,7 @@ margin_bottom = -4.0
 [node name="Cols" type="HBoxContainer" parent="Menu/Tabs/audio"]
 visible = false
 margin_right = 4.0
+margin_bottom = 12.0
 
 [node name="L" type="VBoxContainer" parent="Menu/Tabs/audio/Cols"]
 

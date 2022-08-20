@@ -8,11 +8,24 @@ uniform vec4 gradColor: hint_color;
 uniform float proportion: hint_range(0, 1) = 0.0;
 uniform float lowerLimit: hint_range(0, 1) = 0.01;
 
+float map(float value, float is, float ie, float os, float oe) {
+	float ir = ie - is;
+	float or = oe - os;
+	float ip = (value - is) / ir;
+	float ov = ip * or + os;
+	return ov;
+}
+
 void fragment() {
+	float v = map(UV.y, 0.0, 1.0, 0.2, 0.8);
+	float p = map(proportion, 0.0, 1.0, 0.2, 0.8);
 	vec4 texcol = texture(TEXTURE, UV);
 	vec4 vfill = step(lowerLimit, texcol);
 	float sfill = vfill.x * vfill.y * vfill.z * vfill.w;
-	vec4 fcolor = mix(fillColor, gradColor, UV.y);
-	vec4 color = mix(texcol, fcolor, step(1.0 - UV.y, proportion) * sfill);
+	vec4 fcolor = mix(fillColor, gradColor, v);
+	float sine = sin(12.0 * UV.x + TIME * 4.0) * 0.05;
+	float sinf = sin(24.0 * UV.x + TIME * 12.0) * 0.01;
+	float xcolor = step(sine, 0);
+	vec4 color = mix(texcol, fcolor, step(-sine + sinf + 1.0 - v, p) * sfill /** xcolor*/);
 	COLOR = color;
 }"
