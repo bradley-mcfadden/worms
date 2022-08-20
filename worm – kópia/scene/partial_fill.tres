@@ -1,0 +1,18 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform vec4 fillColor: hint_color;
+uniform vec4 gradColor: hint_color;
+uniform float proportion: hint_range(0, 1) = 0.0;
+uniform float lowerLimit: hint_range(0, 1) = 0.01;
+
+void fragment() {
+	vec4 texcol = texture(TEXTURE, UV);
+	vec4 vfill = step(lowerLimit, texcol);
+	float sfill = vfill.x * vfill.y * vfill.z * vfill.w;
+	vec4 fcolor = mix(fillColor, gradColor, UV.y);
+	vec4 color = mix(texcol, fcolor, step(1.0 - UV.y, proportion) * sfill);
+	COLOR = color;
+}"
