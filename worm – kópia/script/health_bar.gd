@@ -57,12 +57,14 @@ func _process(_delta):
 	var seg
 	var offset
 	var msec = OS.get_ticks_msec() / 500.0
-	var sqr_size := float(get_child_count())
+	var sqr_size := float(min(get_child_count(), 8))
+	var pow_term := pow(1.5, -(sqr_size - 3))
 	for i in range(body.size()):
 		seg = body[i]
-		offset = yoff - seg.rect_size.y * 0.5 + sin(msec + i * 2 / sqr_size) * amplitude
+		offset = yoff - seg.rect_size.y * 0.5 + sin(
+			(msec + i * 0.5) * 4 *  pow_term
+		) * amplitude
 		seg.rect_position.y = offset
-		
  
 
 func _test():
