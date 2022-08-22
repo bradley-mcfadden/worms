@@ -3,8 +3,8 @@
 [resource]
 code = "shader_type canvas_item;
 
-uniform vec4 fillColor: hint_color;
-uniform vec4 gradColor: hint_color;
+uniform vec4 fillColor: hint_color = vec4(0.70, 0.31, 0.31, 1.00);
+uniform vec4 gradColor: hint_color = vec4(0.47, 0.21, 0.21, 1.00);
 uniform float proportion: hint_range(0, 1) = 0.0;
 uniform float lowerLimit: hint_range(0, 1) = 0.01;
 

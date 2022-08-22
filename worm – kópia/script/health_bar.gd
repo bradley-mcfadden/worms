@@ -1,3 +1,7 @@
+# health_bar.gd
+# author: Bradley McFadden
+# date: 2022-08-21
+# brief: Manages a list of icons that oscillate and display worm health.
 extends Control
 
 
@@ -14,19 +18,25 @@ var body := []
 
 
 func _ready():
-	#if Engine.editor_hint:
-	_test_grow()
-
-
-func _on_Segment_took_damage(position, segment):
 	pass
 
 
-func _on_Segment_died(position, segment):
-	pass
+# set the icon at position to the correct fill level
+# based on segment remaining health
+func _on_Segment_took_damage(position: int, segment):
+	if !_in_bounds(position): return
+	print("segment at ", position, " took damage")
+	body[position].set_proportion(float(segment.health) / segment.start_health)
 
 
+# bounds check pos against len of body
+func _in_bounds(pos: int) -> bool:
+	return pos >= 0 && pos < len(body)
+
+
+# update number of icons to size "to"
 func _on_Worm_size_changed(to: int):
+	print("size changed", to)
 	if head == null:
 		_init_health_bar(to)
 	elif len(body) < to:
@@ -93,6 +103,7 @@ func _init_health_bar(size: int):
 			yoff = 25 + amplitude
 	
 	_position_segments()
+	_fill_segments()
 
 
 func _position_segments():
@@ -101,6 +112,11 @@ func _position_segments():
 		seg.rect_position.x = xoff
 		seg.rect_position.y = yoff - seg.rect_size.y / 2 
 		xoff += seg.rect_size.x + hseperation 
+
+
+func _fill_segments():
+	for seg in body:
+		seg.set_proportion()
 
 
 func _process(_delta):
@@ -132,3 +148,13 @@ func _test_grow():
 	yield(get_tree().create_timer(4.0), "timeout")
 	_grow_to_size(20)
 
+
+func _test_take_damage():
+	_init_health_bar(10)
+	yield(get_tree().create_timer(4.0), "timeout")
+	_on_Segment_took_damage(5, DummySegment.new())
+
+
+class DummySegment:
+	var health := 50
+	var start_health := 100

@@ -1,6 +1,5 @@
 extends Position2D
 
-signal died(from, overkill)
 
 const MAX_SPEED = 400
 const ACC = 20
@@ -10,6 +9,9 @@ enum SegmentState { ALIVE, DEAD }
 signal segment_changed(segment, state)
 signal switch_layer_pressed(new_layer, node)
 signal layer_visibility_changed(layer, is_visible)
+signal died(from, overkill)
+signal segment_took_damage(position, segment)
+signal size_changed(to)
 
 # fill this with camera2D node 
 export (PackedScene) var camera
@@ -70,6 +72,7 @@ func _ready():
 		body.append(segment)
 		emit_signal("segment_changed", segment, SegmentState.ALIVE)
 		segment.connect("segment_died", self, "_on_segment_died")
+		segment.connect("took_damage", self, "_on_segment_took_damage")
 #	this reverses the order of segments in the tree 
 	for i in body:
 		move_child(i, 0)
@@ -86,6 +89,8 @@ func _ready():
 		
 	#start_transform = transform
 	start_layer = layer
+
+	emit_signal("size_changed", len(body))
 
 
 func reset():
@@ -188,6 +193,8 @@ func _control(delta):
 
 
 func add_segment():
+	var old_len := len(body)
+
 	var last2 = body[body.size() - 2]
 	var new_seg = Segment.instance()
 	new_seg.base = base
@@ -215,6 +222,8 @@ func add_segment():
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
 	emit_signal("segment_changed", new_tail, SegmentState.ALIVE)
+
+	emit_signal("size_changed", len(body))
 
 
 func scale_segments(factor):
@@ -334,9 +343,15 @@ func _on_segment_died(segment, from, overkill):
 		for i in range(len(body) - 2, idx, -1):
 			var old_segment = body.pop_back()
 			emit_signal("segment_changed", old_segment, SegmentState.DEAD)
+			emit_signal("size_changed", len(body) - 1)
 	
 		call_deferred("add_segment")
 
 		if (len(body) < minimum_length || segment == head) and is_alive():
 			dead = true
 			emit_signal("died", self, from, overkill)
+
+
+func _on_segment_took_damage(segment):
+	var idx = body.find(segment)
+	emit_signal("segment_took_damage", len(body) - idx - 1, segment)

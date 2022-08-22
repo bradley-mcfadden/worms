@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal segment_died(segment, from, overkill)
+signal took_damage(segment)
 
 export (int) var start_health := 100
 
@@ -62,7 +63,9 @@ func get_layer() -> int:
 func take_damage(how_much, from):
 	if not is_alive(): return
 	print("Player is taking " + str(how_much) + " damage")
-	if health > 0: health -= how_much
+	if health > 0: 
+		health -= how_much
+		emit_signal("took_damage", self)
 	if health < start_health * -0.25:
 		emit_signal("segment_died", self, from, true)
 	elif health <= 0:
