@@ -7,6 +7,7 @@ extends Node
 enum SegmentState { ALIVE, DEAD }
 
 signal layer_changed(to)
+signal number_of_layers_changed(to)
 
 export (int) var collision_offset = 4
 
@@ -26,8 +27,12 @@ func add_items(items:Array):
 # Add an item to the specified layer.
 func add(layer:int, item:Node):
 	if not item.has_method("get_depth_controllers"): return
+	var prev_len: int = len(layers)
 	while len(layers) <= layer: 
 		layers.append([])
+	if prev_len != len(layers):
+		emit_signal("number_of_layers_changed", len(layers))
+	
 	var controllers = item.get_depth_controllers()
 	for dc in controllers:
 		layers[layer].append(dc)

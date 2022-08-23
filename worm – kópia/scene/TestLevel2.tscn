@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://img/morgan-padgett-dirt-texture.jpg" type="Texture" id=14]
 [ext_resource path="res://script/dirt.tres" type="Shader" id=15]
 [ext_resource path="res://scene/HealthBar.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scene/DepthMeter.tscn" type="PackedScene" id=17]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 15 )
@@ -83,6 +84,8 @@ margin_right = 1040.0
 margin_bottom = 514.0
 hseperation = -12
 
+[node name="DepthGauge" parent="CanvasLayer" instance=ExtResource( 17 )]
+
 [node name="AllEnemiesDead" parent="CanvasLayer" instance=ExtResource( 12 )]
 visible = false
 anchor_left = 0.5
@@ -143,6 +146,8 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="segment_took_damage" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Segment_took_damage"]
 [connection signal="size_changed" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Worm_size_changed"]
 [connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]
+[connection signal="layer_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_layer_changed"]
 [connection signal="layer_changed" from="DepthManager" to="Background" method="_on_layer_changed"]
+[connection signal="number_of_layers_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_number_of_layers_changed"]
 [connection signal="lay_eggs" from="CanvasLayer/AllEnemiesDead" to="." method="_on_lay_eggs"]
 [connection signal="restart" from="CanvasLayer/DeathScreen" to="." method="_on_restart"]
