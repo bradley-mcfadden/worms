@@ -9,7 +9,7 @@ func invoke():
 	parent.acceleration *= 2
 	is_ready = false
 	$Duration.start()
-	emit_signal("is_ready_changed", self, is_ready)
+	emit_signal("is_ready_changed_cd", self, is_ready, $Cooldown.wait_time + $Duration.wait_time)
 
 
 func _on_Duration_timeout():

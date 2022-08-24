@@ -12,6 +12,9 @@ signal layer_visibility_changed(layer, is_visible)
 signal died(from, overkill)
 signal segment_took_damage(position, segment)
 signal size_changed(to)
+signal abilities_ready(abilities)
+signal ability_is_ready_changed(ability, is_ready)
+signal ability_is_ready_changed_cd(ability, is_ready, duration)
 
 # fill this with camera2D node 
 export (PackedScene) var camera
@@ -82,10 +85,14 @@ func _ready():
 		add_child(wide_camera)
 		call_deferred("scale_camera")
 	
-	for ability in $AbilitiesContainer.get_children():
+	var abilities := $AbilitiesContainer.get_children()
+	for ability in abilities:
 		ability.parent = self
 		if not ability.is_connected("is_ready_changed", self, "_on_ability_is_ready_changed"):
 			ability.connect("is_ready_changed", self, "_on_ability_is_ready_changed")
+		if not ability.is_connected("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd"):
+			ability.connect("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd")
+	emit_signal("abilities_ready", abilities)
 		
 	#start_transform = transform
 	start_layer = layer
@@ -329,8 +336,12 @@ func _on_DiveTimer_timeout():
 		is_switch_depth = false
 
 
-func _on_ability_is_ready_changed(ability, is_ready:bool):
-	pass
+func _on_ability_is_ready_changed(ability, is_ready: bool):
+	emit_signal("ability_is_ready_changed", ability, is_ready)
+
+
+func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float):
+	emit_signal("ability_is_ready_changed_cd", ability, is_ready, duration)
 
 
 func _on_head_animation_changed(from:String, to:String):

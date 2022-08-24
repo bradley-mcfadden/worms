@@ -1,0 +1,17 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform vec4 fill_color: hint_color;
+uniform float proportion: hint_range(0, 1) = 0.0;
+
+const float LOWER_LIMIT = 0.01;
+
+void fragment() {
+	vec4 texcol = texture(TEXTURE, UV);
+	vec4 vfill = step(LOWER_LIMIT, texcol);
+	float sfill = vfill.x * vfill.y * vfill.z * vfill.w;
+	vec4 color = mix(texcol, fill_color, step(1.0 - UV.y, proportion) * sfill * 0.5);
+	COLOR = color;
+}"
