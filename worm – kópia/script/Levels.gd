@@ -1,7 +1,7 @@
 extends Node
 
 # This file contains methods for working with the levels directory
-# Including saving progress, getting level resources, as well as the 
+# Including saving progress, getting level resources, as well as the
 # next level available.
 
 const LEVELS_PATH = "res://levels"
@@ -11,7 +11,7 @@ const CONFIG_SUFFIX = "config.ini"
 const PROPERTIES_KEY = "properties"
 const PREVIOUS_KEY = "previous"
 
-var level_list = null setget ,get_level_list
+var level_list = null setget , get_level_list
 var level_idx: int = -1
 
 
@@ -28,7 +28,7 @@ func get_level_list() -> Array:
 	level_list = []
 	level_dir.list_dir_begin(true, true)
 	var next = level_dir.get_next()
-	while (next != ""):
+	while next != "":
 		level_list.append(next)
 		next = level_dir.get_next()
 	return level_list
@@ -37,11 +37,13 @@ func get_level_list() -> Array:
 # next_index of level iterator
 # increments the index by 1
 # the index wraps at the bounds
-func next_index(wrap=true) -> int:
-	if level_list == null: get_level_list()
+func next_index(wrap = true) -> int:
+	if level_list == null:
+		get_level_list()
 	var n = len(level_list)
-	if n == 0: return -1
-	if not wrap: 
+	if n == 0:
+		return -1
+	if not wrap:
 		level_idx += 1
 		if level_idx >= n:
 			level_idx = -1
@@ -83,7 +85,7 @@ func config_from_index(idx: int) -> Dictionary:
 	var dict = {}
 	if err != OK:
 		return {}
-	
+
 	# TODO: Make this more efficient if the number of sections is
 	# known
 	for section in config.get_sections():
@@ -91,20 +93,22 @@ func config_from_index(idx: int) -> Dictionary:
 		for key in config.get_section_keys(section):
 			var temp = config.get_value(section, key)
 			section_dict[key] = temp
-		
+
 		dict[section] = section_dict
-	
-	if not dict.has(PROPERTIES_KEY): return {}
-	if not dict.has(PREVIOUS_KEY): return {}
+
+	if not dict.has(PROPERTIES_KEY):
+		return {}
+	if not dict.has(PREVIOUS_KEY):
+		return {}
 
 	return dict
 
 
 # config_to_index saves the given configuration to the levels at index
-func config_to_index(idx: int, dict:Dictionary) -> bool:
+func config_to_index(idx: int, dict: Dictionary) -> bool:
 	var path = "%s/level%d/%s" % [LEVELS_PATH, idx, CONFIG_SUFFIX]
 	var config = ConfigFile.new()
-	
+
 	for section in dict.keys():
 		var section_dict = dict[section]
 		for key in section_dict.keys():

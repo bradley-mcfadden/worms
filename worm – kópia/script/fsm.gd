@@ -1,13 +1,13 @@
+class_name Fsm
 extends Object
 
-class_name Fsm
-
 var stack := []
+
 
 # push the current state to the top of the stack.
 # calls on_exit() for the previous top, and on_enter() for the new state.
 # Does not remove the previous state from the stack.
-func push(state:EntityState):
+func push(state: EntityState):
 	if !stack.empty():
 		stack.back().on_exit()
 	stack.push_back(state)
@@ -29,7 +29,7 @@ func pop():
 # replace the top of the stack with the current state.
 # the stack remains the same size.
 # on_enter() is called on state, and on_exit() is called for the previous top.
-func replace(state:EntityState):
+func replace(state: EntityState):
 	if !stack.empty():
 		stack.pop_back().on_exit()
 	stack.push_back(state)

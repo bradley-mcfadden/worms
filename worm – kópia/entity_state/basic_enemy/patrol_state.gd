@@ -7,8 +7,9 @@ const START_REACTION_TIME := 30
 const PROPERTIES := {color = Color.aquamarine, speed = 250, threshold = 32, fov = 90}
 
 var reaction_time = START_REACTION_TIME
-var idle_patrol 
+var idle_patrol
 var patrol_idx
+
 
 func _init(_fsm, _entity):
 	fsm = _fsm
@@ -45,10 +46,11 @@ func react_to_player() -> bool:
 
 func get_target():
 	var n = len(idle_patrol)
-	if n == 0: return null
+	if n == 0:
+		return null
 	var threshold = PROPERTIES["threshold"]
 	if entity.position.distance_to(idle_patrol[patrol_idx]) < threshold:
-		patrol_idx = patrol_idx + 1 if patrol_idx  < n - 1 else 0
+		patrol_idx = patrol_idx + 1 if patrol_idx < n - 1 else 0
 	return idle_patrol[patrol_idx]
 
 

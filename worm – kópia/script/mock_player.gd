@@ -4,15 +4,15 @@ extends KinematicBody2D
 signal died(node, killer, overkill)
 signal switch_layer_pressed(new_layer, node)
 
-enum State {PLAYER_ALIVE=20, PLAYER_DEAD=40}
+enum State { PLAYER_ALIVE = 20, PLAYER_DEAD = 40 }
 
-export (int) var start_health = 100
-export (int) var layer = 0
+export(int) var start_health = 100
+export(int) var layer = 0
 
 var vel := Vector2.ZERO
 var health = start_health
 var current_state = State.PLAYER_ALIVE
-var start_transform 
+var start_transform
 
 
 func _ready():
@@ -38,23 +38,25 @@ func _draw():
 			color = Color.black
 	draw_circle(Vector2.ZERO, 20, color)
 	draw_line(Vector2.ZERO, Vector2.RIGHT * 21, Color.black)
-	draw_arc(Vector2.ZERO, 21, 0, 2*PI, 20, Color.black)
+	draw_arc(Vector2.ZERO, 21, 0, 2 * PI, 20, Color.black)
 
 
-func _physics_process(delta):
-	if Engine.editor_hint: return
+func _physics_process(_delta):
+	if Engine.editor_hint:
+		return
 	match current_state:
-		State.PLAYER_ALIVE: 
+		State.PLAYER_ALIVE:
 			move_and_collide(vel)
-			look_at(position+vel)
-		State.PLAYER_DEAD: pass
+			look_at(position + vel)
+		State.PLAYER_DEAD:
+			pass
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("layer_up"):
-		emit_signal("switch_layer_pressed", get_layer()+1, self)
+		emit_signal("switch_layer_pressed", get_layer() + 1, self)
 	elif Input.is_action_just_pressed("layer_down"):
-		emit_signal("switch_layer_pressed", get_layer()-1, self)
+		emit_signal("switch_layer_pressed", get_layer() - 1, self)
 
 
 func _on_Timer_timeout():
@@ -80,7 +82,8 @@ func get_state():
 
 func take_damage(how_much, from):
 	print("Player is taking " + str(how_much) + " damage")
-	if health > 0: health -= how_much
+	if health > 0:
+		health -= how_much
 	if health < start_health * -0.25:
 		emit_signal("died", self, from, true)
 		current_state = State.PLAYER_DEAD
@@ -99,9 +102,11 @@ func get_layer() -> int:
 	return $DepthController.get_layer()
 
 
-func set_layer(new_layer:int):
+func set_layer(new_layer: int):
 	$DepthController.set_layer(new_layer)
 
 
 func get_depth_controllers() -> Array:
-	return [$DepthController,]
+	return [
+		$DepthController,
+	]

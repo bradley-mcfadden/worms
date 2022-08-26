@@ -2,15 +2,13 @@ extends EntityState
 
 class_name BasicEnemyRangedAttackState
 
-
 const NAME := "RangedAttackState"
 const PROPERTIES := {
-	color = Color.crimson, 
-	speed = 350, 
-	threshold = 200, 
+	color = Color.crimson,
+	speed = 350,
+	threshold = 200,
 	fov = 360,
 }
-
 
 var aplayer
 

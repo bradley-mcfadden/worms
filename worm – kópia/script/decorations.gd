@@ -6,5 +6,5 @@ func get_decorations() -> Array:
 	for child in get_children():
 		if child.has_method("get_layer"):
 			obs.append(child)
-	
+
 	return obs

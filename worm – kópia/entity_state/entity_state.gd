@@ -2,7 +2,6 @@ extends Object
 
 class_name EntityState
 
-
 var entity
 var fsm
 

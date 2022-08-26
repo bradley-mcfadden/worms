@@ -1,18 +1,16 @@
 # Boiler plate code for an entity state.
 # Each of these fields and methods needs to be present in a class that
-# extends EntityState. 
+# extends EntityState.
 # Depending on the entity, the properties keys can be swapped.
 extends EntityState
 
-
 class_name BoilerState
-
 
 const NAME := "BoilerState"
 const PROPERTIES := {
-	color = Color.crimson, 
-	speed = 350, 
-	threshold = 200, 
+	color = Color.crimson,
+	speed = 350,
+	threshold = 200,
 	fov = 360,
 }
 

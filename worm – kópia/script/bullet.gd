@@ -8,6 +8,7 @@ var damage = 0
 var lifetime = 10
 var layer := 0
 
+
 func setup(shot_by, velocity, damage, lifetime, cmask, layer):
 	self.shot_by = shot_by
 	self.velocity = velocity
@@ -21,7 +22,7 @@ func get_layer() -> int:
 	return $DepthController.get_layer()
 
 
-func set_layer(new_layer:int):
+func set_layer(new_layer: int):
 	$DepthController.set_layer(new_layer)
 
 

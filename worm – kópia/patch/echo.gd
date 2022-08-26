@@ -1,12 +1,11 @@
 extends Node2D
 
-
-export (Vector2) var pos
-export (int) var amplitude
-export (int) var average
-export (float) var speed
-export (Color) var color
-export (float) var decay
+export(Vector2) var pos
+export(int) var amplitude
+export(int) var average
+export(float) var speed
+export(Color) var color
+export(float) var decay
 
 var tdelta
 var view_pos
@@ -16,11 +15,12 @@ var xpos
 func _ready():
 	tdelta = 0.0
 
+
 func _draw():
 	var v_rect: Rect2 = get_viewport_transform().affine_inverse().xform(get_viewport_rect())
 	var vpos = Vector2()
-	vpos.x = clamp(pos.x, v_rect.position.x,  v_rect.position.x + v_rect.size.x)
-	vpos.y = clamp(pos.y, v_rect.position.y,  v_rect.position.y + v_rect.size.y)
+	vpos.x = clamp(pos.x, v_rect.position.x, v_rect.position.x + v_rect.size.x)
+	vpos.y = clamp(pos.y, v_rect.position.y, v_rect.position.y + v_rect.size.y)
 	view_pos = get_viewport_transform() * get_global_transform() * vpos
 	xpos = pos
 

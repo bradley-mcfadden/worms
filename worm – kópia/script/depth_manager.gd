@@ -4,35 +4,37 @@
 # collide slide past each other and make invisible all but the current layer.
 extends Node
 
-enum SegmentState { ALIVE, DEAD }
-
 signal layer_changed(to)
 signal number_of_layers_changed(to)
 
-export (int) var collision_offset = 4
+enum SegmentState { ALIVE, DEAD }
+
+export(int) var collision_offset = 4
 
 var layers := []
 onready var current_layer := 0
+
 
 func _ready():
 	layers.append([])
 
 
-func add_items(items:Array):
+func add_items(items: Array):
 	for item in items:
 		if item.has_method("get_layer"):
 			add(item.get_layer(), item)
 
 
 # Add an item to the specified layer.
-func add(layer:int, item:Node):
-	if not item.has_method("get_depth_controllers"): return
+func add(layer: int, item: Node):
+	if not item.has_method("get_depth_controllers"):
+		return
 	var prev_len: int = len(layers)
-	while len(layers) <= layer: 
+	while len(layers) <= layer:
 		layers.append([])
 	if prev_len != len(layers):
 		emit_signal("number_of_layers_changed", len(layers))
-	
+
 	var controllers = item.get_depth_controllers()
 	for dc in controllers:
 		layers[layer].append(dc)
@@ -45,8 +47,9 @@ func add(layer:int, item:Node):
 # Switch the position of item to the layer `to`.
 # Cause item to become active or inactive depending on whether the new layer is
 # active.
-func switch(to:int, item:Node):
-	if not item.has_method("get_depth_controllers"): return
+func switch(to: int, item: Node):
+	if not item.has_method("get_depth_controllers"):
+		return
 	var controllers = item.get_depth_controllers()
 	var item_curr_layer = item.get_layer()
 	for dc in controllers:
@@ -58,17 +61,17 @@ func switch(to:int, item:Node):
 		dc.set_active(to == current_layer)
 
 
-func switch_if_safe(to:int, item:Node):
+func switch_if_safe(to: int, item: Node):
 	if is_switch_valid(to):
 		switch(to, item)
 		return true
-	else:
-		return false
+	return false
 
 
 # Remove an item from the layers
-func remove(item:Node):
-	if not item.has_method("get_depth_controllers"): return
+func remove(item: Node):
+	if not item.has_method("get_depth_controllers"):
+		return
 	var controllers = item.get_depth_controllers()
 	var item_l = item.get_layer()
 	for dc in controllers:
@@ -80,15 +83,18 @@ func remove(item:Node):
 
 # Switch the active layer. All elements in old layer are inactive.
 # All elements in new_layer are active.
-func set_current_layer(new_layer:int):
-	if new_layer == current_layer: return
-	for item in layers[current_layer]: item.set_active(false)
-	for item in layers[new_layer]: item.set_active(true)
+func set_current_layer(new_layer: int):
+	if new_layer == current_layer:
+		return
+	for item in layers[current_layer]:
+		item.set_active(false)
+	for item in layers[new_layer]:
+		item.set_active(true)
 	current_layer = new_layer
 	emit_signal("layer_changed", new_layer)
 
 
-func is_switch_valid(to:int):
+func is_switch_valid(to: int):
 	return to >= 0 and to < len(layers)
 
 
@@ -99,7 +105,8 @@ func _on_switch_layer_pressed(new_layer, node):
 
 
 func _on_segment_changed(segment, state):
-	if segment == null: return
+	if segment == null:
+		return
 	match state:
 		SegmentState.ALIVE:
 			add(segment.get_layer(), segment)
@@ -119,5 +126,6 @@ func _on_layer_visibility_changed(layer, is_visible):
 
 func _on_dc_tree_exited(layer, dc):
 	var idx = layers[layer].find(dc)
-	if idx == -1: return
+	if idx == -1:
+		return
 	layers[layer].remove(idx)

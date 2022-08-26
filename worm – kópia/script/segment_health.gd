@@ -1,6 +1,6 @@
 extends TextureRect
 
-var shader = preload("res://scene/partial_fill.tres") 
+var shader = preload("res://scene/partial_fill.tres")
 
 
 # Need to create a new ShaderMaterial for each instance, otherwise
@@ -12,5 +12,5 @@ func _ready():
 	set_proportion()
 
 
-func set_proportion(frac: float=1.0):
+func set_proportion(frac: float = 1.0):
 	self.material.set_shader_param("proportion", frac)

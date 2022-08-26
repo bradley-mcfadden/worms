@@ -2,7 +2,8 @@ extends Ability
 
 var is_ready = true
 
-export (int) var factor = 2
+export(int) var factor = 2
+
 
 func invoke():
 	parent.max_speed *= 2

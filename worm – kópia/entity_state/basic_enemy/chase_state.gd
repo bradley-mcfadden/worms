@@ -7,7 +7,6 @@ const PROPERTIES := {color = Color.crimson, speed = 350, threshold = 200, fov = 
 # Length of time in seconds before entity will give up its chase
 const INITIAL_INTEREST := 10.0
 
-
 var current_interest
 var last_player_location
 

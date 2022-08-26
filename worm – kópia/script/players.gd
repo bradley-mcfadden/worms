@@ -1,6 +1,6 @@
 extends Node
 
-signal all_players_dead()
+signal all_players_dead
 
 
 func reset_all_players():
@@ -26,7 +26,7 @@ func get_players() -> Array:
 
 
 func _on_Player_died(node, killer, _overkill):
-	print("Player " + str(node) + " was killed by " + str(killer));
+	print("Player " + str(node) + " was killed by " + str(killer))
 	# remove_child(node)
 	# node.queue_free()
 	if get_alive_players() == 0:

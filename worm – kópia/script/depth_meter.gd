@@ -16,9 +16,13 @@ func set_maximum_depth(to: int):
 func change_depth(to: int):
 	var slider: VSlider = $VSlider
 	$Tween.interpolate_property(
-		slider, "value", slider.value, to, 
+		slider,
+		"value",
+		slider.value,
+		to,
 		abs(slider.value - to) * RATE_OF_CHANGE,
-		Tween.TRANS_QUAD, Tween.EASE_IN
+		Tween.TRANS_QUAD,
+		Tween.EASE_IN
 	)
 	$Tween.start()
 	$DepthValue.text = str(to)

@@ -1,6 +1,6 @@
 extends Control
 
-const FILL_SHADER = preload("res://scene/fill.tres") 
+const FILL_SHADER = preload("res://scene/fill.tres")
 const SAMPLE_IMAGE = preload("res://img/mini.png")
 const ENABLED_MOD := Color(1.0, 1.0, 1.0, 1.0)
 const DISABLED_MOD := Color(0.5, 0.5, 0.5, 0.5)
@@ -37,7 +37,9 @@ func _on_ability_is_ready_changed(ability, is_ready: bool):
 		param_map[ability] = ShaderParam.new("proportion", ability_map[ability].material)
 	var start_value = param_map[ability].get_param()
 	$Tween.stop(param_map[ability], "param")
-	$Tween.interpolate_property(param_map[ability], "param", start_value, next_mod, 1.0, Tween.TRANS_SINE)
+	$Tween.interpolate_property(
+		param_map[ability], "param", start_value, next_mod, 1.0, Tween.TRANS_SINE
+	)
 	$Tween.start()
 
 
@@ -73,7 +75,7 @@ func _test_on_ability_is_ready_changed_cd():
 
 
 class ShaderParam:
-	var name: String 
+	var name: String
 	var material: ShaderMaterial
 	var param setget set_param, get_param
 
@@ -83,8 +85,6 @@ class ShaderParam:
 
 	func set_param(value):
 		material.set_shader_param(name, value)
-	
 
 	func get_param():
 		return material.get_shader_param(name)
-

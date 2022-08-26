@@ -1,6 +1,6 @@
 extends Node
 
-signal all_enemies_dead()
+signal all_enemies_dead
 
 
 func reset_all_enemies():
@@ -21,7 +21,7 @@ func get_enemies() -> Array:
 	var enemies := []
 	for child in get_children():
 		enemies.append(child)
-	
+
 	return enemies
 
 

@@ -10,7 +10,7 @@ func _ready():
 	pass
 
 
-func update_tracked_position(new_position:Vector2):
+func update_tracked_position(new_position: Vector2):
 	var mag: Vector2 = (new_position - last_tracked_position) / max_tracked_speed
 	last_tracked_position = new_position
 	self.material.set_shader_param("scroll_speed", mag)

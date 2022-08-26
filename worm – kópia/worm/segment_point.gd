@@ -1,6 +1,5 @@
 extends KinematicBody2D
 
-
 onready var j1 := $Joint1
 onready var j2 := $Joint2
 onready var base: float = j1.position.distance_to(j2.position)
@@ -8,6 +7,7 @@ onready var theta := 0.0
 
 var jj1 = Vector2.ZERO
 var jj2 = Vector2.ZERO
+
 
 func _ready():
 	pass
@@ -33,16 +33,15 @@ func move(vel, oscvel):
 	# self.position += vel
 	# look_at(vel + self.position)
 	###
-	
+
 	position = j1.position + (j2.position - j1.position) / 2
 
-	
 	var osc_offset = oscvel * int(sin(theta) * vel.length())
 	# j1.position += vel.rotated(rot)
 	# j2.position += Vector2(vel.x + base - sqrt(base * base - vel.y * vel.y), 0).rotated(rot)
-	
-	$Collision.position = osc_offset#.rotated(rot)
+
+	$Collision.position = osc_offset  #.rotated(rot)
 	$Image.position = osc_offset
-	
-	position += vel# .rotated(rot)
+
+	position += vel  # .rotated(rot)
 	rotation = vel.angle()

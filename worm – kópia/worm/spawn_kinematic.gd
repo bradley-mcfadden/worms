@@ -1,6 +1,5 @@
 extends Position2D
 
-
 const MAX_SPEED = 400
 const ACC = 20
 
@@ -16,28 +15,27 @@ signal abilities_ready(abilities)
 signal ability_is_ready_changed(ability, is_ready)
 signal ability_is_ready_changed_cd(ability, is_ready, duration)
 
-# fill this with camera2D node 
-export (PackedScene) var camera
-export (PackedScene) var Segment
-export (PackedScene) var Head
-export (PackedScene) var Tail
-export (int) var segment_number = 30
+# fill this with camera2D node
+export(PackedScene) var camera
+export(PackedScene) var Segment
+export(PackedScene) var Head
+export(PackedScene) var Tail
+export(int) var segment_number = 30
 # difference between two segments' theta along sin curve
 # controls oscillation
-export (float) var tdelta = 0.75
-export (int) var max_speed = MAX_SPEED
-export (int) var acceleration = ACC
-export (float) var speed_decay = 0.95
-export (int) var layer := 0
-export (int) var minimum_length = 5
-
+export(float) var tdelta = 0.75
+export(int) var max_speed = MAX_SPEED
+export(int) var acceleration = ACC
+export(float) var speed_decay = 0.95
+export(int) var layer := 0
+export(int) var minimum_length = 5
 
 var dead = false
 var body = []
 var heading = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
 var vel = Vector2(0.001, 0)
-# base is default distance betveen joints. 
+# base is default distance betveen joints.
 var base = 40
 var j1 = Vector2()
 var counter = 0
@@ -46,8 +44,8 @@ var tail
 var wide_camera
 var iter
 
-var start_transform:Transform2D
-var start_layer:int
+var start_transform: Transform2D
+var start_layer: int
 var is_switch_depth := false
 var background = null
 
@@ -68,7 +66,7 @@ func _ready():
 			segment = Segment.instance()
 		add_child(segment)
 		segment.base = base
-		segment.j1 = j1 
+		segment.j1 = j1
 		j1 = Vector2(j1.x - base, 0)
 		segment.j2 = j1
 		print("j1: " + str(segment.j1) + " j2: " + str(segment.j2))
@@ -76,7 +74,7 @@ func _ready():
 		emit_signal("segment_changed", segment, SegmentState.ALIVE)
 		segment.connect("segment_died", self, "_on_segment_died")
 		segment.connect("took_damage", self, "_on_segment_took_damage")
-#	this reverses the order of segments in the tree 
+#	this reverses the order of segments in the tree
 	for i in body:
 		move_child(i, 0)
 	if camera:
@@ -84,7 +82,7 @@ func _ready():
 		#scale_camera()
 		add_child(wide_camera)
 		call_deferred("scale_camera")
-	
+
 	var abilities := $AbilitiesContainer.get_children()
 	for ability in abilities:
 		ability.parent = self
@@ -93,7 +91,7 @@ func _ready():
 		if not ability.is_connected("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd"):
 			ability.connect("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd")
 	emit_signal("abilities_ready", abilities)
-		
+
 	#start_transform = transform
 	start_layer = layer
 
@@ -115,7 +113,6 @@ func reset():
 		segment.queue_free()
 	body.clear()
 	_ready()
-	
 
 
 func _draw():
@@ -133,10 +130,10 @@ func update_camera_position():
 	var sum := Vector2.ZERO
 	for segment in body:
 		sum += segment.position
-		
+
 	var avg = sum / len(body)
 	wide_camera.position = avg
-	
+
 	if background:
 		background.set_noise_offset(avg)
 
@@ -144,14 +141,13 @@ func update_camera_position():
 # Do not touch this function.
 func _physics_process(delta):
 	_control(delta)
-	if vel.length() > 0 :
+	if vel.length() > 0:
 		var vel_ = vel.rotated(heading) * delta
 		var ivel = Vector2(vel.y, vel.x).normalized()
 
 		var i = counter
-		for segment in body :
-			vel_ = Vector2(vel_.length(), 0).rotated(
-					(segment.j1 - segment.j2).angle_to(vel_))
+		for segment in body:
+			vel_ = Vector2(vel_.length(), 0).rotated((segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
 			var j2 = segment.move(vel_, ivel, delta)
 			vel_ = j2
@@ -170,7 +166,7 @@ func _control(delta):
 		#print("Moving forward")
 	else:
 		vel *= speed_decay
-	
+
 	if Input.is_action_pressed("move_left"):
 		heading -= PI * delta * 3
 	elif Input.is_action_pressed("move_right"):
@@ -182,20 +178,20 @@ func _control(delta):
 		scale_segments(1.1)
 	if !is_switch_depth:
 		if Input.is_action_just_pressed("peek_layer_up"):
-			emit_signal("layer_visibility_changed", layer+1, true)
+			emit_signal("layer_visibility_changed", layer + 1, true)
 		elif Input.is_action_just_released("peek_layer_up"):
-			emit_signal("layer_visibility_changed", layer+1, false)
+			emit_signal("layer_visibility_changed", layer + 1, false)
 		elif Input.is_action_just_pressed("peek_layer_down"):
-			emit_signal("layer_visibility_changed", layer-1, true)
+			emit_signal("layer_visibility_changed", layer - 1, true)
 		elif Input.is_action_just_released("peek_layer_down"):
-			emit_signal("layer_visibility_changed", layer-1, false)
+			emit_signal("layer_visibility_changed", layer - 1, false)
 		elif Input.is_action_just_pressed("layer_down"):
-			emit_signal("switch_layer_pressed", layer-1, self)
+			emit_signal("switch_layer_pressed", layer - 1, self)
 		elif Input.is_action_just_pressed("layer_up"):
-			emit_signal("switch_layer_pressed", layer+1, self)
+			emit_signal("switch_layer_pressed", layer + 1, self)
 	for i in range(0, 4):
 		var ability = $AbilitiesContainer.get_child(i)
-		if (Input.is_action_pressed("ability" + str(i + 1)) and ability.is_ready):
+		if Input.is_action_pressed("ability" + str(i + 1)) and ability.is_ready:
 			ability.invoke()
 
 
@@ -220,12 +216,12 @@ func add_segment():
 	body.append(new_tail)
 	add_child(new_tail)
 	move_child(new_tail, 0)
-	
+
 	scale_camera()
-	
+
 	new_seg.layer = head.get_layer()
 	new_tail.layer = head.get_layer()
-	
+
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
 	emit_signal("segment_changed", new_tail, SegmentState.ALIVE)
@@ -241,7 +237,7 @@ func scale_segments(factor):
 			segment.scale_children(factor)
 		else:
 			segment.scale *= factor
-		
+
 		if j2 == null:
 			j1 = segment.j1
 		else:
@@ -256,7 +252,7 @@ func split():
 		var tail = body.pop_back()
 		destroyed_parts.append(tail)
 		emit_signal("segment_changed", tail, SegmentState.DEAD)
-		
+
 	return destroyed_parts
 
 
@@ -277,7 +273,7 @@ func scale_camera():
 		new_zoom.x = max(new_zoom.x, 1.5)
 		new_zoom.y = max(new_zoom.y, 1.5)
 		print("changing zoom to ", new_zoom)
-		if (wide_camera.has_method("zoom_to")):
+		if wide_camera.has_method("zoom_to"):
 			wide_camera.zoom_to(new_zoom)
 		# else:
 		# wide_camera.zoom = new_zoom
@@ -287,7 +283,7 @@ func get_entity_positions() -> Array:
 	var pts := []
 	for segment in body:
 		pts.append(segment)
-	
+
 	return pts
 
 
@@ -295,13 +291,13 @@ func get_layer() -> int:
 	return head.get_layer()
 
 
-func set_active(is_active:bool):
+func set_active(is_active: bool):
 	for segment in body:
 		segment.set_modulate(Color(1, 1, 1, 1) if is_active else Color(1, 1, 1, 0.3))
 		#segment.visible = true
 
 
-func set_layer(new_layer:int):
+func set_layer(new_layer: int):
 	set_active(false)
 	layer = new_layer
 	iter = Iterator.new()
@@ -344,7 +340,7 @@ func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float):
 	emit_signal("ability_is_ready_changed_cd", ability, is_ready, duration)
 
 
-func _on_head_animation_changed(from:String, to:String):
+func _on_head_animation_changed(from: String, to: String):
 	$AbilitiesContainer/Bite.set_is_ready(to == "idle")
 
 
@@ -355,7 +351,7 @@ func _on_segment_died(segment, from, overkill):
 			var old_segment = body.pop_back()
 			emit_signal("segment_changed", old_segment, SegmentState.DEAD)
 			emit_signal("size_changed", len(body) - 1)
-	
+
 		call_deferred("add_segment")
 
 		if (len(body) < minimum_length || segment == head) and is_alive():

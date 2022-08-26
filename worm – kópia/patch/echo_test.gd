@@ -1,6 +1,5 @@
 extends Node2D
 
-
 const SPEED = 50
 
 

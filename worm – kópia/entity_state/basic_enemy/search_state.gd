@@ -4,9 +4,9 @@ class_name BasicEnemySearchState
 
 const NAME := "SearchState"
 const PROPERTIES := {
-	color = Color.green, 
-	speed = 350, 
-	threshold = 200, 
+	color = Color.green,
+	speed = 350,
+	threshold = 200,
 	fov = 360,
 }
 

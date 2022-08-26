@@ -4,12 +4,11 @@
 # brief: Manages a list of icons that oscillate and display worm health.
 extends Control
 
-
-export (PackedScene) var headWidg
-export (PackedScene) var segmWidg
-export (PackedScene) var tailWidg
-export (int) var hseperation := 0
-export (int) var amplitude := 10
+export(PackedScene) var head_widg
+export(PackedScene) var segm_widg
+export(PackedScene) var tail_widg
+export(int) var hseperation := 0
+export(int) var amplitude := 10
 
 var yoff := 0
 var tail
@@ -24,7 +23,8 @@ func _ready():
 # set the icon at position to the correct fill level
 # based on segment remaining health
 func _on_Segment_took_damage(position: int, segment):
-	if !_in_bounds(position): return
+	if !_in_bounds(position):
+		return
 	print("segment at ", position, " took damage")
 	body[position].set_proportion(float(segment.health) / segment.start_health)
 
@@ -47,7 +47,8 @@ func _on_Worm_size_changed(to: int):
 
 func _shrink_to_size(to: int):
 	var by: int = len(body) - to
-	if by <= 0: return
+	if by <= 0:
+		return
 
 	var seg
 	# n-1, n-by-2, by+1 removed
@@ -58,15 +59,16 @@ func _shrink_to_size(to: int):
 		remove_child(seg)
 		seg.queue_free()
 	# add head back in
-	head = headWidg.instance()
+	head = head_widg.instance()
 	body.append(head)
 	add_child(head)
 	_position_segments()
-	
+
 
 func _grow_to_size(to: int):
 	var by: int = to - len(body)
-	if by <= 0: return
+	if by <= 0:
+		return
 
 	var seg
 	var curr_length := len(body)
@@ -75,12 +77,12 @@ func _grow_to_size(to: int):
 	remove_child(head)
 	head.queue_free()
 	# add segments
-	for i in range(curr_length - 1, curr_length + by - 1):
-		seg = segmWidg.instance()
+	for _i in range(curr_length - 1, curr_length + by - 1):
+		seg = segm_widg.instance()
 		body.append(seg)
 		add_child(seg)
 	# add new tail
-	head = headWidg.instance()
+	head = head_widg.instance()
 	body.append(head)
 	add_child(head)
 
@@ -88,20 +90,19 @@ func _grow_to_size(to: int):
 
 
 func _init_health_bar(size: int):
-	tail = tailWidg.instance()
+	tail = tail_widg.instance()
 	body.append(tail)
-	for i in range(1, size - 1):
-		var segm = segmWidg.instance()
+	for _i in range(1, size - 1):
+		var segm = segm_widg.instance()
 		body.append(segm)
-	head = headWidg.instance()
+	head = head_widg.instance()
 	body.append(head)
-	
-	var xoff := 0
+
 	for seg in body:
 		add_child(seg)
 		if seg == tail:
 			yoff = 25 + amplitude
-	
+
 	_position_segments()
 	_fill_segments()
 
@@ -110,8 +111,8 @@ func _position_segments():
 	var xoff := 0
 	for seg in body:
 		seg.rect_position.x = xoff
-		seg.rect_position.y = yoff - seg.rect_size.y / 2 
-		xoff += seg.rect_size.x + hseperation 
+		seg.rect_position.y = yoff - seg.rect_size.y / 2
+		xoff += seg.rect_size.x + hseperation
 
 
 func _fill_segments():
@@ -127,11 +128,9 @@ func _process(_delta):
 	var pow_term := pow(1.5, -(sqr_size - 3))
 	for i in range(body.size()):
 		seg = body[i]
-		offset = yoff - seg.rect_size.y * 0.5 + sin(
-			(msec + i * 0.5) * 4 *  pow_term
-		) * amplitude
+		offset = yoff - seg.rect_size.y * 0.5 + sin((msec + i * 0.5) * 4 * pow_term) * amplitude
 		seg.rect_position.y = offset
- 
+
 
 func _test_init_health_bar():
 	_init_health_bar(20)

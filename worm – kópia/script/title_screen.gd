@@ -18,19 +18,17 @@ func _ready():
 func init_labels():
 	var animate = Configuration.use_text_animations
 	var header = $VBoxContainer/Header
-	set_text(
-		header, header.text, ANIMATION_OPEN_HEADER, 
-		ANIMATION_CLOSE_HEADER, true, animate)
+	set_text(header, header.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate)
 
 
-func set_text(label, msg, start, end, center=true, animate=true):
+func set_text(label, msg, start, end, center = true, animate = true):
 	var text = msg
 	if center:
 		text = wrap_string(msg, "[center]", "[/center]")
-	
+
 	if animate:
 		text = wrap_string(text, start, end)
-	
+
 	label.bbcode_text = text
 
 

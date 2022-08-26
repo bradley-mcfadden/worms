@@ -1,13 +1,13 @@
 extends Node2D
 
-
 export var layer := 0
+
 
 func _ready():
 	set_layer(layer)
 
 
-func set_layer(new_layer:int):
+func set_layer(new_layer: int):
 	$DepthController.set_layer(new_layer)
 
 
@@ -16,7 +16,9 @@ func get_layer() -> int:
 
 
 func get_depth_controllers() -> Array:
-	return [$DepthController, ]
+	return [
+		$DepthController,
+	]
 
 
 func _on_hide():

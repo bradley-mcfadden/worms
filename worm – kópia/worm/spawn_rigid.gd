@@ -3,30 +3,31 @@ extends RigidBody2D
 const MAX_SPEED = 400
 const ACC = 20
 
-# fill this with camera2D node 
-export (PackedScene) var camera
-export (PackedScene) var Segment
-export (PackedScene) var Head
-export (PackedScene) var Tail
-export (int) var segment_number = 30
-export (int) var offset = 2
-export (float) var tdelta = 0.75
-export (int) var max_speed = MAX_SPEED
-export (int) var acc = ACC
-export (float) var speed_decay = 0.95
+# fill this with camera2D node
+export(PackedScene) var camera
+export(PackedScene) var Segment
+export(PackedScene) var Head
+export(PackedScene) var Tail
+export(int) var segment_number = 30
+export(int) var offset = 2
+export(float) var tdelta = 0.75
+export(int) var max_speed = MAX_SPEED
+export(int) var acc = ACC
+export(float) var speed_decay = 0.95
 
 var body = []
 var rot = 0
 var heading = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
 var vel = Vector2(0.001, 0)
-#base is deafult distance betveen joints. 
+#base is deafult distance betveen joints.
 var base = 40
 var j1 = Vector2()
 var counter = 0
 var head
 var tail
 var wide_camera
+
 
 func _ready():
 # This loop will set segment's properties.
@@ -43,11 +44,11 @@ func _ready():
 			segment = Segment.instance()
 		add_child(segment)
 		segment.base = base
-		segment.j1 = j1 
-		j1=Vector2(j1.x - base, 0)
+		segment.j1 = j1
+		j1 = Vector2(j1.x - base, 0)
 		segment.j2 = j1
 		body.append(segment)
-#	this reverses order of segments in three 
+#	this reverses order of segments in three
 	for i in body:
 		move_child(i, 0)
 	# if camera:
@@ -60,7 +61,7 @@ func _ready():
 		print(zoom_factor)
 		wide_camera.zoom = Vector2(zoom_factor, zoom_factor)
 		add_child(wide_camera)
-	
+
 	for ability in $AbilitiesContainer.get_children():
 		ability.parent = self
 
@@ -80,7 +81,7 @@ func update_camera_position():
 	var sum := Vector2.ZERO
 	for segment in body:
 		sum += segment.position
-		
+
 	var avg = sum / len(body)
 	wide_camera.position = avg
 
@@ -107,26 +108,26 @@ func _physics_process(delta):
 #		counter += 0.2
 	pass
 
+
 func _integrate_forces(state):
 	var delta = state.get_step()
 	_control(delta)
-	if vel.length() > 0 :
+	if vel.length() > 0:
 		var vel_ = vel.rotated(heading) * delta
 		var ivel = Vector2(vel.y, vel.x).normalized()
 
 		var i = counter
-		for segment in body :
-			vel_ = Vector2(vel_.length(), 0).rotated(
-					(segment.j1 - segment.j2).angle_to(vel_))
+		for segment in body:
+			vel_ = Vector2(vel_.length(), 0).rotated((segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
 			segment.move(vel_, ivel)
-			vel_ = Vector2(
-					segment.base + vel_.x - sqrt(
-						segment.base * segment.base - vel_.y * vel_.y), 0
-						).rotated(segment.rotation)
+			vel_ = Vector2(segment.base + vel_.x - sqrt(segment.base * segment.base - vel_.y * vel_.y), 0).rotated(
+				segment.rotation
+			)
 			i += tdelta
 
 		counter += 0.2
+
 
 func _control(delta):
 #	This is just example just make sure you dont alaut beckvard movement.
@@ -170,7 +171,7 @@ func add_segment():
 	body.append(new_tail)
 	add_child(new_tail)
 	move_child(new_tail, 0)
-	
+
 	if camera:
 		wide_camera.zoom += Vector2(0.1, 0.1)
 
@@ -183,7 +184,7 @@ func scale_segments(factor):
 			segment.scale_children(factor)
 		else:
 			segment.scale *= factor
-		
+
 		if j2 == null:
 			j1 = segment.j1
 		else:
@@ -196,7 +197,7 @@ func split():
 	var destroyed_parts = []
 	for _i in range(5):
 		destroyed_parts.append(body.pop_back())
-		
+
 	return destroyed_parts
 
 

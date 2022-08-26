@@ -14,6 +14,6 @@ func invoke():
 
 func set_is_ready(is_ready: bool):
 	print("set_is_ready ", self.is_ready, " is_ready ", is_ready)
-	if is_ready != self.is_ready: 
+	if is_ready != self.is_ready:
 		emit_signal("is_ready_changed", self, is_ready)
 	self.is_ready = is_ready

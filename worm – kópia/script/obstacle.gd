@@ -2,13 +2,13 @@ tool
 extends Node2D
 
 export var layer := 0
-export (Texture) var texture = null
-export (PoolVector2Array) var uvs := PoolVector2Array()
-export (PoolVector2Array) var points := PoolVector2Array()
-export (float) var peek_alpha = 0.3
+export(Texture) var texture = null
+export(PoolVector2Array) var uvs := PoolVector2Array()
+export(PoolVector2Array) var points := PoolVector2Array()
+export(float) var peek_alpha = 0.3
 
 var colors = PoolColorArray()
-var active 
+var active
 
 
 func _ready():
@@ -32,19 +32,19 @@ func get_collision_layer() -> int:
 	return $StaticBody2D.get_collision_layer()
 
 
-func set_collision_layer(new_layer:int):
+func set_collision_layer(new_layer: int):
 	$StaticBody2D.set_collision_layer(new_layer)
 
 
 func get_collision_mask() -> int:
 	return $StaticBody2D.get_collision_mask()
-	
 
-func set_collision_mask(new_mask:int):
+
+func set_collision_mask(new_mask: int):
 	$StaticBody2D.set_collision_mask(new_mask)
 
 
-func set_layer(new_layer:int):
+func set_layer(new_layer: int):
 	$DepthController.set_layer(new_layer)
 
 
@@ -53,10 +53,12 @@ func get_layer() -> int:
 
 
 func get_depth_controllers() -> Array:
-	return [$DepthController, ]
+	return [
+		$DepthController,
+	]
 
 
-func copy(pool:PoolVector2Array) -> PoolVector2Array:
+func copy(pool: PoolVector2Array) -> PoolVector2Array:
 	var new_pool := PoolVector2Array()
 	for vec in pool:
 		new_pool.append(vec)
@@ -73,11 +75,15 @@ func _on_show():
 	$Tween.start()
 
 
-func _on_peek_start():
-	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, peek_alpha), 0.1)
+func start_peek():
+	$Tween.interpolate_property(
+		self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, peek_alpha), 0.1
+	)
 	$Tween.start()
 
 
-func _on_peek_end():
-	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, peek_alpha), Color(1, 1, 1, 0), 0.1)
+func end_peek():
+	$Tween.interpolate_property(
+		self, "modulate", Color(1, 1, 1, peek_alpha), Color(1, 1, 1, 0), 0.1
+	)
 	$Tween.start()

@@ -1,5 +1,6 @@
 extends TextureRect
 
+
 func _ready():
 	for prop in texture.get_property_list():
 		print(prop)
@@ -15,6 +16,6 @@ func _ready():
 	print(texture.noise_offset)
 
 
-func _process(delta):
+func _process(_delta):
 	# print(texture.get_property_list())
 	pass

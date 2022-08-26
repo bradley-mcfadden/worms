@@ -1,6 +1,5 @@
 extends Node2D
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -11,6 +10,7 @@ var head
 onready var j1 := $Joint1
 onready var j2 := $Joint2
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -20,6 +20,7 @@ func _ready():
 func _process(delta):
 	update()
 	_draw()
+
 
 func _draw():
 	draw_line(j1.position, j2.position, Color.red)

@@ -1,6 +1,6 @@
 extends "res://worm/segment_rigid.gd"
 
-var anim_player:AnimationPlayer
+var anim_player: AnimationPlayer
 
 const IDLE = "idle"
 const MOUTH_CHOMP = "mouth_chomp"

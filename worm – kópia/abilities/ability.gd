@@ -5,8 +5,9 @@ class_name Ability
 signal is_ready_changed(ability, is_ready)
 signal is_ready_changed_cd(ability, is_ready, duration)
 
-export (Texture) var texture
+export(Texture) var texture
 var parent
+
 
 func invoke():
 	pass
