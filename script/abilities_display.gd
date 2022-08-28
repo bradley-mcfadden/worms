@@ -7,27 +7,36 @@ const DISABLED_MOD := Color(0.5, 0.5, 0.5, 0.5)
 
 var ability_map := {}
 var param_map := {}
-var abilities_added := false
+
+
+func _reset():
+	for child in $Box.get_children():
+		$Box.remove_child(child)
+		child.queue_free()
+	
+	ability_map.clear()
+	param_map.clear()
 
 
 func _on_abilities_ready(arr: Array):
-	if abilities_added: return
-	var rect: TextureRect
+	_reset()
 	for ability in arr:
-		rect = TextureRect.new()
-		if ability is Object and ability.has_method("get_texture"):
-			rect.texture = ability.get_texture()
-		else:
-			rect.texture = SAMPLE_IMAGE
-		rect.material = ShaderMaterial.new()
-		rect.material.shader = FILL_SHADER
-		rect.material.set_shader_param("fill_color", DISABLED_MOD)
-
-		$Box.add_child(rect)
-		ability_map[ability] = rect
-		rect_min_size = $Box.rect_min_size
+		_on_ability_added(ability)
 	
-	abilities_added = true
+
+func _on_ability_added(ability: Ability):
+	var rect = TextureRect.new()
+	if ability is Object and ability.has_method("get_texture"):
+		rect.texture = ability.get_texture()
+	else:
+		rect.texture = SAMPLE_IMAGE
+	rect.material = ShaderMaterial.new()
+	rect.material.shader = FILL_SHADER
+	rect.material.set_shader_param("fill_color", DISABLED_MOD)
+
+	$Box.add_child(rect)
+	ability_map[ability] = rect
+	rect_min_size = $Box.rect_min_size
 
 
 func _on_ability_is_ready_changed(ability, is_ready: bool):
@@ -43,7 +52,6 @@ func _on_ability_is_ready_changed(ability, is_ready: bool):
 	$Tween.start()
 
 
-# TODO: test me
 func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float):
 	var rect: TextureRect = ability_map[ability]
 	if not is_ready:
