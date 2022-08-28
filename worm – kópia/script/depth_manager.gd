@@ -9,8 +9,6 @@ signal number_of_layers_changed(to)
 
 enum SegmentState { ALIVE, DEAD }
 
-export(int) var collision_offset = 4
-
 var layers := []
 onready var current_layer := 0
 
@@ -20,6 +18,7 @@ func _ready():
 
 
 func add_items(items: Array):
+	# print("Add group of items ", items)
 	for item in items:
 		if item.has_method("get_layer"):
 			add(item.get_layer(), item)
@@ -29,6 +28,7 @@ func add_items(items: Array):
 func add(layer: int, item: Node):
 	if not item.has_method("get_depth_controllers"):
 		return
+	# print("Add ", item, " to layer ", layer)
 	var prev_len: int = len(layers)
 	while len(layers) <= layer:
 		layers.append([])
@@ -57,7 +57,7 @@ func switch(to: int, item: Node):
 		layers[item_curr_layer].remove(idx)
 		layers[to].append(dc)
 		dc.set_layer(to)
-		print("Changing ", dc.get_parent())
+		# print("Changing ", dc.get_parent())
 		dc.set_active(to == current_layer)
 
 

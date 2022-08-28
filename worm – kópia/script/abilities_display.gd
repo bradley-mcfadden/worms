@@ -31,7 +31,7 @@ func _on_abilities_ready(arr: Array):
 
 
 func _on_ability_is_ready_changed(ability, is_ready: bool):
-	print("is_ready_changed ", is_ready)
+	# print("is_ready_changed ", is_ready)
 	var next_mod = 0.0 if is_ready else 1.0
 	if not param_map.has(ability):
 		param_map[ability] = ShaderParam.new("proportion", ability_map[ability].material)

@@ -9,7 +9,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-headWidg = ExtResource( 2 )
-segmWidg = ExtResource( 4 )
-tailWidg = ExtResource( 3 )
+head_widg = ExtResource( 2 )
+segm_widg = ExtResource( 4 )
+tail_widg = ExtResource( 3 )
 hseperation = -8

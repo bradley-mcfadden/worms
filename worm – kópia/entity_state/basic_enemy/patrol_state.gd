@@ -37,7 +37,7 @@ func _physics_process(delta):
 func react_to_player() -> bool:
 	var player = entity.check_for_player()
 	if player != null:
-		print(player)
+		# print(player)
 		reaction_time -= 1
 		if reaction_time <= 0:
 			return true

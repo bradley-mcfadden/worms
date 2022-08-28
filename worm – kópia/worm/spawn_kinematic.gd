@@ -69,7 +69,6 @@ func _ready():
 		segment.j1 = j1
 		j1 = Vector2(j1.x - base, 0)
 		segment.j2 = j1
-		print("j1: " + str(segment.j1) + " j2: " + str(segment.j2))
 		body.append(segment)
 		emit_signal("segment_changed", segment, SegmentState.ALIVE)
 		segment.connect("segment_died", self, "_on_segment_died")
@@ -272,7 +271,7 @@ func scale_camera():
 		var new_zoom = Vector2(0.1, 0.1) * len(body)
 		new_zoom.x = max(new_zoom.x, 1.5)
 		new_zoom.y = max(new_zoom.y, 1.5)
-		print("changing zoom to ", new_zoom)
+		# print("changing zoom to ", new_zoom)
 		if wide_camera.has_method("zoom_to"):
 			wide_camera.zoom_to(new_zoom)
 		# else:

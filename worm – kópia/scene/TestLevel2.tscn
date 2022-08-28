@@ -43,6 +43,7 @@ script = ExtResource( 5 )
 [node name="SpawnKinematic" parent="Players" instance=ExtResource( 9 )]
 pause_mode = 1
 position = Vector2( -246, -377 )
+segment_number = 30
 max_speed = 600
 
 [node name="Obstacles" type="Node" parent="."]
@@ -57,7 +58,6 @@ points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -
 [node name="Obstacle3" parent="Obstacles" instance=ExtResource( 7 )]
 position = Vector2( 423, 138 )
 rotation = -1.1331
-layer = 1
 uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
 points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
 

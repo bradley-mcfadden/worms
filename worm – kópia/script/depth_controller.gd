@@ -24,12 +24,12 @@ func _ready():
 		start_layer = parent.get_collision_layer()
 		start_mask = parent.get_collision_mask()
 
-		var cl = start_layer + COLLISION_OFFSET * depth_layer
-		var cm = start_mask + COLLISION_OFFSET * depth_layer
-		set_collision_layer(cl)
-		set_collision_mask(cm)
-
-		print("cl ", cl, " cm ", cm)
+		# var cl = start_layer + (COLLISION_OFFSET * depth_layer)
+		# var cm = start_mask + (COLLISION_OFFSET * depth_layer)
+		# print("Start layer ", start_layer, " ", (COLLISION_OFFSET * depth_layer))
+		# print("Depth layer ", depth_layer)
+		
+		set_layer(parent.layer)
 
 
 # Set whether this object is active. An active object is visible and collides,
@@ -58,13 +58,14 @@ func get_layer() -> int:
 
 # Change the controlled object's depth layer.
 func set_layer(layer: int):
+	# print("Call set layer on ", self, " with layer ", layer)
 	if active == null:
 		active = depth_layer == layer
 	depth_layer = layer
 
 	if parent.has_method("set_collision_mask"):
-		set_collision_layer(start_layer + COLLISION_OFFSET * depth_layer)
-		set_collision_mask(start_mask + COLLISION_OFFSET * depth_layer)
+		set_collision_layer(start_layer << (2 * depth_layer))
+		set_collision_mask(start_mask << (2 * depth_layer))
 
 	parent.layer = layer
 
@@ -72,22 +73,22 @@ func set_layer(layer: int):
 # Set the collision mask to the given layer. Does not allow for multiple masks
 # to be set.
 func set_collision_mask(layer: int):
-	parent.set_collision_mask(int(pow(2, layer)))
+	parent.set_collision_mask(layer)
 	# print("new cm ", layer)
 
 
 # Set the collision layer to the given layer. Does not allow for multiple layers
 # to be set.
 func set_collision_layer(layer: int):
-	parent.set_collision_layer(int(pow(2, layer)))
+	parent.set_collision_layer(layer)
 	# print("new cl ", layer)
 
 
 # Reset parent's collision layer and mask to match its initial depth value.
 func reset():
 	if parent.has_method("set_collision_mask"):
-		set_collision_layer(start_layer + COLLISION_OFFSET * depth_layer)
-		set_collision_mask(start_mask + COLLISION_OFFSET * depth_layer)
+		set_collision_layer(start_layer)
+		set_collision_mask(start_mask)
 
 		depth_layer = start_layer
 

@@ -24,11 +24,10 @@ func on_enter():
 func _physics_process(delta):
 	var player = entity.check_for_player()
 	if player != null:
-		print("I see a player! ", player)
 		last_player_location = player.position
 		current_interest = INITIAL_INTEREST
-		var dist = entity.position.distance_to(player.position)
-		print(dist)
+		var dist = entity.position.distance_to(player.position) - player.radius - entity.radius
+		entity.look_at(player.position)
 		if entity.check_melee_attack(dist, player.position):
 			print(self, "Doing a melee attack!")
 			fsm.push(BasicEnemyStateLoader.melee_attack(fsm, entity))

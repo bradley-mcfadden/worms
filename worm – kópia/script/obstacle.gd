@@ -33,6 +33,7 @@ func get_collision_layer() -> int:
 
 
 func set_collision_layer(new_layer: int):
+	print("obstacle ", $StaticBody2D.collision_layer, " to ", new_layer)
 	$StaticBody2D.set_collision_layer(new_layer)
 
 
@@ -41,10 +42,13 @@ func get_collision_mask() -> int:
 
 
 func set_collision_mask(new_mask: int):
+	print("obstacle ", $StaticBody2D.collision_mask, " to ", new_mask)
+
 	$StaticBody2D.set_collision_mask(new_mask)
 
 
 func set_layer(new_layer: int):
+	print("set_layer() to ", new_layer)
 	$DepthController.set_layer(new_layer)
 
 

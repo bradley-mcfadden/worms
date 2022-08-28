@@ -15,6 +15,7 @@ camera = ExtResource( 7 )
 Segment = ExtResource( 6 )
 Head = ExtResource( 5 )
 Tail = ExtResource( 4 )
+segment_number = 10
 speed_decay = 0.9
 
 [node name="AbilitiesContainer" type="Node" parent="."]

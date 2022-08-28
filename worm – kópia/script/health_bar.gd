@@ -36,7 +36,7 @@ func _in_bounds(pos: int) -> bool:
 
 # update number of icons to size "to"
 func _on_Worm_size_changed(to: int):
-	print("size changed", to)
+	# print("size changed", to)
 	if head == null:
 		_init_health_bar(to)
 	elif len(body) < to:

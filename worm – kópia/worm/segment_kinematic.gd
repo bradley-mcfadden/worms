@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal segment_died(segment, from, overkill)
 signal took_damage(segment)
 
+export(int) var radius := 45
 export(int) var start_health := 100
 
 # Yes i changed it to Area2D because kinematic isnt nessesery.
@@ -77,12 +78,14 @@ func is_alive() -> bool:
 	return health > 0
 
 
-func set_collision_layer(layer: int):
-	collision_layer = layer
-	# print("cl ", collision_layer)
+func set_collision_layer(clayer: int):
+	# print("segment cl from ", collision_layer, " to ", clayer)
+	collision_layer = clayer
+	
 
 
 func set_collision_mask(mask: int):
+	# print("segment cm from ", collision_mask, " to ", mask)
 	collision_mask = mask
 
 

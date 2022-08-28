@@ -19,7 +19,7 @@ func _init(_fsm, _entity):
 
 
 func on_enter():
-	aplayer = entity.get_animation_player()
+	aplayer = entity.animation_player
 	aplayer.connect("animation_finished", self, "_on_animation_finished")
 	aplayer.play("ranged_attack")
 

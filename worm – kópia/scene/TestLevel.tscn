@@ -19,26 +19,6 @@ script = ExtResource( 3 )
 
 [node name="TargetFollow" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( 177, 62 )
-ent_state_prop = {
-0: {
-"color": Color( 0.5, 1, 0.83, 1 ),
-"fov": 90,
-"speed": 250,
-"threshold": 32
-},
-1: {
-"color": Color( 1, 0, 0, 1 ),
-"fov": 360,
-"speed": 350,
-"threshold": 200
-},
-2: {
-"color": Color( 0, 0, 0, 1 ),
-"fov": 0,
-"speed": 0,
-"threshold": 0
-}
-}
 idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
 
 [node name="Players" type="Node" parent="."]

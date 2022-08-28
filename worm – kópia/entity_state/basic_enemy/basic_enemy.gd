@@ -12,6 +12,7 @@ const DRAW_ME = true
 
 var ent_state_prop := {}
 
+export(int) var radius := 20
 export(float) var steer_force := 0.5
 export(int) var look_ahead := 125
 export(int) var num_rays := 12
@@ -49,7 +50,7 @@ var animation_player
 
 func _ready():
 	set_layer(layer)
-	print("Enemy ", collision_layer)
+	# print("Enemy ", collision_layer)
 	if Engine.editor_hint:
 		return
 
@@ -67,7 +68,7 @@ func _ready():
 		ray_directions[i] = Vector2.RIGHT.rotated(angle)
 		if angle > PI / 2 or angle < 3 * PI / 2:
 			ray_directions[i] *= 0.5
-		print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
+		# print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
 
 	start_transform = transform
 	start_layer = layer
@@ -96,16 +97,17 @@ func _physics_process(delta: float):
 
 
 func move(delta: float):
+	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME:
+		$echo.set_visible(true)
+	else:
+		$echo.set_visible(false)
+	if (target == null or target.distance_to(global_position) < fsm.top().PROPERTIES["threshold"]):
+		return
 	var speed = fsm.top().PROPERTIES["speed"]
 	var desired_velocity = chosen_dir.rotated(rot) * speed
 	velocity = velocity.linear_interpolate(desired_velocity, steer_force)
 	rotation = velocity.angle()
 	position += velocity * delta
-
-	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME:
-		$echo.set_visible(true)
-	else:
-		$echo.set_visible(false)
 
 
 func _draw():
@@ -182,7 +184,7 @@ func set_interest():
 	# var path_direction = owner.get_path_direction(position)
 	# if owner and owner.has_method("get_target"):
 	if target == null:
-		print("null target")
+		# print("null target")
 		set_default_interest()
 		return SeekState.NO_TARGET
 	var threshold = ent_state_prop[fsm.top().NAME]["threshold"]
@@ -257,20 +259,21 @@ func check_for_player() -> Node:
 			if ent == null:
 				continue
 			var angle_to_player = abs((ent.position - position).angle() - rotation)
-			var dist_to_player = position.distance_to(ent.position)
+			var dist_to_player = position.distance_to(ent.position) - ent.radius - radius
 			var f = deg2rad(fsm.top().PROPERTIES["fov"])
-			var _hit = space_state.intersect_ray(
-				position, position + (ent.position - position).normalized() * look_distance
+			var hit = space_state.intersect_ray(
+				position, position + (ent.position - position).normalized() * look_distance, [self],
+				collision_mask
 			)
 			if (
 				angle_to_player < f * 0.5
 				and ent.get_layer() == get_layer()
 				and dist_to_player < look_distance
 				and ent.is_alive()
+			
+				and hit.has("collider")
+				and hit["collider"].has_method("take_damage")			
 			):
-				#and hit.has("collider")
-				#and hit["collider"].has_method("take_damage")):
-				# print(angle_to_player, " ", f * 0.5)
 				return ent
 	return null
 
@@ -280,18 +283,14 @@ func check_ranged_attack(dist_to_player, ppos):
 	if !has_ranged_attack:
 		return false
 	var space_state = get_world_2d().direct_space_state
-	var hit: Dictionary = space_state.intersect_ray(position, ppos - position, [self])
-	print(hit)
-	if hit.has("collider"):  #dist_to_player < ranged_thresh
+	var hit: Dictionary = space_state.intersect_ray(position, ppos, [self], collision_mask)
+	if hit.has("collider"):
 		# and $AnimationPlayer.assigned_animation == "idle"
-		#and
 		if hit["collider"].has_method("take_damage"):
 			#$AnimationPlayer.play("ranged_attack")
-			print("Doing ranged attack!")
+			# print("Doing ranged attack!")
 			look_at(hit["position"])
 			return true
-		else:
-			print(hit["collider"].has_method("take_damage"))
 	return false
 
 
@@ -319,12 +318,8 @@ func check_melee_attack(dist_to_player, ppos):
 	#var current_anim = $AnimationPlayer.current_animation
 	if dist_to_player < melee_thresh:  # and current_anim == "idle":
 		# $AnimationPlayer.play("melee_attack")
-		print("Doing melee attacK!", dist_to_player)
+		# print("Doing melee attacK!", dist_to_player)
 		return true
-	else:
-		print("Not close enough to melee! ", dist_to_player, melee_thresh)
-	#else:
-	#	print($AnimationPlayer.assigned_animation)
 	return false
 
 

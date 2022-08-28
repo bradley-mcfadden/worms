@@ -12,8 +12,7 @@ func invoke():
 	emit_signal("is_ready_changed", self, false)
 
 
-func set_is_ready(is_ready: bool):
-	print("set_is_ready ", self.is_ready, " is_ready ", is_ready)
-	if is_ready != self.is_ready:
-		emit_signal("is_ready_changed", self, is_ready)
-	self.is_ready = is_ready
+func set_is_ready(_is_ready: bool):
+	if _is_ready != self.is_ready:
+		emit_signal("is_ready_changed", self, _is_ready)
+	self.is_ready = _is_ready
