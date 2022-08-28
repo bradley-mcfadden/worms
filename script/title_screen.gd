@@ -43,7 +43,6 @@ func _on_StartGame_pressed():
 	print("Start level %d" % Levels.level_idx)
 	var idx = Levels.next_index()
 	print("Start level %d" % idx)
-	print(str(idx))
 	var first = Levels.scene_from_index(idx)
 	var file = File.new()
 	if file.file_exists(first):

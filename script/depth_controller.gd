@@ -43,13 +43,13 @@ func set_active(is_active: bool):
 
 
 func start_peek():
-	if parent.has_method("peek_start"):
-		parent.peek_start()
+	if parent.has_method("start_peek"):
+		parent.start_peek()
 
 
 func end_peek():
-	if parent.has_method("peek_end"):
-		parent.peek_end()
+	if parent.has_method("end_peek"):
+		parent.end_peek()
 
 
 func get_layer() -> int:

@@ -12,6 +12,7 @@ func _ready():
 	$DepthManager.add_items($Decorations.get_decorations())
 	$DepthManager.set_current_layer(0)
 	$Background.set_layer(0)
+	$CanvasLayer/DepthGauge.change_depth(0)
 	death_screen = $CanvasLayer/DeathScreen
 	enemies_dead_screen = $CanvasLayer/AllEnemiesDead
 	primary_player = $Players/SpawnKinematic
