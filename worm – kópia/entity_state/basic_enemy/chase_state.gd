@@ -28,10 +28,10 @@ func _physics_process(delta):
 		current_interest = INITIAL_INTEREST
 		var dist = entity.position.distance_to(player.position) - player.radius - entity.radius
 		entity.look_at(player.position)
-		if entity.check_melee_attack(dist, player.position):
-			print(self, "Doing a melee attack!")
-			fsm.push(BasicEnemyStateLoader.melee_attack(fsm, entity))
-			return
+		# if entity.check_melee_attack(dist, player.position):
+		# 	print(self, "Doing a melee attack!")
+		# 	fsm.push(BasicEnemyStateLoader.melee_attack(fsm, entity))
+		# 	return
 		if entity.check_ranged_attack(dist, player.position):
 			print("Doing a ranged attack!")
 			fsm.push(BasicEnemyStateLoader.ranged_attack(fsm, entity))

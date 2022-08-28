@@ -34,6 +34,7 @@ func _ready():
 
 func _physics_process(delta):
 	position += velocity * delta
+	look_at(position + velocity)
 
 
 func _on_Bullet_body_entered(body):

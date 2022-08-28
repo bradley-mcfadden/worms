@@ -265,10 +265,13 @@ func check_for_player() -> Node:
 				position, position + (ent.position - position).normalized() * look_distance, [self],
 				collision_mask
 			)
+			if hit.has("collider"):
+				print(hit)
 			if (
 				angle_to_player < f * 0.5
+				#and 
 				and ent.get_layer() == get_layer()
-				and dist_to_player < look_distance
+				# and dist_to_player < look_distance
 				and ent.is_alive()
 			
 				and hit.has("collider")
@@ -283,12 +286,13 @@ func check_ranged_attack(dist_to_player, ppos):
 	if !has_ranged_attack:
 		return false
 	var space_state = get_world_2d().direct_space_state
-	var hit: Dictionary = space_state.intersect_ray(position, ppos, [self], collision_mask)
+	var hit: Dictionary = space_state.intersect_ray(position, position+(ppos-position)*fsm.top().PROPERTIES["threshold"], [self], collision_mask)
 	if hit.has("collider"):
+		# print(hit)
 		# and $AnimationPlayer.assigned_animation == "idle"
 		if hit["collider"].has_method("take_damage"):
 			#$AnimationPlayer.play("ranged_attack")
-			# print("Doing ranged attack!")
+			print("Doing ranged attack!")
 			look_at(hit["position"])
 			return true
 	return false
