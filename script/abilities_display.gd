@@ -7,13 +7,11 @@ const DISABLED_MOD := Color(0.5, 0.5, 0.5, 0.5)
 
 var ability_map := {}
 var param_map := {}
-
-
-func _ready():
-	pass
+var abilities_added := false
 
 
 func _on_abilities_ready(arr: Array):
+	if abilities_added: return
 	var rect: TextureRect
 	for ability in arr:
 		rect = TextureRect.new()
@@ -28,6 +26,8 @@ func _on_abilities_ready(arr: Array):
 		$Box.add_child(rect)
 		ability_map[ability] = rect
 		rect_min_size = $Box.rect_min_size
+	
+	abilities_added = true
 
 
 func _on_ability_is_ready_changed(ability, is_ready: bool):
