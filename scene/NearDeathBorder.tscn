@@ -21,8 +21,9 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/fill_color = Color( 1, 0, 0, 1 )
 
-[node name="SinTextureTest" type="Sprite"]
+[node name="NearDeathBorder" type="TextureRect"]
 material = SubResource( 2 )
-position = Vector2( 511.5, 302 )
-scale = Vector2( 20.42, 12 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 1 )
+expand = true

@@ -14,6 +14,7 @@ signal size_changed(to)
 signal abilities_ready(abilities)
 signal ability_is_ready_changed(ability, is_ready)
 signal ability_is_ready_changed_cd(ability, is_ready, duration)
+signal health_state_changed(is_low)
 
 # fill this with camera2D node
 export(PackedScene) var camera
@@ -23,12 +24,13 @@ export(PackedScene) var Tail
 export(int) var segment_number = 30
 # difference between two segments' theta along sin curve
 # controls oscillation
-export(float) var tdelta = 0.75
-export(int) var max_speed = MAX_SPEED
-export(int) var acceleration = ACC
-export(float) var speed_decay = 0.95
+export(float) var tdelta := 0.75
+export(int) var max_speed := MAX_SPEED
+export(int) var acceleration := ACC
+export(float) var speed_decay := 0.95
 export(int) var layer := 0
-export(int) var minimum_length = 5
+export(int) var minimum_length := 5
+export(int) var num_segment_for_low_health := minimum_length + 10
 
 var dead = false
 var body = []
@@ -90,11 +92,10 @@ func _ready():
 		if not ability.is_connected("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd"):
 			ability.connect("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd")
 	emit_signal("abilities_ready", abilities)
-
 	#start_transform = transform
 	start_layer = layer
-
 	emit_signal("size_changed", len(body))
+	emit_signal("health_state_changed", false)
 
 
 func reset():
@@ -224,8 +225,9 @@ func add_segment():
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
 	emit_signal("segment_changed", new_tail, SegmentState.ALIVE)
-
 	emit_signal("size_changed", len(body))
+	if len(body) >= num_segment_for_low_health:
+		emit_signal("health_state_changed", false)
 
 
 func scale_segments(factor):
@@ -346,7 +348,7 @@ func _on_head_animation_changed(from: String, to: String):
 func _on_segment_died(segment, from, overkill):
 	var idx = body.find(segment)
 	if idx != -1:
-		for i in range(len(body) - 2, idx, -1):
+		for _i in range(len(body) - 2, idx, -1):
 			var old_segment = body.pop_back()
 			emit_signal("segment_changed", old_segment, SegmentState.DEAD)
 			emit_signal("size_changed", len(body) - 1)
@@ -356,8 +358,15 @@ func _on_segment_died(segment, from, overkill):
 		if (len(body) < minimum_length || segment == head) and is_alive():
 			dead = true
 			emit_signal("died", self, from, overkill)
+		elif (len(body) < num_segment_for_low_health):
+			emit_signal("health_state_changed", true)
 
 
 func _on_segment_took_damage(segment):
 	var idx = body.find(segment)
 	emit_signal("segment_took_damage", len(body) - idx - 1, segment)
+
+	if segment == head:
+		var ratio = float(segment.health / segment.start_health)
+		if ratio < 0.5:
+			emit_signal("health_state_changed", true)

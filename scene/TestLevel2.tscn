@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -18,6 +18,8 @@
 [ext_resource path="res://scene/HealthBar.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scene/DepthMeter.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scene/AbilitiesDisplay.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scene/NearDeathBorder.tscn" type="PackedScene" id=19]
+[ext_resource path="res://script/near_death_border.gd" type="Script" id=20]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 15 )
@@ -75,6 +77,10 @@ script = ExtResource( 1 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 pause_mode = 2
+
+[node name="NearDeathBorder" parent="CanvasLayer" instance=ExtResource( 19 )]
+visible = false
+script = ExtResource( 20 )
 
 [node name="HealthBar" parent="CanvasLayer" instance=ExtResource( 16 )]
 anchor_top = 1.0
@@ -153,6 +159,7 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="ability_is_ready_changed" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed"]
 [connection signal="ability_is_ready_changed_cd" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed_cd"]
 [connection signal="died" from="Players/SpawnKinematic" to="Players" method="_on_Player_died"]
+[connection signal="health_state_changed" from="Players/SpawnKinematic" to="CanvasLayer/NearDeathBorder" method="_on_health_state_changed"]
 [connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
 [connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
 [connection signal="segment_took_damage" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Segment_took_damage"]
