@@ -26,7 +26,7 @@ func _on_Segment_took_damage(position: int, segment):
 	if !_in_bounds(position):
 		return
 	print("segment at ", position, " took damage")
-	body[position].set_proportion(float(segment.health) / segment.start_health)
+	body[len(body)-position-1].set_proportion(float(segment.health) / segment.start_health)
 
 
 # bounds check pos against len of body
@@ -52,16 +52,20 @@ func _shrink_to_size(to: int):
 
 	var seg
 	# n-1, n-by-2, by+1 removed
-	var size := len(body)
-	for i in range(size - 1, size - by - 2, -1):
+	for i in range(by, -1, -1):
 		seg = body[i]
 		body.remove(i)
 		remove_child(seg)
 		seg.queue_free()
-	# add head back in
-	head = head_widg.instance()
-	body.append(head)
-	add_child(head)
+		print(str(seg.proportion), " at ", i)
+	var new_tail = tail_widg.instance()
+	new_tail.set_proportion(tail.proportion)
+	add_child(new_tail)
+	var new_body := [new_tail]
+	new_body.append_array(body)
+	body = new_body
+
+	_reorder_children()
 	_position_segments()
 
 
@@ -71,21 +75,25 @@ func _grow_to_size(to: int):
 		return
 
 	var seg
-	var curr_length := len(body)
-	# replace current head
-	body.remove(curr_length - 1)
-	remove_child(head)
-	head.queue_free()
 	# add segments
-	for _i in range(curr_length - 1, curr_length + by - 1):
+	var new_body := []
+	var new_tail = tail_widg.instance()
+	new_body.append(new_tail)
+	add_child(new_tail)
+	for _i in range(by):
 		seg = segm_widg.instance()
-		body.append(seg)
+		new_body.append(seg)
 		add_child(seg)
-	# add new tail
-	head = head_widg.instance()
-	body.append(head)
-	add_child(head)
+	tail = new_tail
+	var old_tail = body.pop_front()
+	var replacement_seg = new_body.back()
+	replacement_seg.set_proportion(old_tail.proportion)
+	remove_child(old_tail)
+	old_tail.queue_free()
+	new_body.append_array(body)
+	body = new_body
 
+	_reorder_children()
 	_position_segments()
 
 
@@ -105,6 +113,12 @@ func _init_health_bar(size: int):
 
 	_position_segments()
 	_fill_segments()
+
+
+func _reorder_children():
+	var n := len(body)
+	for i in range(n):
+		move_child(body[i], i)
 
 
 func _position_segments():
@@ -138,12 +152,27 @@ func _test_init_health_bar():
 
 func _test_shrink():
 	_init_health_bar(20)
+	var dummy0 := DummySegment.new()
+	dummy0.health = 75
+	var dummy1 := DummySegment.new()
+	dummy1.health = 25
+	_on_Segment_took_damage(0, dummy0)
+	_on_Segment_took_damage(5, dummy0)
+	_on_Segment_took_damage(19, dummy1)
+	
+	_on_Segment_took_damage(15, dummy1)
 	yield(get_tree().create_timer(4.0), "timeout")
-	_shrink_to_size(10)
+	_shrink_to_size(12)
 
 
 func _test_grow():
 	_init_health_bar(10)
+	var dummy0 := DummySegment.new()
+	dummy0.health = 75
+	var dummy1 := DummySegment.new()
+	dummy1.health = 25
+	_on_Segment_took_damage(5, dummy0)
+	_on_Segment_took_damage(9, dummy1)
 	yield(get_tree().create_timer(4.0), "timeout")
 	_grow_to_size(20)
 
