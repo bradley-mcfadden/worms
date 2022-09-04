@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://scene/AbilitiesDisplay.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scene/NearDeathBorder.tscn" type="PackedScene" id=19]
 [ext_resource path="res://script/near_death_border.gd" type="Script" id=20]
+[ext_resource path="res://img/worm/segment.png" type="Texture" id=21]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 15 )
@@ -54,18 +55,22 @@ script = ExtResource( 4 )
 
 [node name="Obstacle2" parent="Obstacles" instance=ExtResource( 7 )]
 position = Vector2( 46, 210 )
+texture = ExtResource( 21 )
 uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
 points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
 
 [node name="Obstacle3" parent="Obstacles" instance=ExtResource( 7 )]
 position = Vector2( 423, 138 )
 rotation = -1.1331
+layer = 1
+texture = ExtResource( 21 )
 uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
 points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
 
 [node name="Obstacle4" parent="Obstacles" instance=ExtResource( 7 )]
 position = Vector2( 389, 483 )
 rotation = 0.894925
+texture = ExtResource( 21 )
 uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
 points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
 

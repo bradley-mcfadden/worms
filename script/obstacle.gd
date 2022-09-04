@@ -1,5 +1,5 @@
 tool
-extends Node2D
+extends StaticBody2D
 
 export var layer := 0
 export(Texture) var texture = null
@@ -13,7 +13,7 @@ var active
 
 func _ready():
 	set_layer(layer)
-	$StaticBody2D/CollisionPolygon2D.polygon = points
+	$CollisionPolygon2D.polygon = points
 
 
 func _process(_delta):
@@ -29,19 +29,19 @@ func _draw():
 
 
 func get_collision_layer() -> int:
-	return $StaticBody2D.get_collision_layer()
+	return collision_layer
 
 
 func set_collision_layer(new_layer: int):
-	$StaticBody2D.set_collision_layer(new_layer)
+	collision_layer = new_layer
 
 
 func get_collision_mask() -> int:
-	return $StaticBody2D.get_collision_mask()
+	return collision_mask
 
 
 func set_collision_mask(new_mask: int):
-	$StaticBody2D.set_collision_mask(new_mask)
+	collision_mask = new_mask
 
 
 func set_layer(new_layer: int):
