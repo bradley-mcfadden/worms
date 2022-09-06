@@ -2,30 +2,13 @@ tool
 extends StaticBody2D
 
 export var layer := 0
-export(Texture) var texture = null
-export(PoolVector2Array) var uvs := PoolVector2Array()
-export(PoolVector2Array) var points := PoolVector2Array()
 export(float) var peek_alpha = 0.3
 
-var colors = PoolColorArray()
 var active
 
 
 func _ready():
 	set_layer(layer)
-	$CollisionPolygon2D.polygon = points
-
-
-func _process(_delta):
-	update()
-
-
-func _draw():
-	draw_polygon(points, colors, uvs, texture)
-	# if Engine.editor_hint:
-	var array = copy(points)
-	array.append(points[0])
-	draw_polyline(array, Color.black)
 
 
 func get_collision_layer() -> int:

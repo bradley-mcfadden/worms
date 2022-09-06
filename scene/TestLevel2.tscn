@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://script/obstacles.gd" type="Script" id=4]
 [ext_resource path="res://script/players.gd" type="Script" id=5]
 [ext_resource path="res://scene/BasicEnemy.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scene/Obstacle.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://worm/SpawnKinematic.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scene/DeathScreen.tscn" type="PackedScene" id=10]
@@ -20,7 +19,262 @@
 [ext_resource path="res://scene/AbilitiesDisplay.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scene/NearDeathBorder.tscn" type="PackedScene" id=19]
 [ext_resource path="res://script/near_death_border.gd" type="Script" id=20]
-[ext_resource path="res://img/worm/segment.png" type="Texture" id=21]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=21]
+[ext_resource path="res://addons/rmsmartshape/shapes/point_array.gd" type="Script" id=22]
+[ext_resource path="res://addons/rmsmartshape/vertex_properties.gd" type="Script" id=23]
+[ext_resource path="res://addons/rmsmartshape/shapes/point.gd" type="Script" id=24]
+[ext_resource path="res://addons/rmsmartshape/materials/shape_material.gd" type="Script" id=25]
+[ext_resource path="res://addons/rmsmartshape/shapes/shape_closed.gd" type="Script" id=26]
+[ext_resource path="res://script/obstacle_ssd.gd" type="Script" id=27]
+[ext_resource path="res://img/dirt.jpg" type="Texture" id=28]
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=24]
+script = ExtResource( 24 )
+position = Vector2( 237, -392.628 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 23 )
+
+[sub_resource type="Resource" id=25]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=26]
+script = ExtResource( 24 )
+position = Vector2( 218, -332.628 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 25 )
+
+[sub_resource type="Resource" id=27]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=28]
+script = ExtResource( 24 )
+position = Vector2( 237, -392.628 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 27 )
+
+[sub_resource type="Resource" id=29]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=30]
+script = ExtResource( 24 )
+position = Vector2( 502.818, -477.019 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 29 )
+
+[sub_resource type="Resource" id=31]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=32]
+script = ExtResource( 24 )
+position = Vector2( 303.02, -494.978 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 31 )
+
+[sub_resource type="Resource" id=33]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=34]
+script = ExtResource( 24 )
+position = Vector2( 727.311, -447.835 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 33 )
+
+[sub_resource type="Resource" id=35]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=36]
+script = ExtResource( 24 )
+position = Vector2( 716.086, -191.914 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 35 )
+
+[sub_resource type="Resource" id=37]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=38]
+script = ExtResource( 24 )
+position = Vector2( 463.532, -116.709 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 37 )
+
+[sub_resource type="Resource" id=39]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=40]
+script = ExtResource( 24 )
+position = Vector2( 705.984, -60.5856 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 39 )
+
+[sub_resource type="Resource" id=41]
+script = ExtResource( 22 )
+_points = {
+0: SubResource( 24 ),
+1: SubResource( 26 ),
+3: SubResource( 28 ),
+5: SubResource( 30 ),
+6: SubResource( 32 ),
+7: SubResource( 34 ),
+8: SubResource( 36 ),
+9: SubResource( 38 ),
+10: SubResource( 40 )
+}
+_point_order = [ 3, 6, 5, 7, 8, 10, 9, 1, 0 ]
+_constraints = {
+[ 0, 3 ]: 15
+}
+_next_key = 4
+
+[sub_resource type="Resource" id=22]
+script = ExtResource( 25 )
+_edge_meta_materials = [  ]
+fill_textures = [ ExtResource( 28 ) ]
+fill_texture_normals = [  ]
+fill_texture_z_index = -10
+fill_mesh_offset = 0.0
+render_offset = 0.0
+
+[sub_resource type="Resource" id=42]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=43]
+script = ExtResource( 24 )
+position = Vector2( 493.732, 705.885 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 42 )
+
+[sub_resource type="Resource" id=44]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=45]
+script = ExtResource( 24 )
+position = Vector2( 1036.79, 841.65 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 44 )
+
+[sub_resource type="Resource" id=46]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=47]
+script = ExtResource( 24 )
+position = Vector2( 915.167, 547.493 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 46 )
+
+[sub_resource type="Resource" id=48]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=49]
+script = ExtResource( 24 )
+position = Vector2( 493.732, 705.885 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 48 )
+
+[sub_resource type="Resource" id=50]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=51]
+script = ExtResource( 24 )
+position = Vector2( 612.526, 451.327 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 50 )
+
+[sub_resource type="Resource" id=52]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=53]
+script = ExtResource( 24 )
+position = Vector2( 636.368, 879.599 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 52 )
+
+[sub_resource type="Resource" id=54]
+script = ExtResource( 22 )
+_points = {
+0: SubResource( 43 ),
+1: SubResource( 45 ),
+2: SubResource( 47 ),
+3: SubResource( 49 ),
+4: SubResource( 51 ),
+5: SubResource( 53 )
+}
+_point_order = [ 0, 4, 2, 1, 5, 3 ]
+_constraints = {
+[ 0, 3 ]: 15
+}
+_next_key = 4
+
+[sub_resource type="Resource" id=55]
+script = ExtResource( 25 )
+_edge_meta_materials = [  ]
+fill_textures = [ ExtResource( 28 ) ]
+fill_texture_normals = [  ]
+fill_texture_z_index = -10
+fill_mesh_offset = 0.0
+render_offset = 0.0
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 15 )
@@ -53,26 +307,58 @@ max_speed = 600
 pause_mode = 1
 script = ExtResource( 4 )
 
-[node name="Obstacle2" parent="Obstacles" instance=ExtResource( 7 )]
-position = Vector2( 46, 210 )
-texture = ExtResource( 21 )
-uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
-points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles"]
+script = ExtResource( 27 )
 
-[node name="Obstacle3" parent="Obstacles" instance=ExtResource( 7 )]
-position = Vector2( 423, 138 )
-rotation = -1.1331
+[node name="SS2D_Shape_Closed" type="Node2D" parent="Obstacles/StaticBody2D"]
+script = ExtResource( 26 )
+_points = SubResource( 41 )
+material_overrides = {
+}
+shape_material = SubResource( 22 )
+tessellation_stages = 5
+tessellation_tolerence = 4.0
+flip_edges = false
+render_edges = true
+collision_size = 32.0
+collision_offset = 0.0
+collision_polygon_node_path = NodePath("../CollisionPolygon2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D"]
+visible = false
+modulate = Color( 1, 1, 1, 0.3 )
+polygon = PoolVector2Array( 236.872, -392.688, 302.008, -497.052, 502.819, -477.022, 730.537, -450.546, 716.088, -191.914, 709.28, -56.0956, 463.311, -116.277, 215.495, -331.931 )
+
+[node name="DepthController" parent="Obstacles/StaticBody2D" instance=ExtResource( 21 )]
+
+[node name="Tween" type="Tween" parent="Obstacles/StaticBody2D"]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Obstacles"]
+script = ExtResource( 27 )
 layer = 1
-texture = ExtResource( 21 )
-uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
-points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
 
-[node name="Obstacle4" parent="Obstacles" instance=ExtResource( 7 )]
-position = Vector2( 389, 483 )
-rotation = 0.894925
-texture = ExtResource( 21 )
-uvs = PoolVector2Array( 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.45, 0.45, 0.35, 0.35, 0.45, 0.45, 0.5, 0.5, 0.4, 0.4, 0.5, 0.5, 0.4, 0.4 )
-points = PoolVector2Array( -25, -100, 25, -120, 50, 50, 0, 20, 5, 80, -40, 90, -100, 80, -40, 70, -30, -20, 0, 0 )
+[node name="SS2D_Shape_Closed" type="Node2D" parent="Obstacles/StaticBody2D2"]
+script = ExtResource( 26 )
+_points = SubResource( 54 )
+material_overrides = {
+}
+shape_material = SubResource( 55 )
+tessellation_stages = 5
+tessellation_tolerence = 4.0
+flip_edges = false
+render_edges = true
+collision_size = 32.0
+collision_offset = 0.0
+collision_polygon_node_path = NodePath("../CollisionPolygon2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D2"]
+visible = false
+modulate = Color( 1, 1, 1, 0.3 )
+polygon = PoolVector2Array( 491.29, 706.193, 610.927, 447.681, 916.178, 546.393, 1042.35, 844.997, 635.648, 881.33 )
+
+[node name="DepthController" parent="Obstacles/StaticBody2D2" instance=ExtResource( 21 )]
+
+[node name="Tween" type="Tween" parent="Obstacles/StaticBody2D2"]
 
 [node name="Decorations" type="Node" parent="."]
 pause_mode = 1
@@ -170,6 +456,10 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="segment_took_damage" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Segment_took_damage"]
 [connection signal="size_changed" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Worm_size_changed"]
 [connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]
+[connection signal="hide" from="Obstacles/StaticBody2D/DepthController" to="Obstacles/StaticBody2D" method="_on_hide"]
+[connection signal="show" from="Obstacles/StaticBody2D/DepthController" to="Obstacles/StaticBody2D" method="_on_show"]
+[connection signal="hide" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_hide"]
+[connection signal="show" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_show"]
 [connection signal="layer_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_layer_changed"]
 [connection signal="layer_changed" from="DepthManager" to="Background" method="_on_layer_changed"]
 [connection signal="number_of_layers_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_number_of_layers_changed"]
