@@ -189,9 +189,9 @@ func _control(delta):
 			emit_signal("switch_layer_pressed", layer - 1, self)
 		elif Input.is_action_just_pressed("layer_up"):
 			emit_signal("switch_layer_pressed", layer + 1, self)
-	for i in range(0, 4):
+	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
-		if Input.is_action_pressed("ability" + str(i + 1)) and ability.is_ready:
+		if Input.is_action_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
 			ability.invoke()
 
 

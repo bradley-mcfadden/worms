@@ -1,6 +1,7 @@
 extends Ability
 
-var is_ready := true
+func _ready():
+	is_ready = true
 
 
 func invoke():

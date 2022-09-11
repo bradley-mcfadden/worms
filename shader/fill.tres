@@ -9,13 +9,29 @@ code = "shader_type canvas_item;
 uniform vec4 fill_color: hint_color;
 // Fraction of the height of the texture to fill. 0 means no fill, 1 fill all
 uniform float proportion: hint_range(0, 1) = 0.0;
+// Color to fill border with
+uniform vec4 border_color: hint_color = vec4(0.20, 0.0, 0.0, 1.0);
+// Alpha of border
+uniform float border_alpha = 0.5;
 // Lower limit for RGBA values to consider a pixel transparent
 const float LOWER_LIMIT = 0.01;
 
 void fragment() {
 	vec4 texcol = texture(TEXTURE, UV);
 	vec4 vfill = step(LOWER_LIMIT, texcol);
+	// 0 if should not be filled due to transparency
 	float sfill = vfill.x * vfill.y * vfill.z * vfill.w;
-	vec4 color = mix(texcol, fill_color, step(1.0 - UV.y, proportion) * sfill * 0.5);
+	// 1 if under fill area, 0 otherwise
+	float parea = step(1.0 - UV.y, proportion);
+	//vec4 color = mix(texcol, fill_color, parea * sfill * 0.5);
+	vec2 iborder = step(abs(UV - vec2(0.5)) + vec2(0.5), vec2(0.1));
+	// Is the pixel near the border?
+	// float ib = 1.0 - step(length(abs(UV - vec2(0.5))), 0.49);
+	float ibx = step(abs(UV.x - 0.5), 0.0);
+	float iby = step(abs(UV.y - 0.5), 0.0);
+	float ib = step(ibx + iby, 1.0);
+	vec4 bcolor = vec4(border_color.xyz, border_alpha);
+	vec4 color = mix(texcol, bcolor, ib * step(proportion, 0.01) * abs(sfill - 1.0));
+	color = mix(color, fill_color, parea * sfill * 0.5);
 	COLOR = color;
 }"

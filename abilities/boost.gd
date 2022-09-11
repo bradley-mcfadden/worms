@@ -1,8 +1,11 @@
 extends Ability
 
-var is_ready = true
 
 export(int) var factor = 2
+
+
+func _ready():
+	is_ready = true
 
 
 func invoke():
