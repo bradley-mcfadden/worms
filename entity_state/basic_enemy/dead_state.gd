@@ -12,7 +12,7 @@ func _init(_fsm, _entity):
 
 
 func on_enter():
-	pass
+	entity.animation_player.play("gib")
 
 
 func _physics_process(_delta):

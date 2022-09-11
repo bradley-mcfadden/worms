@@ -38,7 +38,11 @@ func replace(state: EntityState):
 
 # top of the stack is returned without removing it.
 func top() -> EntityState:
-	return stack.back() if stack != null else null
+	if stack != null:
+		if not stack.empty():
+			return stack.back()
+
+	return null
 
 
 func clear():

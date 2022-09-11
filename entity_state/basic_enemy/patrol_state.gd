@@ -20,6 +20,13 @@ func on_enter():
 	reaction_time = START_REACTION_TIME
 	idle_patrol = entity.idle_patrol
 	patrol_idx = entity.patrol_idx
+	var walk_anim := "walk"
+	if entity.has_ranged_attack:
+		walk_anim = "walk_gun"
+	elif entity.has_melee_attack:
+		walk_anim = "walk_knife"
+	entity.animation_player.play(walk_anim)
+	
 
 
 func _physics_process(delta):

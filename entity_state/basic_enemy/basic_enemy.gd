@@ -8,7 +8,7 @@ signal died(node, from, overkill)
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
-const DRAW_ME = true
+const DRAW_ME = false
 
 var ent_state_prop := {}
 
@@ -114,6 +114,8 @@ func _draw():
 	if not DRAW_ME or fsm == null:
 		return
 	var current_state = fsm.top()
+	if current_state == null:
+		return
 	var prop = current_state.PROPERTIES
 	var state = current_state.NAME
 	var color = prop["color"]
@@ -141,13 +143,13 @@ func _draw():
 
 # draw a semicircle with radius, which travels around the arc for f,
 # and is color color
-func _draw_semicircle(radius: float, f: float, color: Color):
+func _draw_semicircle(rradius: float, f: float, color: Color):
 	var f2 = f / 2
 	var cosf2 = cos(f2)  # cos(x) = -cos(x)
 	var sinf2 = sin(f2)  # sin(-x) = -sin(x)
-	draw_arc(Vector2.ZERO, radius, -f2, f2, 20, color)
-	draw_line(Vector2(20 * cosf2, 20 * -sinf2), Vector2(radius * cosf2, radius * -sinf2), color)
-	draw_line(Vector2(20 * cosf2, 20 * sinf2), Vector2(radius * cosf2, radius * sinf2), color)
+	draw_arc(Vector2.ZERO, rradius, -f2, f2, 20, color)
+	draw_line(Vector2(20 * cosf2, 20 * -sinf2), Vector2(rradius * cosf2, rradius * -sinf2), color)
+	draw_line(Vector2(20 * cosf2, 20 * sinf2), Vector2(rradius * cosf2, rradius * sinf2), color)
 
 
 func _draw_polyline(points, color, xform):
@@ -259,14 +261,14 @@ func check_for_player() -> Node:
 			if ent == null:
 				continue
 			var angle_to_player = abs((ent.position - position).angle() - rotation)
-			var dist_to_player = position.distance_to(ent.position) - ent.radius - radius
+			# var dist_to_player = position.distance_to(ent.position) - ent.radius - radius
 			var f = deg2rad(fsm.top().PROPERTIES["fov"])
 			var hit = space_state.intersect_ray(
 				position, position + (ent.position - position).normalized() * look_distance, [self],
 				collision_mask
 			)
-			if hit.has("collider"):
-				print(hit)
+			#if hit.has("collider"):
+			#	print(hit)
 			if (
 				angle_to_player < f * 0.5
 				#and 
@@ -311,8 +313,8 @@ func start_ranged_attack():
 
 func end_ranged_attack():
 	# cooldown period is over
-	$AnimationPlayer.play("idle")
-	fsm.pop()
+	#fsm.pop()
+	pass
 
 
 func check_melee_attack(dist_to_player, ppos):
@@ -338,7 +340,7 @@ func end_melee_attack():
 	# disable the collision shape with the melee radius on it
 	$MeleeAttack.visible = false
 	$MeleeAttack.monitoring = false
-	$AnimationPlayer.play("idle")
+	#fsm.pop()
 
 
 func take_damage(how_much, from):
@@ -348,8 +350,10 @@ func take_damage(how_much, from):
 	health -= how_much
 	if health < start_health * -0.25:
 		emit_signal("died", self, from, true)
+		# animation_player.disconnect()
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
 	elif health <= 0:
+		# animation_player.disconnect_all()
 		emit_signal("died", self, from, false)
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
 

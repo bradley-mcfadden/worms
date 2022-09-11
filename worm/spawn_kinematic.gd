@@ -364,7 +364,7 @@ func _on_segment_died(segment, from, overkill):
 
 func _on_segment_took_damage(segment):
 	var idx = body.find(segment)
-	emit_signal("segment_took_damage", len(body) - idx - 1, segment)
+	emit_signal("segment_took_damage", idx, segment)
 
 	if segment == head:
 		var ratio = float(segment.health / segment.start_health)

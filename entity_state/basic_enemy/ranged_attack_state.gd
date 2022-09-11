@@ -21,7 +21,7 @@ func _init(_fsm, _entity):
 func on_enter():
 	aplayer = entity.animation_player
 	aplayer.connect("animation_finished", self, "_on_animation_finished")
-	aplayer.play("ranged_attack")
+	aplayer.play("shoot")
 
 
 func _physics_process(_delta):

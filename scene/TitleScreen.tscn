@@ -9,7 +9,7 @@
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 
-uniform vec3 color = vec3(1f, 1f, 1f);
+uniform vec3 color = vec3(1.0, 0.0, 0.0);
 uniform int layer = 1;
 uniform vec2 offset;
 

@@ -21,7 +21,7 @@ func _init(_fsm, _entity):
 func on_enter():
 	aplayer = entity.animation_player
 	aplayer.connect("animation_finished", self, "_on_animation_finished")
-	aplayer.play("melee_attack")
+	aplayer.play("stab")
 
 
 func _physics_process(_delta):
@@ -30,7 +30,7 @@ func _physics_process(_delta):
 
 func _on_animation_finished(_name):
 	fsm.pop()
-	# aplayer.disconnect()
+	aplayer.disconnect("animation_finished", self, "_on_animation_finished")
 
 
 func on_exit():
