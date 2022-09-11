@@ -1,5 +1,8 @@
 shader_type canvas_item;
 
+// Scroll a texture with time, in the x and y axis.
+
+// Speed of scrolling.
 uniform vec2 scroll_speed;
 
 void fragment() {

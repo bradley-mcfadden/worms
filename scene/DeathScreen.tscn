@@ -1,16 +1,15 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://script/death_screen.gd" type="Script" id=3]
-[ext_resource path="res://script/rich_text_siny.gd" type="Script" id=4]
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=5]
 
 [sub_resource type="RichTextEffect" id=1]
 script = ExtResource( 5 )
 
 [sub_resource type="RichTextEffect" id=2]
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 
 [node name="DeathScreen" type="VBoxContainer"]
 anchor_right = 1.0

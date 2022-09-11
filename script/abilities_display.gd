@@ -1,6 +1,6 @@
 extends Control
 
-const FILL_SHADER = preload("res://scene/fill.tres")
+const FILL_SHADER = preload("res://shader/fill.tres")
 const SAMPLE_IMAGE = preload("res://img/mini.png")
 const ENABLED_MOD := Color(1.0, 1.0, 1.0, 1.0)
 const DISABLED_MOD := Color(0.5, 0.5, 0.5, 0.5)

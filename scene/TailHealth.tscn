@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scene/partial_fill.tres" type="Shader" id=1]
+[ext_resource path="res://shader/partial_fill.tres" type="Shader" id=1]
 [ext_resource path="res://img/tail_health.png" type="Texture" id=2]
 [ext_resource path="res://script/segment_health.gd" type="Script" id=3]
 

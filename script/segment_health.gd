@@ -1,7 +1,7 @@
 extends TextureRect
 
 onready var proportion := 1.0
-var shader = preload("res://scene/partial_fill.tres")
+var shader = preload("res://shader/partial_fill.tres")
 
 
 # Need to create a new ShaderMaterial for each instance, otherwise

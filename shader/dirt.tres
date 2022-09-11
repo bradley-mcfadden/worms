@@ -3,8 +3,12 @@
 [resource]
 code = "shader_type canvas_item;
 
-uniform vec3 color = vec3(1.0f, 1.0f, 1.0f);
+// Using noise, create orbs that rotate in three bands of colors to make a wave
+// effect.
+
+// Layer affects the lightness of the bands. A lower layer results in lighter bands
 uniform int layer = 1;
+// Offset for 2D noise
 uniform vec2 offset;
 
 // psrdnoise (c) Stefan Gustavson and Ian McEwan,
@@ -59,16 +63,6 @@ float aastep(float threshold, float value) {
 }
 
 void fragment() {
-	/*
-	COLOR = texture(TEXTURE, UV);
-	float l_off = float(layer) * 0.1;
-	COLOR.x = max(COLOR.x, 0.1) + l_off;
-	COLOR.y = max(COLOR.y, 0.1) + l_off;
-	COLOR.z = max(COLOR.z, 0.1) + l_off;
-	COLOR.x *= color.x;
-	COLOR.y *= color.y;
-	COLOR.z *= color.z;
-	*/
 	const float scale = 12.0;
 	vec2 v = scale * UV.xy;
 	const vec2 p = vec2(0.0);

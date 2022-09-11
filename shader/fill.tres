@@ -3,9 +3,13 @@
 [resource]
 code = "shader_type canvas_item;
 
-uniform vec4 fill_color: hint_color;
-uniform float proportion: hint_range(0, 1) = 0.0;
+// Fill non-transparent pixels with fill_color, up to proportion 
 
+// Color to mix over the texture
+uniform vec4 fill_color: hint_color;
+// Fraction of the height of the texture to fill. 0 means no fill, 1 fill all
+uniform float proportion: hint_range(0, 1) = 0.0;
+// Lower limit for RGBA values to consider a pixel transparent
 const float LOWER_LIMIT = 0.01;
 
 void fragment() {

@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://img/spot.png" type="Texture" id=1]
-[ext_resource path="res://img/light.png" type="Texture" id=2]
-[ext_resource path="res://worm/Spawn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://worm/SpawnKinematic.tscn" type="PackedScene" id=1]
+[ext_resource path="res://img/spot.png" type="Texture" id=2]
+[ext_resource path="res://img/light.png" type="Texture" id=3]
 
 [node name="LightTest" type="Node"]
 
-[node name="spawn" parent="." instance=ExtResource( 3 )]
+[node name="spawn" parent="." instance=ExtResource( 1 )]
 position = Vector2( 942, 492 )
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 506, 338 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 color = Color( 0.34902, 0.286275, 0, 1 )
 energy = 2.0
 mode = 2
@@ -22,7 +22,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Light2D"]
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 position = Vector2( 85, -11 )
@@ -30,7 +30,7 @@ color = Color( 0.588235, 0.588235, 0.588235, 1 )
 
 [node name="Light2D3" type="Light2D" parent="."]
 position = Vector2( 1490, 322 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 color = Color( 0.337255, 0.00392157, 0.447059, 1 )
 energy = 2.0
 range_height = 10.0
@@ -40,11 +40,11 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Light2D3"]
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Light2D2" type="Light2D" parent="."]
 position = Vector2( 1118, 862 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 color = Color( 0.380392, 0, 0, 1 )
 energy = 2.0
 mode = 2
@@ -55,7 +55,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Light2D2"]
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 3, 0 )

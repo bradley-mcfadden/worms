@@ -3,11 +3,26 @@
 [resource]
 code = "shader_type canvas_item;
 
+// Fill part of the height of a texture will a gradient
+
+// High gradient color
 uniform vec4 fillColor: hint_color = vec4(0.70, 0.31, 0.31, 1.00);
+// Low gradient color
 uniform vec4 gradColor: hint_color = vec4(0.47, 0.21, 0.21, 1.00);
+// Fraction of height to fill
 uniform float proportion: hint_range(0, 1) = 0.0;
+// Threshold below which RGBA values are considered transparent
 uniform float lowerLimit: hint_range(0, 1) = 0.01;
 
+/**
+ * map values from one range to another.
+ * @value value in range is, ie
+ * @is Lower limit of input range
+ * @ie Upper limit of input range
+ * @os Lower limit of output range
+ * @oe Upper limit of output range
+ * @return Value in os, oe range proportional to its place in is, ie range.
+ */ 
 float map(float value, float is, float ie, float os, float oe) {
 	float ir = ie - is;
 	float or = oe - os;

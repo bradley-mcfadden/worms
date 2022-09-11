@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+// Fill the edges of a texture according to the value of max(sin, cos)
+
 uniform vec4 fill_color: hint_color = vec4(1.0, 0.0, 0.0, 1.0);
 
 void fragment() {

@@ -3,7 +3,8 @@
 [ext_resource path="res://script/target_follow.gd" type="Script" id=1]
 [ext_resource path="res://scene/Bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
-[ext_resource path="res://patch/echo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scene/echo.tscn" type="PackedScene" id=4]
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
