@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://worm/segment_kinematic.gd" type="Script" id=1]
-[ext_resource path="res://img/worm/tail_n.png" type="Texture" id=2]
-[ext_resource path="res://img/worm/tail.png" type="Texture" id=3]
+[ext_resource path="res://img/worm/tail_full_n.png" type="Texture" id=2]
+[ext_resource path="res://img/worm/tail_full.png" type="Texture" id=3]
 [ext_resource path="res://worm/worm.tres" type="Material" id=4]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=5]
 
@@ -17,7 +17,7 @@ polygon = PoolVector2Array( 21, -18, 4, -37, -17, -45, -84, -31, -102, -19, -102
 
 [node name="image" type="Sprite" parent="."]
 material = ExtResource( 4 )
-position = Vector2( -50, 5.96046e-08 )
+position = Vector2( -59, -1 )
 rotation = 3.14159
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )

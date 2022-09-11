@@ -261,7 +261,7 @@ _global_script_class_icons={
 [application]
 
 config/name="worm"
-run/main_scene="res://worm/Spawn.tscn"
+run/main_scene="res://scene/TitleScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -407,4 +407,5 @@ pause={
 
 [rendering]
 
+gles3/shaders/shader_compilation_mode=1
 environment/default_environment="res://default_env.tres"
