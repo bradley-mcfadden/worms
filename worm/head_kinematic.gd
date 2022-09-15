@@ -38,6 +38,7 @@ func move(vel: Vector2, oscvel: Vector2, _delta: float) -> Vector2:
 
 	$colision.position = osc_offset  #.rotated(rot)
 	$image.position = osc_offset
+	$blood.position = osc_offset
 
 	# return collider != null
 	return delta_j2
