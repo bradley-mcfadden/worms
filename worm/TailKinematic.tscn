@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://worm/segment_kinematic.gd" type="Script" id=1]
 [ext_resource path="res://img/worm/tail_full_n.png" type="Texture" id=2]
 [ext_resource path="res://img/worm/tail_full.png" type="Texture" id=3]
 [ext_resource path="res://material/worm.tres" type="Material" id=4]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scene/particles/DirtExplode.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scene/particles/BloodExplode.tscn" type="PackedScene" id=7]
 
 [node name="TailKinematic" type="KinematicBody2D"]
 collision_layer = 2
@@ -23,6 +25,17 @@ scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )
 normal_map = ExtResource( 2 )
 flip_h = true
+
+[node name="DirtExplode" parent="." instance=ExtResource( 6 )]
+z_index = 10
+emitting = false
+one_shot = true
+local_coords = false
+
+[node name="BloodExplode" parent="." instance=ExtResource( 7 )]
+scale = Vector2( 1.5, 1.5 )
+color = Color( 0.117647, 0.0313726, 0.278431, 1 )
+gore_color = Color( 0.11802, 0.0308, 0.28, 1 )
 
 [node name="DepthController" parent="." instance=ExtResource( 5 )]
 

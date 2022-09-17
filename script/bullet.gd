@@ -2,6 +2,9 @@ extends Area2D
 
 signal bullet_destroyed(bullet)
 
+export(Color) var player_color = Color(0.17, 0.15, 0.19, 1.0)
+export(Color) var enemy_color = Color(0.28, 0.03, 0.03, 1.0)
+
 var shot_by = null
 var velocity = Vector2.ZERO
 var damage = 0
@@ -41,11 +44,20 @@ func _on_Bullet_body_entered(body):
 	if body.has_method("take_damage") and body != shot_by:
 		body.take_damage(damage, shot_by)
 		$Timer.stop()
-		destroy()
+		$AttackHit.emitting = true
+		velocity = Vector2.ZERO
+		$Timer.wait_time = $AttackHit.lifetime
+		$Timer.start()
+		$AttackHit.color = player_color if body is KinematicBody2D else enemy_color
+		set_deferred("monitorable", false)
+		set_deferred("monitoring", false)
+		$Sprite.visible = false
+		$BulletTrail.visible = false
 
 
 func _on_Timer_timeout():
 	destroy()
+	# pass
 
 
 func destroy():

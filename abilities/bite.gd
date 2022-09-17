@@ -8,7 +8,8 @@ func invoke():
 	if not is_ready:
 		return
 	is_ready = false
-	var player = parent.get_head().get_animation_player()
+	var head = parent.get_head()
+	var player = head.get_animation_player()
 	player.play("mouth_open_wide")
 	emit_signal("is_ready_changed", self, false)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scene/echo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://scene/Bullet.tscn" type="PackedScene" id=4]
 [ext_resource path="res://img/enemies/basic_enemy/ss_full.png" type="Texture" id=5]
 [ext_resource path="res://img/enemies/basic_enemy/ss_full_n.png" type="Texture" id=6]
+[ext_resource path="res://scene/particles/BloodExplode.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scene/particles/AttackHit.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scene/particles/MuzzleFlash.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scene/particles/Trail.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -20,6 +24,42 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 73 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MuzzleFlash:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Trail:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Trail:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 115, -99 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -189,6 +229,18 @@ tracks/1/keys = {
 "method": "end_ranged_attack"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("MuzzleFlash:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "stab"
@@ -221,6 +273,30 @@ tracks/1/keys = {
 "args": [  ],
 "method": "end_melee_attack"
 } ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Trail:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.333333, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Trail:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.333333, 0.416667 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 115, -99 ), Vector2( 148, 70 ) ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -283,7 +359,17 @@ script = ExtResource( 3 )
 has_ranged_attack = false
 has_melee_attack = true
 bullet = ExtResource( 4 )
-ranged_thresh = 200
+ranged_thresh = 500
+
+[node name="MuzzleFlash" parent="." instance=ExtResource( 9 )]
+position = Vector2( 167, 10 )
+rotation = -0.230383
+emitting = false
+one_shot = true
+
+[node name="Trail" parent="." instance=ExtResource( 10 )]
+visible = false
+position = Vector2( 115, -99 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 5 )
@@ -313,6 +399,7 @@ scale = Vector2( 13.5853, 5.83995 )
 monitoring = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MeleeAttack"]
+visible = false
 polygon = PoolVector2Array( 0, 0, -11, -21, 11, -21 )
 
 [node name="DepthController" parent="." instance=ExtResource( 2 )]
@@ -327,6 +414,19 @@ decay = 0.05
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 1.96, 2.49447 )
 shape = SubResource( 4 )
+
+[node name="BloodExplode" parent="." instance=ExtResource( 7 )]
+scale = Vector2( 2, 2 )
+z_index = 10
+lifetime = 0.75
+
+[node name="AttackHit" parent="." instance=ExtResource( 8 )]
+position = Vector2( 90, 0 )
+scale = Vector2( -2, 2 )
+z_index = 10
+emitting = false
+one_shot = true
+spread = 45.0
 
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
 [connection signal="hide" from="DepthController" to="." method="_on_hide"]

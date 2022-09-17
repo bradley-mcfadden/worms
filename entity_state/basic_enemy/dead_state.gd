@@ -13,6 +13,7 @@ func _init(_fsm, _entity):
 
 func on_enter():
 	entity.animation_player.play("gib")
+	entity.get_node("BloodExplode").emitting = true
 
 
 func _physics_process(_delta):

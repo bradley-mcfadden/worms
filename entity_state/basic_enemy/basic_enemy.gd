@@ -306,7 +306,7 @@ func start_ranged_attack():
 	new_bullet.setup(
 		self, Vector2.RIGHT.rotated(rotation) * 1000, ranged_damage, 10, collision_layer, layer
 	)
-	new_bullet.position = global_position
+	new_bullet.position = $MuzzleFlash.global_position
 	new_bullet.rotation = (target - global_position).angle()
 	emit_signal("bullet_created", new_bullet)
 
@@ -381,6 +381,7 @@ func _on_MeleeAttack_body_entered(body):
 		return
 	if body.has_method("take_damage"):
 		body.take_damage(melee_damage, self)
+		$AttackHit.emitting = true
 
 
 func _on_hide():

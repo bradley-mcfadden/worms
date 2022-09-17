@@ -291,6 +291,8 @@ script = ExtResource( 2 )
 
 [node name="BasicEnemy" parent="Enemies" instance=ExtResource( 6 )]
 idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+look_distance = 800
+ranged_thresh = 800
 
 [node name="Players" type="Node" parent="."]
 pause_mode = 1
@@ -299,7 +301,7 @@ script = ExtResource( 5 )
 [node name="SpawnKinematic" parent="Players" instance=ExtResource( 9 )]
 pause_mode = 1
 position = Vector2( -246, -377 )
-segment_number = 30
+segment_number = 15
 max_speed = 600
 
 [node name="Obstacles" type="Node" parent="."]

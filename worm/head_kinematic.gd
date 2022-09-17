@@ -8,9 +8,10 @@ const MOUTH_OPEN_WIDE = "mouth_open_wide"
 const CHOMP_TO_IDLE = "chomp_to_idle"
 
 export(int) var bite_damage := 100
+export(int) var max_blood_level := 4
 
 var anim_player: AnimationPlayer
-
+var curr_blood_level := 0
 
 func _ready():
 	anim_player = $AnimationPlayer
@@ -89,3 +90,10 @@ func toggle_bite_hitbox(is_on):
 func _on_BiteHitbox_area_entered(area):
 	if area.has_method("take_damage"):
 		area.take_damage(bite_damage, self)
+		increment_blood_level()
+
+
+func increment_blood_level():
+	var step = 1.0 / max_blood_level
+	curr_blood_level = curr_blood_level + 1 if curr_blood_level < max_blood_level else curr_blood_level
+	$blood.modulate = Color(1.0, 1.0, 1.0, curr_blood_level * step)

@@ -146,12 +146,19 @@ func _physics_process(delta):
 		var ivel = Vector2(vel.y, vel.x).normalized()
 
 		var i = counter
+		var speed_rate = vel.x / max_speed
 		for segment in body:
 			vel_ = Vector2(vel_.length(), 0).rotated((segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
 			var j2 = segment.move(vel_, ivel, delta)
 			vel_ = j2
 			i += tdelta
+			if segment.has_node("DirtMotion"):
+				var dirt_node = segment.get_node("DirtMotion")
+				dirt_node.speed_scale = speed_rate
+				# dirt_node.one_shot = not speed_rate > 0.2
+				# dirt_node.visible = speed_rate > 0.2
+
 
 		counter += 0.2
 

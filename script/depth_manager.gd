@@ -112,7 +112,6 @@ func _on_segment_changed(segment, state):
 			add(segment.get_layer(), segment)
 		SegmentState.DEAD:
 			remove(segment)
-			segment.queue_free()
 
 
 func _on_layer_visibility_changed(layer, is_visible):

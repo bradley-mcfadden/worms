@@ -70,8 +70,10 @@ func take_damage(how_much, from):
 		emit_signal("took_damage", self)
 	if health < start_health * -0.25:
 		emit_signal("segment_died", self, from, true)
+		$BloodExplode.emitting = true
 	elif health <= 0:
 		emit_signal("segment_died", self, from, false)
+		$BloodExplode.emitting = true
 
 
 func is_alive() -> bool:
@@ -98,8 +100,12 @@ func get_depth_controllers() -> Array:
 func fade_in(duration: float):
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.3), Color(1, 1, 1, 1), duration)
 	$Tween.start()
+	$DirtExplode.emitting = true
+	#$DirtExplode.lifetime = duration
 
 
 func fade_out(duration: float):
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.3), duration)
 	$Tween.start()
+	$DirtExplode.emitting = true
+	#$DirtExplode.lifetime = duration
