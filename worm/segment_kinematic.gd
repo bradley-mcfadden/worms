@@ -1,10 +1,26 @@
+class_name Segment
 extends KinematicBody2D
 
 signal segment_died(segment, from, overkill)
 signal took_damage(segment)
 
+export(float) var moderate_gore_thresh = 0.66
+export(float) var heavy_gore_thresh = 0.33
+
+export(Array) var damage_textures := [
+	load("res://img/worm/segment_full.png"),
+	load("res://img/worm/segment_gore1.png"),
+	load("res://img/worm/segment_gore2.png")
+]
+export(Array) var damage_normals := [
+	load("res://img/worm/segment_full_n.png"),
+	load("res://img/worm/segment_gore1_n.png"),
+	load("res://img/worm/segment_gore2_n.png"),
+]
 export(int) var radius := 45
 export(int) var start_health := 100
+
+enum GoreState {NONE, MODERATE, HEAVY}
 
 # Yes i changed it to Area2D because kinematic isnt nessesery.
 var j1
@@ -14,7 +30,7 @@ var theta
 var layer := 0
 var health: int = start_health
 var last_osc_offset := Vector2.ZERO
-
+var current_gore = GoreState.NONE
 
 func _ready():
 	health = start_health
@@ -74,6 +90,22 @@ func take_damage(how_much, from):
 	elif health <= 0:
 		emit_signal("segment_died", self, from, false)
 		$BloodExplode.emitting = true
+	_adjust_gore(float(health) / start_health)
+
+
+func _adjust_gore(ratio: float):
+	var new_gore = GoreState.NONE
+	if ratio < heavy_gore_thresh:
+		new_gore = GoreState.HEAVY
+	elif ratio < moderate_gore_thresh:
+		new_gore = GoreState.MODERATE
+	
+	if current_gore != new_gore:
+		if damage_textures[new_gore] is String:
+			damage_textures[new_gore] = load(damage_textures[new_gore])
+		$image.texture = damage_textures[new_gore]
+		$image.normal_map = damage_textures[new_gore]
+		current_gore = new_gore
 
 
 func is_alive() -> bool:

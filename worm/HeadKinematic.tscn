@@ -204,6 +204,8 @@ radius = 10.714
 [node name="HeadKinematic" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 4 )
+damage_textures = [ "res://img/worm/ss_full.png", "res://img/worm/ss_gore1_full.png", "res://img/worm/ss_gore2_full.png" ]
+damage_normals = [ "res://img/worm/ss_full_n.png", "res://img/worm/ss_gore1_full_n.png", "res://img/worm/ss_gore2_full_n.png" ]
 
 [node name="colision" type="CollisionShape2D" parent="."]
 visible = false

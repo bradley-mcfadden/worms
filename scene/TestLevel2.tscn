@@ -292,6 +292,24 @@ script = ExtResource( 2 )
 [node name="BasicEnemy" parent="Enemies" instance=ExtResource( 6 )]
 idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
 look_distance = 800
+melee_damage = 30
+melee_thresh = 75
+ranged_thresh = 800
+
+[node name="BasicEnemy2" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -1057, 317 )
+idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+look_distance = 800
+melee_damage = 30
+melee_thresh = 75
+ranged_thresh = 800
+
+[node name="BasicEnemy3" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -408, 1000 )
+idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+look_distance = 800
+melee_damage = 30
+melee_thresh = 75
 ranged_thresh = 800
 
 [node name="Players" type="Node" parent="."]
@@ -446,6 +464,10 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="all_enemies_dead" from="Enemies" to="." method="_on_all_enemies_dead"]
 [connection signal="bullet_created" from="Enemies/BasicEnemy" to="." method="attach_bullet"]
 [connection signal="died" from="Enemies/BasicEnemy" to="Enemies" method="_on_Enemy_died"]
+[connection signal="bullet_created" from="Enemies/BasicEnemy2" to="." method="attach_bullet"]
+[connection signal="died" from="Enemies/BasicEnemy2" to="Enemies" method="_on_Enemy_died"]
+[connection signal="bullet_created" from="Enemies/BasicEnemy3" to="." method="attach_bullet"]
+[connection signal="died" from="Enemies/BasicEnemy3" to="Enemies" method="_on_Enemy_died"]
 [connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
 [connection signal="abilities_ready" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_abilities_ready"]
 [connection signal="ability_is_ready_changed" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed"]

@@ -209,6 +209,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/rmsmartshape/vertex_properties.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Segment",
+"language": "GDScript",
+"path": "res://worm/segment_kinematic.gd"
+}, {
 "base": "RigidBody2D",
 "class": "SegmentRigid",
 "language": "GDScript",
@@ -255,6 +260,7 @@ _global_script_class_icons={
 "SS2D_Shape_Render": "",
 "SS2D_Strings": "",
 "SS2D_VertexProperties": "",
+"Segment": "",
 "SegmentRigid": ""
 }
 

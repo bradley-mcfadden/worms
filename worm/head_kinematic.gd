@@ -17,6 +17,18 @@ func _ready():
 	anim_player = $AnimationPlayer
 	_change_animation("idle")
 
+	damage_textures = [
+		load("res://img/worm/ss_full.png"),
+		load("res://img/worm/ss_gore1_full.png"),
+		load("res://img/worm/ss_gore2_full.png"),
+	]
+
+	damage_normals = [
+		"res://img/worm/ss_full_n.png",
+		"res://img/worm/ss_gore1_full_n.png",
+		"res://img/worm/ss_gore2_full_n.png",
+	]
+
 
 func move(vel: Vector2, oscvel: Vector2, _delta: float) -> Vector2:
 	var rot = (j1 - j2).angle()

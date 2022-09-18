@@ -11,6 +11,8 @@
 [node name="TailKinematic" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 1 )
+damage_textures = [ "res://img/worm/tail_full.png", "res://img/worm/tail_gore1.png", "res://img/worm/tail_gore2.png" ]
+damage_normals = [ "res://img/worm/tail_full_n.png", "res://img/worm/tail_gore1_n.png", "res://img/worm/tail_gore2_n.png" ]
 
 [node name="colision" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, 1 )
@@ -34,7 +36,7 @@ local_coords = false
 
 [node name="BloodExplode" parent="." instance=ExtResource( 7 )]
 scale = Vector2( 1.5, 1.5 )
-color = Color( 0.117647, 0.0313726, 0.278431, 1 )
+color = Color( 0.11802, 0.0308, 0.28, 1 )
 gore_color = Color( 0.11802, 0.0308, 0.28, 1 )
 
 [node name="DepthController" parent="." instance=ExtResource( 5 )]
