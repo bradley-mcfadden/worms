@@ -103,6 +103,7 @@ func _on_BiteHitbox_area_entered(area):
 	if area.has_method("take_damage"):
 		area.take_damage(bite_damage, self)
 		increment_blood_level()
+		$BiteHit.play()
 
 
 func increment_blood_level():

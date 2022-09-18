@@ -6,6 +6,7 @@ var primary_player
 
 
 func _ready():
+	$Music.play()
 	$DepthManager.add_items($Players.get_players())
 	$DepthManager.add_items($Enemies.get_enemies())
 	$DepthManager.add_items($Obstacles.get_obstacles())
@@ -44,6 +45,7 @@ func reset():
 	enemies_dead_screen.visible = false
 	$Enemies.reset_all_enemies()
 	$Players.reset_all_players()
+	$Music.play()
 
 
 func to_main_menu():
@@ -69,6 +71,7 @@ func get_current_camera_2d():
 func _on_lay_eggs():
 	# in future, probably play an animation and wait for it finish before that
 	Levels.next_level_or_main(get_tree())
+	$LayEggs.play()
 
 
 func _on_all_enemies_dead():

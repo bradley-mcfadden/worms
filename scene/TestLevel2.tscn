@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://script/obstacles.gd" type="Script" id=4]
 [ext_resource path="res://script/players.gd" type="Script" id=5]
 [ext_resource path="res://scene/BasicEnemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://music/Danger - no guitar.wav" type="AudioStream" id=7]
 [ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://worm/SpawnKinematic.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scene/DeathScreen.tscn" type="PackedScene" id=10]
@@ -27,6 +28,8 @@
 [ext_resource path="res://addons/rmsmartshape/shapes/shape_closed.gd" type="Script" id=26]
 [ext_resource path="res://script/obstacle_ssd.gd" type="Script" id=27]
 [ext_resource path="res://img/dirt.jpg" type="Texture" id=28]
+[ext_resource path="res://script/bg_music.gd" type="Script" id=29]
+[ext_resource path="res://sound/lay_eggs.wav" type="AudioStream" id=30]
 
 [sub_resource type="Resource" id=56]
 script = ExtResource( 23 )
@@ -285,6 +288,15 @@ shader_param/offset = null
 position = Vector2( 1, -4 )
 script = ExtResource( 3 )
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -30.0
+script = ExtResource( 29 )
+
+[node name="LayEggs" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 30 )
+volume_db = -30.0
+
 [node name="Enemies" type="Node" parent="."]
 pause_mode = 1
 script = ExtResource( 2 )
@@ -292,6 +304,8 @@ script = ExtResource( 2 )
 [node name="BasicEnemy" parent="Enemies" instance=ExtResource( 6 )]
 idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
 look_distance = 800
+has_ranged_attack = true
+has_melee_attack = false
 melee_damage = 30
 melee_thresh = 75
 ranged_thresh = 800
@@ -473,6 +487,7 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="ability_is_ready_changed" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed"]
 [connection signal="ability_is_ready_changed_cd" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed_cd"]
 [connection signal="died" from="Players/SpawnKinematic" to="Players" method="_on_Player_died"]
+[connection signal="health_state_changed" from="Players/SpawnKinematic" to="Music" method="_on_health_state_changed"]
 [connection signal="health_state_changed" from="Players/SpawnKinematic" to="CanvasLayer/NearDeathBorder" method="_on_health_state_changed"]
 [connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
 [connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]

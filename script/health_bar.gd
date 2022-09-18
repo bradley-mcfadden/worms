@@ -47,12 +47,12 @@ func _on_Worm_size_changed(to: int):
 
 func _shrink_to_size(to: int):
 	var by: int = len(body) - to
-	if by <= 0:
+	if by <= 0 or to < 0:
 		return
 
 	var seg
 	# n-1, n-by-2, by+1 removed
-	for i in range(by, -1, -1):
+	for i in range(by-1, -1, -1):
 		seg = body[i]
 		body.remove(i)
 		remove_child(seg)
@@ -64,6 +64,7 @@ func _shrink_to_size(to: int):
 	var new_body := [new_tail]
 	new_body.append_array(body)
 	body = new_body
+	tail = new_tail
 
 	_reorder_children()
 	_position_segments()

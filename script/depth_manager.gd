@@ -78,7 +78,7 @@ func remove(item: Node):
 		var idx = layers[item_l].find(dc)
 		if idx != -1:
 			layers[item_l].remove(idx)
-			item.queue_free()
+			#item.queue_free()
 
 
 # Switch the active layer. All elements in old layer are inactive.

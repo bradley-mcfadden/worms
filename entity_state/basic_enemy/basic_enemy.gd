@@ -309,6 +309,7 @@ func start_ranged_attack():
 	new_bullet.position = $MuzzleFlash.global_position
 	new_bullet.rotation = (target - global_position).angle()
 	emit_signal("bullet_created", new_bullet)
+	$Sounds/GunShot.play()
 
 
 func end_ranged_attack():
@@ -334,6 +335,7 @@ func start_melee_attack():
 	look_at(target)
 	$MeleeAttack.visible = true
 	$MeleeAttack.monitoring = true
+	$Sounds/KnifeSlash.play()
 
 
 func end_melee_attack():
@@ -348,14 +350,17 @@ func take_damage(how_much, from):
 		return
 	print("Enemy is taking " + str(how_much) + " damage")
 	health -= how_much
+	$Sounds/Grunt.play()
 	if health < start_health * -0.25:
 		emit_signal("died", self, from, true)
 		# animation_player.disconnect()
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
+		$Sounds/Gib.play()
 	elif health <= 0:
 		# animation_player.disconnect_all()
 		emit_signal("died", self, from, false)
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
+		$Sounds/Gib.play()
 
 
 func is_alive() -> bool:

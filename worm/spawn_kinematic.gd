@@ -45,7 +45,7 @@ var head
 var tail
 var wide_camera
 var iter
-
+var free_later_list := []
 var start_transform: Transform2D
 var start_layer: int
 var is_switch_depth := false
@@ -118,7 +118,7 @@ func reset():
 func _draw():
 	pass
 	#for segment in body:
-	# 	draw_line(segment.j1, segment.j2, Color.red)
+	#	draw_line(segment.j1, segment.j2, Color.red)
 
 
 func _process(_delta):
@@ -128,6 +128,7 @@ func _process(_delta):
 
 func update_camera_position():
 	var sum := Vector2.ZERO
+	if (len(body) == 0): return
 	for segment in body:
 		sum += segment.position
 
@@ -147,6 +148,7 @@ func _physics_process(delta):
 
 		var i = counter
 		var speed_rate = vel.x / max_speed
+		var slither_sound = $Sounds/Slither
 		for segment in body:
 			vel_ = Vector2(vel_.length(), 0).rotated((segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
@@ -156,11 +158,12 @@ func _physics_process(delta):
 			if segment.has_node("DirtMotion"):
 				var dirt_node = segment.get_node("DirtMotion")
 				dirt_node.speed_scale = speed_rate
-				# dirt_node.one_shot = not speed_rate > 0.2
-				# dirt_node.visible = speed_rate > 0.2
-
+			slither_sound.playing = speed_rate > 0.1
 
 		counter += 0.2
+	for _i in range(len(free_later_list)):
+		var _node = free_later_list.pop_back()
+		_node.queue_free()
 
 
 func _control(delta):
@@ -178,11 +181,6 @@ func _control(delta):
 		heading -= PI * delta * 3
 	elif Input.is_action_pressed("move_right"):
 		heading += PI * delta * 3
-	if Input.is_action_just_pressed("add_segment"):
-		add_segment()
-		# split()
-	if Input.is_action_just_pressed("scale_up"):
-		scale_segments(1.1)
 	if !is_switch_depth:
 		if Input.is_action_just_pressed("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer + 1, true)
@@ -193,8 +191,10 @@ func _control(delta):
 		elif Input.is_action_just_released("peek_layer_down"):
 			emit_signal("layer_visibility_changed", layer - 1, false)
 		elif Input.is_action_just_pressed("layer_down"):
+			$Sounds/ChangeLayerDown.play()
 			emit_signal("switch_layer_pressed", layer - 1, self)
 		elif Input.is_action_just_pressed("layer_up"):
+			$Sounds/ChangeLayerUp.play()
 			emit_signal("switch_layer_pressed", layer + 1, self)
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
@@ -203,8 +203,8 @@ func _control(delta):
 
 
 func add_segment():
-	var old_len := len(body)
-
+	# var old_len := len(body)
+	if body.size() == 0: return
 	var last2 = body[body.size() - 2]
 	var new_seg = Segment.instance()
 	new_seg.base = base
@@ -257,9 +257,9 @@ func scale_segments(factor):
 func split():
 	var destroyed_parts = []
 	for _i in range(5):
-		var tail = body.pop_back()
-		destroyed_parts.append(tail)
-		emit_signal("segment_changed", tail, SegmentState.DEAD)
+		var _tail = body.pop_back()
+		destroyed_parts.append(_tail)
+		emit_signal("segment_changed", _tail, SegmentState.DEAD)
 
 	return destroyed_parts
 
@@ -348,19 +348,24 @@ func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float):
 	emit_signal("ability_is_ready_changed_cd", ability, is_ready, duration)
 
 
-func _on_head_animation_changed(from: String, to: String):
+func _on_head_animation_changed(_from: String, to: String):
 	$AbilitiesContainer/Bite.set_is_ready(to == "idle")
 
 
 func _on_segment_died(segment, from, overkill):
 	var idx = body.find(segment)
 	if idx != -1:
-		for _i in range(len(body) - 2, idx, -1):
+		for _i in range(len(body) - 1, idx - 1, -1):
 			var old_segment = body.pop_back()
+			if old_segment == null: break
+			old_segment.disconnect("segment_died", self, "_on_segment_died")
+			old_segment.take_damage(1000, null)
+			yield(get_tree().create_timer(0.1), "timeout")
 			emit_signal("segment_changed", old_segment, SegmentState.DEAD)
 			emit_signal("size_changed", len(body) - 1)
 
-		call_deferred("add_segment")
+		if idx != 0 && segment != head:
+			call_deferred("add_segment")
 
 		if (len(body) < minimum_length || segment == head) and is_alive():
 			dead = true
@@ -369,7 +374,15 @@ func _on_segment_died(segment, from, overkill):
 			emit_signal("health_state_changed", true)
 
 
+func _play_death_sound(segment: Node):
+	if segment == head:
+		$Sounds/HeadDeath.play()
+	else:
+		$Sounds/SegmentDeath.play()
+
+
 func _on_segment_took_damage(segment):
+	$Sounds/SegmentTakeDamage.play()
 	var idx = body.find(segment)
 	emit_signal("segment_took_damage", idx, segment)
 

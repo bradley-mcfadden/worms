@@ -49,6 +49,8 @@ local_coords = false
 
 [node name="BloodExplode" parent="." instance=ExtResource( 8 )]
 scale = Vector2( 1.5, 1.5 )
+z_index = 10
+z_as_relative = false
 color = Color( 0.11802, 0.0308, 0.28, 1 )
 gore_color = Color( 0.11802, 0.0308, 0.28, 1 )
 

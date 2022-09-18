@@ -87,10 +87,20 @@ func take_damage(how_much, from):
 	if health < start_health * -0.25:
 		emit_signal("segment_died", self, from, true)
 		$BloodExplode.emitting = true
+		_die_then_cleanup()
 	elif health <= 0:
 		emit_signal("segment_died", self, from, false)
 		$BloodExplode.emitting = true
+		_die_then_cleanup()
 	_adjust_gore(float(health) / start_health)
+
+
+func _die_then_cleanup():
+	$BloodExplode.emitting = true
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 2.0)
+	$Tween.start()
+	yield(get_tree().create_timer(2.0), "timeout")
+	get_parent().free_later_list.append(self)
 
 
 func _adjust_gore(ratio: float):

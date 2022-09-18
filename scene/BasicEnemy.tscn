@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scene/echo.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=2]
@@ -10,6 +10,12 @@
 [ext_resource path="res://scene/particles/AttackHit.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/particles/MuzzleFlash.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scene/particles/Trail.tscn" type="PackedScene" id=10]
+[ext_resource path="res://sound/knife slash.wav" type="AudioStream" id=11]
+[ext_resource path="res://sound/gunshot.wav" type="AudioStream" id=12]
+[ext_resource path="res://sound/enemy_gib.wav" type="AudioStream" id=13]
+[ext_resource path="res://sound/roar1.wav" type="AudioStream" id=14]
+[ext_resource path="res://sound/footstep3.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound/footstep2.wav" type="AudioStream" id=16]
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -364,7 +370,6 @@ ranged_thresh = 500
 [node name="MuzzleFlash" parent="." instance=ExtResource( 9 )]
 position = Vector2( 167, 10 )
 rotation = -0.230383
-emitting = false
 one_shot = true
 
 [node name="Trail" parent="." instance=ExtResource( 10 )]
@@ -427,6 +432,35 @@ z_index = 10
 emitting = false
 one_shot = true
 spread = 45.0
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="KnifeSlash" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 11 )
+volume_db = -10.0
+
+[node name="Grunt" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 14 )
+volume_db = -30.0
+pitch_scale = 2.0
+
+[node name="GunShot" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 12 )
+volume_db = -20.0
+
+[node name="Gib" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 13 )
+volume_db = -20.0
+
+[node name="Footsteps" type="Node2D" parent="Sounds"]
+
+[node name="One" type="AudioStreamPlayer2D" parent="Sounds/Footsteps"]
+stream = ExtResource( 15 )
+volume_db = -20.0
+
+[node name="Two" type="AudioStreamPlayer2D" parent="Sounds/Footsteps"]
+stream = ExtResource( 16 )
+volume_db = -20.0
 
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
 [connection signal="hide" from="DepthController" to="." method="_on_hide"]
