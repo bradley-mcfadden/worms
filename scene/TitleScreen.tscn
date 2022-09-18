@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=4]
 [ext_resource path="res://script/title_screen.gd" type="Script" id=5]
+[ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=6]
+[ext_resource path="res://music/Danger - no guitar.wav" type="AudioStream" id=7]
+[ext_resource path="res://sound/press_button.wav" type="AudioStream" id=8]
+[ext_resource path="res://script/loop_audio.gd" type="Script" id=9]
 
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
@@ -116,6 +120,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 5 )
 
+[node name="PressButton" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -20.0
+
+[node name="FocusIn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -20.0
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -30.0
+script = ExtResource( 9 )
+
 [node name="Panel" type="TextureRect" parent="."]
 material = SubResource( 3 )
 margin_right = 1024.0
@@ -157,13 +174,11 @@ margin_top = 57.0
 margin_right = 587.0
 margin_bottom = 81.0
 rect_min_size = Vector2( 150, 0 )
-focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_colors/font_color_disabled = Color( 0.870588, 0.870588, 0.870588, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 2 )
-enabled_focus_mode = 0
 text = "start game"
 
 [node name="LevelSelect" type="Button" parent="VBoxContainer"]
@@ -216,8 +231,18 @@ custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "quit to desktop"
 
+[connection signal="mouse_entered" from="VBoxContainer/StartGame" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/LevelSelect" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
+[connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Credits" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]

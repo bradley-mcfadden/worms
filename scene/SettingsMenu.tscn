@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=4]
 [ext_resource path="res://script/settings_menu.gd" type="Script" id=5]
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=6]
+[ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=7]
+[ext_resource path="res://sound/press_button.wav" type="AudioStream" id=8]
+[ext_resource path="res://sound/set_button.wav" type="AudioStream" id=9]
+[ext_resource path="res://sound/unset_button.wav" type="AudioStream" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.1116, 0.1116, 0.18, 0.0980392 )
@@ -275,5 +279,26 @@ theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
 text = "exit"
 
+[node name="PressButton" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -20.0
+
+[node name="FocusIn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -20.0
+
+[node name="ButtonEnabled" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -20.0
+
+[node name="ButtonDisabled" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -20.0
+
+[connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_Button_mouse_entered"]
 [connection signal="toggled" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_RichTextCheck_toggled"]
+[connection signal="toggled" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_Button_toggled"]
+[connection signal="mouse_entered" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_pressed"]

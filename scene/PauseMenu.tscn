@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=3]
 [ext_resource path="res://script/pause_menu.gd" type="Script" id=4]
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=5]
+[ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=6]
+[ext_resource path="res://sound/press_button.wav" type="AudioStream" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.117647 )
@@ -100,7 +102,23 @@ custom_fonts/font = ExtResource( 2 )
 enabled_focus_mode = 0
 text = "quit to desktop"
 
+[node name="PressButton" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -20.0
+
+[node name="FocusIn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -20.0
+
+[connection signal="mouse_entered" from="VBoxContainer/Resume" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/QuitToMenu" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_QuitToMenu_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]

@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/death_roar2.wav-8c2c27a9e6a2f1259ffca730a6a4ffbc.sample"
+
+[deps]
+
+source_file="res://sound/death_roar2.wav"
+dest_files=[ "res://.import/death_roar2.wav-8c2c27a9e6a2f1259ffca730a6a4ffbc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

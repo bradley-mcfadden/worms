@@ -81,3 +81,11 @@ func set_text(label, msg, start, end, center = true, animate = true):
 
 func wrap_string(string, start, end):
 	return "%s%s%s" % [start, string, end]
+
+
+func _on_Button_pressed():
+	$PressButton.play()
+
+
+func _on_Button_mouse_entered():
+	$FocusIn.play()

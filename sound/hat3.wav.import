@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/hat3.wav-e563cc8d7734b6c5475c2d6d8985cf2c.sample"
+
+[deps]
+
+source_file="res://sound/hat3.wav"
+dest_files=[ "res://.import/hat3.wav-e563cc8d7734b6c5475c2d6d8985cf2c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

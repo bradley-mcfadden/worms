@@ -77,3 +77,11 @@ func _on_Credits_pressed():
 
 func _on_QuitToDesktop_pressed():
 	get_tree().quit()
+
+
+func _on_Button_mouse_entered():
+	$FocusIn.play()
+
+
+func _on_Button_pressed():
+	$PressButton.play()

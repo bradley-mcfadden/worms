@@ -53,3 +53,16 @@ func _on_RichTextCheck_toggled(state: bool):
 
 func _on_ExitButton_pressed():
 	queue_free()
+
+
+func _on_Button_pressed():
+	$PressButton.play()
+
+
+func _on_Button_mouse_entered():
+	$FocusIn.play()
+
+
+func _on_Button_toggled(state: bool):
+	if state: $ButtonEnabled.play()
+	else: $ButtonDisabled.play()
