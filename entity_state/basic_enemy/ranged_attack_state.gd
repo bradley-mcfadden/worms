@@ -31,8 +31,7 @@ func _physics_process(_delta):
 func _on_animation_finished(_name):
 	print("Animation finished")
 	fsm.pop()
-	# aplayer.disconnect()
 
 
 func on_exit():
-	pass
+	aplayer.disconnect("animation_finished", self, "_on_animation_finished")

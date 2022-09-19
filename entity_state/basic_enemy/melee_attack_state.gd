@@ -30,8 +30,8 @@ func _physics_process(_delta):
 
 func _on_animation_finished(_name):
 	fsm.pop()
-	aplayer.disconnect("animation_finished", self, "_on_animation_finished")
 
 
 func on_exit():
-	pass
+	entity.end_melee_attack()
+	aplayer.disconnect("animation_finished", self, "_on_animation_finished")
