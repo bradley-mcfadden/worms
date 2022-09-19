@@ -58,13 +58,17 @@ func _shrink_to_size(to: int):
 		remove_child(seg)
 		seg.queue_free()
 		print(str(seg.proportion), " at ", i)
-	var new_tail = tail_widg.instance()
-	new_tail.set_proportion(tail.proportion)
-	add_child(new_tail)
-	var new_body := [new_tail]
-	new_body.append_array(body)
-	body = new_body
-	tail = new_tail
+	if to != 0:
+		var new_tail = tail_widg.instance()
+		new_tail.set_proportion(tail.proportion)
+		add_child(new_tail)
+		var new_body := [new_tail]
+		new_body.append_array(body)
+		body = new_body
+		tail = new_tail
+	else:
+		tail = null
+		head = null
 
 	_reorder_children()
 	_position_segments()
