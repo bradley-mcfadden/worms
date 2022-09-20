@@ -38,7 +38,6 @@ func _physics_process(delta):
 		last_player_location = player.global_position
 		current_interest = INITIAL_INTEREST
 		var dist = entity.global_position.distance_to(player.global_position) - player.radius - entity.radius
-		entity.look_at(player.position)
 		if entity.check_melee_attack(dist, player.position):
 			print("Doing a melee attack!")
 			fsm.push(BasicEnemyStateLoader.melee_attack(fsm, entity))

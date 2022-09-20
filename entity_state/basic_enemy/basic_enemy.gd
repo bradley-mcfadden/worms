@@ -8,7 +8,7 @@ signal died(node, from, overkill)
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
-const DRAW_ME = true
+const DRAW_ME = false
 
 var ent_state_prop := {}
 
@@ -286,7 +286,7 @@ func check_for_player() -> Node:
 	return null
 
 
-func check_ranged_attack(dist_to_player, ppos):
+func check_ranged_attack(_dist_to_player, ppos):
 	#print("Check ranged attack")
 	if !has_ranged_attack:
 		return false
@@ -321,7 +321,7 @@ func end_ranged_attack():
 	pass
 
 
-func check_melee_attack(dist_to_player, ppos):
+func check_melee_attack(dist_to_player, _ppos):
 	if !has_melee_attack:
 		return false
 	# check if I'm close enough to attack
