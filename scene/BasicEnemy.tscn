@@ -404,7 +404,6 @@ scale = Vector2( 13.5853, 5.83995 )
 monitoring = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MeleeAttack"]
-visible = false
 polygon = PoolVector2Array( 0, 0, -11, -21, 11, -21 )
 
 [node name="DepthController" parent="." instance=ExtResource( 2 )]

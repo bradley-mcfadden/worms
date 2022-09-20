@@ -8,7 +8,7 @@ signal died(node, from, overkill)
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
-const DRAW_ME = false
+const DRAW_ME = true
 
 var ent_state_prop := {}
 
@@ -134,8 +134,10 @@ func _draw():
 				_draw_semicircle(ranged_thresh, f, Color.black)
 	else:
 		_draw_semicircle(look_distance, f, Color.black)
-		_draw_semicircle(melee_thresh, f, Color.black)
-		_draw_semicircle(ranged_thresh, f, Color.black)
+		if has_melee_attack:
+			_draw_semicircle(melee_thresh, f, Color.black)
+		if has_ranged_attack:
+			_draw_semicircle(ranged_thresh, f, Color.black)
 		# translate(-global_position)
 
 		_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
@@ -260,11 +262,12 @@ func check_for_player() -> Node:
 		for ent in entities:
 			if ent == null:
 				continue
-			var angle_to_player = abs((ent.position - position).angle() - rotation)
+			var position_diff = ent.global_position - global_position
+			var angle_to_player = abs((position_diff).angle() - rotation)
 			# var dist_to_player = position.distance_to(ent.position) - ent.radius - radius
 			var f = deg2rad(fsm.top().PROPERTIES["fov"])
 			var hit = space_state.intersect_ray(
-				position, position + (ent.position - position).normalized() * look_distance, [self],
+				global_position, global_position + (position_diff).normalized() * look_distance, [self],
 				collision_mask
 			)
 			#if hit.has("collider"):

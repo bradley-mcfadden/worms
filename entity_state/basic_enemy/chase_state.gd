@@ -35,9 +35,9 @@ func on_enter():
 func _physics_process(delta):
 	var player = entity.check_for_player()
 	if player != null:
-		last_player_location = player.position
+		last_player_location = player.global_position
 		current_interest = INITIAL_INTEREST
-		var dist = entity.position.distance_to(player.position) - player.radius - entity.radius
+		var dist = entity.global_position.distance_to(player.global_position) - player.radius - entity.radius
 		entity.look_at(player.position)
 		if entity.check_melee_attack(dist, player.position):
 			print("Doing a melee attack!")

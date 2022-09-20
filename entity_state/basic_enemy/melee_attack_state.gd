@@ -29,7 +29,9 @@ func _physics_process(_delta):
 
 
 func _on_animation_finished(_name):
-	fsm.pop()
+	print("Done melee attack")
+	if fsm.top().NAME == NAME:
+		fsm.pop()
 
 
 func on_exit():

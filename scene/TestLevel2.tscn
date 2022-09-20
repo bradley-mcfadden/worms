@@ -307,7 +307,7 @@ look_distance = 800
 has_ranged_attack = true
 has_melee_attack = false
 melee_damage = 30
-melee_thresh = 75
+melee_thresh = 125
 ranged_thresh = 800
 
 [node name="BasicEnemy2" parent="Enemies" instance=ExtResource( 6 )]
@@ -315,7 +315,7 @@ position = Vector2( -1057, 317 )
 idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
 look_distance = 800
 melee_damage = 30
-melee_thresh = 75
+melee_thresh = 125
 ranged_thresh = 800
 
 [node name="BasicEnemy3" parent="Enemies" instance=ExtResource( 6 )]
@@ -323,7 +323,7 @@ position = Vector2( -408, 1000 )
 idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
 look_distance = 800
 melee_damage = 30
-melee_thresh = 75
+melee_thresh = 125
 ranged_thresh = 800
 
 [node name="Players" type="Node" parent="."]

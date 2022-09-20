@@ -30,7 +30,8 @@ func _physics_process(_delta):
 
 func _on_animation_finished(_name):
 	print("Animation finished")
-	fsm.pop()
+	if fsm.top().NAME == NAME:
+		fsm.pop()
 
 
 func on_exit():
