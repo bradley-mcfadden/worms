@@ -400,7 +400,7 @@ anims/walk_knife = SubResource( 13 )
 
 [node name="MeleeAttack" type="Area2D" parent="."]
 rotation = 1.5708
-scale = Vector2( 13.5853, 5.83995 )
+scale = Vector2( 13.585, 8 )
 monitoring = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MeleeAttack"]
