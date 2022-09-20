@@ -252,7 +252,7 @@ func check_for_player() -> Node:
 	if not get_parent().has_method("get_players"):
 		return null
 	var players = get_parent().get_players()
-	var min_dist := -1.0
+	var min_dist := 200000.0
 	var closest_ent: Node = null
 	# Prefer finding a player
 	var space_state = get_world_2d().direct_space_state
@@ -294,7 +294,7 @@ func check_ranged_attack(_dist_to_player, ppos):
 	if !has_ranged_attack:
 		return false
 	var space_state = get_world_2d().direct_space_state
-	var hit: Dictionary = space_state.intersect_ray(position, position+(ppos-position)*fsm.top().PROPERTIES["threshold"], [self], collision_mask)
+	var hit: Dictionary = space_state.intersect_ray(global_position, global_position+(ppos-global_position)*fsm.top().PROPERTIES["threshold"], [self], collision_mask)
 	if hit.has("collider"):
 		# print(hit)
 		# and $AnimationPlayer.assigned_animation == "idle"
