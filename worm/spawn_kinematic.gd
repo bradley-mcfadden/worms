@@ -229,6 +229,9 @@ func add_segment():
 	new_seg.layer = head.get_layer()
 	new_tail.layer = head.get_layer()
 
+	old_tail.disconnect("segment_died", self, "_on_segment_died")
+	old_tail.take_damage(1000, null)
+
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
 	emit_signal("segment_changed", new_tail, SegmentState.ALIVE)

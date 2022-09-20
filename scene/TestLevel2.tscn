@@ -407,6 +407,7 @@ visible = false
 script = ExtResource( 20 )
 
 [node name="HealthBar" parent="CanvasLayer" instance=ExtResource( 16 )]
+visible = false
 anchor_top = 1.0
 anchor_right = 0.0
 margin_left = 16.0

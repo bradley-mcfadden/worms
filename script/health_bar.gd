@@ -17,6 +17,7 @@ var body := []
 
 
 func _ready():
+	#_test_shrink()
 	pass
 
 
@@ -36,7 +37,7 @@ func _in_bounds(pos: int) -> bool:
 
 # update number of icons to size "to"
 func _on_Worm_size_changed(to: int):
-	# print("size changed", to)
+	if to < 0: return
 	if head == null:
 		_init_health_bar(to)
 	elif len(body) < to:
@@ -49,6 +50,8 @@ func _shrink_to_size(to: int):
 	var by: int = len(body) - to
 	if by <= 0 or to < 0:
 		return
+
+	print("_shrink_to_size ", to, " removing ", by)
 
 	var seg
 	# n-1, n-by-2, by+1 removed
@@ -67,8 +70,13 @@ func _shrink_to_size(to: int):
 		body = new_body
 		tail = new_tail
 	else:
+		for segm in body:
+			remove_child(segm)
+			segm.queue_free()
+		body.clear()
 		tail = null
 		head = null
+		hide()
 
 	_reorder_children()
 	_position_segments()
@@ -103,6 +111,7 @@ func _grow_to_size(to: int):
 
 
 func _init_health_bar(size: int):
+	show()
 	tail = tail_widg.instance()
 	body.append(tail)
 	for _i in range(1, size - 1):
@@ -167,7 +176,7 @@ func _test_shrink():
 	
 	_on_Segment_took_damage(15, dummy1)
 	yield(get_tree().create_timer(4.0), "timeout")
-	_shrink_to_size(12)
+	_shrink_to_size(0)
 
 
 func _test_grow():
