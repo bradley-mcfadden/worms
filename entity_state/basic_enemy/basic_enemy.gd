@@ -252,7 +252,8 @@ func check_for_player() -> Node:
 	if not get_parent().has_method("get_players"):
 		return null
 	var players = get_parent().get_players()
-
+	var min_dist := -1.0
+	var closest_ent: Node = null
 	# Prefer finding a player
 	var space_state = get_world_2d().direct_space_state
 	for player in players:
@@ -264,7 +265,7 @@ func check_for_player() -> Node:
 				continue
 			var position_diff = ent.global_position - global_position
 			var angle_to_player = abs((position_diff).angle() - rotation)
-			# var dist_to_player = position.distance_to(ent.position) - ent.radius - radius
+			var dist_to_player = position_diff.length() - ent.radius - radius
 			var f = deg2rad(fsm.top().PROPERTIES["fov"])
 			var hit = space_state.intersect_ray(
 				global_position, global_position + (position_diff).normalized() * look_distance, [self],
@@ -282,8 +283,10 @@ func check_for_player() -> Node:
 				and hit.has("collider")
 				and hit["collider"].has_method("take_damage")			
 			):
-				return ent
-	return null
+				if dist_to_player < min_dist:
+					min_dist = dist_to_player
+					closest_ent = ent
+	return closest_ent
 
 
 func check_ranged_attack(_dist_to_player, ppos):
