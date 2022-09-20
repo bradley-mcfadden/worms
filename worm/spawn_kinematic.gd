@@ -130,7 +130,8 @@ func update_camera_position():
 	var sum := Vector2.ZERO
 	if (len(body) == 0): return
 	for segment in body:
-		sum += segment.position
+		if not segment.is_queued_for_deletion():
+			sum += segment.position
 
 	var avg = sum / len(body)
 	wide_camera.position = avg
@@ -231,6 +232,12 @@ func add_segment():
 
 	old_tail.disconnect("segment_died", self, "_on_segment_died")
 	old_tail.take_damage(1000, null)
+
+	new_seg.connect("segment_died", self, "_on_segment_died")
+	new_seg.connect("took_damage", self, "_on_segment_took_damage")
+
+	new_tail.connect("segment_died", self, "_on_segment_died")
+	new_tail.connect("took_damage", self, "_on_segment_took_damage")
 
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
