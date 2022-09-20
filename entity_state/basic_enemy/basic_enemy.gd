@@ -170,7 +170,6 @@ func reset():
 	chosen_dir = Vector2.ZERO
 	velocity = Vector2.ZERO
 	acceleration = Vector2.ZERO
-	collision_layer = 2147483647
 	patrol_idx = 0
 	fsm.clear()
 	fsm.push(BasicEnemyStateLoader.patrol(fsm, self))
@@ -178,7 +177,7 @@ func reset():
 	rot = 0
 	transform = start_transform
 	health = start_health
-	layer = start_layer
+	set_layer(start_layer)
 
 
 func set_interest():
