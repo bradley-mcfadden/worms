@@ -372,7 +372,7 @@ func _on_segment_died(segment, from, overkill):
 
 		if (len(body) < minimum_length || segment == head) and is_alive():
 			dead = true
-			emit_signal("died", self, from, overkill)
+			emit_signal("died", from, overkill)
 		elif (len(body) < num_segment_for_low_health):
 			emit_signal("health_state_changed", true)
 

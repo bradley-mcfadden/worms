@@ -25,8 +25,8 @@ func get_players() -> Array:
 	return players
 
 
-func _on_Player_died(node, killer, _overkill):
-	print("Player " + str(node) + " was killed by " + str(killer))
+func _on_Player_died(killer, _overkill):
+	print("Player was killed by " + str(killer))
 	# remove_child(node)
 	# node.queue_free()
 	if get_alive_players() == 0:

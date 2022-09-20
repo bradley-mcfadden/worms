@@ -46,6 +46,10 @@ func _on_Worm_size_changed(to: int):
 		_shrink_to_size(to)
 
 
+func _on_Worm_died(_from, _overkill):
+	_shrink_to_size(0)
+
+
 func _shrink_to_size(to: int):
 	var by: int = len(body) - to
 	if by <= 0 or to < 0:

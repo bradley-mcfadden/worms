@@ -488,6 +488,7 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="ability_is_ready_changed" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed"]
 [connection signal="ability_is_ready_changed_cd" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed_cd"]
 [connection signal="died" from="Players/SpawnKinematic" to="Players" method="_on_Player_died"]
+[connection signal="died" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Worm_died"]
 [connection signal="health_state_changed" from="Players/SpawnKinematic" to="Music" method="_on_health_state_changed"]
 [connection signal="health_state_changed" from="Players/SpawnKinematic" to="CanvasLayer/NearDeathBorder" method="_on_health_state_changed"]
 [connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
