@@ -392,13 +392,22 @@ func _on_MeleeAttack_body_entered(body):
 
 func _on_hide():
 	is_hidden = true
-	$Tween.interpolate_property(self, "self_modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
+	_set_effects_modulate(Color(1, 1, 1, 0))
+	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
 	$Tween.start()
+
+
+func _set_effects_modulate(mod: Color):
+	$MuzzleFlash.modulate = mod
+	$Trail.modulate = mod
+	$BloodExplode.modulate = mod
+	$AttackHit.modulate = mod
 
 
 func _on_show():
 	is_hidden = false
-	$Tween.interpolate_property(self, "self_modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
+	_set_effects_modulate(Color(1, 1, 1, 1))
+	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
 	$Tween.start()
 
 
