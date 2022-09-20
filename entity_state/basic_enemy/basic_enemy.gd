@@ -97,11 +97,12 @@ func _physics_process(delta: float):
 
 
 func move(delta: float):
-	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME:
+	var reached_target: bool = target.distance_to(global_position) < fsm.top().PROPERTIES["threshold"]
+	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME and not reached_target:
 		$echo.set_visible(true)
 	else:
 		$echo.set_visible(false)
-	if (target == null or target.distance_to(global_position) < fsm.top().PROPERTIES["threshold"]):
+	if (target == null or reached_target):
 		return
 	var speed = fsm.top().PROPERTIES["speed"]
 	var desired_velocity = chosen_dir.rotated(rot) * speed
