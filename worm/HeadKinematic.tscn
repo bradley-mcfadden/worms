@@ -113,7 +113,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "mouth_chomp"
-length = 0.833333
+length = 0.583334
 step = 0.0416667
 tracks/0/type = "value"
 tracks/0/path = NodePath("image:frame")
@@ -122,10 +122,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.0416667, 0.0833333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.0416667, 0.0833333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 50 ]
+"values": [ 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 50 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("blood:frame")
@@ -134,10 +134,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.0416667, 0.0833334, 0.125, 0.166667, 0.208334, 0.25, 0.291667, 0.333334, 0.375, 0.416667, 0.458334, 0.5, 0.541667, 0.625001, 0.666667, 0.708334, 0.750001, 0.791667 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.0416667, 0.0833333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333334, 0.375, 0.416667, 0.458333, 0.5, 0.541667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 48, 49, 50, 51 ]
+"values": [ 38, 39, 40, 41, 42, 43, 44, 45, 45, 47, 48, 49, 50, 51 ]
 }
 tracks/2/type = "audio"
 tracks/2/path = NodePath("MouthClose")
@@ -151,7 +151,7 @@ tracks/2/keys = {
 "start_offset": 0.0,
 "stream": ExtResource( 10 )
 } ],
-"times": PoolRealArray( 0.672 )
+"times": PoolRealArray( 0.375 )
 }
 tracks/3/type = "method"
 tracks/3/path = NodePath(".")
@@ -160,7 +160,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.5, 0.75 ),
+"times": PoolRealArray( 0.333333, 0.458333 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [ true ],
@@ -232,7 +232,7 @@ texture = ExtResource( 3 )
 normal_map = ExtResource( 1 )
 hframes = 11
 vframes = 7
-frame = 52
+frame = 47
 
 [node name="blood" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
