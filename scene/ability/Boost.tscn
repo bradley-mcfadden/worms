@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://abilities/boost.gd" type="Script" id=1]
+[ext_resource path="res://script/ability/boost.gd" type="Script" id=1]
 [ext_resource path="res://img/boost-icon.png" type="Texture" id=2]
 
 [node name="Boost" type="Node"]
