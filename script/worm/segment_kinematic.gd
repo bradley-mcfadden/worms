@@ -81,17 +81,19 @@ func take_damage(how_much, from):
 	if not is_alive():
 		return
 	print("Player is taking " + str(how_much) + " damage")
-	if health > 0:
-		health -= how_much
+	var new_health: float = health -= how_much
+	if new_health > 0:
+		health = clamp(health, 0.0, start_health)
 		emit_signal("took_damage", self)
-	if health < start_health * -0.25:
+	if new_health < start_health * -0.25:
 		emit_signal("segment_died", self, from, true)
 		$BloodExplode.emitting = true
 		_die_then_cleanup()
-	elif health <= 0:
+	elif new_health <= 0:
 		emit_signal("segment_died", self, from, false)
 		$BloodExplode.emitting = true
 		_die_then_cleanup()
+	health = clamp(new_health, 0.0, start_health)
 	_adjust_gore(float(health) / start_health)
 
 

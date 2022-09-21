@@ -9,6 +9,7 @@ const CHOMP_TO_IDLE = "chomp_to_idle"
 
 export(int) var bite_damage := 100
 export(int) var max_blood_level := 4
+export(float) var bite_heal_factor := 0.5
 
 var anim_player: AnimationPlayer
 var curr_blood_level := 0
@@ -85,6 +86,12 @@ func _on_BiteHitbox_area_entered(area):
 		area.take_damage(bite_damage, self)
 		increment_blood_level()
 		$BiteHit.play()
+	# Heal when biting an enemy
+	var parent: Node = get_parent()
+	for segment in parent.body():
+		segment.take_damage(-start_health * bite_heal_factor)
+	# ... and add an extra segment
+	parent.add_segment()
 
 
 func increment_blood_level():
