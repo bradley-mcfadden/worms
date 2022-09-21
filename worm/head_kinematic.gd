@@ -15,7 +15,7 @@ var curr_blood_level := 0
 
 func _ready():
 	anim_player = $AnimationPlayer
-	_change_animation("idle")
+	anim_player.play(IDLE)
 
 	damage_textures = [
 		load("res://img/worm/ss_full.png"),
@@ -73,25 +73,6 @@ func set_collision_mask(mask: int):
 
 func get_animation_player() -> Node:
 	return anim_player
-
-
-func _on_mouth_open_wide_end():
-	_change_animation("mouth_chomp")
-	toggle_bite_hitbox(true)
-
-
-func _on_mouth_chomp_end():
-	_change_animation("chomp_to_idle")
-	toggle_bite_hitbox(false)
-
-
-func _on_chomp_to_idle_end():
-	_change_animation("idle")
-
-
-func _change_animation(to: String):
-	anim_player.play(to)
-	emit_signal("changed_animation", anim_player.current_animation, to)
 
 
 func toggle_bite_hitbox(is_on):

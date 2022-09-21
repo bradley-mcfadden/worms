@@ -65,12 +65,9 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.294 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_on_chomp_to_idle_end"
-} ]
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("blood:frame")
@@ -130,45 +127,48 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 50 ]
 }
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
+tracks/1/type = "value"
+tracks/1/path = NodePath("blood:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.84 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_on_mouth_chomp_end"
-} ]
+"times": PoolRealArray( 0, 0.0416667, 0.0833334, 0.125, 0.166667, 0.208334, 0.25, 0.291667, 0.333334, 0.375, 0.416667, 0.458334, 0.5, 0.541667, 0.625001, 0.666667, 0.708334, 0.750001, 0.791667 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 48, 49, 50, 51 ]
 }
-tracks/2/type = "value"
-tracks/2/path = NodePath("blood:frame")
+tracks/2/type = "audio"
+tracks/2/path = NodePath("MouthClose")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.0416667, 0.0833334, 0.125, 0.166667, 0.208334, 0.25, 0.291667, 0.333334, 0.375, 0.416667, 0.458334, 0.5, 0.541667, 0.583334, 0.625001, 0.666667, 0.708334, 0.750001, 0.791667 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51 ]
-}
-tracks/3/type = "audio"
-tracks/3/path = NodePath("MouthClose")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
 "clips": [ {
 "end_offset": 0.0,
 "start_offset": 0.0,
 "stream": ExtResource( 10 )
 } ],
 "times": PoolRealArray( 0.672 )
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.5, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ true ],
+"method": "toggle_bite_hitbox"
+}, {
+"args": [ false ],
+"method": "toggle_bite_hitbox"
+} ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -194,12 +194,9 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.833333 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_on_mouth_open_wide_end"
-} ]
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("blood:frame")
@@ -235,7 +232,7 @@ texture = ExtResource( 3 )
 normal_map = ExtResource( 1 )
 hframes = 11
 vframes = 7
-frame = 50
+frame = 52
 
 [node name="blood" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
@@ -262,13 +259,14 @@ anims/chomp_to_idle = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/mouth_chomp = SubResource( 4 )
 anims/mouth_open_wide = SubResource( 5 )
+next/chomp_to_idle = "idle"
+next/mouth_chomp = "chomp_to_idle"
 
 [node name="DepthController" parent="." instance=ExtResource( 5 )]
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="BiteHitbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 monitoring = false
 monitorable = false

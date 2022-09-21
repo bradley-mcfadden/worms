@@ -60,7 +60,7 @@ func _ready():
 		if i == 0:
 			segment = Head.instance()
 			head = segment
-			head.connect("changed_animation", self, "_on_head_animation_changed")
+			# head.connect("changed_animation", self, "_on_head_animation_changed")
 		elif i == segment_number - 1:
 			segment = Tail.instance()
 			tail = segment
@@ -91,6 +91,7 @@ func _ready():
 			ability.connect("is_ready_changed", self, "_on_ability_is_ready_changed")
 		if not ability.is_connected("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd"):
 			ability.connect("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd")
+		ability.setup()
 	emit_signal("abilities_ready", abilities)
 	#start_transform = transform
 	start_layer = layer
@@ -199,7 +200,7 @@ func _control(delta):
 			emit_signal("switch_layer_pressed", layer + 1, self)
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
-		if Input.is_action_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
+		if Input.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
 			ability.invoke()
 
 
@@ -358,8 +359,9 @@ func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float):
 	emit_signal("ability_is_ready_changed_cd", ability, is_ready, duration)
 
 
-func _on_head_animation_changed(_from: String, to: String):
-	$AbilitiesContainer/Bite.set_is_ready(to == "idle")
+func _on_head_animation_changed(_from: String, _to: String):
+	#$AbilitiesContainer/Bite.set_is_ready(to == "idle")
+	pass
 
 
 func _on_segment_died(segment, from, overkill):

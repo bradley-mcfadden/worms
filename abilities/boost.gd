@@ -4,7 +4,7 @@ extends Ability
 export(int) var factor = 2
 
 
-func _ready():
+func setup():
 	is_ready = true
 
 

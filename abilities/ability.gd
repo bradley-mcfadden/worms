@@ -10,6 +10,10 @@ var parent
 var is_ready := false
 
 
+func setup():
+	pass
+
+
 func invoke():
 	pass
 
