@@ -1,4 +1,4 @@
-extends "res://worm/segment_kinematic.gd"
+extends "res://script/worm/segment_kinematic.gd"
 
 signal changed_animation(from, to)
 
