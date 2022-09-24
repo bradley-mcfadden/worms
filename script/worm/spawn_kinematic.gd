@@ -227,11 +227,12 @@ func add_segment():
 	add_child(new_tail)
 	move_child(new_tail, 0)
 
-	scale_camera()
-
 	new_seg.layer = head.get_layer()
 	new_tail.layer = head.get_layer()
+	new_seg.position = old_tail.position
+	new_tail.position = old_tail.position
 
+	old_tail.hide()
 	old_tail.disconnect("segment_died", self, "_on_segment_died")
 	old_tail.take_damage(1000, null)
 
@@ -247,6 +248,8 @@ func add_segment():
 	emit_signal("size_changed", len(body))
 	if len(body) >= num_segment_for_low_health:
 		emit_signal("health_state_changed", false)
+
+	scale_camera()
 
 
 func scale_segments(factor):
@@ -394,8 +397,8 @@ func _play_death_sound(segment: Node):
 		$Sounds/SegmentDeath.play()
 
 
-func _on_segment_took_damage(segment):
-	$Sounds/SegmentTakeDamage.play()
+func _on_segment_took_damage(segment, hurt=false):
+	if hurt: $Sounds/SegmentTakeDamage.play()
 	var idx = body.find(segment)
 	emit_signal("segment_took_damage", idx, segment)
 

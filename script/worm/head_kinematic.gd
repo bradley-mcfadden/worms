@@ -83,15 +83,17 @@ func toggle_bite_hitbox(is_on):
 
 func _on_BiteHitbox_area_entered(area):
 	if area.has_method("take_damage"):
+		if not area.is_alive(): return
 		area.take_damage(bite_damage, self)
 		increment_blood_level()
 		$BiteHit.play()
-	# Heal when biting an enemy
-	var parent: Node = get_parent()
-	for segment in parent.body():
-		segment.take_damage(-start_health * bite_heal_factor)
-	# ... and add an extra segment
-	parent.add_segment()
+		var parent: Node = get_parent()
+		# When biting an enemy, add a segment
+		parent.call_deferred("add_segment")
+		# ... and heal each segment
+		for segment in parent.body:
+			segment.take_damage(-start_health * bite_heal_factor, parent)
+			yield(get_tree().create_timer(0.1), "timeout")
 
 
 func increment_blood_level():

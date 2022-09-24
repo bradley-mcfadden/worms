@@ -77,20 +77,20 @@ func get_layer() -> int:
 	return $DepthController.get_layer()
 
 
-func take_damage(how_much, from):
+func take_damage(how_much, from, emit=true):
 	if not is_alive():
 		return
 	print("Player is taking " + str(how_much) + " damage")
-	var new_health: float = health -= how_much
+	var new_health: float = health - how_much
 	if new_health > 0:
 		health = clamp(health, 0.0, start_health)
-		emit_signal("took_damage", self)
+		if emit: emit_signal("took_damage", self, how_much>0)
 	if new_health < start_health * -0.25:
-		emit_signal("segment_died", self, from, true)
+		if emit: emit_signal("segment_died", self, from, true)
 		$BloodExplode.emitting = true
 		_die_then_cleanup()
 	elif new_health <= 0:
-		emit_signal("segment_died", self, from, false)
+		if emit: emit_signal("segment_died", self, from, false)
 		$BloodExplode.emitting = true
 		_die_then_cleanup()
 	health = clamp(new_health, 0.0, start_health)
