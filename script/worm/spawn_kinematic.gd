@@ -15,6 +15,7 @@ signal abilities_ready(abilities)
 signal ability_is_ready_changed(ability, is_ready)
 signal ability_is_ready_changed_cd(ability, is_ready, duration)
 signal health_state_changed(is_low)
+signal noise_produced(position, audible_radius)
 
 # fill this with camera2D node
 export(PackedScene) var camera

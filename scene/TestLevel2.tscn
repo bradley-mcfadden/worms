@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -30,6 +30,7 @@
 [ext_resource path="res://img/dirt.jpg" type="Texture" id=28]
 [ext_resource path="res://script/bg_music.gd" type="Script" id=29]
 [ext_resource path="res://sound/lay_eggs.wav" type="AudioStream" id=30]
+[ext_resource path="res://script/noise_manager.gd" type="Script" id=31]
 
 [sub_resource type="Resource" id=56]
 script = ExtResource( 23 )
@@ -397,6 +398,9 @@ polygon = PoolVector2Array( 491.29, 706.193, 610.927, 447.681, 916.178, 546.393,
 pause_mode = 1
 script = ExtResource( 1 )
 
+[node name="NoiseManager" type="Node" parent="."]
+script = ExtResource( 31 )
+
 [node name="DepthManager" parent="." instance=ExtResource( 8 )]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -479,10 +483,13 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="all_enemies_dead" from="Enemies" to="." method="_on_all_enemies_dead"]
 [connection signal="bullet_created" from="Enemies/BasicEnemy" to="." method="attach_bullet"]
 [connection signal="died" from="Enemies/BasicEnemy" to="Enemies" method="_on_Enemy_died"]
+[connection signal="noise_produced" from="Enemies/BasicEnemy" to="NoiseManager" method="_on_noise_produced"]
 [connection signal="bullet_created" from="Enemies/BasicEnemy2" to="." method="attach_bullet"]
 [connection signal="died" from="Enemies/BasicEnemy2" to="Enemies" method="_on_Enemy_died"]
+[connection signal="noise_produced" from="Enemies/BasicEnemy2" to="NoiseManager" method="_on_noise_produced"]
 [connection signal="bullet_created" from="Enemies/BasicEnemy3" to="." method="attach_bullet"]
 [connection signal="died" from="Enemies/BasicEnemy3" to="Enemies" method="_on_Enemy_died"]
+[connection signal="noise_produced" from="Enemies/BasicEnemy3" to="." method="_on_noise_produced"]
 [connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
 [connection signal="abilities_ready" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_abilities_ready"]
 [connection signal="ability_is_ready_changed" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed"]
@@ -492,6 +499,7 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="health_state_changed" from="Players/SpawnKinematic" to="Music" method="_on_health_state_changed"]
 [connection signal="health_state_changed" from="Players/SpawnKinematic" to="CanvasLayer/NearDeathBorder" method="_on_health_state_changed"]
 [connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
+[connection signal="noise_produced" from="Players/SpawnKinematic" to="NoiseManager" method="_on_noise_produced"]
 [connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
 [connection signal="segment_took_damage" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Segment_took_damage"]
 [connection signal="size_changed" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Worm_size_changed"]

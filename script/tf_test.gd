@@ -12,6 +12,7 @@ func _ready():
 	$DepthManager.add_items($Obstacles.get_obstacles())
 	$DepthManager.add_items($Decorations.get_decorations())
 	$DepthManager.set_current_layer(0)
+	$NoiseManager.listeners.append_array($Enemies.get_enemies())
 	$Background.set_layer(0)
 	$CanvasLayer/DepthGauge.change_depth(0)
 	death_screen = $CanvasLayer/DeathScreen

@@ -42,6 +42,9 @@ func set_is_ready(_is_ready: bool):
 func _play_roar_sound():
 	var i := int(rand_range(0, $RoarSounds.get_child_count() - 0.01))
 	$RoarSounds.get_child(i).play()
+	var head = parent.get_head()
+	var worm = head.get_parent()
+	worm.emit_signal("noise_produced", head.global_position, 500)
 
 
 func _on_animation_finished(name: String):

@@ -5,6 +5,7 @@ class_name BasicEnemy
 
 signal bullet_created(bullet)
 signal died(node, from, overkill)
+signal noise_produced(position, audible_radius)
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
@@ -26,6 +27,7 @@ export(int) var ranged_damage := 20
 export(int) var melee_damage := 50
 export(PackedScene) var bullet
 export(int) var start_health = 100
+export(int) var hear_radius = 2000
 export var melee_thresh := 50
 export var ranged_thresh := 300
 export var layer := 0
@@ -424,3 +426,8 @@ func set_collision_layer(_layer: int):
 func set_collision_mask(mask: int):
 	collision_mask = mask
 	$MeleeAttack.collision_mask = mask
+
+
+func on_noise_heard(position: Vector2):
+	if not is_alive(): return
+	print(self, " heard a noise at ", position)
