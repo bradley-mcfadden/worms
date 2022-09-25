@@ -46,11 +46,13 @@ func _physics_process(delta):
 			print("Doing a ranged attack!")
 			fsm.push(BasicEnemyStateLoader.ranged_attack(fsm, entity))
 			return
-	# else:
-	# 	current_interest -= delta
-	# if current_interest < 0:
-	# 	fsm.replace(BasicEnemyStateLoader.search(fsm, entity))
-	# 	return
+	
+	else:
+		current_interest -= delta
+		if current_interest < 0.0:
+			print("Switch to search state")
+			fsm.replace(BasicEnemyStateLoader.search(fsm, entity))
+			return
 	entity.set_target(last_player_location)
 	var ss = entity.set_interest()
 	if ss == SeekState.SEEK_TARGET:

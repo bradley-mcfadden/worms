@@ -81,6 +81,9 @@ func _ready():
 	ent_state_prop[BasicEnemyPatrolState.NAME] = BasicEnemyPatrolState.PROPERTIES
 	ent_state_prop[BasicEnemyChaseState.NAME] = BasicEnemyChaseState.PROPERTIES
 	ent_state_prop[BasicEnemyDeadState.NAME] = BasicEnemyDeadState.PROPERTIES
+	ent_state_prop[BasicEnemyMeleeAttackState.NAME] = BasicEnemyMeleeAttackState.PROPERTIES
+	ent_state_prop[BasicEnemyRangedAttackState.NAME] = BasicEnemyRangedAttackState.PROPERTIES
+	ent_state_prop[BasicEnemySeekState.NAME] = BasicEnemySeekState.PROPERTIES
 	# ent_state_prop[typeof(MeleeAttackState)] = MeleeAttackState.PROPERTIES
 	# ent_state_prop[typeof(RangedAttackState)] = RangedAttackState.PROPERTIES
 
@@ -128,6 +131,8 @@ func _draw():
 	# print(ent_state_prop)
 	if !Engine.editor_hint:
 		match state:
+			BasicEnemySeekState.NAME:
+				continue
 			BasicEnemyPatrolState.NAME:
 				_draw_semicircle(look_distance, f, Color.black)
 			BasicEnemyChaseState.NAME:
@@ -431,3 +436,6 @@ func set_collision_mask(mask: int):
 func on_noise_heard(position: Vector2):
 	if not is_alive(): return
 	print(self, " heard a noise at ", position)
+	var top = fsm.top()
+	if top.has_method("on_noise_heard"):
+		top.on_noise_heard(position)

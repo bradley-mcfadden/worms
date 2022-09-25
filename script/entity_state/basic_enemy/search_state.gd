@@ -11,6 +11,9 @@ const PROPERTIES := {
 }
 
 
+var noise_location = null
+
+
 func _init(_fsm, _entity):
 	fsm = _fsm
 	entity = _entity
@@ -21,8 +24,14 @@ func on_enter():
 
 
 func _physics_process(_delta):
-	pass
+	if noise_location != null:
+		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location))
 
 
 func on_exit():
 	pass
+
+
+func on_noise_heard(position: Vector2):
+	print("SearchState heard a noise")
+	noise_location = position

@@ -334,7 +334,6 @@ script = ExtResource( 5 )
 [node name="SpawnKinematic" parent="Players" instance=ExtResource( 9 )]
 pause_mode = 1
 position = Vector2( -246, -377 )
-segment_number = 15
 max_speed = 600
 
 [node name="Obstacles" type="Node" parent="."]

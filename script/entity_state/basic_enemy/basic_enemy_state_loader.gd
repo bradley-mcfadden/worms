@@ -30,3 +30,7 @@ static func patrol(fsm, entity):
 static func search(fsm, entity):
 	# return BasicEnemySearchState.new(fsm, entity)
 	return load("res://script/entity_state/basic_enemy/search_state.gd").new(fsm, entity)
+
+
+static func seek(fsm, entity, position):
+	return load("res://script/entity_state/basic_enemy/seek_state.gd").new(fsm, entity, position)

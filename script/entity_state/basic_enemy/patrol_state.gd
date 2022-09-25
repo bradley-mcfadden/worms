@@ -9,6 +9,7 @@ const PROPERTIES := {color = Color.aquamarine, speed = 250, threshold = 32, fov 
 var reaction_time = START_REACTION_TIME
 var idle_patrol
 var patrol_idx
+var noise_location = null
 
 
 func _init(_fsm, _entity):
@@ -33,6 +34,10 @@ func _physics_process(delta):
 	if react_to_player():
 		fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
 		print("reacted to player")
+		return
+	if noise_location != null:
+		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location))
+		print("Going to chase noise!")
 		return
 	entity.set_target(get_target())
 	var _ss = entity.set_interest()
@@ -63,3 +68,7 @@ func get_target():
 
 func on_exit():
 	pass
+
+
+func on_noise_heard(position: Vector2):
+	noise_location = position
