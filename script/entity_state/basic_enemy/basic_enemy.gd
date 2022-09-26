@@ -83,6 +83,7 @@ func _ready():
 	ent_state_prop[BasicEnemyDeadState.NAME] = BasicEnemyDeadState.PROPERTIES
 	ent_state_prop[BasicEnemyMeleeAttackState.NAME] = BasicEnemyMeleeAttackState.PROPERTIES
 	ent_state_prop[BasicEnemyRangedAttackState.NAME] = BasicEnemyRangedAttackState.PROPERTIES
+	ent_state_prop[BasicEnemySearchState.NAME] = BasicEnemySearchState.PROPERTIES
 	ent_state_prop[BasicEnemySeekState.NAME] = BasicEnemySeekState.PROPERTIES
 	# ent_state_prop[typeof(MeleeAttackState)] = MeleeAttackState.PROPERTIES
 	# ent_state_prop[typeof(RangedAttackState)] = RangedAttackState.PROPERTIES

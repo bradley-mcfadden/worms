@@ -55,6 +55,8 @@ func _physics_process(delta):
     else:
         if entity.animation_player.current_animation != idle_anim:
             entity.animation_player.play(idle_anim)
+            fsm.replace(BasicEnemySearchState.new(fsm, entity))
+            return
 
     entity.set_danger()
     entity.choose_direction()
