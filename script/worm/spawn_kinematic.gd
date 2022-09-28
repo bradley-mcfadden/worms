@@ -51,6 +51,7 @@ var start_transform: Transform2D
 var start_layer: int
 var is_switch_depth := false
 var background = null
+var active_controller = null
 
 
 func _ready():
@@ -98,6 +99,9 @@ func _ready():
 	start_layer = layer
 	emit_signal("size_changed", len(body))
 	emit_signal("health_state_changed", false)
+
+	active_controller = $InputController
+	active_controller.set_abilities_count(len(abilities))
 
 
 func reset():
@@ -173,36 +177,50 @@ func _control(delta):
 	if not is_alive():
 		return
 #	This is just example just make sure you dont allow beckvard movement.
-	if Input.is_action_pressed("move_forward"):
+	#if Input.is_action_pressed("move_forward"):
+	if active_controller.is_action_pressed("move_forward"):
 		vel.x += acceleration
 		vel.x = vel.x if vel.x <= max_speed else vel.x * speed_decay
 		#print("Moving forward")
 	else:
 		vel *= speed_decay
 
-	if Input.is_action_pressed("move_left"):
+	# if Input.is_action_pressed("move_left"):
+	if active_controller.is_action_pressed("move_left"):
 		heading -= PI * delta * 3
-	elif Input.is_action_pressed("move_right"):
+	# elif Input.is_action_pressed("move_right"):
+	elif active_controller.is_action_pressed("move_right"):
 		heading += PI * delta * 3
 	if !is_switch_depth:
-		if Input.is_action_just_pressed("peek_layer_up"):
+		# if Input.is_action_just_pressed("peek_layer_up"):
+		if active_controller.is_action_just_pressed("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer + 1, true)
-		elif Input.is_action_just_released("peek_layer_up"):
+		# elif Input.is_action_just_released("peek_layer_up"):
+		elif active_controller.is_action_just_released("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer + 1, false)
-		elif Input.is_action_just_pressed("peek_layer_down"):
+		# elif Input.is_action_just_pressed("peek_layer_down"):
+		elif active_controller.is_action_just_pressed("peek_layer_down"):
 			emit_signal("layer_visibility_changed", layer - 1, true)
-		elif Input.is_action_just_released("peek_layer_down"):
+		# elif Input.is_action_just_released("peek_layer_down"):
+		elif active_controller.is_action_just_released("peek_layer_down"):
 			emit_signal("layer_visibility_changed", layer - 1, false)
-		elif Input.is_action_just_pressed("layer_down"):
+		# elif Input.is_action_just_pressed("layer_down"):
+		elif active_controller.is_action_just_pressed("layer_down"):
 			$Sounds/ChangeLayerDown.play()
 			emit_signal("switch_layer_pressed", layer - 1, self)
-		elif Input.is_action_just_pressed("layer_up"):
+		# elif Input.is_action_just_pressed("layer_up"):
+		elif active_controller.is_action_just_pressed("layer_up"):
 			$Sounds/ChangeLayerUp.play()
 			emit_signal("switch_layer_pressed", layer + 1, self)
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
-		if Input.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
+		# if Input.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
+		if (active_controller.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready):
 			ability.invoke()
+
+
+func set_active_controller(controller: Node):
+	active_controller = controller
 
 
 func add_segment():
