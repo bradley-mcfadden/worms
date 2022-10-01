@@ -115,7 +115,7 @@ func config_to_index(idx: int, dict: Dictionary) -> bool:
 			var value = section_dict[key]
 			config.set_value(section, key, value)
 
-	return config.save() == OK
+	return config.save(path) == OK
 
 
 # next_level_or_main will load the next level without wrapping
