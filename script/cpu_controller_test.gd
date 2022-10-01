@@ -12,4 +12,8 @@ func _ready():
 func _on_command_finished():
 	print("command finished")
 	idx = (idx + 1) % len(commands)
-	if idx < len(commands): $CpuController.call(commands[idx])
+	if idx < len(commands): 
+		if commands[idx] == 'curl':
+			$CpuController.curl('left', len($SpawnKinematic.body)/10.0 + 1)
+		else:
+			$CpuController.call(commands[idx])

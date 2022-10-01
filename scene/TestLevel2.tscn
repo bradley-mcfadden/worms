@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -31,6 +31,8 @@
 [ext_resource path="res://script/bg_music.gd" type="Script" id=29]
 [ext_resource path="res://sound/lay_eggs.wav" type="AudioStream" id=30]
 [ext_resource path="res://script/noise_manager.gd" type="Script" id=31]
+[ext_resource path="res://scene/worm/CpuController.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scene/EggAnimation.tscn" type="PackedScene" id=33]
 
 [sub_resource type="Resource" id=56]
 script = ExtResource( 23 )
@@ -288,6 +290,9 @@ shader_param/offset = null
 [node name="TestLevel2" type="Node2D"]
 position = Vector2( 1, -4 )
 script = ExtResource( 3 )
+eggs = ExtResource( 33 )
+
+[node name="CpuController" parent="." instance=ExtResource( 32 )]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

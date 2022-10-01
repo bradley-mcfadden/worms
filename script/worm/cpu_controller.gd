@@ -27,7 +27,7 @@ func curl(direction: String = "left", duration: float = 4.0):
     while (total_time < duration):
         set_action(action, last % 2 == 0)
         var itime = 0.1 if last % 2 == 0 else time
-        time -= 0.015
+        time -= 0.018
         time = max(0.0, time)
         yield(get_tree().create_timer(itime), "timeout")
         total_time += itime

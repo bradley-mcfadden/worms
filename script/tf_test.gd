@@ -1,5 +1,9 @@
 extends Node2D
 
+
+export(PackedScene) var eggs
+
+
 var death_screen
 var enemies_dead_screen
 var primary_player
@@ -19,12 +23,6 @@ func _ready():
 	enemies_dead_screen = $CanvasLayer/AllEnemiesDead
 	primary_player = $Players/SpawnKinematic
 	primary_player.background = $Background
-
-
-func _input(_event):
-	pass
-	# if Input.is_action_just_released("reset"):
-	# 	reset()
 
 
 func _process(_delta):
@@ -49,14 +47,6 @@ func reset():
 	$Music.play()
 
 
-func to_main_menu():
-	pass
-
-
-func quit_to_desktop():
-	pass
-
-
 func get_current_camera_2d():
 	var viewport = get_viewport()
 	if not viewport:
@@ -71,8 +61,21 @@ func get_current_camera_2d():
 
 func _on_lay_eggs():
 	# in future, probably play an animation and wait for it finish before that
-	Levels.next_level_or_main(get_tree())
+	enemies_dead_screen.visible = false
+	var cpu_con = $CpuController
+	var worm = $Players/SpawnKinematic
+	$Players/SpawnKinematic.set_active_controller(cpu_con)
+	cpu_con.straighten_out(len(worm.body)+0.2)
+	yield(cpu_con, "command_finished")
+	cpu_con.curl("left", len(worm.body)+1.0)
+	yield(cpu_con, "command_finished")
+	var egg_ins = eggs.instance()
+	worm.add_child(egg_ins)
+	worm.move_child(egg_ins, 0)
+	egg_ins.global_position = worm.wide_camera.global_position
 	$LayEggs.play()
+	yield(egg_ins, "animation_finished")
+	Levels.next_level_or_main(get_tree())
 
 
 func _on_all_enemies_dead():
