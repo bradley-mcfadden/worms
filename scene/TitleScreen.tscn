@@ -123,14 +123,17 @@ script = ExtResource( 5 )
 [node name="PressButton" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 volume_db = -20.0
+bus = "UI"
 
 [node name="FocusIn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -20.0
+bus = "UI"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -30.0
+bus = "Music"
 script = ExtResource( 9 )
 
 [node name="Panel" type="TextureRect" parent="."]
@@ -155,8 +158,8 @@ size_flags_horizontal = 5
 size_flags_vertical = 4
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "[center]worm game[/center]"
-text = "worm game"
+bbcode_text = "[center]frenzy[/center]"
+text = "frenzy"
 fit_content_height = true
 custom_effects = [ SubResource( 2 ) ]
 
@@ -232,17 +235,17 @@ enabled_focus_mode = 0
 text = "quit to desktop"
 
 [connection signal="mouse_entered" from="VBoxContainer/StartGame" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/LevelSelect" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Credits" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]

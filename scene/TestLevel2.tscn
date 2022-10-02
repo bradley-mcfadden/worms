@@ -297,11 +297,13 @@ eggs = ExtResource( 33 )
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -30.0
+bus = "Music"
 script = ExtResource( 29 )
 
 [node name="LayEggs" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 30 )
 volume_db = -30.0
+bus = "SFX"
 
 [node name="Enemies" type="Node" parent="."]
 pause_mode = 1

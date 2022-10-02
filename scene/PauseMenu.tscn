@@ -105,20 +105,22 @@ text = "quit to desktop"
 [node name="PressButton" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -20.0
+bus = "UI"
 
 [node name="FocusIn" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -20.0
+bus = "UI"
 
 [connection signal="mouse_entered" from="VBoxContainer/Resume" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToMenu" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_QuitToMenu_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_QuitToMenu_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]

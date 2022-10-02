@@ -279,10 +279,12 @@ shape = SubResource( 6 )
 [node name="BiteHit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
 volume_db = -30.0
+bus = "SFX"
 
 [node name="MouthClose" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
 volume_db = -20.0
 pitch_scale = 0.25
+bus = "SFX"
 
 [connection signal="area_entered" from="BiteHitbox" to="." method="_on_BiteHitbox_area_entered"]

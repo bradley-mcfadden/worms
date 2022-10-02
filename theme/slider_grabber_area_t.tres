@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=2]
+
+[ext_resource path="res://theme/slider_grabber_area.tres" type="StyleBox" id=1]
+
+[resource]
+HSlider/styles/grabber_area = ExtResource( 1 )
+HSlider/styles/grabber_area_highlight = ExtResource( 1 )
+VSlider/styles/grabber_area = ExtResource( 1 )
+VSlider/styles/grabber_area_highlight = ExtResource( 1 )

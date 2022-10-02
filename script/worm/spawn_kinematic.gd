@@ -136,7 +136,7 @@ func update_camera_position():
 	var sum := Vector2.ZERO
 	if (len(body) == 0): return
 	for segment in body:
-		if not segment.is_queued_for_deletion():
+		if (not segment == null) and (not segment.is_queued_for_deletion()):
 			sum += segment.position
 
 	var avg = sum / len(body)

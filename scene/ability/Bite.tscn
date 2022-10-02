@@ -15,11 +15,14 @@ texture = ExtResource( 2 )
 [node name="Roar" type="AudioStreamPlayer" parent="RoarSounds"]
 stream = ExtResource( 4 )
 volume_db = -30.0
+bus = "SFX"
 
 [node name="Roar2" type="AudioStreamPlayer" parent="RoarSounds"]
 stream = ExtResource( 3 )
 volume_db = -30.0
+bus = "SFX"
 
 [node name="Roar3" type="AudioStreamPlayer" parent="RoarSounds"]
 stream = ExtResource( 5 )
 volume_db = -30.0
+bus = "SFX"

@@ -449,29 +449,35 @@ spread = 45.0
 [node name="KnifeSlash" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 11 )
 volume_db = -10.0
+bus = "SFX"
 
 [node name="Grunt" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 14 )
 volume_db = -30.0
 pitch_scale = 2.0
+bus = "SFX"
 
 [node name="GunShot" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 12 )
 volume_db = -20.0
+bus = "SFX"
 
 [node name="Gib" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 13 )
 volume_db = -20.0
+bus = "SFX"
 
 [node name="Footsteps" type="Node2D" parent="Sounds"]
 
 [node name="One" type="AudioStreamPlayer2D" parent="Sounds/Footsteps"]
 stream = ExtResource( 15 )
 volume_db = -20.0
+bus = "SFX"
 
 [node name="Two" type="AudioStreamPlayer2D" parent="Sounds/Footsteps"]
 stream = ExtResource( 16 )
 volume_db = -20.0
+bus = "SFX"
 
 [connection signal="body_entered" from="MeleeAttack" to="." method="_on_MeleeAttack_body_entered"]
 [connection signal="hide" from="DepthController" to="." method="_on_hide"]

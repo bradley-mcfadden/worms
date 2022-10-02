@@ -65,9 +65,9 @@ func _on_lay_eggs():
 	var cpu_con = $CpuController
 	var worm = $Players/SpawnKinematic
 	$Players/SpawnKinematic.set_active_controller(cpu_con)
-	cpu_con.straighten_out(len(worm.body)+0.2)
+	cpu_con.straighten_out(len(worm.body)*0.1+0.2)
 	yield(cpu_con, "command_finished")
-	cpu_con.curl("left", len(worm.body)+1.0)
+	cpu_con.curl("left", len(worm.body)*0.1+1.0)
 	yield(cpu_con, "command_finished")
 	var egg_ins = eggs.instance()
 	worm.add_child(egg_ins)

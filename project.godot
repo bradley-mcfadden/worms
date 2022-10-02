@@ -274,7 +274,12 @@ _global_script_class_icons={
 
 config/name="worm"
 run/main_scene="res://scene/TitleScreen.tscn"
+boot_splash/image="res://img/splash_w_title_wide.png"
 config/icon="res://icon.png"
+
+[audio]
+
+default_bus_layout="res://sound/default_bus_layout.tres"
 
 [autoload]
 

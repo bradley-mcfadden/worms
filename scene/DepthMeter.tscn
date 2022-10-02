@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://script/depth_meter.gd" type="Script" id=2]
+[ext_resource path="res://theme/slider_grabber_area_t.tres" type="Theme" id=3]
+[ext_resource path="res://theme/slider_grabber_area.tres" type="StyleBox" id=4]
 
 [node name="DepthGauge" type="Control"]
 anchor_right = 1.0
@@ -14,6 +16,9 @@ margin_top = 476.0
 margin_right = 64.0
 margin_bottom = 585.0
 rect_rotation = -180.0
+theme = ExtResource( 3 )
+custom_styles/grabber_area_highlight = ExtResource( 4 )
+custom_styles/grabber_area = ExtResource( 4 )
 max_value = 5.0
 step = 0.0
 editable = false

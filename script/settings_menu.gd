@@ -55,7 +55,7 @@ func _on_ExitButton_pressed():
 	queue_free()
 
 
-func _on_Button_pressed():
+func _on_Button_pressed(_option=false):
 	$PressButton.play()
 
 
@@ -66,3 +66,47 @@ func _on_Button_mouse_entered():
 func _on_Button_toggled(state: bool):
 	if state: $ButtonEnabled.play()
 	else: $ButtonDisabled.play()
+
+
+func _on_master_vol_drag_ended(changed: bool):
+	if not changed: return
+	var volume = $Menu/Tabs/audio/Cols/R/MasterVolumeSlider.value
+	Configuration.set_master_volume(volume)
+
+
+func _on_sfx_vol_drag_ended(changed: bool):
+	if not changed: return
+	var volume = $Menu/Tabs/audio/Cols/R/SoundFXVolumeSlider.value
+	Configuration.set_sfx_volume(volume)
+
+
+func _on_ui_vol_drag_ended(changed: bool):
+	if not changed: return
+	var volume = $Menu/Tabs/audio/Cols/R/UISoundVolumeSlider.value
+	Configuration.set_ui_volume(volume)
+
+
+func _on_music_vol_drag_ended(changed: bool):
+	if not changed: return
+	var volume = $Menu/Tabs/audio/Cols/R/MusicVolumeSlider.value
+	Configuration.set_music_volume(volume)
+
+
+func _on_slider_value_changed(_value: float):
+	$SliderHandleMoved.play()
+
+
+func _on_master_vol_value_changed(value: float):
+	Configuration.set_master_volume(int(value))
+
+
+func _on_music_vol_value_changed(value: float):
+	Configuration.set_music_volume(int(value))
+
+
+func _on_ui_vol_value_changed(value: float):
+	Configuration.set_ui_volume(int(value))
+
+
+func _on_sfx_vol_value_changed(value: float):
+	Configuration.set_sfx_volume(int(value))
