@@ -215,7 +215,7 @@ func _control(delta):
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
 		# if Input.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
-		if (active_controller.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready):
+		if (ability != null and ability.is_ready and active_controller.is_action_just_pressed("ability" + str(i + 1))):
 			ability.invoke()
 
 
