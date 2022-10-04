@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=2]
+
+[ext_resource path="res://theme/panel.tres" type="StyleBox" id=1]
+[ext_resource path="res://theme/scroll_container_stylebox.tres" type="StyleBox" id=2]
+
+[resource]
+Panel/styles/panel = ExtResource( 1 )
+PanelContainer/styles/panel = ExtResource( 2 )
+ScrollContainer/styles/bg = ExtResource( 2 )

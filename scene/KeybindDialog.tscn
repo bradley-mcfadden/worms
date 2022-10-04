@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scene/MessageDialog.tscn" type="PackedScene" id=1]
+[ext_resource path="res://script/keybind_dialog.gd" type="Script" id=2]
+
+[node name="KeybindDialog" instance=ExtResource( 1 )]
+visible = true
+script = ExtResource( 2 )
+
+[connection signal="popup_hide" from="." to="." method="_on_popup_hide"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/Button" to="." method="_on_OkButton_pressed"]
