@@ -6,7 +6,7 @@
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=4]
 [ext_resource path="res://script/title_screen.gd" type="Script" id=5]
 [ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=6]
-[ext_resource path="res://music/Danger - no guitar.wav" type="AudioStream" id=7]
+[ext_resource path="res://music/short-drum loop.wav" type="AudioStream" id=7]
 [ext_resource path="res://sound/press_button.wav" type="AudioStream" id=8]
 [ext_resource path="res://script/loop_audio.gd" type="Script" id=9]
 
@@ -133,6 +133,7 @@ bus = "UI"
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -30.0
+autoplay = true
 bus = "Music"
 script = ExtResource( 9 )
 

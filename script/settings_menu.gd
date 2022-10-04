@@ -110,3 +110,59 @@ func _on_ui_vol_value_changed(value: float):
 
 func _on_sfx_vol_value_changed(value: float):
 	Configuration.set_sfx_volume(int(value))
+
+
+func _show_change_bind_for_action(action: String):
+	pass
+
+
+func _on_MoveForwardButton_pressed():
+	_show_change_bind_for_action("move_forward")
+
+
+func _on_TurnLeft_pressed():
+	_show_change_bind_for_action("move_left")
+
+
+func _on_TurnRight_pressed():
+	_show_change_bind_for_action("move_right")
+
+
+func _on_Ability1_pressed():
+	_show_change_bind_for_action("ability1")
+
+
+func _on_Ability2_pressed():
+	_show_change_bind_for_action("ability2")
+
+
+func _on_Ability3_pressed():
+	_show_change_bind_for_action("ability3")
+
+
+func _on_Ability4_pressed():
+	_show_change_bind_for_action("ability4")
+
+
+func _on_MoveUpALayer_pressed():
+	_show_change_bind_for_action("change_layer_up")
+
+
+func _on_MoveDownALayer_pressed():
+	_show_change_bind_for_action("change_layer_down")
+
+
+func _on_PeekUp_pressed():
+	_show_change_bind_for_action("peek_layer_up")
+
+
+func _on_PeekDown_pressed():
+	_show_change_bind_for_action("peek_layer_down")
+
+
+func _on_Restart_pressed():
+	_show_change_bind_for_action("reset")
+
+
+func _on_Interact_pressed():
+	_show_change_bind_for_action("lay_eggs")
