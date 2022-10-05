@@ -46,6 +46,6 @@ func _on_OkButton_pressed():
 		var action_cfg = ProjectSettings.get_setting(property_name)
 		action_cfg["events"] = InputMap.get_action_list(current_action)
 		ProjectSettings.set_setting(property_name, action_cfg)
-		var _ret = ProjectSettings.save()
+		var _ret = ProjectSettings.save_custom("override.cfg")
 		new_input_event = null
 		current_action = ""

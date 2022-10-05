@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
@@ -12,10 +12,9 @@
 [ext_resource path="res://sound/unset_button.wav" type="AudioStream" id=10]
 [ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=11]
 [ext_resource path="res://sound/slider.wav" type="AudioStream" id=12]
-[ext_resource path="res://theme/slider_grabber_area.tres" type="StyleBox" id=13]
-[ext_resource path="res://theme/slider_grabber_area_t.tres" type="Theme" id=14]
+[ext_resource path="res://scene/KeybindDialog.tscn" type="PackedScene" id=13]
+[ext_resource path="res://script/settings_controls.gd" type="Script" id=14]
 [ext_resource path="res://theme/menu_panel_stylebox.tres" type="StyleBox" id=15]
-
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.1116, 0.1116, 0.18, 0.0980392 )
@@ -104,7 +103,6 @@ custom_styles/tab_bg = SubResource( 3 )
 custom_styles/panel = ExtResource( 15 )
 
 [node name="general" type="ScrollContainer" parent="Menu/Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
@@ -117,13 +115,13 @@ scroll_horizontal_enabled = false
 [node name="Cols" type="HBoxContainer" parent="Menu/Tabs/general"]
 margin_left = 24.0
 margin_right = 572.0
-margin_bottom = 68.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 custom_constants/separation = 24
 
 [node name="L" type="VBoxContainer" parent="Menu/Tabs/general/Cols"]
 margin_right = 262.0
-margin_bottom = 68.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Menu/Tabs/general/Cols/L"]
@@ -139,17 +137,10 @@ margin_bottom = 40.0
 text = "use rich text"
 align = 2
 
-[node name="Label5" type="Label" parent="Menu/Tabs/general/Cols/L"]
-margin_top = 44.0
-margin_right = 262.0
-margin_bottom = 68.0
-text = "sample text"
-align = 2
-
 [node name="R" type="VBoxContainer" parent="Menu/Tabs/general/Cols"]
 margin_left = 286.0
 margin_right = 548.0
-margin_bottom = 68.0
+margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Menu/Tabs/general/Cols/R"]
@@ -165,13 +156,8 @@ margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true
 
-[node name="Label2" type="Label" parent="Menu/Tabs/general/Cols/R"]
-margin_top = 44.0
-margin_right = 262.0
-margin_bottom = 68.0
-text = "something"
-
 [node name="controls" type="ScrollContainer" parent="Menu/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
@@ -179,17 +165,18 @@ margin_top = 36.0
 margin_right = -2.0
 margin_bottom = -2.0
 theme = ExtResource( 11 )
+script = ExtResource( 14 )
 
 [node name="Cols" type="HBoxContainer" parent="Menu/Tabs/controls"]
 margin_left = 24.0
-margin_right = 560.0
-margin_bottom = 376.0
+margin_right = 572.0
+margin_bottom = 428.0
 size_flags_horizontal = 3
 custom_constants/separation = 16
 
 [node name="LeftColumn" type="VBoxContainer" parent="Menu/Tabs/controls/Cols"]
 margin_right = 260.0
-margin_bottom = 376.0
+margin_bottom = 412.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Menu/Tabs/controls/Cols/LeftColumn"]
@@ -289,10 +276,29 @@ margin_bottom = 376.0
 text = "interact"
 align = 2
 
+[node name="HSeparator" type="HSeparator" parent="Menu/Tabs/controls/Cols/LeftColumn"]
+margin_top = 380.0
+margin_right = 260.0
+margin_bottom = 384.0
+
+[node name="RestoreDefaultControls" type="Label" parent="Menu/Tabs/controls/Cols/LeftColumn"]
+margin_top = 388.0
+margin_right = 260.0
+margin_bottom = 412.0
+custom_fonts/font = ExtResource( 2 )
+text = "restore default controls"
+align = 2
+
+[node name="Spacer2" type="Label" parent="Menu/Tabs/controls/Cols/LeftColumn"]
+margin_right = 260.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 4 )
+
 [node name="RightColumn" type="VBoxContainer" parent="Menu/Tabs/controls/Cols"]
 margin_left = 276.0
 margin_right = 536.0
-margin_bottom = 376.0
+margin_bottom = 412.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Menu/Tabs/controls/Cols/RightColumn"]
@@ -405,6 +411,25 @@ theme = ExtResource( 3 )
 text = "space"
 align = 0
 
+[node name="HSeparator2" type="HSeparator" parent="Menu/Tabs/controls/Cols/RightColumn"]
+margin_top = 380.0
+margin_right = 260.0
+margin_bottom = 384.0
+
+[node name="RestoreDefaults" type="Button" parent="Menu/Tabs/controls/Cols/RightColumn"]
+margin_top = 388.0
+margin_right = 260.0
+margin_bottom = 412.0
+theme = ExtResource( 3 )
+text = "do it!"
+align = 0
+
+[node name="Spacer2" type="Label" parent="Menu/Tabs/controls/Cols/RightColumn"]
+margin_right = 260.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 4 )
+
 [node name="graphics" type="ScrollContainer" parent="Menu/Tabs"]
 visible = false
 anchor_right = 1.0
@@ -511,7 +536,6 @@ margin_top = 16.0
 margin_right = 266.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 24 )
-theme = ExtResource( 15 )
 step = 5.0
 value = 100.0
 tick_count = 20
@@ -521,7 +545,6 @@ margin_top = 44.0
 margin_right = 266.0
 margin_bottom = 68.0
 rect_min_size = Vector2( 0, 24 )
-theme = ExtResource( 15 )
 step = 5.0
 value = 100.0
 tick_count = 20
@@ -531,7 +554,6 @@ margin_top = 72.0
 margin_right = 266.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 0, 24 )
-theme = ExtResource( 15 )
 step = 5.0
 value = 100.0
 tick_count = 20
@@ -542,7 +564,6 @@ margin_right = 266.0
 margin_bottom = 124.0
 rect_min_size = Vector2( 0, 24 )
 focus_mode = 0
-theme = ExtResource( 15 )
 step = 5.0
 value = 100.0
 tick_count = 20
@@ -567,6 +588,16 @@ theme = ExtResource( 3 )
 custom_fonts/font = ExtResource( 2 )
 shortcut = SubResource( 7 )
 text = "exit"
+
+[node name="KeybindDialog" parent="." instance=ExtResource( 13 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 512.0
+margin_top = 300.0
+margin_right = 512.0
+margin_bottom = 300.0
 
 [node name="PressButton" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
@@ -593,10 +624,11 @@ stream = ExtResource( 12 )
 volume_db = -20.0
 bus = "UI"
 
+[connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Tabs_tab_changed"]
 [connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_Button_mouse_entered"]
-[connection signal="toggled" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_Button_toggled"]
 [connection signal="toggled" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_RichTextCheck_toggled"]
+[connection signal="toggled" from="Menu/Tabs/general/Cols/R/RichTextCheck" to="." method="_on_Button_toggled"]
 [connection signal="mouse_entered" from="Menu/Tabs/controls/Cols/RightColumn/MoveForwardButton" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="Menu/Tabs/controls/Cols/RightColumn/MoveForwardButton" to="." method="_on_MoveForwardButton_pressed"]
 [connection signal="pressed" from="Menu/Tabs/controls/Cols/RightColumn/MoveForwardButton" to="." method="_on_Button_pressed"]
@@ -636,18 +668,21 @@ bus = "UI"
 [connection signal="mouse_entered" from="Menu/Tabs/controls/Cols/RightColumn/Interact" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="Menu/Tabs/controls/Cols/RightColumn/Interact" to="." method="_on_Interact_pressed"]
 [connection signal="pressed" from="Menu/Tabs/controls/Cols/RightColumn/Interact" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="Menu/Tabs/controls/Cols/RightColumn/RestoreDefaults" to="." method="_on_Button_mouse_entered"]
+[connection signal="pressed" from="Menu/Tabs/controls/Cols/RightColumn/RestoreDefaults" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Menu/Tabs/controls/Cols/RightColumn/RestoreDefaults" to="Menu/Tabs/controls" method="_on_RestoreDefaults_pressed"]
 [connection signal="drag_ended" from="Menu/Tabs/audio/Cols/R/MasterVolumeSlider" to="." method="_on_master_vol_drag_ended"]
-[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/MasterVolumeSlider" to="." method="_on_master_vol_value_changed"]
 [connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/MasterVolumeSlider" to="." method="_on_slider_value_changed"]
+[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/MasterVolumeSlider" to="." method="_on_master_vol_value_changed"]
 [connection signal="drag_ended" from="Menu/Tabs/audio/Cols/R/SoundFXVolumeSlider" to="." method="_on_sfx_vol_drag_ended"]
-[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/SoundFXVolumeSlider" to="." method="_on_sfx_vol_value_changed"]
 [connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/SoundFXVolumeSlider" to="." method="_on_slider_value_changed"]
+[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/SoundFXVolumeSlider" to="." method="_on_sfx_vol_value_changed"]
 [connection signal="drag_ended" from="Menu/Tabs/audio/Cols/R/UISoundVolumeSlider" to="." method="_on_ui_vol_drag_ended"]
-[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/UISoundVolumeSlider" to="." method="_on_ui_vol_value_changed"]
 [connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/UISoundVolumeSlider" to="." method="_on_slider_value_changed"]
+[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/UISoundVolumeSlider" to="." method="_on_ui_vol_value_changed"]
 [connection signal="drag_ended" from="Menu/Tabs/audio/Cols/R/MusicVolumeSlider" to="." method="_on_music_vol_drag_ended"]
-[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/MusicVolumeSlider" to="." method="_on_music_vol_value_changed"]
 [connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/MusicVolumeSlider" to="." method="_on_slider_value_changed"]
+[connection signal="value_changed" from="Menu/Tabs/audio/Cols/R/MusicVolumeSlider" to="." method="_on_music_vol_value_changed"]
 [connection signal="mouse_entered" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_pressed"]

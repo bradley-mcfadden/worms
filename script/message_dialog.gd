@@ -1,10 +1,6 @@
 extends PopupDialog
 
 
-func _ready():
-	popup_with_message("Did you know?", "Pee is stored in the balls")
-
-
 func popup_with_message(title: String, message: String):
 	$VBoxContainer/PanelContainer/VBoxContainer/Title.text = title
 	$VBoxContainer/PanelContainer/VBoxContainer/MarginContainer/Message.text = message

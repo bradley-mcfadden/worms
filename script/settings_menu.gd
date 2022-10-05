@@ -52,6 +52,8 @@ func _on_RichTextCheck_toggled(state: bool):
 
 
 func _on_ExitButton_pressed():
+	hide()
+	yield(get_tree().create_timer(0.5), "timeout")
 	queue_free()
 
 
@@ -112,57 +114,66 @@ func _on_sfx_vol_value_changed(value: float):
 	Configuration.set_sfx_volume(int(value))
 
 
-func _show_change_bind_for_action(action: String):
-	pass
+func _show_change_bind_for_action(action: String, desc: String):
+	$KeybindDialog.show_for(action, desc)
 
 
 func _on_MoveForwardButton_pressed():
-	_show_change_bind_for_action("move_forward")
+	_show_change_bind_for_action("move_forward", '"move forward"')
 
 
 func _on_TurnLeft_pressed():
-	_show_change_bind_for_action("move_left")
+	_show_change_bind_for_action("move_left", '"move left"')
 
 
 func _on_TurnRight_pressed():
-	_show_change_bind_for_action("move_right")
+	_show_change_bind_for_action("move_right", '"move right"')
 
 
 func _on_Ability1_pressed():
-	_show_change_bind_for_action("ability1")
+	_show_change_bind_for_action("ability1", '"use ability 1"')
 
 
 func _on_Ability2_pressed():
-	_show_change_bind_for_action("ability2")
+	_show_change_bind_for_action("ability2", '"use ability 2"')
 
 
 func _on_Ability3_pressed():
-	_show_change_bind_for_action("ability3")
+	_show_change_bind_for_action("ability3", '"use ability 3"')
 
 
 func _on_Ability4_pressed():
-	_show_change_bind_for_action("ability4")
+	_show_change_bind_for_action("ability4", '"use ability 4"')
 
 
 func _on_MoveUpALayer_pressed():
-	_show_change_bind_for_action("change_layer_up")
+	_show_change_bind_for_action("change_layer_up", '"move up a layer"')
 
 
 func _on_MoveDownALayer_pressed():
-	_show_change_bind_for_action("change_layer_down")
+	_show_change_bind_for_action("change_layer_down", '"move down a layer"')
 
 
 func _on_PeekUp_pressed():
-	_show_change_bind_for_action("peek_layer_up")
+	_show_change_bind_for_action("peek_layer_up", '"peek up a layer"')
 
 
 func _on_PeekDown_pressed():
-	_show_change_bind_for_action("peek_layer_down")
+	_show_change_bind_for_action("peek_layer_down", '"peek down a layer"')
 
 
 func _on_Restart_pressed():
-	_show_change_bind_for_action("reset")
+	_show_change_bind_for_action("reset", '"restart level"')
 
 
 func _on_Interact_pressed():
-	_show_change_bind_for_action("lay_eggs")
+	_show_change_bind_for_action("lay_eggs", '"interact"')
+
+
+func _on_Tabs_tab_changed(tab:int):
+	match tab:
+		1: _on_Controls_shown()
+
+
+func _on_Controls_shown():
+	$Menu/Tabs/controls.show()
