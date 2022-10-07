@@ -1,3 +1,7 @@
+# Bite is an ability that is a short range melee attack.
+# It has two parts, the wind up, and the snap
+# The first press causes the windup, then after a timer or
+# the second press, a hitbox will appear at the player mouth.
 extends Ability
 
 const CHOMP_TO_IDLE := "chomp_to_idle"
@@ -8,7 +12,8 @@ onready var n_invoke_called := 0
 onready var anim_player: AnimationPlayer = null
 
 
-func setup():
+func setup() -> void:
+# Connect some callbacks to the animation player
 	is_ready = true
 	randomize()
 	var head = parent.get_head()
@@ -17,29 +22,41 @@ func setup():
 	_connected = anim_player.connect("animation_changed", self, "_on_animation_changed")
 
 
-func invoke():
+func invoke() -> void:
+# State machine that executes wind up and snap
 	if not is_ready:
 		return
 	n_invoke_called += 1
 	is_ready = false
 
-	# print("Bite invoke ", n_invoke_called)
 	if n_invoke_called == 1:
-		anim_player.play(MOUTH_OPEN_WIDE)
-		_play_roar_sound()
-		emit_signal("is_ready_changed", self, false)
+		wind_up()
 	elif n_invoke_called == 2:
-		anim_player.play(MOUTH_CHOMP)
-		emit_signal("is_ready_changed", self, false)
+		bite()
 
 
-func set_is_ready(_is_ready: bool):
+func wind_up() -> void:
+# Play mouth opening animation, sound, and emit signal
+	anim_player.play(MOUTH_OPEN_WIDE)
+	_play_roar_sound()
+	emit_signal("is_ready_changed", self, false)
+
+
+func bite() -> void:
+# Play mouth biting animation
+	anim_player.play(MOUTH_CHOMP)
+	emit_signal("is_ready_changed", self, false)
+
+
+func set_is_ready(_is_ready: bool) -> void:
+# Change ready state
 	if _is_ready != self.is_ready:
 		emit_signal("is_ready_changed", self, _is_ready)
 	self.is_ready = _is_ready
 
 
-func _play_roar_sound():
+func _play_roar_sound() -> void:
+# Play random roar sound, and emit a noise signal 
 	var i := int(rand_range(0, $RoarSounds.get_child_count() - 0.01))
 	$RoarSounds.get_child(i).play()
 	var head = parent.get_head()
@@ -47,15 +64,13 @@ func _play_roar_sound():
 	worm.emit_signal("noise_produced", head.global_position, 500)
 
 
-func _on_animation_finished(name: String):
-	# print("Finished animation ", name)
+func _on_animation_finished(name: String) -> void:
 	if name == MOUTH_OPEN_WIDE:
 		is_ready = true
 		emit_signal("is_ready_changed", self, true)
 
 
-func _on_animation_changed(from: String, to: String):
-	# print("Switched from ", from, " to ", to)
+func _on_animation_changed(from: String, to: String) -> void:
 	if from == MOUTH_CHOMP and to == CHOMP_TO_IDLE:
 		is_ready = true
 		emit_signal("is_ready_changed", self, true)

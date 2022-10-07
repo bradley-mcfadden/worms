@@ -1,13 +1,21 @@
+#
+# decoration.gd
+#
+# Attach this to a node that belongs to a layer, has no collision, and
+# should be hidden when the layer is changed.
+#
+# The node should have a child called DepthController with depth_controller.gd
+
 extends Node2D
 
 export var layer := 0
 
 
-func _ready():
+func _ready() -> void:
 	set_layer(layer)
 
 
-func set_layer(new_layer: int):
+func set_layer(new_layer: int) -> void:
 	$DepthController.set_layer(new_layer)
 
 
@@ -21,11 +29,11 @@ func get_depth_controllers() -> Array:
 	]
 
 
-func _on_hide():
+func _on_hide() -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
 	$Tween.start()
 
 
-func _on_show():
+func _on_show() -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
 	$Tween.start()

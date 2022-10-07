@@ -1,3 +1,11 @@
+#
+# echo.gd
+# Displays an `echo` at its position.
+# The echo should be able to been seen from anywhere. To do this, the echo
+# should appear on the screen border when the actual position is outside what
+# the camera can see. This way, the player gets a hint that something is in that
+# direction
+#
 extends Node2D
 
 export(Vector2) var pos
@@ -7,16 +15,16 @@ export(float) var speed
 export(Color) var color
 export(float) var decay
 
-var tdelta
-var view_pos
-var xpos
+var tdelta: float
+var view_pos: Vector2
+var xpos: Vector2
 
 
 func _ready():
 	tdelta = 0.0
 
 
-func _draw():
+func _draw() -> void:
 	var v_rect: Rect2 = get_viewport_transform().affine_inverse().xform(get_viewport_rect())
 	var vpos = Vector2()
 	vpos.x = clamp(pos.x, v_rect.position.x, v_rect.position.x + v_rect.size.x)

@@ -1,30 +1,48 @@
+
+#
+# spawn_kinematic.gd is the player class.
+# It takes care of adding the segments to create the worm,
+# managing the current list of segments, and controlling
+# the worm movement.
+#
+
 extends Position2D
 
-const MAX_SPEED = 400
-const ACC = 20
+const MAX_SPEED := 400
+const ACC := 20
 
 enum SegmentState { ALIVE, DEAD }
 
-signal segment_changed(segment, state)
-signal switch_layer_pressed(new_layer, node)
-signal layer_visibility_changed(layer, is_visible)
-signal died(from, overkill)
-signal segment_took_damage(position, segment)
-signal size_changed(to)
-signal abilities_ready(abilities)
-signal ability_is_ready_changed(ability, is_ready)
-signal ability_is_ready_changed_cd(ability, is_ready, duration)
-signal health_state_changed(is_low)
-signal noise_produced(position, audible_radius)
+# Emitted when a segment is created or dies
+signal segment_changed(segment, state) # Node, SegmentState/int
+# Emitted when the player wants to switch layers
+signal switch_layer_pressed(new_layer, node) # int, Node
+# Emitted when the player wants to peek at a layer
+signal layer_visibility_changed(layer, is_visible) # int, bool
+# Emitted when the player is killed
+signal died(from, overkill) # Node, bool
+# Emitted when a segment takes damage
+signal segment_took_damage(position, segment) # int, Node
+# Emitted when the number of segments in the body changes
+signal size_changed(to) # int
+# Emitted when the abilities UI may be initialized
+signal abilities_ready(abilities) # Array[Ability]
+# Emitted when an ability state is changed
+signal ability_is_ready_changed(ability, is_ready) # Ability, bool
+# Emitted when an ability with a cd's state changes
+signal ability_is_ready_changed_cd(ability, is_ready, duration) # Ability, bool, float
+# Emitted to signal if the player is near death
+signal health_state_changed(is_low) # bool
+# Emitted if the player produces a noise that enemies should react to
+signal noise_produced(position, audible_radius) # Vector2, float
 
 # fill this with camera2D node
 export(PackedScene) var camera
 export(PackedScene) var Segment
 export(PackedScene) var Head
 export(PackedScene) var Tail
-export(int) var segment_number = 30
-# difference between two segments' theta along sin curve
-# controls oscillation
+export(int) var segment_number := 30
+# difference between two segments' theta along sin curve, controls oscillation
 export(float) var tdelta := 0.75
 export(int) var max_speed := MAX_SPEED
 export(int) var acceleration := ACC
@@ -33,28 +51,34 @@ export(int) var layer := 0
 export(int) var minimum_length := 5
 export(int) var num_segment_for_low_health := minimum_length + 10
 
-var dead = false
-var body = []
-var heading = 0
+var dead := false
+var body := []
+var heading: float = 0
 # If initial velocity is not nonzero, then the worm collapses to a single point
-var vel = Vector2(0.001, 0)
+var vel := Vector2(0.001, 0)
 # base is default distance betveen joints.
-var base = 40
-var j1 = Vector2()
-var counter = 0
+var base: int = 40
+# Track a running total of joint positions in the worm during initialization/movement
+var j1 := Vector2()
+# Counter keeping track of variable used for finding segment horizontal offset 
+var osc_counter := 0.0
+# Pointer to head
 var head
+# Pointer to tail
 var tail
-var wide_camera
-var iter
+# Camera
+var wide_camera: Camera2D
+# Iterator over body
+var iter: # Iterator
 var free_later_list := []
 var start_transform: Transform2D
 var start_layer: int
 var is_switch_depth := false
-var background = null
-var active_controller = null
+var background: BackgroundNoise
+var active_controller: WormController
 
 
-func _ready():
+func _ready() -> void:
 # This loop will set segment's properties.
 # Every segment can have different base, scale...
 	for i in range(segment_number):
@@ -77,15 +101,15 @@ func _ready():
 		emit_signal("segment_changed", segment, SegmentState.ALIVE)
 		segment.connect("segment_died", self, "_on_segment_died")
 		segment.connect("took_damage", self, "_on_segment_took_damage")
-#	this reverses the order of segments in the tree
+	# Reverse the draw order of segments
 	for i in body:
 		move_child(i, 0)
 	if camera:
 		wide_camera = camera.instance()
-		#scale_camera()
 		add_child(wide_camera)
 		call_deferred("scale_camera")
 
+	# Connect abilities to our ability signals so they work with abilities bar
 	var abilities := $AbilitiesContainer.get_children()
 	for ability in abilities:
 		ability.parent = self
@@ -95,16 +119,20 @@ func _ready():
 			ability.connect("is_ready_changed_cd", self, "_on_ability_is_ready_changed_cd")
 		ability.setup()
 	emit_signal("abilities_ready", abilities)
-	#start_transform = transform
 	start_layer = layer
 	emit_signal("size_changed", len(body))
 	emit_signal("health_state_changed", false)
 
+	# Connect the controller so we can query about what we should do.
 	active_controller = $InputController
 	active_controller.set_abilities_count(len(abilities))
 
 
-func reset():
+func reset() -> void:
+#
+# reset
+# Reset the worm back to its initial state.
+# 
 	dead = false
 	# transform = start_transform
 	layer = start_layer
@@ -121,18 +149,22 @@ func reset():
 	_ready()
 
 
-func _draw():
+func _draw() -> void:
 	pass
 	#for segment in body:
 	#	draw_line(segment.j1, segment.j2, Color.red)
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	update()
 	update_camera_position()
 
 
-func update_camera_position():
+func update_camera_position() -> void:
+#
+# update_camera_position
+# Recenter the camera so it follows the centroid the worm.
+#
 	var sum := Vector2.ZERO
 	if (len(body) == 0): return
 	for segment in body:
@@ -148,14 +180,14 @@ func update_camera_position():
 		background.set_noise_offset(avg)
 
 
-# Do not touch this function.
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	_control(delta)
+	# Move each segment to its proper position
 	if vel.length() > 0:
 		var vel_ = vel.rotated(heading) * delta
 		var ivel = Vector2(vel.y, vel.x).normalized()
 
-		var i = counter
+		var i = osc_counter
 		var speed_rate = vel.x / max_speed
 		var slither_sound = $Sounds/Slither
 		for segment in body:
@@ -169,64 +201,70 @@ func _physics_process(delta):
 				dirt_node.speed_scale = speed_rate
 			slither_sound.playing = speed_rate > 0.1
 
-		counter += 0.2
+		osc_counter += 0.2
+	# Free any dead segments
 	for _i in range(len(free_later_list)):
 		var _node = free_later_list.pop_back()
 		_node.queue_free()
 
 
-func _control(delta):
+func _control(delta: float) -> void:
+#
+# _control
+# Query the controller for what actions are currently happening, then
+# adjust the worm's state to account for that.
+# delta - Time since last physics frame.
+#
 	if not is_alive():
 		return
-#	This is just example just make sure you dont allow beckvard movement.
-	#if Input.is_action_pressed("move_forward"):
 	if active_controller.is_action_pressed("move_forward"):
 		vel.x += acceleration
 		vel.x = vel.x if vel.x <= max_speed else vel.x * speed_decay
-		#print("Moving forward")
 	else:
 		vel *= speed_decay
 
-	# if Input.is_action_pressed("move_left"):
 	if active_controller.is_action_pressed("move_left"):
 		heading -= PI * delta * 3
-	# elif Input.is_action_pressed("move_right"):
 	elif active_controller.is_action_pressed("move_right"):
 		heading += PI * delta * 3
 	if !is_switch_depth:
-		# if Input.is_action_just_pressed("peek_layer_up"):
 		if active_controller.is_action_just_pressed("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer + 1, true)
-		# elif Input.is_action_just_released("peek_layer_up"):
 		elif active_controller.is_action_just_released("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer + 1, false)
-		# elif Input.is_action_just_pressed("peek_layer_down"):
 		elif active_controller.is_action_just_pressed("peek_layer_down"):
 			emit_signal("layer_visibility_changed", layer - 1, true)
-		# elif Input.is_action_just_released("peek_layer_down"):
 		elif active_controller.is_action_just_released("peek_layer_down"):
 			emit_signal("layer_visibility_changed", layer - 1, false)
-		# elif Input.is_action_just_pressed("layer_down"):
 		elif active_controller.is_action_just_pressed("layer_down"):
 			$Sounds/ChangeLayerDown.play()
 			emit_signal("switch_layer_pressed", layer - 1, self)
-		# elif Input.is_action_just_pressed("layer_up"):
 		elif active_controller.is_action_just_pressed("layer_up"):
 			$Sounds/ChangeLayerUp.play()
 			emit_signal("switch_layer_pressed", layer + 1, self)
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
-		# if Input.is_action_just_pressed("ability" + str(i + 1)) and ability != null and ability.is_ready:
 		if (ability != null and ability.is_ready and active_controller.is_action_just_pressed("ability" + str(i + 1))):
 			ability.invoke()
 
 
-func set_active_controller(controller: Node):
+func set_active_controller(controller: WormController) -> void:
+#
+# set_active_controller
+# Change the controller responsible for telling the worm what to do.
+# controller - WormController implementation to be used, now.
+#
 	active_controller = controller
 
 
-func add_segment():
-	# var old_len := len(body)
+func add_segment() -> void:
+#
+# add_segment
+# Add a segment to the worm's body.
+# This is a complicated operation, because the end of the worm
+# is drawn differently. So, we need to get rid of the old tail,
+# add a new segment, and add a new tail.
+#
 	if body.size() == 0: return
 	var last2 = body[body.size() - 2]
 	var new_seg = Segment.instance()
@@ -272,7 +310,12 @@ func add_segment():
 	scale_camera()
 
 
-func scale_segments(factor):
+func scale_segments(factor: float) -> void:
+#
+# scale_segments
+# Use to multiply the scale vector of each segment by factor.
+# factor - Scalar amount to multiply scale vector by.
+#
 	var j2 = null
 	for segment in body:
 		segment.base *= factor
@@ -289,7 +332,13 @@ func scale_segments(factor):
 		j2 = segment.j2
 
 
-func split():
+func split() -> Array:
+#
+# split
+# NOTE: This is not used anywhere in the game currently. 
+# Split the worm at its 5th segment.
+# return - An array of the split off parts.
+#
 	var destroyed_parts = []
 	for _i in range(5):
 		var _tail = body.pop_back()
@@ -299,13 +348,23 @@ func split():
 	return destroyed_parts
 
 
-func apply_boost_speed():
+func apply_boost_speed() -> void:
+#
+# apply_boost_speed
+# NOTE: Need to check if this is still being used.
+# Code that gives the worm a temporary speed boost.
+#
 	max_speed *= 2
 	acceleration *= 2
 	$BoostTimer.start()
 
 
-func reset_boost_speed():
+func reset_boost_speed() -> void:
+#
+# reset_boost_speed
+# NOTE: Need to check if this is still being used.
+# Code that resets the worm's temporary speed boost.
+#
 	max_speed *= 0.5
 	acceleration *= 0.5
 
@@ -315,14 +374,18 @@ func scale_camera():
 		var new_zoom = Vector2(0.1, 0.1) * len(body)
 		new_zoom.x = max(new_zoom.x, 1.5)
 		new_zoom.y = max(new_zoom.y, 1.5)
-		# print("changing zoom to ", new_zoom)
 		if wide_camera.has_method("zoom_to"):
 			wide_camera.zoom_to(new_zoom)
-		# else:
-		# wide_camera.zoom = new_zoom
 
 
 func get_entity_positions() -> Array:
+#
+# get_entity_positions
+# TODO: Rename this to something like "get_body_parts"
+# Poorly named function that actually returns the individual
+# body parts of the worm.
+# return - Each segment of the worm.
+#
 	var pts := []
 	for segment in body:
 		pts.append(segment)
@@ -334,13 +397,12 @@ func get_layer() -> int:
 	return head.get_layer()
 
 
-func set_active(is_active: bool):
+func set_active(is_active: bool) -> void:
 	for segment in body:
 		segment.set_modulate(Color(1, 1, 1, 1) if is_active else Color(1, 1, 1, 0.3))
-		#segment.visible = true
 
 
-func set_layer(new_layer: int):
+func set_layer(new_layer: int) -> void:
 	set_active(false)
 	layer = new_layer
 	iter = Iterator.new()
@@ -357,10 +419,20 @@ func get_depth_controllers() -> Array:
 
 
 func get_head() -> Node:
+# 
+# get_head
+# NOTE: This function does not need to exist.
+# return - The first body part, or the head.
+#
 	return head
 
 
 func is_alive() -> bool:
+#
+# is_alive
+# NOTE: Could be replaced by calls to `not dead`
+# return - Whether the player could be considered alive.
+#
 	return not dead
 
 
@@ -368,27 +440,26 @@ func _on_DiveTimer_timeout():
 	var segment = iter.next()
 	if segment != null:
 		segment.set_layer(layer)
-		#segment.visible = true
 		$DiveTimer.start()
 		segment.fade_in($DiveTimer.wait_time)
 	else:
 		is_switch_depth = false
 
 
-func _on_ability_is_ready_changed(ability, is_ready: bool):
+func _on_ability_is_ready_changed(ability: Ability, is_ready: bool) -> void:
 	emit_signal("ability_is_ready_changed", ability, is_ready)
 
 
-func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float):
+func _on_ability_is_ready_changed_cd(ability: Ability, is_ready: bool, duration: float) -> void:
 	emit_signal("ability_is_ready_changed_cd", ability, is_ready, duration)
 
 
-func _on_head_animation_changed(_from: String, _to: String):
+func _on_head_animation_changed(_from: String, _to: String) -> void:
 	#$AbilitiesContainer/Bite.set_is_ready(to == "idle")
 	pass
 
 
-func _on_segment_died(segment, from, overkill):
+func _on_segment_died(segment: Node, from: Node, overkill: bool) -> void:
 	var idx = body.find(segment)
 	if idx != -1:
 		for _i in range(len(body) - 1, idx - 1, -1):
@@ -410,19 +481,18 @@ func _on_segment_died(segment, from, overkill):
 			emit_signal("health_state_changed", true)
 
 
-func _play_death_sound(segment: Node):
+func _play_death_sound(segment: Node) -> void:
 	if segment == head:
 		$Sounds/HeadDeath.play()
 	else:
 		$Sounds/SegmentDeath.play()
 
 
-func _on_segment_took_damage(segment, hurt=false):
+func _on_segment_took_damage(segment: Node, hurt: bool = false) -> void:
 	if hurt: $Sounds/SegmentTakeDamage.play()
 	var idx = body.find(segment)
 	emit_signal("segment_took_damage", idx, segment)
 
-	if segment == head:
-		var ratio = float(segment.health / segment.start_health)
+	if segment == head: var ratio = float(segment.health / segment.start_health)
 		if ratio < 0.5:
 			emit_signal("health_state_changed", true)

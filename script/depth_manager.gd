@@ -1,11 +1,14 @@
+# depth_manager.gd
 # DepthManager allows for grouping nodes into layers.
 # One layer at a time is considered active, and the others inactive.
 # This should work with DepthController to make shapes that would normally
 # collide slide past each other and make invisible all but the current layer.
 extends Node
 
-signal layer_changed(to)
-signal number_of_layers_changed(to)
+# Emitted when the active layer is changed
+signal layer_changed(to) # int
+# Emitted when the physical count of the number of layers changes.
+signal number_of_layers_changed(to) # int
 
 enum SegmentState { ALIVE, DEAD }
 
@@ -13,19 +16,28 @@ var layers := []
 onready var current_layer := 0
 
 
-func _ready():
+func _ready() -> void:
 	layers.append([])
 
 
-func add_items(items: Array):
+func add_items(items: Array) -> void:
+#
+# add_items
+# Adds a group of items with DepthControllers to the manager.
+# items - Nodes with depth controllers to add.
+# 
 	# print("Add group of items ", items)
 	for item in items:
 		if item.has_method("get_layer"):
 			add(item.get_layer(), item)
 
 
-# Add an item to the specified layer.
-func add(layer: int, item: Node):
+func add(layer: int, item: Node) -> void:
+# add
+# Add a node to the specified layer.
+# layer - Depth layer to add the item to. Created if it doesn't exist.
+# item - Node to add to the manager. Should not be null.
+#
 	if not item.has_method("get_depth_controllers"):
 		return
 	# print("Add ", item, " to layer ", layer)
@@ -44,10 +56,15 @@ func add(layer: int, item: Node):
 		dc.set_active(layer == current_layer)
 
 
+func switch(to: int, item: Node) -> void:
+#
+# switch
 # Switch the position of item to the layer `to`.
 # Cause item to become active or inactive depending on whether the new layer is
 # active.
-func switch(to: int, item: Node):
+# to - Layer to switch item to. Should already exist as a layer.
+# item - Node to move from its current layer to `to`
+#
 	if not item.has_method("get_depth_controllers"):
 		return
 	var controllers = item.get_depth_controllers()
@@ -61,15 +78,27 @@ func switch(to: int, item: Node):
 		dc.set_active(to == current_layer)
 
 
-func switch_if_safe(to: int, item: Node):
+func switch_if_safe(to: int, item: Node) -> bool:
+# 
+# switch_if_safe
+# Switch `item` to depth layer `to`, but check that the layer
+# exists beforehand. Return if the layer exists.
+# to - Depth layer to move `item` to.
+# item - Node to move to the new layer.
+# return - True if layer `to` exists, false otherwise.
+#
 	if is_switch_valid(to):
 		switch(to, item)
 		return true
 	return false
 
 
-# Remove an item from the layers
-func remove(item: Node):
+func remove(item: Node) -> void:
+#
+# remove
+# Complete remove `item` from the depth_manager
+# item - Non-null item to remove. The item with not be restored to being visible or colliding.
+#
 	if not item.has_method("get_depth_controllers"):
 		return
 	var controllers = item.get_depth_controllers()
@@ -78,12 +107,15 @@ func remove(item: Node):
 		var idx = layers[item_l].find(dc)
 		if idx != -1:
 			layers[item_l].remove(idx)
-			#item.queue_free()
 
 
+func set_current_layer(new_layer: int) -> void:
+#
+# set_current_layer
 # Switch the active layer. All elements in old layer are inactive.
 # All elements in new_layer are active.
-func set_current_layer(new_layer: int):
+# new_layer - Depth layer that shall become the new active layer.
+#
 	if new_layer == current_layer:
 		return
 	for item in layers[current_layer]:
@@ -94,17 +126,23 @@ func set_current_layer(new_layer: int):
 	emit_signal("layer_changed", new_layer)
 
 
-func is_switch_valid(to: int):
+func is_switch_valid(to: int) -> bool:
+#
+# is_switch_valid
+# Check that layer `to` exists in the current array of layers.
+# to - Layer to check if exists.
+# return - True if the layer exists, false otherwise.
+#
 	return to >= 0 and to < len(layers)
 
 
-func _on_switch_layer_pressed(new_layer, node):
+func _on_switch_layer_pressed(new_layer: int, node: Node) -> void:
 	if is_switch_valid(new_layer):
 		node.set_layer(new_layer)
 		set_current_layer(new_layer)
 
 
-func _on_segment_changed(segment, state):
+func _on_segment_changed(segment: Node, state: Object) -> void:
 	if segment == null:
 		return
 	match state:
@@ -114,7 +152,7 @@ func _on_segment_changed(segment, state):
 			remove(segment)
 
 
-func _on_layer_visibility_changed(layer, is_visible):
+func _on_layer_visibility_changed(layer: int, is_visible: bool) -> void:
 	var f = "start_peek" if is_visible else "end_peek"
 	var arr := []
 	if layer >= 0 and layer < len(layers):
@@ -123,7 +161,7 @@ func _on_layer_visibility_changed(layer, is_visible):
 		item.call(f)
 
 
-func _on_dc_tree_exited(layer, dc):
+func _on_dc_tree_exited(layer: int, dc: Node) -> void:
 	var idx = layers[layer].find(dc)
 	if idx == -1:
 		return

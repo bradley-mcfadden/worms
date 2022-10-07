@@ -1,3 +1,7 @@
+#
+# target_follow.gd
+# Old enemy AI code that is currently unused.
+#
 tool
 extends Area2D
 

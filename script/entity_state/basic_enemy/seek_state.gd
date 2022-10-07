@@ -1,7 +1,8 @@
-# Boiler plate code for an entity state.
-# Each of these fields and methods needs to be present in a class that
-# extends EntityState.
-# Depending on the entity, the properties keys can be swapped.
+#
+# BasicEnemySeekState will make the AI go to a particular location.
+# Upon seeing an enemy, it will go into a chase state.
+# Upon reaching the location, it will go into search state.
+#
 extends EntityState
 
 class_name BasicEnemySeekState
@@ -19,16 +20,16 @@ const PROPERTIES := {
 var target: Vector2
 var walk_anim := "walk_gun"
 var idle_anim := "idle_gun"
-var noise_location = null
+var noise_location: Vector2
 
-func _init(_fsm, _entity, _target: Vector2):
+
+func _init(_fsm: Fsm, _entity: Node, _target: Vector2) -> void:
     fsm = _fsm
     entity = _entity
     target = _target
 
 
-# on_enter calls code once when switching to this state
-func on_enter():
+func on_enter() -> void:
 	if entity.has_ranged_attack:
 		walk_anim = "walk_gun"
 		idle_anim = "idle_gun"
@@ -37,8 +38,7 @@ func on_enter():
 		idle_anim = "idle_knife"
 
 
-# called every _physics_process in parent
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
     var player = entity.check_for_player()
     if player != null:
         fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
@@ -63,11 +63,10 @@ func _physics_process(delta):
     entity.move(delta)
 
 
-# on_exit is called when switching out of this state
-func on_exit():
+func on_exit() -> void:
 	pass
 
 
-func on_noise_heard(position: Vector2):
+func on_noise_heard(position: Vector2) -> void:
     print("SearchState heard a noise")
     noise_location = position

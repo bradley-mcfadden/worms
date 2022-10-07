@@ -1,7 +1,10 @@
+#
+# settings_controls.gd 
+# is a script for fetching the key bindings, 
+# and initializing the UI with them
+#
 extends ScrollContainer
 
-# Script for fetching the key bindings, and initializing
-# the UI with them
 
 onready var button_to_action := {
 	"MoveForwardButton" : "move_forward",
@@ -25,6 +28,9 @@ func show() -> void:
 
 
 func _get_controls() -> void:
+#
+# _get_controls - Initialize buttons in button_to_action with scancode strings
+# 
 	print(_keystr_for("move_forward"))
 	var rcol = $Cols/RightColumn
 	for key in button_to_action.keys():
@@ -33,6 +39,10 @@ func _get_controls() -> void:
 
 
 func _keystr_for(action: String) -> String:
+#
+# _key_str_for - return scancode string for a particular action
+# action - Name of action 
+# return - scancode string or ???
 	var first: InputEvent = InputMap.get_action_list(action)[0]
 	if first is InputEventKey:
 		return OS.get_scancode_string(first.scancode)
@@ -41,7 +51,7 @@ func _keystr_for(action: String) -> String:
 
 
 func _on_RestoreDefaults_pressed():
-	# Restore defaults with initial property values
+# Restore defaults with initial property values
 	var file = Directory.new()
 	if file.file_exists("override.cfg"):
 		file.remove()

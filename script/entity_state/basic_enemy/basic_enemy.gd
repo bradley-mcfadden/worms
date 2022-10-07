@@ -1,17 +1,24 @@
+#
+# basic_enemy.gd
+# Controls the enemies of the game, and handles enemies taking damage, dieing,
+# pathfinding, etc.
+#
+
 tool
 extends Area2D
 
 class_name BasicEnemy
 
-signal bullet_created(bullet)
-signal died(node, from, overkill)
-signal noise_produced(position, audible_radius)
+# Emitted when the enemy has a bullet that should attach to the level.
+signal bullet_created(bullet) # instance of bullet.tscn
+# Emitted when the enemy dies.
+signal died(node, from, overkill) # BasicEnemy instance, node, bool
+# Emitted when the enemy produces a noise
+signal noise_produced(position, audible_radius) # Vector2, float
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
-const DRAW_ME = false
-
-var ent_state_prop := {}
+const DRAW_ME := false
 
 export(int) var radius := 20
 export(float) var steer_force := 0.5
@@ -26,8 +33,8 @@ export(bool) var has_melee_attack := false
 export(int) var ranged_damage := 20
 export(int) var melee_damage := 50
 export(PackedScene) var bullet
-export(int) var start_health = 100
-export(int) var hear_radius = 2000
+export(int) var start_health := 100
+export(int) var hear_radius := 2000
 export var melee_thresh := 50
 export var ranged_thresh := 300
 export var layer := 0
@@ -40,19 +47,19 @@ var chosen_dir := Vector2.ZERO
 var velocity := Vector2.ZERO
 var acceleration := Vector2.ZERO
 var patrol_idx := 0
-var target = null
-var rot = 0
+var target = null # Usually a Vector2, sometimes null
+var rot: float = 0
 var start_transform
 var start_layer
-var health = start_health
-var is_hidden
-var fsm
-var animation_player
+var health: int = start_health
+var is_hidden: bool
+var fsm # Fsm
+var animation_player: AnimationPlayer
+var ent_state_prop := {}
 
 
-func _ready():
+func _ready() -> void:
 	set_layer(layer)
-	# print("Enemy ", collision_layer)
 	if Engine.editor_hint:
 		return
 
@@ -70,7 +77,6 @@ func _ready():
 		ray_directions[i] = Vector2.RIGHT.rotated(angle)
 		if angle > PI / 2 or angle < 3 * PI / 2:
 			ray_directions[i] *= 0.5
-		# print(ray_directions[i], ray_directions[i].rotated(rotation).dot(transform.x))
 
 	start_transform = transform
 	start_layer = layer
@@ -94,7 +100,7 @@ func _ready():
 		ent_state_prop[BasicEnemyChaseState.NAME]["threshold"] = melee_thresh
 
 
-func _physics_process(delta: float):
+func _physics_process(delta: float) -> void:
 	if Engine.editor_hint:
 		return
 	var current_estate = fsm.top()
@@ -102,7 +108,12 @@ func _physics_process(delta: float):
 		current_estate._physics_process(delta)
 
 
-func move(delta: float):
+func move(delta: float) -> void:
+#
+# move
+# Move the enemy toward its target.
+# delta - Time since last frame, useful for scaling movement speed.
+# 
 	var reached_target: bool = target.distance_to(global_position) < fsm.top().PROPERTIES["threshold"]
 	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME and not reached_target:
 		$echo.set_visible(true)
@@ -117,7 +128,7 @@ func move(delta: float):
 	position += velocity * delta
 
 
-func _draw():
+func _draw() -> void:
 	if not DRAW_ME or fsm == null:
 		return
 	var current_state = fsm.top()
@@ -154,7 +165,7 @@ func _draw():
 
 # draw a semicircle with radius, which travels around the arc for f,
 # and is color color
-func _draw_semicircle(rradius: float, f: float, color: Color):
+func _draw_semicircle(rradius: float, f: float, color: Color) -> void:
 	var f2 = f / 2
 	var cosf2 = cos(f2)  # cos(x) = -cos(x)
 	var sinf2 = sin(f2)  # sin(-x) = -sin(x)
@@ -163,7 +174,14 @@ func _draw_semicircle(rradius: float, f: float, color: Color):
 	draw_line(Vector2(20 * cosf2, 20 * sinf2), Vector2(rradius * cosf2, rradius * sinf2), color)
 
 
-func _draw_polyline(points, color, xform):
+func _draw_polyline(points: Array , color: Color, xform: Transform2D) -> void:
+#
+# _draw_polyline
+# Draw a polygon.
+# points - Vertices of the polygon
+# color - Color to draw the line of the polygon
+# xform - Local to world transform matrix
+# 
 	var p2 := []
 	for p in points:
 		p2.append(xform * p)
@@ -171,11 +189,14 @@ func _draw_polyline(points, color, xform):
 	draw_polyline(p2, color)
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	update()
 
 
-func reset():
+func reset() -> void:
+#
+# reset the enemy to its initial state.
+# 
 	# context array
 	chosen_dir = Vector2.ZERO
 	velocity = Vector2.ZERO
@@ -190,11 +211,14 @@ func reset():
 	set_layer(start_layer)
 
 
-func set_interest():
-	# Set interest in each slot based on world direction
-	# if owner and owner.has_method("get_path_direction"):
-	# var path_direction = owner.get_path_direction(position)
-	# if owner and owner.has_method("get_target"):
+func set_interest() -> Object: # Return SeekState
+#
+# set_interest
+# Set the enemy's intereset in moving in each direction indicated by ray_directions.
+# Used to prevent the enemy from walking into walls.
+# See Context-based steering.
+# return - State of player's travel to its target.
+#
 	if target == null:
 		# print("null target")
 		set_default_interest()
@@ -214,15 +238,22 @@ func set_interest():
 	return SeekState.SEEK_TARGET
 
 
-func set_default_interest():
-	# Default to moving forward
+func set_default_interest() -> void:
+#
+# set_default_intereset
+# Default to moving forward
+#
 	for i in num_rays:
 		var d = ray_directions[i].rotated(rot).dot(transform.x)
 		interest[i] = max(0, d)
 
 
-func set_danger():
-	# Cast rays to find danger directions
+func set_danger() -> void:
+#
+# set_danger
+# Cast rays in several directions to check for collisions.
+# This data can be used to avoid walls later.
+#
 	var space_state := get_world_2d().direct_space_state
 	for i in num_rays:
 		var result := space_state.intersect_ray(
@@ -237,7 +268,12 @@ func set_danger():
 			danger[i] = 0.0
 
 
-func choose_direction():
+func choose_direction() -> void:
+#
+# choose_direction
+# Given result of set_danger, weight direction of movement toward 
+# a path with the fewest amount of obstacles.
+#
 	# Eliminate interest in slots with danger
 	for i in num_rays:
 		# if danger[i] > 0.0:
@@ -250,13 +286,22 @@ func choose_direction():
 	chosen_dir = chosen_dir.normalized()
 
 
-func set_target(_target):
+func set_target(_target) -> void: # Target is either null or a Vector2
+#
+# set_target that the player should pursue.
+# _target - Location for the player to pursue. May be null.
+#
 	target = _target
 
 
 # check for the player, and if we find an active player in the field of view,
 # acquire it as target and reduce our reaction time
 func check_for_player() -> Node:
+#
+# check_for_player
+# Check for close players are, and if any player is in the detection area (a cone)
+# return - Acquired player, or null if nothing in range
+#
 	if not get_parent().has_method("get_players"):
 		return null
 	var players = get_parent().get_players()
@@ -297,7 +342,14 @@ func check_for_player() -> Node:
 	return closest_ent
 
 
-func check_ranged_attack(_dist_to_player, ppos):
+func check_ranged_attack(_dist_to_player: float, ppos: Vector2) -> bool:
+#
+# check_ranged_attack
+# Check if a ranged attack would be successful.
+# _dist_to_player - Separation between self and player.
+# ppos - Player position
+# return - True if a ranged attack would probably succeed.
+# 
 	#print("Check ranged attack")
 	if !has_ranged_attack:
 		return false
@@ -314,7 +366,11 @@ func check_ranged_attack(_dist_to_player, ppos):
 	return false
 
 
-func start_ranged_attack():
+func start_ranged_attack() -> void:
+#
+# start_ranged_attack
+# Start the ranged attack animation, and transition to a new state.
+# 
 	# launch a projectile
 	var new_bullet = bullet.instance()
 	new_bullet.setup(
@@ -326,13 +382,23 @@ func start_ranged_attack():
 	$Sounds/GunShot.play()
 
 
-func end_ranged_attack():
+func end_ranged_attack() -> void:
+#
+# end_ranged_attack
+# Called when a ranged attack has finished.
+# 
 	# cooldown period is over
 	#fsm.pop()
 	pass
 
 
-func check_melee_attack(dist_to_player, _ppos):
+func check_melee_attack(dist_to_player: float, _ppos: Vector2) -> bool:
+#
+# check_melee_attack
+# Check if a melee attack could succeed against a player a ppos.
+# dist_to_player - Distance to player
+# return - True if player is close enough to be hit by a melee attack.
+#
 	if !has_melee_attack:
 		return false
 	# check if I'm close enough to attack
@@ -344,7 +410,11 @@ func check_melee_attack(dist_to_player, _ppos):
 	return false
 
 
-func start_melee_attack():
+func start_melee_attack() -> void:
+#
+# start_melee_attack
+# Callback for when the enemy's melee attack has started.
+#
 	# enable some collision shape with the melee radius on it
 	look_at(target)
 	$MeleeAttack.visible = true
@@ -353,13 +423,24 @@ func start_melee_attack():
 
 
 func end_melee_attack():
+#
+# end_melee_attack
+# Callback for when the enemy's melee attack has ended
+# 
 	# disable the collision shape with the melee radius on it
 	$MeleeAttack.visible = false
 	$MeleeAttack.monitoring = false
 	#fsm.pop()
 
 
-func take_damage(how_much, from):
+func take_damage(how_much: int, from: Node) -> void:
+#
+# take_damage
+# Cause this enemy to take a certain amount of damage.
+# No effect if is_alive() == false
+# how_much - Amount health should be reduced by.
+# from - Entity causing the damage.
+#
 	if health <= 0:
 		return
 	print("Enemy is taking " + str(how_much) + " damage")
@@ -378,6 +459,8 @@ func take_damage(how_much, from):
 
 
 func is_alive() -> bool:
+# is_alive
+# return - True if this enemy is alive
 	return health > 0
 
 
@@ -385,7 +468,7 @@ func get_layer() -> int:
 	return $DepthController.get_layer()
 
 
-func set_layer(new_layer: int):
+func set_layer(new_layer: int) -> void:
 	$DepthController.set_layer(new_layer)
 
 
@@ -395,7 +478,7 @@ func get_depth_controllers() -> Array:
 	]
 
 
-func _on_MeleeAttack_body_entered(body):
+func _on_MeleeAttack_body_entered(body: PhysicsBody2D) -> void:
 	if body == self:
 		return
 	if body.has_method("take_damage"):
@@ -403,38 +486,38 @@ func _on_MeleeAttack_body_entered(body):
 		$AttackHit.emitting = true
 
 
-func _on_hide():
+func _on_hide() -> void:
 	is_hidden = true
 	_set_effects_modulate(Color(1, 1, 1, 0))
 	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
 	$Tween.start()
 
 
-func _set_effects_modulate(mod: Color):
+func _set_effects_modulate(mod: Color) -> void:
 	$MuzzleFlash.modulate = mod
 	$Trail.modulate = mod
 	$BloodExplode.modulate = mod
 	$AttackHit.modulate = mod
 
 
-func _on_show():
+func _on_show() -> void:
 	is_hidden = false
 	_set_effects_modulate(Color(1, 1, 1, 1))
 	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
 	$Tween.start()
 
 
-func set_collision_layer(_layer: int):
+func set_collision_layer(_layer: int) -> void:
 	collision_layer = _layer
 	$MeleeAttack.collision_layer = _layer
 
 
-func set_collision_mask(mask: int):
+func set_collision_mask(mask: int) -> void:
 	collision_mask = mask
 	$MeleeAttack.collision_mask = mask
 
 
-func on_noise_heard(position: Vector2):
+func on_noise_heard(position: Vector2) -> void:
 	if not is_alive(): return
 	print(self, " heard a noise at ", position)
 	var top = fsm.top()

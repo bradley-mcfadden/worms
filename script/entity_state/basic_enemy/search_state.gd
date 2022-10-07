@@ -1,3 +1,8 @@
+#
+# BasicEnemySearchState makes the AI randomly walk, until it dies
+# or spots an enemy that it should chase.
+#
+
 extends EntityState
 
 class_name BasicEnemySearchState
@@ -12,20 +17,20 @@ const PROPERTIES := {
 	fov = 90,
 }
 
-const TWO_PI = 2 * PI
+const TWO_PI: float = 2 * PI
 
-var noise_location = null
-var walk_anim
-var search_location = null
-var search_time = -1.0
+var noise_location: Vector2
+var walk_anim: String
+var search_location: Vector2
+var search_time: float = -1.0
 
 
-func _init(_fsm, _entity):
+func _init(_fsm: Fsm, _entity) -> void:
 	fsm = _fsm
 	entity = _entity
 
 
-func on_enter():
+func on_enter() -> void:
 	if entity.has_ranged_attack:
 		walk_anim = "walk_gun"
 	elif entity.has_melee_attack:
@@ -33,7 +38,7 @@ func on_enter():
 	entity.animation_player.play(walk_anim)
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	var player = entity.check_for_player()
 	if player != null:
 		fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
@@ -65,10 +70,10 @@ func _physics_process(delta):
 	entity.move(delta)
 	
 
-func on_exit():
+func on_exit() -> void:
 	pass
 
 
-func on_noise_heard(position: Vector2):
+func on_noise_heard(position: Vector2) -> void:
 	print("SearchState heard a noise")
 	noise_location = position

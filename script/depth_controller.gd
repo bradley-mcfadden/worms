@@ -1,40 +1,45 @@
-# DepthController is meant to be managed by DepthManager
+#
+# depth_controller.gd 
+# Is meant to be managed by depth_manager.gd
 # It allows for automatically hiding a Node2D when it moves to an inactive
-# layer. For nodes with collision, it also will disable it when the layer is
+# layer. For nodes with collision, it also will disable collision when the layer is
 # inactive.
 extends Node
 
+# Emitted when the node is hidden
 signal hide
+# Emitted when the node is shown
 signal show
 
 const COLLISION_OFFSET := 2
 
-export(int) var depth_layer = 0
+export(int) var depth_layer := 0
 
-var start_mask
-var start_layer
+# Starting collision mask
+var start_mask: int
+# Starting collision layer
+var start_layer: int
 var parent: Node2D
-var active
+var active: bool = false
 
 
-func _ready():
+func _ready() -> void:
 	parent = get_parent()
 
 	if parent.has_method("set_collision_mask"):
 		start_layer = parent.get_collision_layer()
 		start_mask = parent.get_collision_mask()
-
-		# var cl = start_layer + (COLLISION_OFFSET * depth_layer)
-		# var cm = start_mask + (COLLISION_OFFSET * depth_layer)
-		# print("Start layer ", start_layer, " ", (COLLISION_OFFSET * depth_layer))
-		# print("Depth layer ", depth_layer)
 		
 		set_layer(parent.layer)
 
 
+func set_active(is_active: bool):
+#
+# set_active
 # Set whether this object is active. An active object is visible and collides,
 # inactive objects are not visible and do not collide.
-func set_active(is_active: bool):
+# set_active - Should the object be visible and collide?
+#
 	if is_active:
 		emit_signal("show")
 	else:
@@ -42,23 +47,39 @@ func set_active(is_active: bool):
 	active = is_active
 
 
-func start_peek():
+func start_peek() -> void:
+#
+# start_peek
+# If the parent should be partially shown on the peek action,
+# then show it.
+#
 	if parent.has_method("start_peek"):
 		parent.start_peek()
 
 
-func end_peek():
+func end_peek() -> void:
+#
+# end_peek
+# return the parent back to being hidden when a peek ends.
+#
 	if parent.has_method("end_peek"):
 		parent.end_peek()
 
 
 func get_layer() -> int:
+#
+# get_layer 
+# return - The depth layer of the parent.
+#
 	return depth_layer
 
 
+func set_layer(layer: int) -> void:
+#
+# set_layer
 # Change the controlled object's depth layer.
-func set_layer(layer: int):
-	# print("Call set layer on ", self, " with layer ", layer)
+# layer - Layer to change to.
+#
 	if active == null:
 		active = depth_layer == layer
 	depth_layer = layer
@@ -70,22 +91,19 @@ func set_layer(layer: int):
 	parent.layer = layer
 
 
-# Set the collision mask to the given layer. Does not allow for multiple masks
-# to be set.
-func set_collision_mask(layer: int):
+func set_collision_mask(layer: int) -> void:
 	parent.set_collision_mask(layer)
-	# print("new cm ", layer)
 
 
-# Set the collision layer to the given layer. Does not allow for multiple layers
-# to be set.
-func set_collision_layer(layer: int):
+func set_collision_layer(layer: int) -> void:
 	parent.set_collision_layer(layer)
-	# print("new cl ", layer)
 
 
+func reset() -> void:
+#
+# reset
 # Reset parent's collision layer and mask to match its initial depth value.
-func reset():
+#
 	if parent.has_method("set_collision_mask"):
 		set_collision_layer(start_layer)
 		set_collision_mask(start_mask)
@@ -93,8 +111,15 @@ func reset():
 		depth_layer = start_layer
 
 
-# Finds the base 2 log for a number.
 func log2(val: int) -> int:
+#
+# log2
+# Finds the n such that 2^n < val < 2^(n+1).
+# That is, return n such that 2^n is the highest power of 2
+# less than val.
+# val - Number to find n for.
+# return - Positive integer in range [0, 63]  
+#
 	var counter := 0
 	var val2 = val
 	while val2 > 1:

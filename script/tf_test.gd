@@ -1,15 +1,15 @@
-extends Node2D
+# tf_test.gd contains the topmost code for a level.
 
+extends Node2D
 
 export(PackedScene) var eggs
 
+var death_screen: Node
+var enemies_dead_screen: Node
+var primary_player: Node
 
-var death_screen
-var enemies_dead_screen
-var primary_player
 
-
-func _ready():
+func _ready() -> void:
 	$Music.play()
 	$DepthManager.add_items($Players.get_players())
 	$DepthManager.add_items($Enemies.get_enemies())
@@ -25,7 +25,7 @@ func _ready():
 	primary_player.background = $Background
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	update()
 
 
@@ -33,13 +33,20 @@ func get_players() -> Array:
 	return $Players.get_players()
 
 
-func attach_bullet(bullet):
+func attach_bullet(bullet: Node) -> void:
+# 
+# attach_bullet adds the current bullet as a child of the scene.
+# bullet to make a child of this scene.
+#
 	add_child(bullet)
 	bullet.connect("bullet_destroyed", self, "_on_bullet_destroyed")
 	$DepthManager.add(bullet.get_layer(), bullet)
 
 
-func reset():
+func reset() -> void:
+#
+# reset the current scene to its initial state.
+#
 	death_screen.visible = false
 	enemies_dead_screen.visible = false
 	$Enemies.reset_all_enemies()
@@ -47,7 +54,11 @@ func reset():
 	$Music.play()
 
 
-func get_current_camera_2d():
+func get_current_camera_2d() -> Camera2D:
+#
+# get_current_camera_2d returns the current active camera.
+# returns - Current active camera in scene.
+#
 	var viewport = get_viewport()
 	if not viewport:
 		return null
@@ -59,8 +70,7 @@ func get_current_camera_2d():
 	return null
 
 
-func _on_lay_eggs():
-	# in future, probably play an animation and wait for it finish before that
+func _on_lay_eggs() -> void:
 	enemies_dead_screen.visible = false
 	var cpu_con = $CpuController
 	var worm = $Players/SpawnKinematic
@@ -78,28 +88,19 @@ func _on_lay_eggs():
 	Levels.next_level_or_main(get_tree())
 
 
-func _on_all_enemies_dead():
-	# var camera = get_current_camera_2d()
-	# var screen_parent = enemies_dead_screen.get_parent()
-	# if screen_parent != camera:
-	# 	enemies_dead_screen.get_parent().remove_child(enemies_dead_screen)
-	# 	camera.add_child(enemies_dead_screen)
+func _on_all_enemies_dead() -> void:
 	enemies_dead_screen.visible = true
 	enemies_dead_screen.fade_in()
 
 
-func _on_all_players_dead():
-	# var camera = get_current_camera_2d()
-	# if death_screen.get_parent() != camera:
-	# 	death_screen.get_parent().remove_child(death_screen)
-	# 	camera.add_child(death_screen)
+func _on_all_players_dead() -> void:
 	death_screen.visible = true
 	death_screen.fade_in()
 
 
-func _on_bullet_destroyed(bullet):
+func _on_bullet_destroyed(bullet: Node) -> void:
 	$DepthManager.remove(bullet)
 
 
-func _on_restart():
+func _on_restart() -> void:
 	reset()

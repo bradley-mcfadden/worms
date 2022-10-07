@@ -1,3 +1,7 @@
+# BasicEnemyPatrolState is a simple state that makes the AI
+# target points from an array. Upon reaching a point, the
+# AI will target the next one.
+
 extends EntityState
 
 class_name BasicEnemyPatrolState
@@ -6,18 +10,18 @@ const NAME := "PatrolState"
 const START_REACTION_TIME := 30
 const PROPERTIES := {color = Color.aquamarine, speed = 250, threshold = 32, fov = 90}
 
-var reaction_time = START_REACTION_TIME
-var idle_patrol
-var patrol_idx
-var noise_location = null
+var reaction_time: float = START_REACTION_TIME
+var idle_patrol: Array
+var patrol_idx: int
+var noise_location: Vector2
 
 
-func _init(_fsm, _entity):
+func _init(_fsm: Fsm, _entity: Node) -> void:
 	fsm = _fsm
 	entity = _entity
 
 
-func on_enter():
+func on_enter() -> void:
 	reaction_time = START_REACTION_TIME
 	idle_patrol = entity.idle_patrol
 	patrol_idx = entity.patrol_idx
@@ -29,8 +33,7 @@ func on_enter():
 	entity.animation_player.play(walk_anim)
 	
 
-
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	if react_to_player():
 		fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
 		print("reacted to player")
@@ -56,19 +59,24 @@ func react_to_player() -> bool:
 	return false
 
 
-func get_target():
+func get_target() -> Vector2:
+#
+# get_target finds the next position to walk towards by consulting an array of
+# patrol points. Upon reaching the point, the target index updates.
+#
+# returns: Point for the AI to seek
 	var n = len(idle_patrol)
 	if n == 0:
-		return null
+		return entity.global_position
 	var threshold = PROPERTIES["threshold"]
 	if entity.position.distance_to(idle_patrol[patrol_idx]) < threshold:
 		patrol_idx = patrol_idx + 1 if patrol_idx < n - 1 else 0
 	return idle_patrol[patrol_idx]
 
 
-func on_exit():
+func on_exit() -> void:
 	pass
 
 
-func on_noise_heard(position: Vector2):
+func on_noise_heard(position: Vector2) -> void:
 	noise_location = position

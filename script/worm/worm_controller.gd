@@ -1,3 +1,7 @@
+# WormController provides a map of actions with their current 
+# and last states. It is useful for separating control code
+# from the player, or perhaps implementing a CPU controller.
+
 extends Node
 
 
@@ -24,8 +28,11 @@ onready var last_action_map := {
 }
 
 
-func set_abilities_count(count: int):
-	# set_abilities_count creates actions for ability1..abilityn
+func set_abilities_count(count: int) -> void:
+#
+# set_abilities_count creates actions for ability1..abilityn
+# count - Number of ability actions to create for the map.
+#
 	for i in range(count):
 		var idx := "ability" + str(i + 1)
 		curr_action_map[idx] = false
@@ -33,12 +40,20 @@ func set_abilities_count(count: int):
 
 
 func is_action_pressed(action: String) -> bool:
-	# is_action_pressed return true if action is currently pressed
+#
+# is_action_pressed return true if action is currently pressed
+# action - Action name to check.
+# return - True if action is currently pressed.
+#
 	return curr_action_map.has(action) && curr_action_map[action] == true
 
 
 func is_action_just_released(action: String) -> bool:
-	# is_action_just_released returns true if action was true, and is now false
+#
+# is_action_just_released returns true if action was true, and is now false
+# action - Action name to check.
+# return - True if action was true and is now false.
+#
 	if not curr_action_map.has(action):
 		return false
 	
@@ -49,7 +64,11 @@ func is_action_just_released(action: String) -> bool:
 
 
 func is_action_just_pressed(action: String) -> bool:
-	# is_action_just_released returns true if action was false, and is now true
+#
+# is_action_just_released returns true if action was false, and is now true
+# action - Action name to check.
+# return - True if action was false and is now true
+#
 	if not curr_action_map.has(action):
 		return false
 	

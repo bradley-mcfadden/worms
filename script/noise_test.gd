@@ -1,7 +1,12 @@
+# 
+# noise_test.gd
+# Script for a test of a perlin noise texture.
+#
+
 extends TextureRect
 
 
-func _ready():
+func _ready() -> void:
 	for prop in texture.get_property_list():
 		print(prop)
 	print(texture)
@@ -16,6 +21,6 @@ func _ready():
 	print(texture.noise_offset)
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	# print(texture.get_property_list())
 	pass

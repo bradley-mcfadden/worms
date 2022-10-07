@@ -11,32 +11,32 @@ export(int) var hseperation := 0
 export(int) var amplitude := 10
 
 var yoff := 0
-var tail
-var head
+var tail: Node
+var head: Node
 var body := []
 
 
-func _ready():
+func _ready() -> void:
 	#_test_shrink()
 	pass
 
 
+func _on_Segment_took_damage(position: int, segment: Object) -> void:
 # set the icon at position to the correct fill level
-# based on segment remaining health
-func _on_Segment_took_damage(position: int, segment):
+# based on segment remaining health.
 	if !_in_bounds(position):
 		return
 	print("segment at ", position, " took damage")
 	body[len(body)-position-1].set_proportion(float(segment.health) / segment.start_health)
 
 
-# bounds check pos against len of body
 func _in_bounds(pos: int) -> bool:
+# bounds check pos against len of body
 	return pos >= 0 && pos < len(body)
 
 
+func _on_Worm_size_changed(to: int) -> void:
 # update number of icons to size "to"
-func _on_Worm_size_changed(to: int):
 	if to < 0: return
 	if head == null:
 		_init_health_bar(to)
@@ -46,11 +46,11 @@ func _on_Worm_size_changed(to: int):
 		_shrink_to_size(to)
 
 
-func _on_Worm_died(_from, _overkill):
+func _on_Worm_died(_from: Node, _overkill: bool) -> void:
 	_shrink_to_size(0)
 
 
-func _shrink_to_size(to: int):
+func _shrink_to_size(to: int) -> void:
 	var by: int = len(body) - to
 	if by <= 0 or to < 0:
 		return
@@ -86,7 +86,7 @@ func _shrink_to_size(to: int):
 	_position_segments()
 
 
-func _grow_to_size(to: int):
+func _grow_to_size(to: int) -> void:
 	var by: int = to - len(body)
 	if by <= 0:
 		return
@@ -114,7 +114,7 @@ func _grow_to_size(to: int):
 	_position_segments()
 
 
-func _init_health_bar(size: int):
+func _init_health_bar(size: int) -> void:
 	show()
 	tail = tail_widg.instance()
 	body.append(tail)
@@ -133,13 +133,13 @@ func _init_health_bar(size: int):
 	_fill_segments()
 
 
-func _reorder_children():
+func _reorder_children() -> void:
 	var n := len(body)
 	for i in range(n):
 		move_child(body[i], i)
 
 
-func _position_segments():
+func _position_segments() -> void:
 	var xoff := 0
 	for seg in body:
 		seg.rect_position.x = xoff
@@ -147,12 +147,12 @@ func _position_segments():
 		xoff += seg.rect_size.x + hseperation
 
 
-func _fill_segments():
+func _fill_segments() -> void:
 	for seg in body:
 		seg.set_proportion()
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	var seg
 	var offset
 	var msec = OS.get_ticks_msec() / 500.0
@@ -164,11 +164,11 @@ func _process(_delta):
 		seg.rect_position.y = offset
 
 
-func _test_init_health_bar():
+func _test_init_health_bar() -> void:
 	_init_health_bar(20)
 
 
-func _test_shrink():
+func _test_shrink() -> void:
 	_init_health_bar(20)
 	var dummy0 := DummySegment.new()
 	dummy0.health = 75
@@ -183,7 +183,7 @@ func _test_shrink():
 	_shrink_to_size(0)
 
 
-func _test_grow():
+func _test_grow() -> void:
 	_init_health_bar(10)
 	var dummy0 := DummySegment.new()
 	dummy0.health = 75
@@ -195,7 +195,7 @@ func _test_grow():
 	_grow_to_size(20)
 
 
-func _test_take_damage():
+func _test_take_damage() -> void:
 	_init_health_bar(10)
 	yield(get_tree().create_timer(4.0), "timeout")
 	_on_Segment_took_damage(5, DummySegment.new())

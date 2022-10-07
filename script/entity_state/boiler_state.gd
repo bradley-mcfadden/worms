@@ -15,21 +15,21 @@ const PROPERTIES := {
 }
 
 
-func _init(_fsm, _entity):
+func _init(_fsm: Fsm, _entity: Node) -> void:
 	fsm = _fsm
 	entity = _entity
 
 
 # on_enter calls code once when switching to this state
-func on_enter():
+func on_enter() -> void:
 	pass
 
 
 # called every _physics_process in parent
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	pass
 
 
 # on_exit is called when switching out of this state
-func on_exit():
+func on_exit() -> void:
 	pass
