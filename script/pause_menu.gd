@@ -32,7 +32,7 @@ func init_labels() -> void:
 		ANIMATION_OPEN_HEADER,
 		ANIMATION_CLOSE_HEADER,
 		true,
-		Configuration.use_text_animations
+		Configuration["general"]["use_text_animations"]
 	)
 
 

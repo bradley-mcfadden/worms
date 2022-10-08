@@ -21,7 +21,7 @@ func _ready() -> void:
 
 
 func init_labels() -> void:
-	var animate = Configuration.use_text_animations
+	var animate = Configuration["general"]["use_text_animations"]
 	set_text(
 		$Message, random_message(), ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate
 	)

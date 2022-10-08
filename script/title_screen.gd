@@ -23,7 +23,7 @@ func _ready() -> void:
 
 
 func init_labels() -> void:
-	var animate = Configuration.use_text_animations
+	var animate = Configuration["general"]["use_text_animations"]
 	var header = $VBoxContainer/Header
 	set_text(header, header.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate)
 

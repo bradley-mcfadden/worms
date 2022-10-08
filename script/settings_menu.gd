@@ -38,14 +38,14 @@ func init_values() -> void:
 # initialize values to their most up to date setting.
 #	
 #	# general here
-	general.get_node("Cols/R/RichTextCheck").pressed = Configuration.use_text_animations
+	general.get_node("Cols/R/RichTextCheck").pressed = Configuration["general"]["use_text_animations"]
 	# graphics here
 	# controls here
 	# audio here
-	audio.get_node("Cols/R/MasterVolumeSlider").value = Configuration.master_volume
-	audio.get_node("Cols/R/SoundFXVolumeSlider").value = Configuration.sfx_volume
-	audio.get_node("Cols/R/UISoundVolumeSlider").value = Configuration.ui_volume
-	audio.get_node("Cols/R/MusicVolumeSlider").value = Configuration.music_volume
+	audio.get_node("Cols/R/MasterVolumeSlider").value = Configuration["audio"]["master_volume"]
+	audio.get_node("Cols/R/SoundFXVolumeSlider").value = Configuration["audio"]["sfx_volume"]
+	audio.get_node("Cols/R/UISoundVolumeSlider").value = Configuration["audio"]["ui_volume"]
+	audio.get_node("Cols/R/MusicVolumeSlider").value = Configuration["audio"]["music_volume"]
 
 func set_text(label: Node, msg: String, start: String, end, center: bool = true, animate: bool = true) -> void:
 #
@@ -75,7 +75,7 @@ func wrap_string(string: String, start: String, end: String) -> String:
 
 
 func _on_RichTextCheck_toggled(state: bool):
-	Configuration.use_text_animations = state
+	Configuration["general"]["use_text_animations"] = state
 	init_labels()
 
 

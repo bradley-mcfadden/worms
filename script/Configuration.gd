@@ -3,16 +3,34 @@
 
 extends Node
 
+const CONFIG_FILE_PATH := "user://settings.cfg"
 const MASTER_BUS_NAME := "Master"
 const UI_BUS_NAME := "UI"
 const SFX_BUS_NAME := "SFX"
 const MUSIC_BUS_NAME := "Music"
 
-var use_text_animations := true
-var master_volume := 100 setget set_master_volume
-var ui_volume := 100 setget set_ui_volume
-var sfx_volume := 100 setget set_sfx_volume
-var music_volume := 100 setget set_music_volume
+var sections := {
+	"general" : {
+		"use_text_animations" : true,
+	},
+	"audio" : {
+		"master_volume" : 100,
+		"ui_volume" : 100,
+		"sfx_volume" : 100,
+		"music_volume" : 100,
+	},
+	"graphics" : {
+		
+	},
+}
+
+
+func _enter_tree() -> void:
+	cload()
+
+
+func _exit_tree() -> void:
+	save()
 
 
 func set_master_volume(vol: int) -> void:
@@ -23,7 +41,7 @@ func set_master_volume(vol: int) -> void:
 	print("Changing master volume")
 	var idx = AudioServer.get_bus_index(MASTER_BUS_NAME)
 	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	master_volume = vol
+	sections["audio"]["master_volume"] = vol
 
 
 func set_ui_volume(vol: int) -> void:
@@ -33,7 +51,7 @@ func set_ui_volume(vol: int) -> void:
 #
 	var idx = AudioServer.get_bus_index(UI_BUS_NAME)
 	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	ui_volume= vol
+	sections["audio"]["ui_volume"] = vol
 
 
 func set_sfx_volume(vol: int) -> void:
@@ -43,7 +61,7 @@ func set_sfx_volume(vol: int) -> void:
 #
 	var idx = AudioServer.get_bus_index(SFX_BUS_NAME)
 	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	sfx_volume = vol
+	sections["audio"]["sfx_volume"] = vol
 
 
 func set_music_volume(vol: int) -> void:
@@ -53,7 +71,7 @@ func set_music_volume(vol: int) -> void:
 #
 	var idx = AudioServer.get_bus_index(MUSIC_BUS_NAME)
 	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	music_volume = vol
+	sections["audio"]["music_volume"] = vol
 
 
 func vol_percent_to_db(vol: int) -> float:
@@ -63,3 +81,29 @@ func vol_percent_to_db(vol: int) -> float:
 # return - Volume in dB. 0 maps to -60, 100 maps to 0
 	var frac := vol / 100.0
 	return lerp(-60, 0, frac)
+
+
+func save() -> void:
+# 
+# save current configuration to filesystem.
+#
+	var file: ConfigFile = ConfigFile.new()
+	for section in sections.keys():
+		var sdict: Dictionary = sections[section]
+		for param in sections[section].keys():
+			file.set_value(section, param, sdict[param])
+
+	file.save(CONFIG_FILE_PATH)
+
+
+func cload() -> void:
+#
+# cload
+# load configuration, or use default values.
+# 
+	var file: ConfigFile = ConfigFile.new()
+	file.load(CONFIG_FILE_PATH)
+	for section in sections.keys():
+		var sdict: Dictionary = sections[section]
+		for param in sdict.keys():
+			sdict[param] = file.get_value(section, param, sdict[param])
