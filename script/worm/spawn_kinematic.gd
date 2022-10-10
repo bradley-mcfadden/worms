@@ -69,7 +69,7 @@ var tail
 # Camera
 var wide_camera: Camera2D
 # Iterator over body
-var iter: # Iterator
+var iter: Object # Iterator
 var free_later_list := []
 var start_transform: Transform2D
 var start_layer: int
@@ -493,6 +493,7 @@ func _on_segment_took_damage(segment: Node, hurt: bool = false) -> void:
 	var idx = body.find(segment)
 	emit_signal("segment_took_damage", idx, segment)
 
-	if segment == head: var ratio = float(segment.health / segment.start_health)
+	if segment == head: 
+		var ratio = float(segment.health / segment.start_health)
 		if ratio < 0.5:
 			emit_signal("health_state_changed", true)

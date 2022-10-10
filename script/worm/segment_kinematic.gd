@@ -48,7 +48,7 @@ var layer := 0
 # Current health
 var health: int = start_health
 var last_osc_offset := Vector2.ZERO
-var current_gore: GoreState = GoreState.NONE
+var current_gore: Object = GoreState.NONE
 
 func _ready() -> void:
 	health = start_health
