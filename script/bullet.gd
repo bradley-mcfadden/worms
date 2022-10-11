@@ -71,6 +71,7 @@ func _on_Bullet_body_entered(body: PhysicsBody2D) -> void:
 		set_deferred("monitoring", false)
 		$Sprite.visible = false
 		$BulletTrail.visible = false
+		visible = false
 
 
 func _on_Timer_timeout() -> void:

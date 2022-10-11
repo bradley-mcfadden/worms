@@ -77,6 +77,8 @@ var is_switch_depth := false
 var background: BackgroundNoise
 var active_controller: WormController
 
+onready var body_mut := Mutex.new()
+
 
 func _ready() -> void:
 # This loop will set segment's properties.
@@ -144,7 +146,8 @@ func reset() -> void:
 		wide_camera.queue_free()
 	for segment in body:
 		remove_child(segment)
-		segment.queue_free()
+		if segment != null:
+			segment.queue_free()
 	body.clear()
 	_ready()
 
@@ -166,13 +169,14 @@ func update_camera_position() -> void:
 # Recenter the camera so it follows the centroid the worm.
 #
 	var sum := Vector2.ZERO
-	if (len(body) == 0): return
-	for segment in body:
-		if segment == null:
-			continue
-		if not segment.is_queued_for_deletion():
-			sum += segment.position
+	if (len(body) == 0) or !is_alive(): return
+	var count := 0
+	for child in get_children():
+		if child is KinematicBody2D and child.is_alive():
+			sum += child.position
+			count += 1
 
+	if count == 0: return
 	var avg = sum / len(body)
 	wide_camera.position = avg
 
@@ -190,6 +194,7 @@ func _physics_process(delta: float) -> void:
 		var i = osc_counter
 		var speed_rate = vel.x / max_speed
 		var slither_sound = $Sounds/Slither
+		body_mut.lock()
 		for segment in body:
 			vel_ = Vector2(vel_.length(), 0).rotated((segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
@@ -200,12 +205,15 @@ func _physics_process(delta: float) -> void:
 				var dirt_node = segment.get_node("DirtMotion")
 				dirt_node.speed_scale = speed_rate
 			slither_sound.playing = speed_rate > 0.1
+		body_mut.unlock()
 
 		osc_counter += 0.2
 	# Free any dead segments
 	for _i in range(len(free_later_list)):
 		var _node = free_later_list.pop_back()
 		_node.queue_free()
+		var idx = body.find(_node)
+		if idx != -1: body.remove(idx)
 
 
 func _control(delta: float) -> void:
@@ -387,9 +395,10 @@ func get_entity_positions() -> Array:
 # return - Each segment of the worm.
 #
 	var pts := []
-	for segment in body:
-		pts.append(segment)
-
+	for x in range(get_child_count()-1, -1, -1):
+		var child = get_child(x)
+		if child is KinematicBody2D:
+			pts.append(child)
 	return pts
 
 
@@ -460,6 +469,7 @@ func _on_head_animation_changed(_from: String, _to: String) -> void:
 
 
 func _on_segment_died(segment: Node, from: Node, overkill: bool) -> void:
+	body_mut.lock()
 	var idx = body.find(segment)
 	if idx != -1:
 		for _i in range(len(body) - 1, idx - 1, -1):
@@ -479,6 +489,7 @@ func _on_segment_died(segment: Node, from: Node, overkill: bool) -> void:
 			emit_signal("died", from, overkill)
 		elif (len(body) < num_segment_for_low_health):
 			emit_signal("health_state_changed", true)
+	body_mut.unlock()
 
 
 func _play_death_sound(segment: Node) -> void:

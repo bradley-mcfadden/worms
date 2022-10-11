@@ -20,7 +20,7 @@ const PROPERTIES := {
 var target: Vector2
 var walk_anim := "walk_gun"
 var idle_anim := "idle_gun"
-var noise_location: Vector2
+var noise_location = null # Vector2, usually
 
 
 func _init(_fsm: Fsm, _entity: Node, _target: Vector2) -> void:

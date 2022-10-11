@@ -69,6 +69,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/entity_state/boiler_state.gd"
 }, {
+"base": "Ability",
+"class": "DummyAbility",
+"language": "GDScript",
+"path": "res://script/ability/dummy_ability.gd"
+}, {
 "base": "Object",
 "class": "EntityState",
 "language": "GDScript",
@@ -242,6 +247,7 @@ _global_script_class_icons={
 "BasicEnemySeekState": "",
 "BasicEnemyStateLoader": "",
 "BoilerState": "",
+"DummyAbility": "",
 "EntityState": "",
 "Fsm": "",
 "Iterator": "",

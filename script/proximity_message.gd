@@ -11,6 +11,7 @@ export (Color) var visible_mod := Color(1.0, 1.0, 1.0, 1.0)
 export (String) var text := "sample text"
 
 export (int) var layer := 0
+export (float) var radius := 200.0
 
 
 func _ready() -> void:
@@ -18,6 +19,7 @@ func _ready() -> void:
 	set_layer(layer)
 	$Label.text = text
 	modulate = invisible_mod
+	$CollisionShape2D.shape.radius = radius
 
 
 func _is_player_head(body: PhysicsBody2D) -> bool:
@@ -27,14 +29,14 @@ func _is_player_head(body: PhysicsBody2D) -> bool:
 
 func _on_ProximityMessage_body_entered(body: PhysicsBody2D) -> void:
 	if _is_player_head(body):
-		$Tween.stop()
+		$Tween.stop(self)
 		$Tween.interpolate_property(self, "modulate", invisible_mod, visible_mod, 2.0)
 		$Tween.start()
 
 
 func _on_ProximityMessage_body_exited(body: PhysicsBody2D) -> void:
 	if _is_player_head(body):
-		$Tween.stop()
+		$Tween.stop(self)
 		$Tween.interpolate_property(self, "modulate", visible_mod, invisible_mod, 2.0)
 		$Tween.start()
 

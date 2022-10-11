@@ -21,7 +21,7 @@ func _ready() -> void:
 
 
 func init_labels() -> void:
-	var animate = Configuration["general"]["use_text_animations"]
+	var animate = Configuration.sections["general"]["use_text_animations"]
 	set_text(
 		$Message, random_message(), ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate
 	)
@@ -29,7 +29,7 @@ func init_labels() -> void:
 	var key_string = OS.get_scancode_string(action[0].scancode)
 	var rp_text = "press %s to restart" % key_string
 	set_text(
-		$RestartPrompt, $RestartPrompt.text, ANIMATION_OPEN_MSG, ANIMATION_CLOSE_MSG, true, animate
+		$RestartPrompt, rp_text, ANIMATION_OPEN_MSG, ANIMATION_CLOSE_MSG, true, animate
 	)
 
 

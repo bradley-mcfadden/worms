@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=70 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://script/noise_manager.gd" type="Script" id=31]
 [ext_resource path="res://scene/worm/CpuController.tscn" type="PackedScene" id=32]
 [ext_resource path="res://scene/EggAnimation.tscn" type="PackedScene" id=33]
+[ext_resource path="res://scene/ProximityMessage.tscn" type="PackedScene" id=34]
 
 [sub_resource type="Resource" id=56]
 script = ExtResource( 23 )
@@ -399,6 +400,9 @@ polygon = PoolVector2Array( 491.29, 706.193, 610.927, 447.681, 916.178, 546.393,
 [node name="DepthController" parent="Obstacles/StaticBody2D2" instance=ExtResource( 21 )]
 
 [node name="Tween" type="Tween" parent="Obstacles/StaticBody2D2"]
+
+[node name="ProximityMessage" parent="Obstacles" instance=ExtResource( 34 )]
+position = Vector2( 90, -942 )
 
 [node name="Decorations" type="Node" parent="."]
 pause_mode = 1

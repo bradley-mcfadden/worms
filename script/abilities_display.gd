@@ -74,7 +74,7 @@ func _on_ability_is_ready_changed(ability: Ability, is_ready: bool) -> void:
 			$Tween.start()
 
 
-func _on_ability_is_ready_changed_cd(ability, is_ready: bool, duration: float) -> void:
+func _on_ability_is_ready_changed_cd(ability: Ability, is_ready: bool, duration: float) -> void:
 # grey out and partial fill ability if not ready
 	var rect: TextureRect = ability_map[ability]
 	if not param_map.has(ability):
@@ -99,9 +99,9 @@ func _test_on_ability_is_ready_changed():
 	dummy.append(10)
 	_on_abilities_ready(dummy)
 	yield(get_tree().create_timer(5.0), "timeout")
-	_on_ability_is_ready_changed(5, false)
+	_on_ability_is_ready_changed(DummyAbility.new(), false)
 	yield(get_tree().create_timer(5.0), "timeout")
-	_on_ability_is_ready_changed(5, true)
+	_on_ability_is_ready_changed(DummyAbility.new(), true)
 
 
 # To use me, get rid of Ability typehints and add to _ready()
@@ -109,8 +109,8 @@ func _test_on_ability_is_ready_changed_cd():
 	var dummy := [5, 10]
 	_on_abilities_ready(dummy)
 	yield(get_tree().create_timer(2.5), "timeout")
-	_on_ability_is_ready_changed_cd(5, false, 10.0)
-	_on_ability_is_ready_changed_cd(10, false, 20)
+	_on_ability_is_ready_changed_cd(DummyAbility.new(), false, 10.0)
+	_on_ability_is_ready_changed_cd(DummyAbility.new(), false, 20)
 
 
 # ShaderParam stores some parameters for a shader, and allows them

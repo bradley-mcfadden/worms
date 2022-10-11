@@ -19,7 +19,7 @@ func set_maximum_depth(to: int) -> void:
 # Used to inform the slider of how many layers there are.
 # to - Number of depth layers
 #
-	$VSlider.max_value = to
+	$VSlider.max_value = to - 1
 	$VSlider.tick_count = to
 
 

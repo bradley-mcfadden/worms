@@ -1,3 +1,4 @@
+# bite.gd
 # Bite is an ability that is a short range melee attack.
 # It has two parts, the wind up, and the snap
 # The first press causes the windup, then after a timer or
@@ -37,15 +38,24 @@ func invoke() -> void:
 
 func wind_up() -> void:
 # Play mouth opening animation, sound, and emit signal
+	if anim_player == null: return
 	anim_player.play(MOUTH_OPEN_WIDE)
 	_play_roar_sound()
 	emit_signal("is_ready_changed", self, false)
+	$Timer.start()
 
 
 func bite() -> void:
 # Play mouth biting animation
+	if anim_player == null: return
 	anim_player.play(MOUTH_CHOMP)
 	emit_signal("is_ready_changed", self, false)
+
+
+func _on_Timer_timeout():
+	if n_invoke_called:
+		if not anim_player == null and parent.is_alive():
+			anim_player.call_deferred("play", MOUTH_CHOMP)
 
 
 func set_is_ready(_is_ready: bool) -> void:
@@ -75,3 +85,4 @@ func _on_animation_changed(from: String, to: String) -> void:
 		is_ready = true
 		emit_signal("is_ready_changed", self, true)
 		n_invoke_called = 0
+		$Timer.stop()

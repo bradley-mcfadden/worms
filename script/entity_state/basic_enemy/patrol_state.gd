@@ -13,7 +13,7 @@ const PROPERTIES := {color = Color.aquamarine, speed = 250, threshold = 32, fov 
 var reaction_time: float = START_REACTION_TIME
 var idle_patrol: Array
 var patrol_idx: int
-var noise_location: Vector2
+var noise_location = null # Vector2, usually
 
 
 func _init(_fsm: Fsm, _entity: Node) -> void:

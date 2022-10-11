@@ -209,6 +209,8 @@ func reset() -> void:
 	transform = start_transform
 	health = start_health
 	set_layer(start_layer)
+	$MeleeAttack.visible = false
+	$MeleeAttack.monitoring = false
 
 
 func set_interest() -> Object: # Return SeekState

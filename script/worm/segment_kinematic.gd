@@ -48,7 +48,7 @@ var layer := 0
 # Current health
 var health: int = start_health
 var last_osc_offset := Vector2.ZERO
-var current_gore: Object = GoreState.NONE
+var current_gore: int = GoreState.NONE
 
 func _ready() -> void:
 	health = start_health
@@ -113,10 +113,10 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 #
 	if not is_alive():
 		return
-	print("Player is taking " + str(how_much) + " damage")
+	print(self, " is taking " + str(how_much) + " damage ", how_much, "/", health)
 	var new_health: float = health - how_much
 	if new_health > 0:
-		health = clamp(health, 0.0, start_health)
+		# health = int(clamp(health, 0.0, start_health))
 		if emit: emit_signal("took_damage", self, how_much>0)
 	if new_health < start_health * -0.25:
 		if emit: emit_signal("segment_died", self, from, true)
@@ -126,7 +126,7 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 		if emit: emit_signal("segment_died", self, from, false)
 		$BloodExplode.emitting = true
 		_die_then_cleanup()
-	health = clamp(new_health, 0.0, start_health)
+	health = int(clamp(new_health, 0.0, start_health))
 	_adjust_gore(float(health) / start_health)
 
 

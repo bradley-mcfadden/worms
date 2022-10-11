@@ -19,9 +19,9 @@ const PROPERTIES := {
 
 const TWO_PI: float = 2 * PI
 
-var noise_location: Vector2
+var noise_location = null # Mostly a Vector2
 var walk_anim: String
-var search_location: Vector2
+var search_location = null # Mostly a Vector2
 var search_time: float = -1.0
 
 

@@ -26,8 +26,9 @@ func _on_Segment_took_damage(position: int, segment: Object) -> void:
 # based on segment remaining health.
 	if !_in_bounds(position):
 		return
-	print("segment at ", position, " took damage")
-	body[len(body)-position-1].set_proportion(float(segment.health) / segment.start_health)
+	var prop: float = float(segment.health) / segment.start_health
+	print("segment at ", position, " took damage ", prop, " ", " health ", segment.health, " sh ", segment.start_health)
+	body[len(body)-position-1].set_proportion(prop)
 
 
 func _in_bounds(pos: int) -> bool:

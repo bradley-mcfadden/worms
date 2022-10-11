@@ -411,6 +411,7 @@ anims/walk_gun = SubResource( 12 )
 anims/walk_knife = SubResource( 13 )
 
 [node name="MeleeAttack" type="Area2D" parent="."]
+visible = false
 rotation = 1.5708
 scale = Vector2( 13.585, 8 )
 monitoring = false

@@ -1,10 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/IM_Fell_English/IMFellEnglish-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/proximity_message.gd" type="Script" id=2]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 72
+font_data = ExtResource( 1 )
 
 [node name="ProximityMessage" type="Area2D"]
 modulate = Color( 1, 1, 1, 0 )
@@ -24,7 +28,7 @@ margin_right = 20.0
 margin_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "sample text"
 align = 1
 
