@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://img/mini.png" type="Texture" id=1]
+[ext_resource path="res://script/laser_node.gd" type="Script" id=2]
+[ext_resource path="res://scene/particles/MuzzleFlash.tscn" type="PackedScene" id=3]
+
+[node name="LaserNode" type="Sprite"]
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MuzzleFlash" parent="." instance=ExtResource( 3 )]
+show_behind_parent = true
+position = Vector2( 11, 0 )
+emitting = false
+one_shot = true

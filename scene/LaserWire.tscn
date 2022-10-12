@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scene/LaserNode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sound/laser.wav" type="AudioStream" id=3]
+[ext_resource path="res://script/laser_wire.gd" type="Script" id=4]
+
+[node name="LaserWire" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="DepthController" parent="." instance=ExtResource( 1 )]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="LaserNode" parent="." instance=ExtResource( 2 )]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 26, 183 )
+
+[node name="LaserNode2" parent="." instance=ExtResource( 2 )]
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 271, 25 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Laser" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -10.0
+bus = "SFX"
+
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
