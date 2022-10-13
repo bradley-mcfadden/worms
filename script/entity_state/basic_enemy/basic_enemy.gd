@@ -466,6 +466,24 @@ func is_alive() -> bool:
 	return health > 0
 
 
+func on_bitten(worm: Node, bite_damage: int, bite_heal_factor: float) -> void:
+#
+# on_bitten
+# Callback for behaviour when being bitten by worm.
+# worm - Pointer to worm
+# bite_damage - Amount of damage the bite should do.
+# bite_heal_factor - Amount of healing that should be applied if applicable.
+#
+	take_damage(bite_damage, worm)
+	worm.increment_blood_level()
+	# When biting an enemy, add a segment
+	worm.call_deferred("add_segment")
+	# ... and heal each segment
+	for segment in parent.body:
+		segment.take_damage(-start_health * bite_heal_factor, worm)
+		yield(get_tree().create_timer(0.1), "timeout")
+
+
 func get_layer() -> int:
 	return $DepthController.get_layer()
 
