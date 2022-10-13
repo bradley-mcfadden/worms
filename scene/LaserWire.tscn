@@ -13,11 +13,9 @@ script = ExtResource( 4 )
 [node name="Timer" type="Timer" parent="."]
 
 [node name="LaserNode" parent="." instance=ExtResource( 2 )]
-self_modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 26, 183 )
 
 [node name="LaserNode2" parent="." instance=ExtResource( 2 )]
-self_modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 271, 25 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

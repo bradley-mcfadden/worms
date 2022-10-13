@@ -1,17 +1,75 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://img/mini.png" type="Texture" id=1]
+[ext_resource path="res://img/laser-wire-housing.png" type="Texture" id=1]
 [ext_resource path="res://script/laser_node.gd" type="Script" id=2]
 [ext_resource path="res://scene/particles/MuzzleFlash.tscn" type="PackedScene" id=3]
+[ext_resource path="res://img/barrel.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 64, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "cooldown"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 16, 0 ), Vector2( 64, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fire"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 64, 0 ), Vector2( 16, 0 ) ]
+}
 
 [node name="LaserNode" type="Sprite"]
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/cooldown = SubResource( 3 )
+anims/fire = SubResource( 2 )
 
 [node name="MuzzleFlash" parent="." instance=ExtResource( 3 )]
 show_behind_parent = true
-position = Vector2( 11, 0 )
+position = Vector2( 128, 0 )
+scale = Vector2( 1, 6.76 )
 emitting = false
 one_shot = true
+
+[node name="Sprite" type="Sprite" parent="."]
+show_behind_parent = true
+position = Vector2( 64, 0 )
+texture = ExtResource( 4 )

@@ -91,6 +91,8 @@ func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
 			$Laser.play()
 		DetectState.FIRE:
 			next_state = DetectState.COOLDOWN
+			node1.cooldown()
+			node2.cooldown()
 		DetectState.COOLDOWN:
 			next_state = DetectState.WAIT
 		DetectState.WAIT:

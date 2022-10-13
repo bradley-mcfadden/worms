@@ -14,3 +14,12 @@ func fire() -> void:
 # Fire this node, calling any animations or effects that it should use.
 #
 	$MuzzleFlash.emitting = true
+	$AnimationPlayer.play("fire")
+
+
+func cooldown() -> void:
+#
+# cooldown
+# Cooldown callback for the node.
+#
+	$AnimationPlayer.play("cooldown")
