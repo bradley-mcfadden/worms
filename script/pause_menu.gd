@@ -65,6 +65,7 @@ func _on_Settings_exited() -> void:
 
 
 func _on_QuitToMenu_pressed() -> void:
+	unpause()
 	var _x = get_tree().change_scene(MAIN_MENU_PATH)
 
 

@@ -13,7 +13,7 @@ const ANIMATION_CLOSE_MSG := "[/siny]"
 # Path to "level select" scene
 const LEVEL_SELECT_PATH := ""
 # Path to "credits" scene
-const CREDITS_PATH := ""
+const CREDITS_PATH := "res://Scene/GodotCredits.tscn"
 # Path to "settings" scene
 const SETTINGS_PATH = "res://Scene/SettingsMenu.tscn"
 
@@ -67,7 +67,7 @@ func _on_StartGame_pressed() -> void:
 	var first = Levels.scene_from_index(idx)
 	var file = File.new()
 	if file.file_exists(first):
-		get_tree().change_scene(first)
+		var _ret = get_tree().change_scene(first)
 	else:
 		# Definitely an error
 		pass
@@ -92,8 +92,9 @@ func _on_LevelSelect_pressed() -> void:
 
 
 func _on_Credits_pressed() -> void:
-	# get_tree.change_scene(CREDITS_PATH)
-	pass
+	var _ret = get_tree().change_scene(CREDITS_PATH)
+	print(_ret)
+	
 
 
 func _on_QuitToDesktop_pressed() -> void:

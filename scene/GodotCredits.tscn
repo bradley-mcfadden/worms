@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://script/godot_credits.gd" type="Script" id=1]
+[ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
+
+[node name="GodotCredits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="CreditsContainer" type="Control" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+rect_min_size = Vector2( 600, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Line" type="Label" parent="CreditsContainer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -36.5
+margin_top = -14.0
+margin_right = 36.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "bungalow"
+align = 1

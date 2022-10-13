@@ -12,7 +12,7 @@ export(Array) var walk_points := []
 export(PackedScene) var target_follow
 
 var velocity := Vector2.ZERO
-var target: Vector2 = null
+var target: Vector2
 var follower
 
 

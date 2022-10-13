@@ -1,3 +1,5 @@
+Concept by Bradley McFadden
+
 Sprites created by Bradley McFadden using Blender
 https://www.blender.org
 
@@ -19,6 +21,10 @@ https://github.com/jummbus/jummbox
 
 Original repositoy of worm controller code:
 https://github.com/mlokogrgel1/worm/tree/master/worm%20–%20kópia/worm
+
+
+Credits scene code by Ben Bishop
+https://github.com/benbishopnz/godot-credits
 
 
 Gunshot Sound: sound/gunshot.wav
