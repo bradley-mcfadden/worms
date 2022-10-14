@@ -167,10 +167,10 @@ stream = ExtResource( 12 )
 volume_db = -20.0
 bus = "UI"
 
-[connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Button_pressed"]
+[connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_button_pressed"]
 [connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Tabs_tab_changed"]
 [connection signal="update_labels" from="Menu/Tabs/general" to="." method="_on_update_labels"]
 [connection signal="change_binding_requested" from="Menu/Tabs/controls" to="." method="_on_change_binding_requested"]
-[connection signal="mouse_entered" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_Button_pressed"]
+[connection signal="mouse_entered" from="Menu/CenterContainer/ExitButton" to="." method="_on_control_focus_entered"]
+[connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

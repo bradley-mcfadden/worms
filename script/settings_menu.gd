@@ -11,15 +11,10 @@ const ANIMATION_CLOSE_HEADER = "[/siny]"
 const ANIMATION_OPEN_MSG = "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_MSG = "[/siny]"
 
-onready var general = $Menu/Tabs/general
-onready var controls = $Menu/Tabs/controls
-onready var graphics = $Menu/Tabs/graphics
-onready var audio = $Menu/Tabs/audio
-
 
 func _ready() -> void:
 	init_labels()
-	init_values()
+	_init_connections()
 
 
 func init_labels() -> void:
@@ -33,23 +28,26 @@ func init_labels() -> void:
 	)
 
 
+func _init_connections() -> void:
+	var sub_menus := [
+		$Menu/Tabs/general,
+		$Menu/Tabs/controls,
+		$Menu/Tabs/audio,
+		$Menu/Tabs/graphics
+	]
+
+	for menu in sub_menus:
+		var _res
+		_res = menu.connect("button_pressed", self, "_on_button_pressed")
+		_res = menu.connect("control_focus_entered", self, "_on_control_focus_entered")
+		_res = menu.connect("control_focus_exited", self, "_on_control_focus_exited")
+		_res = menu.connect("slider_handle_moved", self, "_on_slider_handle_moved")
+		_res = menu.connect("button_enabled", self, "_on_button_enabled")
+		_res = menu.connect("button_disabled", self, "_on_button_disabled")
+
+
 func _on_update_labels() -> void:
 	init_labels()
-
-
-func init_values() -> void:
-# 
-# initialize values to their most up to date setting.
-#	
-#	# general here
-	general.get_node("Cols/R/RichTextCheck").pressed = Configuration.sections["general"]["use_text_animations"]
-	# graphics here
-	# controls here
-	# audio here
-	audio.get_node("Cols/R/MasterVolumeSlider").value = Configuration.sections["audio"]["master_volume"]
-	audio.get_node("Cols/R/SoundFXVolumeSlider").value = Configuration.section["audio"]["sfx_volume"]
-	audio.get_node("Cols/R/UISoundVolumeSlider").value = Configuration.sections["audio"]["ui_volume"]
-	audio.get_node("Cols/R/MusicVolumeSlider").value = Configuration.sections["audio"]["music_volume"]
 
 
 func set_text(label: Node, msg: String, start: String, end, center: bool = true, animate: bool = true) -> void:
@@ -85,21 +83,28 @@ func _on_ExitButton_pressed() -> void:
 	queue_free()
 
 
-func _on_Button_pressed(_option: bool = false) -> void:
+func _on_button_pressed() -> void:
 	$PressButton.play()
 
 
-func _on_Button_mouse_entered() -> void:
+func _on_control_focus_entered() -> void:
 	$FocusIn.play()
 
 
-func _on_Button_toggled(state: bool) -> void:
-	if state: $ButtonEnabled.play()
-	else: $ButtonDisabled.play()
+func _on_control_focus_exited() -> void:
+	pass
 
 
-func _on_slider_value_changed(_value: float) -> void:
+func _on_slider_handle_moved() -> void:
 	$SliderHandleMoved.play()
+
+
+func _on_button_enabled() -> void:
+	$ButtonEnabled.play()
+
+
+func _on_button_disabled() -> void:
+	$ButtonDisabled.play()
 
 
 func _on_change_binding_requested(action: String, desc: String) -> void:

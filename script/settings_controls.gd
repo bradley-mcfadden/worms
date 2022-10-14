@@ -25,6 +25,31 @@ onready var button_to_action := {
 	"Interact" : "lay_eggs",
 }
 
+
+func _ready() -> void:
+	_init_values()
+	_init_connections()
+
+
+func _init_values() -> void:
+	_get_controls()
+
+
+func _init_connections() -> void:
+	var buttons := [
+		$Cols/RightColumn/RestoreDefaults
+	]
+	var rcol: Node = $Cols/RightColumn
+	for key in button_to_action.keys():
+		var button: Button = rcol.get_node(key)
+		buttons.append(button)
+	
+	for btn in buttons():
+		btn.connect("focus_entered", self, "_on_control_focus_entered")
+		btn.connect("focus_exited", self, "_on_control_focus_exited")
+		btn.connect("button_pressed", self, "_on_button_pressed")
+
+
 func show() -> void:
 	_get_controls()
 	.show()
