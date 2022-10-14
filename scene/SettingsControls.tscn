@@ -1,0 +1,283 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://theme/menu_button.tres" type="Theme" id=1]
+[ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=2]
+[ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=4]
+[ext_resource path="res://script/settings_controls.gd" type="Script" id=5]
+
+[node name="controls" type="ScrollContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 36.0
+margin_right = -2.0
+margin_bottom = -2.0
+theme = ExtResource( 2 )
+script = ExtResource( 5 )
+
+[node name="Cols" type="HBoxContainer" parent="."]
+margin_left = 24.0
+margin_right = 572.0
+margin_bottom = 428.0
+size_flags_horizontal = 3
+custom_constants/separation = 16
+
+[node name="LeftColumn" type="VBoxContainer" parent="Cols"]
+margin_right = 260.0
+margin_bottom = 412.0
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="Cols/LeftColumn"]
+margin_right = 260.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 4 )
+
+[node name="MoveForward" type="Label" parent="Cols/LeftColumn"]
+margin_top = 16.0
+margin_right = 260.0
+margin_bottom = 40.0
+text = "move forward"
+align = 2
+
+[node name="TurnLeft" type="Label" parent="Cols/LeftColumn"]
+margin_top = 44.0
+margin_right = 260.0
+margin_bottom = 68.0
+text = "turn left"
+align = 2
+
+[node name="TurnRight" type="Label" parent="Cols/LeftColumn"]
+margin_top = 72.0
+margin_right = 260.0
+margin_bottom = 96.0
+text = "turn right"
+align = 2
+
+[node name="Ability1" type="Label" parent="Cols/LeftColumn"]
+margin_top = 100.0
+margin_right = 260.0
+margin_bottom = 124.0
+text = "ability 1"
+align = 2
+
+[node name="Ability2" type="Label" parent="Cols/LeftColumn"]
+margin_top = 128.0
+margin_right = 260.0
+margin_bottom = 152.0
+text = "ability 2"
+align = 2
+
+[node name="Ability3" type="Label" parent="Cols/LeftColumn"]
+margin_top = 156.0
+margin_right = 260.0
+margin_bottom = 180.0
+text = "ability 3"
+align = 2
+
+[node name="Ability4" type="Label" parent="Cols/LeftColumn"]
+margin_top = 184.0
+margin_right = 260.0
+margin_bottom = 208.0
+text = "ability 4"
+align = 2
+
+[node name="MoveUpALayer" type="Label" parent="Cols/LeftColumn"]
+margin_top = 212.0
+margin_right = 260.0
+margin_bottom = 236.0
+text = "move up a layer"
+align = 2
+
+[node name="MoveDownALayer" type="Label" parent="Cols/LeftColumn"]
+margin_top = 240.0
+margin_right = 260.0
+margin_bottom = 264.0
+text = "move down a layer"
+align = 2
+
+[node name="PeekUp" type="Label" parent="Cols/LeftColumn"]
+margin_top = 268.0
+margin_right = 260.0
+margin_bottom = 292.0
+text = "peek up a layer"
+align = 2
+
+[node name="PeekDown" type="Label" parent="Cols/LeftColumn"]
+margin_top = 296.0
+margin_right = 260.0
+margin_bottom = 320.0
+text = "peek down a layer"
+align = 2
+
+[node name="Restart" type="Label" parent="Cols/LeftColumn"]
+margin_top = 324.0
+margin_right = 260.0
+margin_bottom = 348.0
+text = "restart"
+align = 2
+
+[node name="Interact" type="Label" parent="Cols/LeftColumn"]
+margin_top = 352.0
+margin_right = 260.0
+margin_bottom = 376.0
+text = "interact"
+align = 2
+
+[node name="HSeparator" type="HSeparator" parent="Cols/LeftColumn"]
+margin_top = 380.0
+margin_right = 260.0
+margin_bottom = 384.0
+
+[node name="RestoreDefaultControls" type="Label" parent="Cols/LeftColumn"]
+margin_top = 388.0
+margin_right = 260.0
+margin_bottom = 412.0
+custom_fonts/font = ExtResource( 3 )
+text = "restore default controls"
+align = 2
+
+[node name="Spacer2" type="Label" parent="Cols/LeftColumn"]
+margin_right = 260.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 4 )
+
+[node name="RightColumn" type="VBoxContainer" parent="Cols"]
+margin_left = 276.0
+margin_right = 536.0
+margin_bottom = 412.0
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="Cols/RightColumn"]
+margin_right = 260.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 4 )
+
+[node name="MoveForwardButton" type="Button" parent="Cols/RightColumn"]
+margin_top = 16.0
+margin_right = 260.0
+margin_bottom = 40.0
+theme = ExtResource( 1 )
+text = "W"
+align = 0
+
+[node name="TurnLeft" type="Button" parent="Cols/RightColumn"]
+margin_top = 44.0
+margin_right = 260.0
+margin_bottom = 68.0
+theme = ExtResource( 1 )
+text = "A"
+align = 0
+
+[node name="TurnRight" type="Button" parent="Cols/RightColumn"]
+margin_top = 72.0
+margin_right = 260.0
+margin_bottom = 96.0
+theme = ExtResource( 1 )
+text = "S"
+align = 0
+
+[node name="Ability1" type="Button" parent="Cols/RightColumn"]
+margin_top = 100.0
+margin_right = 260.0
+margin_bottom = 124.0
+theme = ExtResource( 1 )
+text = "1"
+align = 0
+
+[node name="Ability2" type="Button" parent="Cols/RightColumn"]
+margin_top = 128.0
+margin_right = 260.0
+margin_bottom = 152.0
+theme = ExtResource( 1 )
+text = "2"
+align = 0
+
+[node name="Ability3" type="Button" parent="Cols/RightColumn"]
+margin_top = 156.0
+margin_right = 260.0
+margin_bottom = 180.0
+theme = ExtResource( 1 )
+text = "3"
+align = 0
+
+[node name="Ability4" type="Button" parent="Cols/RightColumn"]
+margin_top = 184.0
+margin_right = 260.0
+margin_bottom = 208.0
+theme = ExtResource( 1 )
+text = "4"
+align = 0
+
+[node name="MoveUpALayer" type="Button" parent="Cols/RightColumn"]
+margin_top = 212.0
+margin_right = 260.0
+margin_bottom = 236.0
+theme = ExtResource( 1 )
+text = "up"
+align = 0
+
+[node name="MoveDownALayer" type="Button" parent="Cols/RightColumn"]
+margin_top = 240.0
+margin_right = 260.0
+margin_bottom = 264.0
+theme = ExtResource( 1 )
+text = "down"
+align = 0
+
+[node name="PeekUp" type="Button" parent="Cols/RightColumn"]
+margin_top = 268.0
+margin_right = 260.0
+margin_bottom = 292.0
+theme = ExtResource( 1 )
+text = "shift+up"
+align = 0
+
+[node name="PeekDown" type="Button" parent="Cols/RightColumn"]
+margin_top = 296.0
+margin_right = 260.0
+margin_bottom = 320.0
+theme = ExtResource( 1 )
+text = "shift+down"
+align = 0
+
+[node name="Restart" type="Button" parent="Cols/RightColumn"]
+margin_top = 324.0
+margin_right = 260.0
+margin_bottom = 348.0
+theme = ExtResource( 1 )
+text = "R"
+align = 0
+
+[node name="Interact" type="Button" parent="Cols/RightColumn"]
+margin_top = 352.0
+margin_right = 260.0
+margin_bottom = 376.0
+theme = ExtResource( 1 )
+text = "space"
+align = 0
+
+[node name="HSeparator2" type="HSeparator" parent="Cols/RightColumn"]
+margin_top = 380.0
+margin_right = 260.0
+margin_bottom = 384.0
+
+[node name="RestoreDefaults" type="Button" parent="Cols/RightColumn"]
+margin_top = 388.0
+margin_right = 260.0
+margin_bottom = 412.0
+theme = ExtResource( 1 )
+text = "do it!"
+align = 0
+
+[node name="Spacer2" type="Label" parent="Cols/RightColumn"]
+margin_right = 260.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 4 )
+
+[connection signal="pressed" from="Cols/RightColumn/RestoreDefaults" to="." method="_on_RestoreDefaults_pressed"]

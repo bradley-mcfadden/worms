@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=1]
+[ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=2]
+[ext_resource path="res://script/settings_graphics.gd" type="Script" id=3]
+
+[node name="graphics" type="ScrollContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 36.0
+margin_right = -2.0
+margin_bottom = -2.0
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Cols" type="HBoxContainer" parent="."]
+visible = false
+margin_left = 24.0
+margin_right = 28.0
+margin_bottom = 12.0
+
+[node name="L" type="VBoxContainer" parent="Cols"]
+
+[node name="Spacer" type="Label" parent="Cols/L"]
+margin_right = 286.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 2 )
+
+[node name="R" type="VBoxContainer" parent="Cols"]
+
+[node name="Spacer" type="Label" parent="Cols/R"]
+margin_right = 286.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 12 )
+custom_fonts/font = ExtResource( 2 )

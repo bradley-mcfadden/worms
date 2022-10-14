@@ -33,6 +33,10 @@ func init_labels() -> void:
 	)
 
 
+func _on_update_labels() -> void:
+	init_labels()
+
+
 func init_values() -> void:
 # 
 # initialize values to their most up to date setting.
@@ -46,6 +50,7 @@ func init_values() -> void:
 	audio.get_node("Cols/R/SoundFXVolumeSlider").value = Configuration.section["audio"]["sfx_volume"]
 	audio.get_node("Cols/R/UISoundVolumeSlider").value = Configuration.sections["audio"]["ui_volume"]
 	audio.get_node("Cols/R/MusicVolumeSlider").value = Configuration.sections["audio"]["music_volume"]
+
 
 func set_text(label: Node, msg: String, start: String, end, center: bool = true, animate: bool = true) -> void:
 #
@@ -74,11 +79,6 @@ func wrap_string(string: String, start: String, end: String) -> String:
 	return "%s%s%s" % [start, string, end]
 
 
-func _on_RichTextCheck_toggled(state: bool):
-	Configuration.sections["general"]["use_text_animations"] = state
-	init_labels()
-
-
 func _on_ExitButton_pressed() -> void:
 	hide()
 	yield(get_tree().create_timer(0.5), "timeout")
@@ -98,104 +98,12 @@ func _on_Button_toggled(state: bool) -> void:
 	else: $ButtonDisabled.play()
 
 
-func _on_master_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume = $Menu/Tabs/audio/Cols/R/MasterVolumeSlider.value
-	Configuration.set_master_volume(volume)
-
-
-func _on_sfx_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume = $Menu/Tabs/audio/Cols/R/SoundFXVolumeSlider.value
-	Configuration.set_sfx_volume(volume)
-
-
-func _on_ui_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume = $Menu/Tabs/audio/Cols/R/UISoundVolumeSlider.value
-	Configuration.set_ui_volume(volume)
-
-
-func _on_music_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume = $Menu/Tabs/audio/Cols/R/MusicVolumeSlider.value
-	Configuration.set_music_volume(volume)
-
-
 func _on_slider_value_changed(_value: float) -> void:
 	$SliderHandleMoved.play()
 
 
-func _on_master_vol_value_changed(value: float) -> void:
-	Configuration.set_master_volume(int(value))
-
-
-func _on_music_vol_value_changed(value: float) -> void:
-	Configuration.set_music_volume(int(value))
-
-
-func _on_ui_vol_value_changed(value: float) -> void:
-	Configuration.set_ui_volume(int(value))
-
-
-func _on_sfx_vol_value_changed(value: float) -> void:
-	Configuration.set_sfx_volume(int(value))
-
-
-func _show_change_bind_for_action(action: String, desc: String) -> void:
+func _on_change_binding_requested(action: String, desc: String) -> void:
 	$KeybindDialog.show_for(action, desc)
-
-
-func _on_MoveForwardButton_pressed() -> void:
-	_show_change_bind_for_action("move_forward", '"move forward"')
-
-
-func _on_TurnLeft_pressed() -> void:
-	_show_change_bind_for_action("move_left", '"move left"')
-
-
-func _on_TurnRight_pressed() -> void:
-	_show_change_bind_for_action("move_right", '"move right"')
-
-
-func _on_Ability1_pressed() -> void:
-	_show_change_bind_for_action("ability1", '"use ability 1"')
-
-
-func _on_Ability2_pressed() -> void:
-	_show_change_bind_for_action("ability2", '"use ability 2"')
-
-
-func _on_Ability3_pressed() -> void:
-	_show_change_bind_for_action("ability3", '"use ability 3"')
-
-
-func _on_Ability4_pressed() -> void:
-	_show_change_bind_for_action("ability4", '"use ability 4"')
-
-
-func _on_MoveUpALayer_pressed() -> void:
-	_show_change_bind_for_action("change_layer_up", '"move up a layer"')
-
-
-func _on_MoveDownALayer_pressed() -> void:
-	_show_change_bind_for_action("change_layer_down", '"move down a layer"')
-
-
-func _on_PeekUp_pressed() -> void:
-	_show_change_bind_for_action("peek_layer_up", '"peek up a layer"')
-
-
-func _on_PeekDown_pressed() -> void:
-	_show_change_bind_for_action("peek_layer_down", '"peek down a layer"')
-
-
-func _on_Restart_pressed() -> void:
-	_show_change_bind_for_action("reset", '"restart level"')
-
-
-func _on_Interact_pressed() -> void:
-	_show_change_bind_for_action("lay_eggs", '"interact"')
 
 
 func _on_Tabs_tab_changed(tab: int) -> void:

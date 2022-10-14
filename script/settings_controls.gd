@@ -3,7 +3,10 @@
 # is a script for fetching the key bindings, 
 # and initializing the UI with them
 #
-extends ScrollContainer
+extends SettingsScrollContainer
+
+# Emitted when a binding is requested to be changed
+signal change_binding_requested(name, label) # String, String
 
 
 onready var button_to_action := {
@@ -55,3 +58,59 @@ func _on_RestoreDefaults_pressed():
 	var file = Directory.new()
 	if file.file_exists("override.cfg"):
 		file.remove()
+
+
+func _show_change_bind_for_action(action: String, label: String) -> void:
+	emit_signal("change_binding_requested", action, label)
+
+
+func _on_MoveForwardButton_pressed() -> void:
+	_show_change_bind_for_action("move_forward", '"move forward"')
+
+
+func _on_TurnLeft_pressed() -> void:
+	_show_change_bind_for_action("move_left", '"move left"')
+
+
+func _on_TurnRight_pressed() -> void:
+	_show_change_bind_for_action("move_right", '"move right"')
+
+
+func _on_Ability1_pressed() -> void:
+	_show_change_bind_for_action("ability1", '"use ability 1"')
+
+
+func _on_Ability2_pressed() -> void:
+	_show_change_bind_for_action("ability2", '"use ability 2"')
+
+
+func _on_Ability3_pressed() -> void:
+	_show_change_bind_for_action("ability3", '"use ability 3"')
+
+
+func _on_Ability4_pressed() -> void:
+	_show_change_bind_for_action("ability4", '"use ability 4"')
+
+
+func _on_MoveUpALayer_pressed() -> void:
+	_show_change_bind_for_action("change_layer_up", '"move up a layer"')
+
+
+func _on_MoveDownALayer_pressed() -> void:
+	_show_change_bind_for_action("change_layer_down", '"move down a layer"')
+
+
+func _on_PeekUp_pressed() -> void:
+	_show_change_bind_for_action("peek_layer_up", '"peek up a layer"')
+
+
+func _on_PeekDown_pressed() -> void:
+	_show_change_bind_for_action("peek_layer_down", '"peek down a layer"')
+
+
+func _on_Restart_pressed() -> void:
+	_show_change_bind_for_action("reset", '"restart level"')
+
+
+func _on_Interact_pressed() -> void:
+	_show_change_bind_for_action("lay_eggs", '"interact"')

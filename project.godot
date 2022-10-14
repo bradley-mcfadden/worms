@@ -234,6 +234,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/worm/segment_kinematic.gd"
 }, {
+"base": "ScrollContainer",
+"class": "SettingsScrollContainer",
+"language": "GDScript",
+"path": "res://script/settings_scroll_container.gd"
+}, {
 "base": "Node",
 "class": "WormController",
 "language": "GDScript",
@@ -285,6 +290,7 @@ _global_script_class_icons={
 "SS2D_Strings": "",
 "SS2D_VertexProperties": "",
 "Segment": "",
+"SettingsScrollContainer": "",
 "WormController": ""
 }
 
