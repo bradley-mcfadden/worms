@@ -1,0 +1,22 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+const vec4 bg = vec4(0.0);
+// A higher value repeats more frequently
+uniform float period = 4.0;
+// Maximum amount of offset for the waves, in UV coords
+uniform float amplitude = 0.1;
+// Controls the horizontal scroll speed. Also affects appearance of waves.
+// Values close to 0.0 do not move quickly horizontally, but appear bouncy.
+// Negative values scroll to the right, positive to the left.
+uniform float xspeed: hint_range(-1.0, 1.0) = 0.5;
+
+void fragment() {
+	float yoff = sin(period * (TIME + UV.x)) * amplitude;
+	vec4 tex = texture(TEXTURE, vec2(UV.x + TIME * xspeed, UV.y + yoff));
+	vec2 dist = vec2(0.5) - UV;
+	float len = length(dist);
+	COLOR = mix(bg, tex, step(len, 0.5));
+}"

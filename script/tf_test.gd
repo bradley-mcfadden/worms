@@ -15,6 +15,7 @@ func _ready() -> void:
 	$DepthManager.add_items($Enemies.get_enemies())
 	$DepthManager.add_items($Obstacles.get_obstacles())
 	$DepthManager.add_items($Decorations.get_decorations())
+	$DepthManager.add_items($Interactibles.get_interactibles())
 	$DepthManager.set_current_layer(0)
 	$NoiseManager.listeners.append_array($Enemies.get_enemies())
 	$Background.set_layer(0)
@@ -39,7 +40,7 @@ func attach_bullet(bullet: Node) -> void:
 # bullet to make a child of this scene.
 #
 	add_child(bullet)
-	bullet.connect("bullet_destroyed", self, "_on_bullet_destroyed")
+	var _ret = bullet.connect("bullet_destroyed", self, "_on_bullet_destroyed")
 	$DepthManager.add(bullet.get_layer(), bullet)
 
 
@@ -52,6 +53,7 @@ func reset() -> void:
 	$Enemies.reset_all_enemies()
 	$Players.reset_all_players()
 	$Music.play()
+	$Interactibles.reset()
 
 
 func get_current_camera_2d() -> Camera2D:
@@ -71,6 +73,7 @@ func get_current_camera_2d() -> Camera2D:
 
 
 func _on_lay_eggs() -> void:
+	$Music.playing = false
 	enemies_dead_screen.visible = false
 	var cpu_con = $CpuController
 	var worm = $Players/SpawnKinematic
@@ -94,6 +97,7 @@ func _on_all_enemies_dead() -> void:
 
 
 func _on_all_players_dead() -> void:
+	$Music.playing = false
 	death_screen.visible = true
 	death_screen.fade_in()
 

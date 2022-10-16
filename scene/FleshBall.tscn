@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://material/wave.tres" type="Material" id=1]
+[ext_resource path="res://img/textures/flesh.png" type="Texture" id=2]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://script/flesh_ball.gd" type="Script" id=4]
+[ext_resource path="res://sound/splat.ogg" type="AudioStream" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 25.0
+
+[node name="FleshBall" type="Area2D"]
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 1 )
+scale = Vector2( 0.194237, 0.195712 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="DepthController" parent="." instance=ExtResource( 3 )]
+
+[node name="Gib" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+volume_db = -10.0
+bus = "SFX"

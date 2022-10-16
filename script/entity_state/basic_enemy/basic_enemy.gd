@@ -479,7 +479,7 @@ func on_bitten(worm: Node, bite_damage: int, bite_heal_factor: float) -> void:
 	# When biting an enemy, add a segment
 	worm.call_deferred("add_segment")
 	# ... and heal each segment
-	for segment in parent.body:
+	for segment in worm.body:
 		segment.take_damage(-start_health * bite_heal_factor, worm)
 		yield(get_tree().create_timer(0.1), "timeout")
 
