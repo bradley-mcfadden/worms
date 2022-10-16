@@ -17,5 +17,5 @@ func _on_noise_produced(position: Vector2, radius: int) -> void:
 #                   and on_noise_heard: Vector2
 	for listener in listeners:
 		var hear_radius: int = listener.hear_radius
-		if (position - listener.position).length() - radius - hear_radius:
+		if (position - listener.global_position).length() - radius < hear_radius:
 			listener.on_noise_heard(position)

@@ -35,6 +35,7 @@ func take_damage(how_much: int, _from: Node) -> void:
 		monitorable = false
 		monitoring = false
 		$Gib.play()
+		$BloodExplode.emitting = true
 	health = new_health
 
 
@@ -52,7 +53,7 @@ func on_bitten(worm: Node, bite_damage: int, bite_heal_factor: float) -> void:
 # bite_damage - Amount of damage the flesh ball should take.
 # bite_heal_factor - Fraction of total health the player should heal per segment
 #	
-	take_damage(bite_damage, worm)
+	call_deferred("take_damage", bite_damage, worm)
 	worm.head.increment_blood_level()
 	# When biting an enemy, add a segment
 	worm.call_deferred("add_segment")

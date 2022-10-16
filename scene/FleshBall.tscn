@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://shader/wave_circle.tres" type="Shader" id=1]
 [ext_resource path="res://img/textures/flesh.png" type="Texture" id=2]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/flesh_ball.gd" type="Script" id=4]
 [ext_resource path="res://sound/splat.ogg" type="AudioStream" id=5]
+[ext_resource path="res://scene/particles/BloodExplode.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 1 )
@@ -32,3 +33,9 @@ shape = SubResource( 1 )
 stream = ExtResource( 5 )
 volume_db = -10.0
 bus = "SFX"
+
+[node name="BloodExplode" parent="." instance=ExtResource( 6 )]
+z_index = 10
+lifetime = 0.75
+color = Color( 0.592157, 0.258824, 0.258824, 1 )
+gore_color = Color( 0.592157, 0.258824, 0.258824, 1 )

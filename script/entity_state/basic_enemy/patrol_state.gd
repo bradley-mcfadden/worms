@@ -10,11 +10,13 @@ const NAME := "PatrolState"
 const START_REACTION_TIME := 30
 const PROPERTIES := {color = Color.aquamarine, speed = 250, threshold = 32, fov = 90}
 
+enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 var reaction_time: float = START_REACTION_TIME
 var idle_patrol: Array
 var patrol_idx: int
 var noise_location = null # Vector2, usually
-
+var walk_anim: String = "walk"
+var idle_anim: String = "idle"
 
 func _init(_fsm: Fsm, _entity: Node) -> void:
 	fsm = _fsm
@@ -25,11 +27,12 @@ func on_enter() -> void:
 	reaction_time = START_REACTION_TIME
 	idle_patrol = entity.idle_patrol
 	patrol_idx = entity.patrol_idx
-	var walk_anim := "walk"
 	if entity.has_ranged_attack:
 		walk_anim = "walk_gun"
+		idle_anim = "idle_gun"
 	elif entity.has_melee_attack:
 		walk_anim = "walk_knife"
+		idle_anim = "idle_knife"
 	entity.animation_player.play(walk_anim)
 	
 
@@ -43,7 +46,11 @@ func _physics_process(delta: float) -> void:
 		print("Going to chase noise!")
 		return
 	entity.set_target(get_target())
-	var _ss = entity.set_interest()
+	var ss = entity.set_interest()
+	if ss == SeekState.REACHED_TARGET or ss == SeekState.NO_TARGET:
+		entity.animation_player.play(idle_anim)
+	else:
+		entity.animation_player.play(walk_anim)
 	entity.set_danger()
 	entity.choose_direction()
 	entity.move(delta)

@@ -177,7 +177,7 @@ func update_camera_position() -> void:
 			count += 1
 
 	if count == 0: return
-	var avg = sum / len(body)
+	var avg = sum / count
 	wide_camera.position = avg
 
 	if background:
@@ -380,8 +380,8 @@ func reset_boost_speed() -> void:
 func scale_camera():
 	if camera:
 		var new_zoom = Vector2(0.1, 0.1) * len(body)
-		new_zoom.x = max(new_zoom.x, 1.5)
-		new_zoom.y = max(new_zoom.y, 1.5)
+		new_zoom.x = max(new_zoom.x, 2.5)
+		new_zoom.y = max(new_zoom.y, 2.5)
 		if wide_camera.has_method("zoom_to"):
 			wide_camera.zoom_to(new_zoom)
 
