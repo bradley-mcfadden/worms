@@ -12,6 +12,7 @@ export (String) var text := "sample text"
 
 export (int) var layer := 0
 export (float) var radius := 200.0
+export (int) var min_width := 800
 
 
 func _ready() -> void:
@@ -20,6 +21,7 @@ func _ready() -> void:
 	$Label.text = text
 	modulate = invisible_mod
 	$CollisionShape2D.shape.radius = radius
+	$Label.rect_min_size.x = min_width
 
 
 func _is_player_head(body: PhysicsBody2D) -> bool:

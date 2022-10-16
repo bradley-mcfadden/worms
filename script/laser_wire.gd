@@ -50,10 +50,10 @@ onready var damage: int = 100
 
 func _ready() -> void:
 	ray = $RayCast2D
-	node1.look_at(node2.position)
-	node2.look_at(node1.position)
-	ray.position = node1.position
-	ray.cast_to = node2.position - ray.position
+	node1.look_at(node2.global_position)
+	node2.look_at(node1.global_position)
+	ray.global_position = node1.global_position
+	ray.cast_to = node2.global_position - ray.global_position
 
 
 func _draw() -> void:
@@ -66,20 +66,20 @@ func _physics_process(_delta: float) -> void:
 			next_state = DetectState.PREFIRE 
 			$Tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
 			$Tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
+			$Tween.stop(self, "width")
+			$Tween.stop(self, "color")
 			$Tween.start()
 		if state == DetectState.FIRE:
 			# process the collider as a hit
 			var collider: Object = ray.get_collider()
 			if collider.has_method("take_damage") and collider.is_alive():
-				collider.take_damage(100, self)
-
+				collider.take_damage(damage, self)
 
 func _process(_delta: float) -> void:
 	update()
 
 
 func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
-	print("Tween completed")
 	state = next_state
 	match state:
 		DetectState.PREFIRE:
@@ -100,6 +100,8 @@ func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
 	if next_state != state:
 		$Tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
 		$Tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
+		$Tween.stop(self, "width")
+		$Tween.stop(self, "color")
 		$Tween.start()
 
 
@@ -131,4 +133,16 @@ func get_depth_controllers() -> Array:
 	return [
 		$DepthController,
 	]
+
+
+func _on_hide() -> void:
+	print("laser hide")
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
+	$Tween.start()
+
+
+func _on_show() -> void:
+	print("laser show")
+	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
+	$Tween.start()
 	

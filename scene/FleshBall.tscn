@@ -1,10 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://material/wave.tres" type="Material" id=1]
+[ext_resource path="res://shader/wave_circle.tres" type="Shader" id=1]
 [ext_resource path="res://img/textures/flesh.png" type="Texture" id=2]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://script/flesh_ball.gd" type="Script" id=4]
 [ext_resource path="res://sound/splat.ogg" type="AudioStream" id=5]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/period = 0.5
+shader_param/amplitude = 0.1
+shader_param/xspeed = 0.001
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 25.0
@@ -13,7 +19,7 @@ radius = 25.0
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = ExtResource( 1 )
+material = SubResource( 2 )
 scale = Vector2( 0.194237, 0.195712 )
 texture = ExtResource( 2 )
 

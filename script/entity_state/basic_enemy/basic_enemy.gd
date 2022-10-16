@@ -475,7 +475,7 @@ func on_bitten(worm: Node, bite_damage: int, bite_heal_factor: float) -> void:
 # bite_heal_factor - Amount of healing that should be applied if applicable.
 #
 	take_damage(bite_damage, worm)
-	worm.increment_blood_level()
+	worm.head.increment_blood_level()
 	# When biting an enemy, add a segment
 	worm.call_deferred("add_segment")
 	# ... and heal each segment
