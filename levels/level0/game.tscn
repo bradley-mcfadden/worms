@@ -1,4 +1,4 @@
-[gd_scene load_steps=306 format=2]
+[gd_scene load_steps=305 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -44,7 +44,6 @@
 [ext_resource path="res://scene/LaserNode.tscn" type="PackedScene" id=42]
 [ext_resource path="res://sound/laser.wav" type="AudioStream" id=43]
 [ext_resource path="res://script/laser_wire.gd" type="Script" id=44]
-[ext_resource path="res://script/flesh_ball.gd" type="Script" id=45]
 
 [sub_resource type="Resource" id=73]
 script = ExtResource( 23 )
@@ -2013,7 +2012,7 @@ collision_polygon_node_path = NodePath("../CollisionPolygon2D")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D3"]
 visible = false
 modulate = Color( 1, 1, 1, 0.3 )
-polygon = PoolVector2Array( 5613.81, -2971.74, 5564.41, -1766.89, 6967.7, -1541.27, 3335.98, -601.549, 2618, -964.477, 2946.93, -4012.16, 2619.9, -4483.85, 2975.02, -5086.29, 6801.45, -5229.96, 9207.11, -5286.8, 15626.5, -4121.46, 43656.1, -7270.04, 44167.4, -5256.01, 44867.1, -2349.88, 45128.6, 1130.92, 11383.3, -472.19, 8764.23, -84.307, 3026.64, -478.314, 5895.57, -1260.01, 8441.06, -1859.72, 10760.1, -1746.15, 15179.8, -1594.08, 16537.4, -1820.09, 20275.6, -1904.46, 20949.5, -1367.51, 22291.9, -1079.69, 27709.8, -1271.41, 30600.5, -1613.4, 31159.6, -2045.95, 32594.1, -2217.28, 34695.6, -1865.56, 37063.1, -1927.88, 42835.8, -21.6033, 44791.1, -2158.13, 44167.1, -4663.85, 43783.1, -5029.7, 42434.2, -6059.78, 37607.2, -4366.53, 34641.8, -4071.9, 32594.2, -3062.69, 31023.5, -3062.8, 30117.4, -3364.91, 27230.3, -3716.61, 22339.9, -3428.93, 21045.3, -3093.35, 20275.4, -2873.23, 17080.5, -2543.98, 15533.2, -2831.92, 11961, -2774.49, 8709.54, -3255.11, 6585.98, -3389.91 )
+polygon = PoolVector2Array( 5613.81, -2971.74, 5564.41, -1766.89, 6967.7, -1541.27, 3335.98, -601.549, 2618, -964.477, 2946.93, -4012.16, 2619.9, -4483.85, 2975.02, -5086.29, 6801.45, -5229.96, 9207.11, -5286.8, 15626.5, -4121.46, 43656.1, -7270.04, 44167.4, -5256.01, 44867, -2349.88, 45128.7, 1130.92, 11383.3, -472.19, 8764.23, -84.307, 3026.64, -478.314, 5895.57, -1260.01, 8441.06, -1859.72, 10760.1, -1746.15, 15179.8, -1594.08, 16537.4, -1820.09, 20275.6, -1904.46, 20949.5, -1367.51, 22291.9, -1079.69, 27709.8, -1271.41, 30600.6, -1613.41, 31159.6, -2045.95, 32594.1, -2217.29, 34695.6, -1865.56, 37063, -1927.89, 42835.8, -21.6033, 44791, -2158.13, 44167.1, -4663.85, 43783.1, -5029.7, 42434.1, -6059.78, 37607.2, -4366.53, 34641.7, -4071.9, 32594.1, -3062.69, 31023.5, -3062.8, 30117.4, -3364.91, 27230.3, -3716.61, 22339.9, -3428.93, 21045.3, -3093.35, 20275.4, -2873.23, 17080.5, -2543.98, 15533.2, -2831.92, 11961, -2774.49, 8709.54, -3255.11, 6585.98, -3389.91 )
 
 [node name="DepthController" parent="Obstacles/StaticBody2D3" instance=ExtResource( 21 )]
 
@@ -2122,19 +2121,15 @@ position = Vector2( 31705, -2096 )
 
 [node name="FleshBall2" parent="Interactibles" instance=ExtResource( 36 )]
 position = Vector2( 30857, -2232 )
-script = ExtResource( 45 )
 
 [node name="FleshBall5" parent="Interactibles" instance=ExtResource( 36 )]
 position = Vector2( 29399, -1418 )
-script = ExtResource( 45 )
 
 [node name="FleshBall3" parent="Interactibles" instance=ExtResource( 36 )]
 position = Vector2( 30417, -1587 )
-script = ExtResource( 45 )
 
 [node name="FleshBall4" parent="Interactibles" instance=ExtResource( 36 )]
 position = Vector2( 29807, -2265 )
-script = ExtResource( 45 )
 
 [node name="NoiseManager" type="Node" parent="."]
 script = ExtResource( 31 )

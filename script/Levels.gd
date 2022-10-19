@@ -14,7 +14,7 @@ const CONFIG_SUFFIX := "config.ini"
 const PROPERTIES_KEY := "properties"
 const PREVIOUS_KEY := "previous"
 
-var level_list: Array = [] setget , get_level_list
+var level_list: Array = get_level_list() setget , get_level_list
 var level_idx: int = -1
 
 
@@ -24,10 +24,10 @@ func get_level_list() -> Array:
 	var level_dir = Directory.new()
 	if not level_dir.dir_exists(LEVELS_PATH):
 		# signal error
-		pass
+		print("Directory does not exist")
 	if not level_dir.open(LEVELS_PATH) == OK:
 		# signal error
-		pass
+		print("Could not open level directory")
 	level_list = []
 	level_dir.list_dir_begin(true, true)
 	var next = level_dir.get_next()
@@ -42,8 +42,6 @@ func next_index(wrap: bool = true) -> int:
 # increments the index by 1
 # the index wraps at the bounds
 # return - Next level index
-	if level_list == null:
-		get_level_list()
 	var n = len(level_list)
 	if n == 0:
 		return -1
@@ -135,7 +133,7 @@ func next_level_or_main(tree: SceneTree) -> void:
 	var idx = next_index(false)
 	print("Changing levels %d" % idx)
 	if idx == -1:
-		tree.change_scene("res://scene/TitleScreen.tscn")
+		var _r = tree.change_scene("res://scene/TitleScreen.tscn")
 	else:
 		var scene = Levels.scene_from_index(idx)
-		tree.change_scene(scene)
+		var _r = tree.change_scene(scene)
