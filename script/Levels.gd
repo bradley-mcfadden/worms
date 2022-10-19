@@ -37,7 +37,7 @@ func get_level_list() -> Array:
 	return level_list
 
 
-func next_index(wrap: bool = true) -> int:
+func next_index(wrap: bool = false) -> int:
 # next_index of level iterator
 # increments the index by 1
 # the index wraps at the bounds
