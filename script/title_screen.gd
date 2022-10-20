@@ -13,9 +13,9 @@ const ANIMATION_CLOSE_MSG := "[/siny]"
 # Path to "level select" scene
 const LEVEL_SELECT_PATH := ""
 # Path to "credits" scene
-const CREDITS_PATH := "res://Scene/GodotCredits.tscn"
+const CREDITS_PATH := "res://scene/GodotCredits.tscn"
 # Path to "settings" scene
-const SETTINGS_PATH = "res://Scene/SettingsMenu.tscn"
+const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:

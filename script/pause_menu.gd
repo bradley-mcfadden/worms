@@ -9,8 +9,8 @@ const ANIMATION_CLOSE_HEADER := "[/siny]"
 const ANIMATION_OPEN_MSG := "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_MSG := "[/siny]"
 
-const MAIN_MENU_PATH := "res://Scene/TitleScreen.tscn"
-const SETTINGS_PATH := "res://Scene/SettingsMenu.tscn"
+const MAIN_MENU_PATH := "res://scene/TitleScreen.tscn"
+const SETTINGS_PATH := "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:

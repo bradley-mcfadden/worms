@@ -12,10 +12,10 @@ func _ready() -> void:
 
 
 func _init_values() -> void:
-	$Cols/R/MasterVolumeSlider.value = Configuration.sections["audio"]["master_volume"]
-	$Cols/R/SoundFXVolumeSlider.value = Configuration.sections["audio"]["sfx_volume"]
-	$Cols/R/UISoundVolumeSlider.value = Configuration.sections["audio"]["ui_volume"]
-	$Cols/R/MusicVolumeSlider.value = Configuration.sections["audio"]["music_volume"]
+	$Cols/R/MasterVolumeSlider.value = float(Configuration.sections["audio"]["master_volume"])
+	$Cols/R/SoundFXVolumeSlider.value = float(Configuration.sections["audio"]["sfx_volume"])
+	$Cols/R/UISoundVolumeSlider.value = float(Configuration.sections["audio"]["ui_volume"])
+	$Cols/R/MusicVolumeSlider.value = float(Configuration.sections["audio"]["music_volume"])
 
 
 func _init_connections() -> void:
