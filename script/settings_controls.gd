@@ -47,7 +47,7 @@ func _init_connections() -> void:
 	for btn in buttons:
 		btn.connect("focus_entered", self, "_on_control_focus_entered")
 		btn.connect("focus_exited", self, "_on_control_focus_exited")
-		btn.connect("button_pressed", self, "_on_button_pressed")
+		btn.connect("pressed", self, "_on_button_pressed")
 
 
 func show() -> void:

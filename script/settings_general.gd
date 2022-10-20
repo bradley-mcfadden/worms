@@ -23,7 +23,7 @@ func _init_connections() -> void:
 		$Cols/R/RichTextCheck
 	]
 	for btn in check_buttons:
-		btn.connect("button_toggled", self, "_on_button_toggled")
+		btn.connect("toggled", self, "_on_button_toggled")
 		btn.connect("focus_entered", self, "_on_control_focus_entered")
 		btn.connect("focus_exited", self, "_on_control_focus_exited")
 

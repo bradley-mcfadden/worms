@@ -17,44 +17,44 @@ script = ExtResource( 3 )
 
 [node name="Cols" type="HBoxContainer" parent="."]
 margin_left = 24.0
-margin_right = 572.0
+margin_right = 996.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 custom_constants/separation = 24
 
 [node name="L" type="VBoxContainer" parent="Cols"]
-margin_right = 262.0
+margin_right = 474.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Cols/L"]
-margin_right = 262.0
+margin_right = 474.0
 margin_bottom = 12.0
 rect_min_size = Vector2( 0, 12 )
 custom_fonts/font = ExtResource( 2 )
 
 [node name="RichText" type="Label" parent="Cols/L"]
 margin_top = 16.0
-margin_right = 262.0
-margin_bottom = 40.0
+margin_right = 474.0
+margin_bottom = 30.0
 text = "use rich text"
 align = 2
 
 [node name="R" type="VBoxContainer" parent="Cols"]
-margin_left = 286.0
-margin_right = 548.0
+margin_left = 498.0
+margin_right = 972.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Cols/R"]
-margin_right = 262.0
+margin_right = 474.0
 margin_bottom = 12.0
 rect_min_size = Vector2( 0, 12 )
 custom_fonts/font = ExtResource( 2 )
 
 [node name="RichTextCheck" type="CheckBox" parent="Cols/R"]
 margin_top = 16.0
-margin_right = 16.0
+margin_right = 24.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 pressed = true

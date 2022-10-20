@@ -17,7 +17,7 @@ script = ExtResource( 3 )
 
 [node name="Cols" type="HBoxContainer" parent="."]
 margin_left = 24.0
-margin_right = 572.0
+margin_right = 996.0
 margin_bottom = 124.0
 size_flags_horizontal = 3
 custom_constants/separation = 16
