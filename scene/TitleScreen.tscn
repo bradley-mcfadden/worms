@@ -236,11 +236,11 @@ enabled_focus_mode = 0
 text = "quit to desktop"
 
 [connection signal="mouse_entered" from="VBoxContainer/StartGame" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/LevelSelect" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
+[connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]

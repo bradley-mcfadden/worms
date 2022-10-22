@@ -8,6 +8,8 @@ extends "res://script/worm/segment_kinematic.gd"
 
 # Emitted when the head's animation changes
 signal changed_animation(from, to) # String, String
+# Emitted when "something" is bitten
+signal interactible_bitten
 
 const IDLE := "idle"
 const MOUTH_CHOMP := "mouth_chomp"
@@ -95,7 +97,10 @@ func _on_BiteHitbox_area_entered(area: Area2D) -> void:
 	if area.has_method("take_damage"):
 		if not (area.has_method("on_bitten") and area.is_alive()): return
 		area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
-		
+		emit_signal("interactible_bitten")
+		#yield(anim_player, "animation_changed")
+		#yield(get_tree().create_timer(0.5), "timeout")
+		#area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
 
 
 func increment_blood_level() -> void:

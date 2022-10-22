@@ -42,14 +42,17 @@ func wind_up() -> void:
 	anim_player.play(MOUTH_OPEN_WIDE)
 	_play_roar_sound()
 	emit_signal("is_ready_changed", self, false)
-	$Timer.start()
+	#$Timer.start()
 
 
 func bite() -> void:
 # Play mouth biting animation
 	if anim_player == null: return
+	anim_player.playback_speed = 2.0
 	anim_player.play(MOUTH_CHOMP)
 	emit_signal("is_ready_changed", self, false)
+	yield(anim_player, "animation_changed")
+	anim_player.playback_speed = 1.0
 
 
 func _on_Timer_timeout():

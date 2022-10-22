@@ -41,6 +41,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 8, 0 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("BiteHitbox:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "chomp_to_idle"
@@ -160,12 +172,9 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.333333, 0.458333 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.378 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ true ],
-"method": "toggle_bite_hitbox"
-}, {
 "args": [ false ],
 "method": "toggle_bite_hitbox"
 } ]
@@ -194,9 +203,12 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0.504 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ true ],
+"method": "toggle_bite_hitbox"
+} ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("blood:frame")
@@ -209,6 +221,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("BiteHitbox:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.833334 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="CircleShape2D" id=6]
@@ -232,7 +256,7 @@ texture = ExtResource( 3 )
 normal_map = ExtResource( 1 )
 hframes = 11
 vframes = 7
-frame = 47
+frame = 40
 
 [node name="blood" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
@@ -267,8 +291,8 @@ next/mouth_chomp = "chomp_to_idle"
 [node name="Tween" type="Tween" parent="."]
 
 [node name="BiteHitbox" type="Area2D" parent="."]
+position = Vector2( 34, 0 )
 collision_layer = 2
-monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BiteHitbox"]

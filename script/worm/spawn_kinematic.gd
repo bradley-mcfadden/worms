@@ -88,7 +88,7 @@ func _ready() -> void:
 		if i == 0:
 			segment = Head.instance()
 			head = segment
-			# head.connect("changed_animation", self, "_on_head_animation_changed")
+			head.connect("interactible_bitten", $AbilitiesContainer/Bite, "bite")
 		elif i == segment_number - 1:
 			segment = Tail.instance()
 			tail = segment
