@@ -113,7 +113,7 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 #
 	if not is_alive():
 		return
-	print(self, " is taking " + str(how_much) + " damage ", how_much, "/", health)
+	# print(self, " is taking " + str(how_much) + " damage ", how_much, "/", health)
 	var new_health: float = health - how_much
 	if new_health > 0:
 		# health = int(clamp(health, 0.0, start_health))

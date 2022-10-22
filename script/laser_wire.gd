@@ -138,13 +138,13 @@ func get_depth_controllers() -> Array:
 
 
 func _on_hide() -> void:
-	print("laser hide")
+	#print("laser hide")
 	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
 	tween.start()
 
 
 func _on_show() -> void:
-	print("laser show")
+	#print("laser show")
 	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
 	tween.start()
 	

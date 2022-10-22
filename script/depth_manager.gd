@@ -123,7 +123,7 @@ func set_current_layer(new_layer: int) -> void:
 	if new_layer == current_layer:
 		return
 	for item in layers[current_layer]:
-		print(item.get_parent())
+		# print(item.get_parent())
 		item.set_active(false)
 	for item in layers[new_layer]:
 		item.set_active(true)
@@ -158,7 +158,7 @@ func _on_segment_changed(segment: Node, state: Object) -> void:
 
 
 func _on_layer_visibility_changed(layer: int, is_visible: bool) -> void:
-	print("_on_layer_visbility_changed", layer, "", is_visible)
+	# print("_on_layer_visbility_changed", layer, "", is_visible)
 	var f = "start_peek" if is_visible else "end_peek"
 	var g = "end_peek" if is_visible else "start_peek"
 	var arr := []
