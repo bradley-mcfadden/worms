@@ -76,3 +76,14 @@ func is_action_just_pressed(action: String) -> bool:
 	var last_action: bool = last_action_map[action]
 
 	return (not last_action) && (curr_action)
+
+
+func replace_action_map_value(action: String, value: bool) -> void:
+#
+# replace_action_map_value
+# Method for updating action map value and last action map at same time.
+# action - Name of action to update.
+# value - New value for action.
+#
+	last_action_map[action] = curr_action_map[action]
+	curr_action_map[action] = value

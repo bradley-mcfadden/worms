@@ -90,6 +90,12 @@ var credits = [
 		"Gib sound",
 		"https://freesound.org/people/Rock%20Savage/sounds/81042/"
 	],[
+		"Play testers",
+		"",
+		"Demetrius",
+		"",
+		"Rhys"
+	],[
 		"Tools used",
 		"Developed with Godot Engine",
 		"https://godotengine.org/license",

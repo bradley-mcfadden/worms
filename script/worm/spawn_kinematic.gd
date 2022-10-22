@@ -126,7 +126,9 @@ func _ready() -> void:
 	emit_signal("health_state_changed", false)
 
 	# Connect the controller so we can query about what we should do.
-	active_controller = $InputController
+	$CursorController.following = head
+	# active_controller = $InputController
+	active_controller = $CursorController
 	active_controller.set_abilities_count(len(abilities))
 
 
