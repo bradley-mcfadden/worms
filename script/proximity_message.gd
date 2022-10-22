@@ -8,7 +8,7 @@ extends Area2D
 
 export (Color) var invisible_mod := Color(1.0, 1.0, 1.0, 0.0)
 export (Color) var visible_mod := Color(1.0, 1.0, 1.0, 1.0)
-export (String) var text := "sample text"
+export (String, MULTILINE) var text := "sample text"
 
 export (int) var layer := 0
 export (float) var radius := 200.0

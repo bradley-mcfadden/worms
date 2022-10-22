@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://scene/ProximityMessage.tscn" type="PackedScene" id=34]
 [ext_resource path="res://script/interactibles.gd" type="Script" id=35]
 [ext_resource path="res://scene/FleshBall.tscn" type="PackedScene" id=36]
+[ext_resource path="res://script/black_bars.gd" type="Script" id=37]
 
 [sub_resource type="Resource" id=56]
 script = ExtResource( 23 )
@@ -429,6 +430,25 @@ pause_mode = 2
 visible = false
 script = ExtResource( 20 )
 
+[node name="BlackBars" type="Control" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 37 )
+
+[node name="Left" type="Panel" parent="CanvasLayer/BlackBars"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_right = 112.0
+margin_bottom = 600.0
+
+[node name="Right" type="Panel" parent="CanvasLayer/BlackBars"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 912.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Tween" type="Tween" parent="CanvasLayer/BlackBars"]
+
 [node name="HealthBar" parent="CanvasLayer" instance=ExtResource( 16 )]
 visible = false
 anchor_top = 1.0
@@ -529,6 +549,7 @@ region_rect = Rect2( 0, 0, 4096, 2048 )
 [connection signal="show" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_show"]
 [connection signal="layer_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_layer_changed"]
 [connection signal="layer_changed" from="DepthManager" to="Background" method="_on_layer_changed"]
+[connection signal="layer_peeked" from="DepthManager" to="CanvasLayer/BlackBars" method="_on_layer_peeked"]
 [connection signal="number_of_layers_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_number_of_layers_changed"]
 [connection signal="lay_eggs" from="CanvasLayer/AllEnemiesDead" to="." method="_on_lay_eggs"]
 [connection signal="restart" from="CanvasLayer/DeathScreen" to="." method="_on_restart"]

@@ -9,6 +9,8 @@ extends Node
 signal layer_changed(to) # int
 # Emitted when the physical count of the number of layers changes.
 signal number_of_layers_changed(to) # int
+# Emitted when a layer has started/stopped being peeked
+signal layer_peeked(visible) # bool
 
 enum SegmentState { ALIVE, DEAD }
 
@@ -156,15 +158,17 @@ func _on_segment_changed(segment: Node, state: Object) -> void:
 
 
 func _on_layer_visibility_changed(layer: int, is_visible: bool) -> void:
+	print("_on_layer_visbility_changed", layer, "", is_visible)
 	var f = "start_peek" if is_visible else "end_peek"
 	var g = "end_peek" if is_visible else "start_peek"
 	var arr := []
 	if layer >= 0 and layer < len(layers):
 		arr = layers[layer]
-	for item in arr:
-		item.call(f)
-	for item in layers[current_layer]:
-		item.call(g)
+		emit_signal("layer_peeked", is_visible)
+		for item in arr:
+			item.call(f)
+		for item in layers[current_layer]:
+			item.call(g)
 
 
 func _on_dc_tree_exited(layer: int, dc: Node) -> void:

@@ -62,7 +62,7 @@ func _draw() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	print(tween.is_active(), " ", ray.is_colliding(), " ", state)
+	#print(tween.is_active(), " ", ray.is_colliding(), " ", state)
 	if ray.is_colliding():
 		if state == DetectState.WAIT and not tween.is_active():
 			next_state = DetectState.PREFIRE 
