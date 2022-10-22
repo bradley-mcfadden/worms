@@ -18,6 +18,7 @@ func reset() -> void:
 # 
 	health = start_health
 	visible = true
+	$Sprite.visible = true
 	monitorable = true
 	monitoring = true
 
@@ -31,12 +32,15 @@ func take_damage(how_much: int, _from: Node) -> void:
 #
 	var new_health: int = int(clamp(health - how_much, 0, start_health))
 	if new_health <= 0:
-		visible = false
 		monitorable = false
 		monitoring = false
 		$Gib.play()
 		$BloodExplode.emitting = true
+		$Sprite.visible = false
+		yield(get_tree().create_timer($BloodExplode.lifetime), "timeout")
+		visible = false
 	health = new_health
+
 
 
 func is_alive() -> bool:
