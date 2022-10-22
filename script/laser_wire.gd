@@ -10,7 +10,7 @@ enum DetectState { WAIT, PREFIRE, ANTICIPATE, FIRE, COOLDOWN }
 export (Color) var invisible_mod := Color(1.0, 1.0, 1.0, 0.0)
 export (Color) var visible_mod := Color(1.0, 1.0, 1.0, 1.0)
 export (int) var layer := 0
-export var state_properties := {
+export (Dictionary) var state_properties := {
 	DetectState.WAIT : {
 		"width" : 1.0,
 		"color" : Color(0.5, 0.0, 0.0, 0.5),
@@ -42,10 +42,11 @@ onready var ray: RayCast2D
 onready var node1: LaserNode = $LaserNode
 onready var node2: LaserNode = $LaserNode2
 onready var state: int = DetectState.WAIT
-onready var next_state: int = -1
+onready var next_state: int = DetectState.PREFIRE
 onready var color: Color = state_properties[state]["color"]
 onready var width: float = state_properties[state]["width"]
 onready var damage: int = 100
+onready var tween: Tween = $Tween
 
 
 func _ready() -> void:
@@ -61,14 +62,15 @@ func _draw() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	print(tween.is_active(), " ", ray.is_colliding(), " ", state)
 	if ray.is_colliding():
-		if state == DetectState.WAIT and not $Tween.is_active():
+		if state == DetectState.WAIT and not tween.is_active():
 			next_state = DetectState.PREFIRE 
-			$Tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
-			$Tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
-			$Tween.stop(self, "width")
-			$Tween.stop(self, "color")
-			$Tween.start()
+			tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
+			tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
+			tween.stop(self, "width")
+			tween.stop(self, "color")
+			tween.start()
 		if state == DetectState.FIRE:
 			# process the collider as a hit
 			var collider: Object = ray.get_collider()
@@ -98,11 +100,11 @@ func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
 		DetectState.WAIT:
 			pass
 	if next_state != state:
-		$Tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
-		$Tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
-		$Tween.stop(self, "width")
-		$Tween.stop(self, "color")
-		$Tween.start()
+		tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
+		tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
+		tween.stop(self, "width")
+		tween.stop(self, "color")
+		tween.start()
 
 
 func get_collision_layer() -> int:
@@ -131,18 +133,18 @@ func get_layer() -> int:
 
 func get_depth_controllers() -> Array:
 	return [
-		$DepthController,
+		$DepthController
 	]
 
 
 func _on_hide() -> void:
 	print("laser hide")
-	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
-	$Tween.start()
+	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
+	tween.start()
 
 
 func _on_show() -> void:
 	print("laser show")
-	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
-	$Tween.start()
+	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
+	tween.start()
 	

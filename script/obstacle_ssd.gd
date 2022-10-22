@@ -8,7 +8,7 @@ tool
 extends StaticBody2D
 
 export var layer := 0
-export(float) var peek_alpha := 0.3
+export(float) var peek_alpha := 1.0
 
 var active: bool
 

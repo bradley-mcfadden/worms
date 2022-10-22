@@ -88,7 +88,7 @@ func _ready() -> void:
 		if i == 0:
 			segment = Head.instance()
 			head = segment
-			head.connect("interactible_bitten", $AbilitiesContainer/Bite, "bite")
+			head.connect("interactible_bitten", $AbilitiesContainer/Bite, "_on_interactible_bitten")
 		elif i == segment_number - 1:
 			segment = Tail.instance()
 			tail = segment
@@ -238,13 +238,13 @@ func _control(delta: float) -> void:
 	elif active_controller.is_action_pressed("move_right"):
 		heading += PI * delta * 3
 	if !is_switch_depth:
-		if active_controller.is_action_just_pressed("peek_layer_up"):
+		if active_controller.is_action_just_pressed("peek_layer_down"):
 			emit_signal("layer_visibility_changed", layer + 1, true)
-		elif active_controller.is_action_just_released("peek_layer_up"):
-			emit_signal("layer_visibility_changed", layer + 1, false)
-		elif active_controller.is_action_just_pressed("peek_layer_down"):
-			emit_signal("layer_visibility_changed", layer - 1, true)
 		elif active_controller.is_action_just_released("peek_layer_down"):
+			emit_signal("layer_visibility_changed", layer + 1, false)
+		elif active_controller.is_action_just_pressed("peek_layer_up"):
+			emit_signal("layer_visibility_changed", layer - 1, true)
+		elif active_controller.is_action_just_released("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer - 1, false)
 		elif active_controller.is_action_just_pressed("layer_down"):
 			$Sounds/ChangeLayerDown.play()

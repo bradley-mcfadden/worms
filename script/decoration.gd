@@ -6,7 +6,7 @@
 #
 # The node should have a child called DepthController with depth_controller.gd
 
-extends Node2D
+extends Node
 
 export var layer := 0
 

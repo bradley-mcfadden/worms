@@ -42,7 +42,7 @@ func wind_up() -> void:
 	anim_player.play(MOUTH_OPEN_WIDE)
 	_play_roar_sound()
 	emit_signal("is_ready_changed", self, false)
-	#$Timer.start()
+	$Timer.start()
 
 
 func bite() -> void:
@@ -89,3 +89,9 @@ func _on_animation_changed(from: String, to: String) -> void:
 		emit_signal("is_ready_changed", self, true)
 		n_invoke_called = 0
 		$Timer.stop()
+
+
+func _on_interactible_bitten() -> void:
+	n_invoke_called = 2
+	bite()
+	$Timer.stop()

@@ -351,6 +351,7 @@ pause_mode = 1
 script = ExtResource( 4 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Obstacles"]
+position = Vector2( -495, -198 )
 script = ExtResource( 27 )
 
 [node name="SS2D_Shape_Closed" type="Node2D" parent="Obstacles/StaticBody2D"]

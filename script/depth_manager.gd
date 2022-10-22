@@ -47,13 +47,15 @@ func add(layer: int, item: Node) -> void:
 	if prev_len != len(layers):
 		emit_signal("number_of_layers_changed", len(layers))
 
-	var controllers = item.get_depth_controllers()
+	var controllers: Array = item.get_depth_controllers()
 	for dc in controllers:
 		layers[layer].append(dc)
 		if not dc.is_connected("tree_exited", self, "_on_dc_tree_exited"):
 			dc.connect("tree_exited", self, "_on_dc_tree_exited", [layer, dc])
 		dc.set_layer(layer)
 		dc.set_active(layer == current_layer)
+		
+	#print("add ", layer, " ", item, " ", len(controllers))
 
 
 func switch(to: int, item: Node) -> void:
@@ -119,6 +121,7 @@ func set_current_layer(new_layer: int) -> void:
 	if new_layer == current_layer:
 		return
 	for item in layers[current_layer]:
+		print(item.get_parent())
 		item.set_active(false)
 	for item in layers[new_layer]:
 		item.set_active(true)
@@ -154,11 +157,14 @@ func _on_segment_changed(segment: Node, state: Object) -> void:
 
 func _on_layer_visibility_changed(layer: int, is_visible: bool) -> void:
 	var f = "start_peek" if is_visible else "end_peek"
+	var g = "end_peek" if is_visible else "start_peek"
 	var arr := []
 	if layer >= 0 and layer < len(layers):
 		arr = layers[layer]
 	for item in arr:
 		item.call(f)
+	for item in layers[current_layer]:
+		item.call(g)
 
 
 func _on_dc_tree_exited(layer: int, dc: Node) -> void:

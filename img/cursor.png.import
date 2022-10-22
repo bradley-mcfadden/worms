@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/segment_health.png-1361dc7c04d85fb943a5f5af692c6c39.stex"
+path="res://.import/cursor.png-8cd07d805fcd68f8346cb69b2e6ddf99.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/segment_health.png"
-dest_files=[ "res://.import/segment_health.png-1361dc7c04d85fb943a5f5af692c6c39.stex" ]
+source_file="res://img/cursor.png"
+dest_files=[ "res://.import/cursor.png-8cd07d805fcd68f8346cb69b2e6ddf99.stex" ]
 
 [params]
 
@@ -24,7 +24,7 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
