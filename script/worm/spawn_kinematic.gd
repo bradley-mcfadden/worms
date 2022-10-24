@@ -126,10 +126,21 @@ func _ready() -> void:
 	emit_signal("health_state_changed", false)
 
 	# Connect the controller so we can query about what we should do.
-	$CursorController.following = head
-	# active_controller = $InputController
-	active_controller = $CursorController
-	active_controller.set_abilities_count(len(abilities))
+	_init_controller()
+
+
+func _init_controller() -> void:
+	for controller in [$CursorController, $InputController]:
+		controller.set_physics_process(false)
+	var scheme: String = Configuration.sections["controls"]["current_scheme"]
+	match scheme:
+		"keyboard":
+			active_controller = $InputController
+		"mouse_keyboard":
+			active_controller = $CursorController
+			$CursorController.following = head
+	active_controller.set_physics_process(true)
+	active_controller.set_abilities_count(len($AbilitiesContainer.get_children()))
 
 
 func reset() -> void:
@@ -248,10 +259,10 @@ func _control(delta: float) -> void:
 			emit_signal("layer_visibility_changed", layer - 1, false)
 		elif active_controller.is_action_just_pressed("layer_down"):
 			$Sounds/ChangeLayerDown.play()
-			emit_signal("switch_layer_pressed", layer - 1, self)
+			emit_signal("switch_layer_pressed", layer + 1, self)
 		elif active_controller.is_action_just_pressed("layer_up"):
 			$Sounds/ChangeLayerUp.play()
-			emit_signal("switch_layer_pressed", layer + 1, self)
+			emit_signal("switch_layer_pressed", layer - 1, self)
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
 		if (ability != null and ability.is_ready and active_controller.is_action_just_pressed("ability" + str(i + 1))):
@@ -510,3 +521,7 @@ func _on_segment_took_damage(segment: Node, hurt: bool = false) -> void:
 		var ratio = float(segment.health / segment.start_health)
 		if ratio < 0.5:
 			emit_signal("health_state_changed", true)
+
+
+func _on_unpaused() -> void:
+	_init_controller()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=445 format=2]
+[gd_scene load_steps=452 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -45,6 +45,13 @@
 [ext_resource path="res://sound/laser.wav" type="AudioStream" id=43]
 [ext_resource path="res://script/laser_wire.gd" type="Script" id=44]
 [ext_resource path="res://img/textures/asphalt.png" type="Texture" id=45]
+[ext_resource path="res://levels/level0/script/movement_message.gd" type="Script" id=46]
+[ext_resource path="res://levels/level0/script/turn_message.gd" type="Script" id=47]
+[ext_resource path="res://levels/level0/script/downward_message.gd" type="Script" id=48]
+[ext_resource path="res://levels/level0/script/upward_message.gd" type="Script" id=49]
+[ext_resource path="res://levels/level0/script/steer_message.gd" type="Script" id=50]
+[ext_resource path="res://levels/level0/script/bite_message.gd" type="Script" id=51]
+[ext_resource path="res://levels/level0/script/speed_boost_message.gd" type="Script" id=52]
 
 [sub_resource type="Resource" id=1301]
 script = ExtResource( 23 )
@@ -3024,43 +3031,31 @@ polygon = PoolVector2Array( 5613.81, -2971.74, 5564.34, -1766.76, 6937.77, -1477
 
 [node name="Tween" type="Tween" parent="Obstacles/StaticBody2D3"]
 
-[node name="WASDMessage" parent="Obstacles" instance=ExtResource( 34 )]
-visible = false
+[node name="MovementMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( -250, -383 )
-text = "W to move forward  A to turn left          D to turn right"
-radius = 600.0
-min_width = 600
+script = ExtResource( 46 )
 
-[node name="WMouseMessage1" parent="Obstacles" instance=ExtResource( 34 )]
-position = Vector2( -250, -383 )
-text = "W to move forward"
-radius = 600.0
-min_width = 600
+[node name="TurnMessage" parent="Obstacles" instance=ExtResource( 34 )]
+position = Vector2( -250, -196 )
+script = ExtResource( 47 )
 
-[node name="WMouseMessage2" parent="Obstacles" instance=ExtResource( 34 )]
-position = Vector2( -250, -313 )
-text = "Move mouse to steer"
-radius = 600.0
-min_width = 1000
+[node name="SteerMessage2" parent="Obstacles" instance=ExtResource( 34 )]
+position = Vector2( -250, -197 )
+script = ExtResource( 50 )
+text = "Move the mouse to steer"
 
 [node name="SpeedBoostMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 1366, -3101 )
-text = "Press 1 for a speed boost"
-radius = 600.0
-min_width = 600
+script = ExtResource( 52 )
+text = "Move the mouse to steer"
 
 [node name="DownwardMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 6721, -2100 )
-text = "Shift+E to look down E to move downward"
-radius = 800.0
-min_width = 700
+script = ExtResource( 48 )
 
 [node name="UpwardMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 9772, -2168 )
-text = "Shift+Q to look up Q to move upward"
-layer = 1
-radius = 1000.0
-min_width = 600
+script = ExtResource( 49 )
 
 [node name="BodyPartMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 14659, -2046 )
@@ -3082,9 +3077,7 @@ min_width = 700
 
 [node name="BiteMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 26154, -1863 )
-text = "Press 2 to open mouth, and press again to bite"
-radius = 1000.0
-min_width = 700
+script = ExtResource( 51 )
 
 [node name="HealthMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 28041, -1944 )

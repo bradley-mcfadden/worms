@@ -83,7 +83,7 @@ func _on_ExitButton_pressed() -> void:
 	queue_free()
 
 
-func _on_button_pressed() -> void:
+func _on_button_pressed(_unused: bool = false) -> void:
 	$PressButton.play()
 
 
@@ -108,6 +108,7 @@ func _on_button_disabled() -> void:
 
 
 func _on_change_binding_requested(action: String, desc: String) -> void:
+	print("action ", action, " ", desc)
 	$KeybindDialog.show_for(action, desc)
 
 

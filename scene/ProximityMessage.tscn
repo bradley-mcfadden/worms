@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://fonts/IM_Fell_English/IMFellEnglish-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/Fira_Sans/FiraSans-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/proximity_message.gd" type="Script" id=2]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=3]
 

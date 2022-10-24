@@ -8,6 +8,8 @@ extends SettingsScrollContainer
 # Emitted when a binding is requested to be changed
 signal change_binding_requested(name, label) # String, String
 
+const MOUSE_AND_KEYBOARD_IDX := 0
+const KEYBOARD_IDX := 1
 
 onready var button_to_action := {
 	"MoveForwardButton" : "move_forward",
@@ -37,7 +39,8 @@ func _init_values() -> void:
 
 func _init_connections() -> void:
 	var buttons := [
-		$Cols/RightColumn/RestoreDefaults
+		$Cols/RightColumn/RestoreDefaults,
+		$Cols/RightColumn/ControlScheme,
 	]
 	var rcol: Node = $Cols/RightColumn
 	for key in button_to_action.keys():
@@ -59,23 +62,37 @@ func _get_controls() -> void:
 #
 # _get_controls - Initialize buttons in button_to_action with scancode strings
 # 
-	print(_keystr_for("move_forward"))
+	# print(_keystr_for("move_forward"))
 	var rcol = $Cols/RightColumn
+	var scheme: String = Configuration.sections["controls"]["current_scheme"]
+	var bindings: Dictionary = Configuration.sections["controls"][scheme]
 	for key in button_to_action.keys():
 		var button = rcol.get_node(key)
-		button.text = _keystr_for(button_to_action[key])
+		button.text = _keystr_for(button_to_action[key], bindings)
+	match scheme:
+		"keyboard":
+			$Cols/RightColumn/ControlScheme.select(KEYBOARD_IDX)
+		"mouse_keyboard":
+			$Cols/RightColumn/ControlScheme.select(MOUSE_AND_KEYBOARD_IDX)
+		_:
+			pass
 
 
-func _keystr_for(action: String) -> String:
+func _keystr_for(action: String, bindings: Dictionary) -> String:
 #
 # _key_str_for - return scancode string for a particular action
 # action - Name of action 
 # return - scancode string or ???
-	var first: InputEvent = InputMap.get_action_list(action)[0]
-	if first is InputEventKey:
-		return OS.get_scancode_string(first.scancode)
-	else:
-		return '???'
+	var entry: Dictionary = bindings[action]
+	match entry["type"]:
+		Configuration.CONTROL_KEY_TYPE:
+			var ctrl := "Ctrl+" if entry["ctrl"] else ""
+			var alt := "Alt+" if entry["alt"] else ""
+			var shift := "Shift+" if entry["shift"] else ""
+			var sc_str := OS.get_scancode_string(entry["scancode"])
+			return "%s%s%s%s" % [ctrl, alt, shift, sc_str]
+		_:
+			return "???"
 
 
 func _on_RestoreDefaults_pressed():
@@ -86,6 +103,7 @@ func _on_RestoreDefaults_pressed():
 
 
 func _show_change_bind_for_action(action: String, label: String) -> void:
+	print("action %s label %s" % [action, label])
 	emit_signal("change_binding_requested", action, label)
 
 
@@ -139,3 +157,20 @@ func _on_Restart_pressed() -> void:
 
 func _on_Interact_pressed() -> void:
 	_show_change_bind_for_action("lay_eggs", '"interact"')
+
+
+func _on_ControlScheme_item_selected(index: int) -> void:
+	emit_signal("button_enabled")
+
+	match index:
+		MOUSE_AND_KEYBOARD_IDX:
+			Configuration.sections["controls"]["current_scheme"] = "mouse_keyboard"
+		KEYBOARD_IDX:
+			Configuration.sections["controls"]["current_scheme"] = "keyboard"
+		_:
+			pass
+	_get_controls()
+	
+
+func _on_ControlScheme_item_focused(_index: int) -> void:
+	emit_signal("control_focus_entered")

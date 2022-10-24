@@ -9,6 +9,8 @@ const UI_BUS_NAME := "UI"
 const SFX_BUS_NAME := "SFX"
 const MUSIC_BUS_NAME := "Music"
 
+const CONTROL_KEY_TYPE := "key"
+
 var sections := {
 	"general" : {
 		"use_text_animations" : true,
@@ -22,6 +24,39 @@ var sections := {
 	"graphics" : {
 		
 	},
+	"controls" : {
+		"current_scheme" : "mouse_keyboard",
+		"keyboard" : {
+			"ability1" : {"type" : CONTROL_KEY_TYPE, "scancode" : 49, "shift" : false, "alt" : false, "ctrl" : false},
+			"ability2" : {"type" : CONTROL_KEY_TYPE, "scancode" : 50, "shift" : false, "alt" : false, "ctrl" : false},
+			"ability3" : {"type" : CONTROL_KEY_TYPE, "scancode" : 51, "shift" : false, "alt" : false, "ctrl" : false},
+			"ability4" : {"type" : CONTROL_KEY_TYPE, "scancode" : 52, "shift" : false, "alt" : false, "ctrl" : false},
+			"reset" : {"type" : CONTROL_KEY_TYPE, "scancode" : 82, "shift" : false, "alt" : false, "ctrl" : false},
+			"layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : 16777232, "shift" : false, "alt" : false, "ctrl" : false},
+			"layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : 16777234, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_forward" : {"type" : CONTROL_KEY_TYPE, "scancode" : 87, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_left" : {"type" : CONTROL_KEY_TYPE, "scancode" : 65, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_right" : {"type" : CONTROL_KEY_TYPE, "scancode" : 68, "shift" : false, "alt" : false, "ctrl" : false}, 
+			"peek_layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : 16777232, "shift" : true, "alt" : false, "ctrl" : false},
+			"peek_layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : 16777234, "shift" : true, "alt" : false, "ctrl" : false},
+			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : 32, "shift" : false, "alt" : false, "ctrl" : false}
+		},
+		"mouse_keyboard" : {
+			"ability1" : {"type" : CONTROL_KEY_TYPE, "scancode" : 49, "shift" : false, "alt" : false, "ctrl" : false},
+			"ability2" : {"type" : CONTROL_KEY_TYPE, "scancode" : 50, "shift" : false, "alt" : false, "ctrl" : false},
+			"ability3" : {"type" : CONTROL_KEY_TYPE, "scancode" : 51, "shift" : false, "alt" : false, "ctrl" : false},
+			"ability4" : {"type" : CONTROL_KEY_TYPE, "scancode" : 52, "shift" : false, "alt" : false, "ctrl" : false},
+			"reset" : {"type" : CONTROL_KEY_TYPE, "scancode" : 82, "shift" : false, "alt" : false, "ctrl" : false},
+			"layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : 81, "shift" : false, "alt" : false, "ctrl" : false},
+			"layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : 69, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_forward" : {"type" : CONTROL_KEY_TYPE, "scancode" : 87, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_left" : {"type" : CONTROL_KEY_TYPE, "scancode" : 65, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_right" : {"type" : CONTROL_KEY_TYPE, "scancode" : 68, "shift" : false, "alt" : false, "ctrl" : false}, 
+			"peek_layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : 81, "shift" : true, "alt" : false, "ctrl" : false},
+			"peek_layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : 69, "shift" : true, "alt" : false, "ctrl" : false},
+			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : 32, "shift" : false, "alt" : false, "ctrl" : false}
+		}
+	}
 }
 
 

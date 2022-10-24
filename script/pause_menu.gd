@@ -4,6 +4,11 @@
 #
 extends MarginContainer
 
+# Emitted when game has been unpaused.
+signal unpaused
+# Emitted when game is just paused.
+signal paused
+
 const ANIMATION_OPEN_HEADER := "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_HEADER := "[/siny]"
 const ANIMATION_OPEN_MSG := "[siny period=4.0 offset=5.0 animate=1.0]"
@@ -40,11 +45,18 @@ func pause() -> void:
 	self.show()
 	get_tree().paused = true
 	init_labels()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	emit_signal("paused")
 
 
 func unpause() -> void:
 	self.hide()
 	get_tree().paused = false
+	var scheme: String = Configuration.sections["controls"]["current_scheme"]
+	if scheme == "mouse_keyboard":
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	InputLoader.load_mappings()
+	emit_signal("unpaused")
 
 
 func _on_Resume_pressed() -> void:

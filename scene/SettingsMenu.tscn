@@ -106,6 +106,7 @@ custom_styles/panel = ExtResource( 15 )
 [node name="general" parent="Menu/Tabs" instance=ExtResource( 4 )]
 
 [node name="controls" parent="Menu/Tabs" instance=ExtResource( 17 )]
+visible = false
 
 [node name="graphics" parent="Menu/Tabs" instance=ExtResource( 14 )]
 

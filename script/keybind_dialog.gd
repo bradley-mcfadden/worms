@@ -13,6 +13,7 @@ onready var new_input_event: InputEvent = null
 func show_for(action: String, action_desc: String) -> void:
 # Show dialog with action_desc in title,
 # and make action the current action.
+	print("show for ", action, " ", action_desc)
 	var title := "Change keybind for " + action_desc
 	var message := "Press any button"
 	current_action = action
@@ -43,10 +44,18 @@ func _on_OkButton_pressed() -> void:
 	if new_input_event != null:
 		InputMap.action_erase_events(current_action)
 		InputMap.action_add_event(current_action, new_input_event)
-		var property_name = "input/%s" % current_action
-		var action_cfg = ProjectSettings.get_setting(property_name)
-		action_cfg["events"] = InputMap.get_action_list(current_action)
-		ProjectSettings.set_setting(property_name, action_cfg)
-		var _ret = ProjectSettings.save_custom("override.cfg")
+		# var property_name = "input/%s" % current_action
+		# var action_cfg = ProjectSettings.get_setting(property_name)
+		# action_cfg["events"] = InputMap.get_action_list(current_action)
+		# ProjectSettings.set_setting(property_name, action_cfg)
+		# var _ret = ProjectSettings.save_custom("override.cfg")
+		# new_input_event = null
+		# current_action = ""
+		var scheme: String = Configuration.sections["controls"]["current_scheme"]
+		var bindings: Dictionary = Configuration.sections["controls"][scheme]
+		bindings[current_action] = InputLoader.input_event_to_config_entry(new_input_event)
 		new_input_event = null
 		current_action = ""
+		Configuration.save()
+
+
