@@ -20,6 +20,7 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 func _ready() -> void:
 	init_labels()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func init_labels() -> void:
