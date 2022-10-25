@@ -43,8 +43,8 @@ func _input(_event: InputEvent) -> void:
 func init_labels() -> void:
 	var animate = Configuration.sections["general"]["use_text_animations"]
 	set_text($Header, $Header.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate)
-	var action = InputMap.get_action_list("lay_eggs")
-	var key_string = OS.get_scancode_string(action[0].physical_scancode)
+	var actions: Array = InputMap.get_action_list("lay_eggs")
+	var key_string: String = InputLoader.string_from_event(actions[0])
 	var rp_text = "press %s to lay eggs" % key_string
 	set_text($Message, rp_text, ANIMATION_OPEN_MSG, ANIMATION_CLOSE_MSG, true, animate)
 

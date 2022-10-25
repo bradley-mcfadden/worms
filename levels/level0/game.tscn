@@ -3050,12 +3050,15 @@ script = ExtResource( 52 )
 text = "Move the mouse to steer"
 
 [node name="DownwardMessage" parent="Obstacles" instance=ExtResource( 34 )]
-position = Vector2( 6721, -2100 )
+position = Vector2( 6744, -2315 )
 script = ExtResource( 48 )
+radius = 1000.0
 
 [node name="UpwardMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 9772, -2168 )
 script = ExtResource( 49 )
+layer = 1
+radius = 1000.0
 
 [node name="BodyPartMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 14659, -2046 )
@@ -3087,13 +3090,13 @@ min_width = 700
 
 [node name="LayEggsMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 39097, -2446 )
-text = "clear out nests for your eggs"
+text = "Clear out nests for your eggs"
 radius = 1000.0
 min_width = 700
 
 [node name="KillEverythingMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 41315, -2580 )
-text = "kill everything"
+text = "Kill everything"
 radius = 1000.0
 min_width = 700
 

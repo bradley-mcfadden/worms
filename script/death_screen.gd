@@ -25,8 +25,8 @@ func init_labels() -> void:
 	set_text(
 		$Message, random_message(), ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate
 	)
-	var action = InputMap.get_action_list("reset")
-	var key_string = OS.get_scancode_string(action[0].physical_scancode)
+	var action: Array = InputMap.get_action_list("reset")
+	var key_string: String = InputLoader.string_from_event(action[0])
 	var rp_text = "press %s to restart" % key_string
 	set_text(
 		$RestartPrompt, rp_text, ANIMATION_OPEN_MSG, ANIMATION_CLOSE_MSG, true, animate
