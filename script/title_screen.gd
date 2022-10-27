@@ -68,19 +68,9 @@ func wrap_string(string: String, start: String, end: String) -> String:
 
 func _on_StartGame_pressed() -> void:
 	Levels.reset_index()
-	print("Start level %d" % Levels.level_idx)
-	var idx = Levels.next_index()
-	print("Start level %d" % idx)
-	var first = Levels.scene_from_index(idx)
-	var file = File.new()
-	if file.file_exists(first):
-		$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
-		$Tween.start()
-		yield($Tween, "tween_completed")
-		var _ret = get_tree().change_scene(first)
-	else:
-		# Definitely an error
-		pass
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 1.0)
+	$Tween.start()
+	Levels.call_deferred("next_level_or_main")
 
 
 func _on_Settings_pressed() -> void:

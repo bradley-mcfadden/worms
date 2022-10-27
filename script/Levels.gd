@@ -14,6 +14,7 @@ const CONFIG_SUFFIX := "config.ini"
 const PROPERTIES_KEY := "properties"
 const PREVIOUS_KEY := "previous"
 
+onready var loading_path: String = ""
 var level_list: Array = get_level_list() setget , get_level_list
 var level_idx: int = -1
 
@@ -126,14 +127,24 @@ func config_to_index(idx: int, dict: Dictionary) -> bool:
 	return config.save(path) == OK
 
 
-func next_level_or_main(tree: SceneTree) -> void:
+func next_level_or_main() -> void:
 # next_level_or_main will load the next level without wrapping
 # if the index would wrap, instead return to main menu
 	print("Changing levels %d" % level_idx)
 	var idx = next_index(false)
 	print("Changing levels %d" % idx)
+	var scene: String
 	if idx == -1:
-		var _r = tree.change_scene("res://scene/TitleScreen.tscn")
+		scene = "res://scene/TitleScreen.tscn"
 	else:
-		var scene = Levels.scene_from_index(idx)
-		var _r = tree.change_scene(scene)
+		scene = Levels.scene_from_index(idx)
+	AsyncLoader.load_resource(scene)
+	loading_path = scene
+	var _r = AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
+
+
+func _on_resource_loaded(path: String, resource: Resource) -> void:
+	if path == loading_path:
+		AsyncLoader.call_deferred("change_scene_to", resource)
+		AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
+		loading_path = ""

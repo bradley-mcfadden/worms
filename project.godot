@@ -310,6 +310,7 @@ default_bus_layout="res://sound/default_bus_layout.tres"
 Configuration="*res://script/Configuration.gd"
 Levels="*res://script/Levels.gd"
 InputLoader="*res://script/InputLoader.gd"
+AsyncLoader="*res://script/AsyncLoader.gd"
 
 [display]
 

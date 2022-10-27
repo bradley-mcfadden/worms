@@ -25,7 +25,7 @@ func _ready() -> void:
 	primary_player = $Players/SpawnKinematic
 	primary_player.background = $Background
 
-	$CanvasLayer/Tween.interpolate_property($CanvasLayer/Panel, "modulate", null, Color.transparent, 2.0)
+	$CanvasLayer/Tween.interpolate_property($CanvasLayer/Panel, "modulate", null, Color.transparent, 1.0)
 	$CanvasLayer/Tween.start()
 
 
@@ -91,10 +91,9 @@ func _on_lay_eggs() -> void:
 	egg_ins.global_position = worm.wide_camera.global_position
 	$LayEggs.play()
 	yield(egg_ins, "animation_finished")
+	Levels.next_level_or_main()
 	$CanvasLayer/Tween.interpolate_property($CanvasLayer/Panel, "modulate", null, Color.black, 2.0)
 	$CanvasLayer/Tween.start()
-	yield($CanvasLayer/Tween, "tween_completed")
-	Levels.next_level_or_main(get_tree())
 
 
 func _on_all_enemies_dead() -> void:
