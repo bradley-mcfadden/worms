@@ -259,11 +259,15 @@ func _control(delta: float) -> void:
 		elif active_controller.is_action_just_released("peek_layer_up"):
 			emit_signal("layer_visibility_changed", layer - 1, false)
 		elif active_controller.is_action_just_pressed("layer_down"):
-			$Sounds/ChangeLayerDown.play()
-			emit_signal("switch_layer_pressed", layer + 1, self)
+			if not head.overlaps_below():
+				$Sounds/ChangeLayerDown.play()
+				head.overlap_above()
+				emit_signal("switch_layer_pressed", layer + 1, self)
 		elif active_controller.is_action_just_pressed("layer_up"):
-			$Sounds/ChangeLayerUp.play()
-			emit_signal("switch_layer_pressed", layer - 1, self)
+			if not head.overlaps_above():
+				$Sounds/ChangeLayerUp.play()
+				head.overlap_above()
+				emit_signal("switch_layer_pressed", layer - 1, self)
 	for i in range(0, $AbilitiesContainer.get_child_count()):
 		var ability = $AbilitiesContainer.get_child(i)
 		if (ability != null and ability.is_ready and active_controller.is_action_just_pressed("ability" + str(i + 1))):

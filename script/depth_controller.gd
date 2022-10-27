@@ -83,12 +83,10 @@ func set_layer(layer: int) -> void:
 	if active == null:
 		active = depth_layer == layer
 	depth_layer = layer
-
+	parent.layer = layer
 	if parent.has_method("set_collision_mask"):
 		set_collision_layer(start_layer << (2 * depth_layer))
 		set_collision_mask(start_mask << (2 * depth_layer))
-
-	parent.layer = layer
 
 
 func set_collision_mask(layer: int) -> void:
@@ -108,7 +106,8 @@ func reset() -> void:
 		set_collision_layer(start_layer)
 		set_collision_mask(start_mask)
 
-		depth_layer = start_layer
+		depth_layer = parent.layer
+		set_layer(depth_layer)
 
 
 func log2(val: int) -> int:

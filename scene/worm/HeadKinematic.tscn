@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://img/worm/ss_full_n.png" type="Texture" id=1]
 [ext_resource path="res://material/worm.tres" type="Material" id=2]
@@ -238,6 +238,8 @@ tracks/3/keys = {
 [sub_resource type="CircleShape2D" id=6]
 radius = 10.714
 
+[sub_resource type="CircleShape2D" id=8]
+
 [node name="HeadKinematic" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 4 )
@@ -291,6 +293,7 @@ next/mouth_chomp = "chomp_to_idle"
 [node name="Tween" type="Tween" parent="."]
 
 [node name="BiteHitbox" type="Area2D" parent="."]
+visible = false
 position = Vector2( 34, 0 )
 collision_layer = 2
 monitorable = false
@@ -310,5 +313,13 @@ stream = ExtResource( 10 )
 volume_db = -20.0
 pitch_scale = 0.25
 bus = "SFX"
+
+[node name="LayerCheck" type="Area2D" parent="."]
+collision_layer = 2
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LayerCheck"]
+scale = Vector2( 14.7209, -13.8558 )
+shape = SubResource( 8 )
 
 [connection signal="area_entered" from="BiteHitbox" to="." method="_on_BiteHitbox_area_entered"]

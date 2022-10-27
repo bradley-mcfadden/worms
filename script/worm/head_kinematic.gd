@@ -18,6 +18,7 @@ export(int) var bite_damage := 100
 export(int) var max_blood_level := 4
 export(float) var bite_heal_factor := 0.5
 
+onready var layer_checker: Area2D = $LayerCheck
 var anim_player: AnimationPlayer
 var curr_blood_level := 0
 
@@ -76,6 +77,11 @@ func set_collision_layer(layer: int) -> void:
 func set_collision_mask(mask: int) -> void:
 	collision_mask = mask
 	$BiteHitbox.collision_mask = mask
+	var start_mask: int = $DepthController.start_mask
+	$LayerCheck.collision_mask = 0
+	if layer > 0:
+		$LayerCheck.collision_mask |= start_mask << (2 * (layer - 1))
+	$LayerCheck.collision_mask |= start_mask << (2 * (layer + 1))
 
 
 func get_animation_player() -> Node:
@@ -96,9 +102,6 @@ func _on_BiteHitbox_area_entered(area: Area2D) -> void:
 		if not (area.has_method("on_bitten") and area.is_alive()): return
 		area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
 		emit_signal("interactible_bitten")
-		#yield(anim_player, "animation_changed")
-		#yield(get_tree().create_timer(0.5), "timeout")
-		#area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
 
 
 func increment_blood_level() -> void:
@@ -108,3 +111,29 @@ func increment_blood_level() -> void:
 	var step = 1.0 / max_blood_level
 	curr_blood_level = curr_blood_level + 1 if curr_blood_level < max_blood_level else curr_blood_level
 	$blood.modulate = Color(1.0, 1.0, 1.0, curr_blood_level * step)
+
+
+func overlaps_above() -> bool:
+#
+# overlaps_above
+# Does the depth layer above overlap at all with this head?
+# return - True if layer above overlaps, false otherwise.
+#
+	for body in layer_checker.get_overlapping_bodies():
+		if body.has_method("get_layer"):
+			if body.get_layer() == layer - 1:
+				return true
+	return false
+
+
+func overlaps_below() -> bool:
+#
+# overlaps_below
+# Does the depth layer below overlap at all with this head?
+# return - True if layer below overlaps, false otherwise.
+#
+	for body in layer_checker.get_overlapping_bodies():
+		if body.has_method("get_layer"):
+			if body.get_layer() == layer + 1:
+				return true
+	return false
