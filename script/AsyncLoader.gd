@@ -13,6 +13,7 @@ onready var wait_frames: int = 1
 onready var time_max: int = 100 # msec
 onready var current_scene: Node
 onready var resource_path: String
+onready var thread: Thread
 
 
 func _ready() -> void:
@@ -32,26 +33,30 @@ func load_resource(path: String) -> void:
 	if loader == null:
 		# show an error
 		return
-	set_process(true)
+	thread = Thread.new()
+	var err: int = thread.start(self, "_load_resource", null)
+	if err == OK:
+		print("Thread started")
+	else:
+		print("Thread not started")
 	
 	# start "loading..." animation
-    # not yet implemented
+	# not yet implemented
 	wait_frames = 1
 
 
-func _process(_delta: float) -> void:
+func _load_resource(_userdata) -> void:
 	if loader == null:
-		set_process(false)
+		print("Loader is null")
 		return
 	
 	# Wait for frames to let the "loading" animation show up
-	if wait_frames > 0:
-		wait_frames -= 1
-		return
+	# if wait_frames > 0:
+	# 	wait_frames -= 1
+	# 	return
 	
-	var t: int = Time.get_ticks_msec()
 	# Use "time_max" to control for how long we block this thread
-	while Time.get_ticks_msec() < t + time_max:
+	while true:
 		# Poll the loader
 		var err: int = loader.poll()
 
@@ -60,12 +65,15 @@ func _process(_delta: float) -> void:
 			loader = null
 			emit_signal("resource_loaded", resource_path, resource)
 			resource_path = ""
+			print("Done loading")
 			break
 		elif err == OK:
 			pass
+			#print("OK")
 		else:
 			loader = null
 			resource_path = ""
+			# print("Not OK")
 			break
 
 
@@ -80,3 +88,7 @@ func change_scene_to(scene: PackedScene) -> void:
 	previous_scene.queue_free()
 	current_scene = scene.instance()
 	get_node("/root").add_child(current_scene)
+
+
+func _exit_tree():
+	thread.wait_to_finish()
