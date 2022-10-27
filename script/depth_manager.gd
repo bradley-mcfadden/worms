@@ -20,6 +20,7 @@ onready var current_layer := 0
 
 func _ready() -> void:
 	layers.append([])
+	emit_signal("layer_changed", current_layer)
 
 
 func add_items(items: Array) -> void:
@@ -55,7 +56,7 @@ func add(layer: int, item: Node) -> void:
 		if not dc.is_connected("tree_exited", self, "_on_dc_tree_exited"):
 			dc.connect("tree_exited", self, "_on_dc_tree_exited", [layer, dc])
 		dc.set_layer(layer)
-		dc.set_active(layer == current_layer)
+		dc.set_active(layer == current_layer, current_layer)
 		
 	#print("add ", layer, " ", item, " ", len(controllers))
 
@@ -79,7 +80,7 @@ func switch(to: int, item: Node) -> void:
 		layers[to].append(dc)
 		dc.set_layer(to)
 		# print("Changing ", dc.get_parent())
-		dc.set_active(to == current_layer)
+		dc.set_active(to == current_layer, current_layer)
 
 
 func switch_if_safe(to: int, item: Node) -> bool:
@@ -120,15 +121,15 @@ func set_current_layer(new_layer: int) -> void:
 # All elements in new_layer are active.
 # new_layer - Depth layer that shall become the new active layer.
 #
+	emit_signal("layer_changed", new_layer)
 	if new_layer == current_layer:
 		return
 	for item in layers[current_layer]:
 		# print(item.get_parent())
-		item.set_active(false)
+		item.set_active(false, current_layer)
 	for item in layers[new_layer]:
-		item.set_active(true)
+		item.set_active(true, current_layer)
 	current_layer = new_layer
-	emit_signal("layer_changed", new_layer)
 
 
 func is_switch_valid(to: int) -> bool:
@@ -166,9 +167,9 @@ func _on_layer_visibility_changed(layer: int, is_visible: bool) -> void:
 		arr = layers[layer]
 		emit_signal("layer_peeked", is_visible)
 		for item in arr:
-			item.call(f)
+			item.call(f, layer)
 		for item in layers[current_layer]:
-			item.call(g)
+			item.call(g, layer)
 
 
 func _on_dc_tree_exited(layer: int, dc: Node) -> void:

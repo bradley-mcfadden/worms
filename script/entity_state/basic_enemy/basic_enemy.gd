@@ -507,7 +507,7 @@ func _on_MeleeAttack_body_entered(body: PhysicsBody2D) -> void:
 		$AttackHit.emitting = true
 
 
-func _on_hide() -> void:
+func _on_hide(_new_layer: int) -> void:
 	is_hidden = true
 	_set_effects_modulate(Color(1, 1, 1, 0))
 	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
@@ -521,7 +521,7 @@ func _set_effects_modulate(mod: Color) -> void:
 	$AttackHit.modulate = mod
 
 
-func _on_show() -> void:
+func _on_show(_new_layer: int) -> void:
 	is_hidden = false
 	_set_effects_modulate(Color(1, 1, 1, 1))
 	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)

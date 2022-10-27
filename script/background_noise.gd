@@ -32,4 +32,4 @@ func set_color(c: Color) -> void:
 
 
 func _on_layer_changed(to: int) -> void:
-	set_layer(to)
+	call_deferred("set_layer", to)

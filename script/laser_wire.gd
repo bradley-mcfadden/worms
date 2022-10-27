@@ -137,12 +137,12 @@ func get_depth_controllers() -> Array:
 	]
 
 
-func _on_hide() -> void:
+func _on_hide(_new_layer: int) -> void:
 	var _res := tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
 	_res = tween.start()
 
 
-func _on_show() -> void:
+func _on_show(_new_layer: int) -> void:
 	var _res := tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
 	_res = tween.start()
 	

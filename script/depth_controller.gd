@@ -7,9 +7,9 @@
 extends Node
 
 # Emitted when the node is hidden
-signal hide
+signal hide(new_layer) # int
 # Emitted when the node is shown
-signal show
+signal show(new_layer) # int
 
 const COLLISION_OFFSET := 2
 
@@ -33,7 +33,7 @@ func _ready() -> void:
 		set_layer(parent.layer)
 
 
-func set_active(is_active: bool):
+func set_active(is_active: bool, new_layer: int) -> void:
 #
 # set_active
 # Set whether this object is active. An active object is visible and collides,
@@ -41,28 +41,32 @@ func set_active(is_active: bool):
 # set_active - Should the object be visible and collide?
 #
 	if is_active:
-		emit_signal("show")
+		emit_signal("show", new_layer)
 	else:
-		emit_signal("hide")
+		emit_signal("hide", new_layer)
 	active = is_active
 
 
-func start_peek() -> void:
+func start_peek(layer: int) -> void:
 #
 # start_peek
 # If the parent should be partially shown on the peek action,
 # then show it.
 #
-	if parent.has_method("start_peek"):
+	if parent.has_method("start_peek_l"):
+		parent.start_peek_l(layer)
+	elif parent.has_method("start_peek"):
 		parent.start_peek()
 
 
-func end_peek() -> void:
+func end_peek(layer: int) -> void:
 #
 # end_peek
 # return the parent back to being hidden when a peek ends.
 #
-	if parent.has_method("end_peek"):
+	if parent.has_method("end_peek_l"):
+		parent.end_peek_l(layer)
+	elif parent.has_method("end_peek"):
 		parent.end_peek()
 
 

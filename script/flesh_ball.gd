@@ -79,3 +79,19 @@ func get_depth_controllers() -> Array:
 	return [
 		$DepthController,
 	]
+
+
+func _on_hide(_new_layer: int) -> void:
+	visible = false
+
+
+func _on_show(_new_layer: int) -> void:
+	visible = true
+
+
+func start_peek() -> void:
+	visible = true
+
+
+func end_peek() -> void:
+	visible = false

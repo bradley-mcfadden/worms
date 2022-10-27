@@ -16,6 +16,11 @@ func _ready() -> void:
 	$DepthManager.add_items($Obstacles.get_obstacles())
 	$DepthManager.add_items($Decorations.get_decorations())
 	$DepthManager.add_items($Interactibles.get_interactibles())
+	var portals := $Portals.get_children()
+	for portal in portals:
+		var _res: int = $DepthManager.connect("layer_changed", portal, "_on_DepthManager_layer_changed")
+		_res = $DepthManager.connect("layer_peeked", portal, "_on_DepthManager_layer_changed")
+	$DepthManager.add_items(portals)
 	$DepthManager.set_current_layer(0)
 	$NoiseManager.listeners.append_array($Enemies.get_enemies())
 	$Background.set_layer(0)
