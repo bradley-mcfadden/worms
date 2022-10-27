@@ -19,8 +19,16 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:
+	$Tween.interpolate_property(self, "modulate", null, Color.white, 2.0)
+	$Tween.start()
 	init_labels()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	yield($Tween, "tween_completed")
+	$VBoxContainer/StartGame.disabled = false
+	$VBoxContainer/Settings.disabled = false
+	$VBoxContainer/LevelSelect.disabled = false
+	$VBoxContainer/Credits.disabled = false
+	$VBoxContainer/QuitToDesktop.disabled = false
 
 
 func init_labels() -> void:
@@ -59,8 +67,6 @@ func wrap_string(string: String, start: String, end: String) -> String:
 
 
 func _on_StartGame_pressed() -> void:
-	# var first = Levels.first()
-	# get_tree().change_scene(first)
 	Levels.reset_index()
 	print("Start level %d" % Levels.level_idx)
 	var idx = Levels.next_index()
@@ -68,6 +74,9 @@ func _on_StartGame_pressed() -> void:
 	var first = Levels.scene_from_index(idx)
 	var file = File.new()
 	if file.file_exists(first):
+		$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
+		$Tween.start()
+		yield($Tween, "tween_completed")
 		var _ret = get_tree().change_scene(first)
 	else:
 		# Definitely an error
@@ -93,18 +102,29 @@ func _on_LevelSelect_pressed() -> void:
 
 
 func _on_Credits_pressed() -> void:
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")
 	var _ret = get_tree().change_scene(CREDITS_PATH)
-	print(_ret)
-	
 
 
 func _on_QuitToDesktop_pressed() -> void:
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")
 	get_tree().quit()
 
 
 func _on_Button_mouse_entered() -> void:
-	$FocusIn.play()
+	if not $Tween.is_active():
+		$FocusIn.play()
 
 
 func _on_Button_pressed() -> void:
 	$PressButton.play()
+
+
+func fade_out() -> void:
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")

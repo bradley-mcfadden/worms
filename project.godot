@@ -297,7 +297,7 @@ _global_script_class_icons={
 [application]
 
 config/name="worm"
-run/main_scene="res://scene/TitleScreen.tscn"
+run/main_scene="res://scene/Splash.tscn"
 boot_splash/image="res://img/splash_w_title_wide.png"
 config/icon="res://icon.png"
 

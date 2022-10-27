@@ -505,6 +505,13 @@ margin_top = 67.0
 margin_right = 49.0
 margin_bottom = -53.0
 
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Tween" type="Tween" parent="CanvasLayer"]
+
 [node name="Background" type="ParallaxBackground" parent="."]
 pause_mode = 1
 script = ExtResource( 11 )

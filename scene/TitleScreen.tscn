@@ -116,6 +116,7 @@ seamless = true
 script = ExtResource( 1 )
 
 [node name="TitleScreen" type="MarginContainer"]
+modulate = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 5 )
@@ -178,11 +179,12 @@ margin_top = 57.0
 margin_right = 587.0
 margin_bottom = 81.0
 rect_min_size = Vector2( 150, 0 )
+focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
-custom_colors/font_color_disabled = Color( 0.870588, 0.870588, 0.870588, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 2 )
+disabled = true
+enabled_focus_mode = 0
 text = "start game"
 
 [node name="LevelSelect" type="Button" parent="VBoxContainer"]
@@ -195,6 +197,7 @@ focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
+disabled = true
 enabled_focus_mode = 0
 text = "level select"
 
@@ -206,6 +209,7 @@ margin_bottom = 137.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
+disabled = true
 text = "settings"
 
 [node name="Credits" type="Button" parent="VBoxContainer"]
@@ -218,6 +222,7 @@ focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
+disabled = true
 enabled_focus_mode = 0
 text = "credits"
 
@@ -232,8 +237,11 @@ focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
+disabled = true
 enabled_focus_mode = 0
 text = "quit to desktop"
+
+[node name="Tween" type="Tween" parent="."]
 
 [connection signal="mouse_entered" from="VBoxContainer/StartGame" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
@@ -242,11 +250,11 @@ text = "quit to desktop"
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Credits" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
