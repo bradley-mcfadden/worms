@@ -13,7 +13,7 @@ onready var wait_frames: int = 1
 onready var time_max: int = 100 # msec
 onready var current_scene: Node
 onready var resource_path: String
-onready var thread: Thread
+onready var thread: Thread = null
 
 
 func _ready() -> void:
@@ -91,4 +91,5 @@ func change_scene_to(scene: PackedScene) -> void:
 
 
 func _exit_tree():
-	thread.wait_to_finish()
+	if not thread == null:
+		thread.wait_to_finish()

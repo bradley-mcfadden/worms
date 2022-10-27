@@ -122,5 +122,5 @@ bus = "UI"
 [connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToMenu" to="." method="_on_QuitToMenu_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]

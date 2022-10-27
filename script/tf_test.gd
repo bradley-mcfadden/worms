@@ -53,6 +53,7 @@ func reset() -> void:
 #
 	death_screen.visible = false
 	enemies_dead_screen.visible = false
+	$CanvasLayer/Panel.visible = false
 	$Enemies.reset_all_enemies()
 	$Players.reset_all_players()
 	$Music.play()
@@ -92,6 +93,7 @@ func _on_lay_eggs() -> void:
 	$LayEggs.play()
 	yield(egg_ins, "animation_finished")
 	Levels.next_level_or_main()
+	$CanvasLayer/Panel.visible = true
 	$CanvasLayer/Tween.interpolate_property($CanvasLayer/Panel, "modulate", null, Color.black, 2.0)
 	$CanvasLayer/Tween.start()
 
