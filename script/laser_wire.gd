@@ -66,11 +66,11 @@ func _physics_process(_delta: float) -> void:
 	if ray.is_colliding():
 		if state == DetectState.WAIT and not tween.is_active():
 			next_state = DetectState.PREFIRE 
-			tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
-			tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
-			tween.stop(self, "width")
-			tween.stop(self, "color")
-			tween.start()
+			var _res := tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
+			_res = tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
+			_res = tween.stop(self, "width")
+			_res = tween.stop(self, "color")
+			_res = tween.start()
 		if state == DetectState.FIRE:
 			# process the collider as a hit
 			var collider: Object = ray.get_collider()
@@ -100,11 +100,11 @@ func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
 		DetectState.WAIT:
 			pass
 	if next_state != state:
-		tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
-		tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
-		tween.stop(self, "width")
-		tween.stop(self, "color")
-		tween.start()
+		var _res := tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
+		_res = tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
+		_res = tween.stop(self, "width")
+		_res = tween.stop(self, "color")
+		_res = tween.start()
 
 
 func get_collision_layer() -> int:
@@ -138,13 +138,11 @@ func get_depth_controllers() -> Array:
 
 
 func _on_hide() -> void:
-	#print("laser hide")
-	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
-	tween.start()
+	var _res := tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
+	_res = tween.start()
 
 
 func _on_show() -> void:
-	#print("laser show")
-	tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
-	tween.start()
+	var _res := tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
+	_res = tween.start()
 	

@@ -14,6 +14,7 @@ signal bullet_created(bullet) # instance of bullet.tscn
 # Emitted when the enemy dies.
 signal died(node, from, overkill) # BasicEnemy instance, node, bool
 # Emitted when the enemy produces a noise
+#warning-ignored:unused-signal
 signal noise_produced(position, audible_radius) # Vector2, float
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }

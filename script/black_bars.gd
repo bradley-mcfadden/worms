@@ -6,7 +6,7 @@
 
 extends Control
 
-export (int) var fade_duration := 0.5
+export (float) var fade_duration := 0.5
 
 const TRANSPARENT := Color(0.0, 0.0, 0.0, 0.0)
 

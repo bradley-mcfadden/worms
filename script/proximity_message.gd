@@ -33,14 +33,16 @@ func _on_ProximityMessage_body_entered(body: PhysicsBody2D) -> void:
 	if _is_player_head(body):
 		$Tween.stop(self)
 		$Tween.interpolate_property(self, "modulate", invisible_mod, visible_mod, 2.0)
-		$Tween.start()
+		if $Tween.is_inside_tree():
+			$Tween.start()
 
 
 func _on_ProximityMessage_body_exited(body: PhysicsBody2D) -> void:
 	if _is_player_head(body):
 		$Tween.stop(self)
 		$Tween.interpolate_property(self, "modulate", visible_mod, invisible_mod, 2.0)
-		$Tween.start()
+		if $Tween.is_inside_tree():
+			$Tween.start()
 
 
 func get_collision_layer() -> int:

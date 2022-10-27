@@ -33,6 +33,8 @@ func load_resource(path: String) -> void:
 	if loader == null:
 		# show an error
 		return
+	if not thread == null:
+		thread.wait_to_finish()
 	thread = Thread.new()
 	var err: int = thread.start(self, "_load_resource", null)
 	if err == OK:

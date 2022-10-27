@@ -1,4 +1,4 @@
-[gd_scene load_steps=452 format=2]
+[gd_scene load_steps=450 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -1931,9 +1931,9 @@ _constraints = {
 }
 _next_key = 144
 
-[sub_resource type="Resource" id=1556]
+[sub_resource type="Resource" id=1688]
 script = ExtResource( 23 )
-texture_idx = 0
+texture_idx = 2
 flip = false
 width = 1.0
 
@@ -1942,7 +1942,7 @@ script = ExtResource( 24 )
 position = Vector2( 2489.61, -1312.1 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
-properties = SubResource( 1556 )
+properties = SubResource( 1688 )
 
 [sub_resource type="Resource" id=1558]
 script = ExtResource( 23 )
@@ -1970,9 +1970,9 @@ point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 1560 )
 
-[sub_resource type="Resource" id=1562]
+[sub_resource type="Resource" id=1689]
 script = ExtResource( 23 )
-texture_idx = 0
+texture_idx = 2
 flip = false
 width = 1.0
 
@@ -1981,7 +1981,7 @@ script = ExtResource( 24 )
 position = Vector2( 2489.61, -1312.1 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
-properties = SubResource( 1562 )
+properties = SubResource( 1689 )
 
 [sub_resource type="Resource" id=1564]
 script = ExtResource( 23 )
@@ -1995,19 +1995,6 @@ position = Vector2( 3819.49, -1229.62 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 1564 )
-
-[sub_resource type="Resource" id=1566]
-script = ExtResource( 23 )
-texture_idx = -1
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id=1567]
-script = ExtResource( 24 )
-position = Vector2( 5800.85, -545.412 )
-point_in = Vector2( 0, 0 )
-point_out = Vector2( 0, 0 )
-properties = SubResource( 1566 )
 
 [sub_resource type="Resource" id=1568]
 script = ExtResource( 23 )
@@ -2269,18 +2256,18 @@ point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 1606 )
 
-[sub_resource type="Resource" id=1608]
+[sub_resource type="Resource" id=1687]
 script = ExtResource( 23 )
-texture_idx = 0
+texture_idx = 4
 flip = false
 width = 1.0
 
 [sub_resource type="Resource" id=1609]
 script = ExtResource( 24 )
-position = Vector2( 49276.3, -3540.91 )
+position = Vector2( 49144.4, -3474.98 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
-properties = SubResource( 1608 )
+properties = SubResource( 1687 )
 
 [sub_resource type="Resource" id=1610]
 script = ExtResource( 23 )
@@ -2784,7 +2771,6 @@ _points = {
 96: SubResource( 1561 ),
 97: SubResource( 1563 ),
 98: SubResource( 1565 ),
-99: SubResource( 1567 ),
 100: SubResource( 1569 ),
 101: SubResource( 1571 ),
 102: SubResource( 1573 ),
@@ -2845,7 +2831,7 @@ _points = {
 157: SubResource( 1683 ),
 158: SubResource( 1685 )
 }
-_point_order = [ 94, 98, 99, 101, 103, 105, 107, 108, 109, 111, 113, 115, 117, 120, 121, 123, 125, 127, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 157, 155, 153, 151, 149, 147, 145, 143, 141, 139, 137, 135, 133, 131, 129, 126, 124, 122, 119, 118, 116, 114, 112, 110, 106, 104, 102, 100, 96, 95, 97 ]
+_point_order = [ 94, 98, 101, 103, 105, 107, 108, 109, 111, 113, 115, 117, 120, 121, 123, 125, 127, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 152, 154, 156, 158, 157, 155, 153, 151, 149, 147, 145, 143, 141, 139, 137, 135, 133, 131, 129, 126, 124, 122, 119, 118, 116, 114, 112, 110, 106, 104, 102, 100, 96, 95, 97 ]
 _constraints = {
 [ 94, 97 ]: 15
 }
@@ -3152,7 +3138,7 @@ collision_polygon_node_path = NodePath("../CollisionPolygon2D")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="GlobalWalls/StaticBody2D"]
 visible = false
 modulate = Color( 1, 1, 1, 0.3 )
-polygon = PoolVector2Array( 2474.08, -1321.11, 3819.55, -1229.91, 5800.88, -545.538, 8751.5, -89.6645, 10005.9, -289.042, 13606.8, -39.6248, 15890.1, -458.181, 18382.7, -343.811, 22397.4, -58.4135, 25573.1, -30.1042, 28936.9, 172.801, 43976, 905.785, 49641.3, 1254.24, 49276.1, -3540.86, 48052, -7128.66, 32663.9, -5575.08, 21137, -4286.76, 20123.4, -4131.05, 17500.6, -4559.08, 13566.4, -5243.14, 9774.71, -5157.76, 6496.21, -5271.77, 2503.12, -5744.97, 111.318, -5565.12, -1953.82, -4451.85, -3532.68, -2530, -3461.66, -124.462, -2876.13, 782.601, -2054.2, 1338.08, -1274.72, 1593.76, 902.614, 1261.74, 1725.77, 270.378, 2504.61, -1261.99, 2967.27, -556.894, 2474.95, -326.084, 2110.84, 527.097, 957.759, 1692.08, -1168.07, 2076.14, -2321.37, 1712.24, -3357.62, 1157.38, -4146.08, 127.689, -4433.64, -1435.21, -3822.25, -3249.17, -2529.68, -5171.6, -186.9, -6265.98, 2099.94, -6632.43, 5869.01, -6155.61, 7978.66, -6098.55, 13395.3, -6013.1, 16474.3, -5556.95, 20798, -5439.57, 32121.5, -6998.99, 49552.8, -9447.26, 51930.5, 2828.46, 44034.5, 2116.85, 29075.7, 1315.43, 25637.2, 1059.14, 22663.8, 931.032, 16727.3, 969.108, 11901.7, 580.713, 8680.23, 594.972, 5572.5, 324.941, 4303.82, -458.84, 3019.46, -499.47 )
+polygon = PoolVector2Array( 2474.08, -1321.11, 3819.51, -1229.73, 8751.52, -89.8719, 10005.9, -289.042, 13606.8, -39.6248, 15890.1, -458.181, 18382.7, -343.811, 22397.4, -58.4135, 25573.1, -30.1042, 28936.9, 172.801, 43976, 905.785, 49641, 1254.11, 49144.3, -3474.96, 48051.6, -7128.41, 32663.9, -5575.08, 21137, -4286.76, 20123.4, -4131.05, 17500.6, -4559.08, 13566.4, -5243.14, 9774.71, -5157.76, 6496.21, -5271.77, 2503.12, -5744.97, 111.318, -5565.12, -1953.82, -4451.85, -3532.68, -2530, -3461.66, -124.462, -2876.13, 782.601, -2054.2, 1338.08, -1274.72, 1593.76, 902.614, 1261.74, 1725.77, 270.378, 2504.61, -1261.99, 2967.27, -556.894, 2474.95, -326.084, 2110.84, 527.097, 957.759, 1692.08, -1168.07, 2076.14, -2321.37, 1712.24, -3357.62, 1157.38, -4146.08, 127.689, -4433.64, -1435.21, -3822.25, -3249.17, -2529.68, -5171.6, -186.9, -6265.98, 2099.94, -6632.43, 5869.01, -6155.61, 7978.66, -6098.55, 13395.3, -6013.1, 16474.3, -5556.95, 20798, -5439.57, 32121.5, -6998.99, 49552.8, -9447.26, 51930.5, 2828.46, 44034.5, 2116.85, 29075.7, 1315.43, 25637.2, 1059.14, 22663.8, 931.032, 16727.3, 969.108, 11901.7, 580.713, 8680.23, 594.972, 5572.5, 324.941, 4303.82, -458.84, 3019.46, -499.47 )
 
 [node name="Interactibles" type="Node" parent="."]
 script = ExtResource( 35 )

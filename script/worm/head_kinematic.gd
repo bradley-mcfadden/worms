@@ -6,8 +6,6 @@
 
 extends "res://script/worm/segment_kinematic.gd"
 
-# Emitted when the head's animation changes
-signal changed_animation(from, to) # String, String
 # Emitted when "something" is bitten
 signal interactible_bitten
 

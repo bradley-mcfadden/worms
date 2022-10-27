@@ -128,7 +128,7 @@ func save() -> void:
 		for param in sections[section].keys():
 			file.set_value(section, param, sdict[param])
 
-	file.save(CONFIG_FILE_PATH)
+	var _err: int = file.save(CONFIG_FILE_PATH)
 
 
 func cload() -> void:
@@ -137,7 +137,7 @@ func cload() -> void:
 # load configuration, or use default values.
 # 
 	var file: ConfigFile = ConfigFile.new()
-	file.load(CONFIG_FILE_PATH)
+	var _err: int = file.load(CONFIG_FILE_PATH)
 	for section in sections.keys():
 		var sdict: Dictionary = sections[section]
 		for param in sdict.keys():

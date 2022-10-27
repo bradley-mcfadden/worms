@@ -6,7 +6,11 @@ extends Node
 
 class_name Ability
 
+# Emitted when the state of the ability changes
+#warning-ignore:unused-signal
 signal is_ready_changed(ability, is_ready) # Ability, bool
+# Emitted when the satte of the ability changes, and duration is a cooldown
+#warning-ignore:unused-signal
 signal is_ready_changed_cd(ability, is_ready, duration) # Ability, bool, float
 
 export(Texture) var texture

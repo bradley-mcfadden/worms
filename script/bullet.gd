@@ -20,8 +20,8 @@ var layer := 0
 
 
 func setup(
-	shot_by: Node, velocity: Vector2, damage: int, 
-	lifetime: float, cmask: int, layer: int
+	shot_by_: Node, velocity_: Vector2, damage_: int, 
+	lifetime_: float, cmask_: int, layer_: int
 ) -> void:
 #
 # setup initializes the bullet with variables it needs to keep track of.
@@ -32,12 +32,12 @@ func setup(
 # cmask - Collision mask of the bullet, which layers does it check for collisions?
 # clayer - Collision layer, which collision layers is it in?
 #
-	self.shot_by = shot_by
-	self.velocity = velocity
-	self.damage = damage
-	self.lifetime = lifetime
-	self.collision_mask = cmask
-	self.layer = layer
+	shot_by = shot_by_
+	velocity = velocity_
+	damage = damage_
+	lifetime = lifetime_
+	collision_mask = cmask_
+	layer = layer_
 
 
 func get_layer() -> int:

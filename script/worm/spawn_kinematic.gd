@@ -34,6 +34,7 @@ signal ability_is_ready_changed_cd(ability, is_ready, duration) # Ability, bool,
 # Emitted to signal if the player is near death
 signal health_state_changed(is_low) # bool
 # Emitted if the player produces a noise that enemies should react to
+#warning-ignore:unused-signal
 signal noise_produced(position, audible_radius) # Vector2, float
 
 # fill this with camera2D node
@@ -386,8 +387,8 @@ func reset_boost_speed() -> void:
 # NOTE: Need to check if this is still being used.
 # Code that resets the worm's temporary speed boost.
 #
-	max_speed *= 0.5
-	acceleration *= 0.5
+	max_speed = int(0.5 * max_speed)
+	acceleration = int(0.5 * max_speed)
 
 
 func scale_camera():

@@ -26,7 +26,7 @@ func _init(_fsm: Fsm, _entity: Node) -> void:
 
 func on_enter() -> void:
 	aplayer = entity.animation_player
-	aplayer.connect("animation_finished", self, "_on_animation_finished")
+	var _err: int = aplayer.connect("animation_finished", self, "_on_animation_finished")
 	aplayer.play("shoot")
 
 
