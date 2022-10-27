@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=1]
 [ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://script/settings_controls.gd" type="Script" id=5]
 [ext_resource path="res://fonts/IM_Fell_English/IMFellEnglish-Regular.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://theme/option_button.tres" type="Theme" id=7]
+[ext_resource path="res://fonts/control_font.tres" type="DynamicFont" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 6 )
@@ -24,13 +25,13 @@ script = ExtResource( 5 )
 [node name="Cols" type="HBoxContainer" parent="."]
 margin_left = 24.0
 margin_right = 996.0
-margin_bottom = 464.0
+margin_bottom = 438.0
 size_flags_horizontal = 3
 custom_constants/separation = 16
 
 [node name="LeftColumn" type="VBoxContainer" parent="Cols"]
 margin_right = 478.0
-margin_bottom = 464.0
+margin_bottom = 438.0
 size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Cols/LeftColumn"]
@@ -55,131 +56,131 @@ margin_bottom = 48.0
 [node name="MoveForward" type="Label" parent="Cols/LeftColumn"]
 margin_top = 52.0
 margin_right = 478.0
-margin_bottom = 76.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 74.0
+custom_fonts/font = ExtResource( 8 )
 text = "move forward"
 align = 2
 
 [node name="TurnLeft" type="Label" parent="Cols/LeftColumn"]
-margin_top = 80.0
+margin_top = 78.0
 margin_right = 478.0
-margin_bottom = 104.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 100.0
+custom_fonts/font = ExtResource( 8 )
 text = "turn left"
 align = 2
 
 [node name="TurnRight" type="Label" parent="Cols/LeftColumn"]
-margin_top = 108.0
+margin_top = 104.0
 margin_right = 478.0
-margin_bottom = 132.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 126.0
+custom_fonts/font = ExtResource( 8 )
 text = "turn right"
 align = 2
 
 [node name="Ability1" type="Label" parent="Cols/LeftColumn"]
-margin_top = 136.0
+margin_top = 130.0
 margin_right = 478.0
-margin_bottom = 160.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 152.0
+custom_fonts/font = ExtResource( 8 )
 text = "ability 1"
 align = 2
 
 [node name="Ability2" type="Label" parent="Cols/LeftColumn"]
-margin_top = 164.0
+margin_top = 156.0
 margin_right = 478.0
-margin_bottom = 188.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 178.0
+custom_fonts/font = ExtResource( 8 )
 text = "ability 2"
 align = 2
 
 [node name="Ability3" type="Label" parent="Cols/LeftColumn"]
-margin_top = 192.0
+margin_top = 182.0
 margin_right = 478.0
-margin_bottom = 216.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 204.0
+custom_fonts/font = ExtResource( 8 )
 text = "ability 3"
 align = 2
 
 [node name="Ability4" type="Label" parent="Cols/LeftColumn"]
-margin_top = 220.0
+margin_top = 208.0
 margin_right = 478.0
-margin_bottom = 244.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 8 )
 text = "ability 4"
 align = 2
 
 [node name="MoveUpALayer" type="Label" parent="Cols/LeftColumn"]
-margin_top = 248.0
+margin_top = 234.0
 margin_right = 478.0
-margin_bottom = 272.0
-custom_fonts/font = ExtResource( 3 )
-text = "move up a layer"
+margin_bottom = 256.0
+custom_fonts/font = ExtResource( 8 )
+text = "move above ground"
 align = 2
 
 [node name="MoveDownALayer" type="Label" parent="Cols/LeftColumn"]
-margin_top = 276.0
+margin_top = 260.0
 margin_right = 478.0
-margin_bottom = 300.0
-custom_fonts/font = ExtResource( 3 )
-text = "move down a layer"
+margin_bottom = 282.0
+custom_fonts/font = ExtResource( 8 )
+text = "move below ground"
 align = 2
 
 [node name="PeekUp" type="Label" parent="Cols/LeftColumn"]
-margin_top = 304.0
+margin_top = 286.0
 margin_right = 478.0
-margin_bottom = 328.0
-custom_fonts/font = ExtResource( 3 )
-text = "peek up a layer"
+margin_bottom = 308.0
+custom_fonts/font = ExtResource( 8 )
+text = "peek above ground"
 align = 2
 
 [node name="PeekDown" type="Label" parent="Cols/LeftColumn"]
-margin_top = 332.0
+margin_top = 312.0
 margin_right = 478.0
-margin_bottom = 356.0
-custom_fonts/font = ExtResource( 3 )
-text = "peek down a layer"
+margin_bottom = 334.0
+custom_fonts/font = ExtResource( 8 )
+text = "peek below ground"
 align = 2
 
 [node name="Restart" type="Label" parent="Cols/LeftColumn"]
-margin_top = 360.0
+margin_top = 338.0
 margin_right = 478.0
-margin_bottom = 384.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 360.0
+custom_fonts/font = ExtResource( 8 )
 text = "restart"
 align = 2
 
 [node name="Interact" type="Label" parent="Cols/LeftColumn"]
-margin_top = 388.0
+margin_top = 364.0
 margin_right = 478.0
-margin_bottom = 412.0
-custom_fonts/font = ExtResource( 3 )
+margin_bottom = 386.0
+custom_fonts/font = ExtResource( 8 )
 text = "interact"
 align = 2
 
 [node name="HSeparator" type="HSeparator" parent="Cols/LeftColumn"]
-margin_top = 416.0
+margin_top = 390.0
 margin_right = 478.0
-margin_bottom = 420.0
+margin_bottom = 394.0
 
 [node name="RestoreDefaultControls" type="Label" parent="Cols/LeftColumn"]
-margin_top = 424.0
+margin_top = 398.0
 margin_right = 478.0
-margin_bottom = 448.0
+margin_bottom = 422.0
 custom_fonts/font = ExtResource( 3 )
 text = "restore default controls"
 align = 2
 
 [node name="Spacer2" type="Label" parent="Cols/LeftColumn"]
-margin_top = 452.0
+margin_top = 426.0
 margin_right = 478.0
-margin_bottom = 464.0
+margin_bottom = 438.0
 rect_min_size = Vector2( 0, 12 )
 custom_fonts/font = ExtResource( 4 )
 
 [node name="RightColumn" type="VBoxContainer" parent="Cols"]
 margin_left = 494.0
 margin_right = 972.0
-margin_bottom = 464.0
+margin_bottom = 438.0
 size_flags_horizontal = 3
 
 [node name="Spacer3" type="Label" parent="Cols/RightColumn"]
@@ -208,124 +209,137 @@ margin_bottom = 48.0
 [node name="MoveForwardButton" type="Button" parent="Cols/RightColumn"]
 margin_top = 52.0
 margin_right = 478.0
-margin_bottom = 76.0
+margin_bottom = 74.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "W"
 align = 0
 
 [node name="TurnLeft" type="Button" parent="Cols/RightColumn"]
-margin_top = 80.0
+margin_top = 78.0
 margin_right = 478.0
-margin_bottom = 104.0
+margin_bottom = 100.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "A"
 align = 0
 
 [node name="TurnRight" type="Button" parent="Cols/RightColumn"]
-margin_top = 108.0
+margin_top = 104.0
 margin_right = 478.0
-margin_bottom = 132.0
+margin_bottom = 126.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "D"
 align = 0
 
 [node name="Ability1" type="Button" parent="Cols/RightColumn"]
-margin_top = 136.0
+margin_top = 130.0
 margin_right = 478.0
-margin_bottom = 160.0
+margin_bottom = 152.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "1"
 align = 0
 
 [node name="Ability2" type="Button" parent="Cols/RightColumn"]
-margin_top = 164.0
+margin_top = 156.0
 margin_right = 478.0
-margin_bottom = 188.0
+margin_bottom = 178.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "2"
 align = 0
 
 [node name="Ability3" type="Button" parent="Cols/RightColumn"]
-margin_top = 192.0
+margin_top = 182.0
 margin_right = 478.0
-margin_bottom = 216.0
+margin_bottom = 204.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "3"
 align = 0
 
 [node name="Ability4" type="Button" parent="Cols/RightColumn"]
-margin_top = 220.0
+margin_top = 208.0
 margin_right = 478.0
-margin_bottom = 244.0
+margin_bottom = 230.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "4"
 align = 0
 
 [node name="MoveUpALayer" type="Button" parent="Cols/RightColumn"]
-margin_top = 248.0
+margin_top = 234.0
 margin_right = 478.0
-margin_bottom = 272.0
+margin_bottom = 256.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "up"
 align = 0
 
 [node name="MoveDownALayer" type="Button" parent="Cols/RightColumn"]
-margin_top = 276.0
+margin_top = 260.0
 margin_right = 478.0
-margin_bottom = 300.0
+margin_bottom = 282.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "down"
 align = 0
 
 [node name="PeekUp" type="Button" parent="Cols/RightColumn"]
-margin_top = 304.0
+margin_top = 286.0
 margin_right = 478.0
-margin_bottom = 328.0
+margin_bottom = 308.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "shift+up"
 align = 0
 
 [node name="PeekDown" type="Button" parent="Cols/RightColumn"]
-margin_top = 332.0
+margin_top = 312.0
 margin_right = 478.0
-margin_bottom = 356.0
+margin_bottom = 334.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "shift+down"
 align = 0
 
 [node name="Restart" type="Button" parent="Cols/RightColumn"]
-margin_top = 360.0
+margin_top = 338.0
 margin_right = 478.0
-margin_bottom = 384.0
+margin_bottom = 360.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "R"
 align = 0
 
 [node name="Interact" type="Button" parent="Cols/RightColumn"]
-margin_top = 388.0
+margin_top = 364.0
 margin_right = 478.0
-margin_bottom = 412.0
+margin_bottom = 386.0
 theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 8 )
 text = "space"
 align = 0
 
 [node name="HSeparator2" type="HSeparator" parent="Cols/RightColumn"]
-margin_top = 416.0
+margin_top = 390.0
 margin_right = 478.0
-margin_bottom = 420.0
+margin_bottom = 394.0
 
 [node name="RestoreDefaults" type="Button" parent="Cols/RightColumn"]
-margin_top = 424.0
+margin_top = 398.0
 margin_right = 478.0
-margin_bottom = 448.0
+margin_bottom = 422.0
 theme = ExtResource( 1 )
 text = "do it!"
 align = 0
 
 [node name="Spacer2" type="Label" parent="Cols/RightColumn"]
-margin_top = 452.0
+margin_top = 426.0
 margin_right = 478.0
-margin_bottom = 464.0
+margin_bottom = 438.0
 rect_min_size = Vector2( 0, 12 )
 custom_fonts/font = ExtResource( 4 )
 
