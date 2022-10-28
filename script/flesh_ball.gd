@@ -12,6 +12,12 @@ export(int) var layer := 0
 onready var health := start_health
 
 
+func _ready():
+	var _err: int = $DepthController.connect("show", self, "_on_show")
+	_err = $DepthController.connect("hide", self, "_on_hide")
+	reset()
+
+
 func reset() -> void:
 #
 # reset to initial state.

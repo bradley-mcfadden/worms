@@ -17,6 +17,7 @@ shader_param/xspeed = 0.001
 radius = 25.0
 
 [node name="FleshBall" type="Area2D"]
+monitoring = false
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
