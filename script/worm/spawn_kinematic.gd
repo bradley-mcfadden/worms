@@ -130,6 +130,17 @@ func _ready() -> void:
 	_init_controller()
 
 
+func emit_signals_first_time() -> void:
+#
+# emit_signals_first_time - Call me to re-emit signals from _ready().
+#
+	for segm in body:
+		emit_signal("segment_changed", segm, SegmentState.ALIVE)
+	emit_signal("abilities_ready", $AbilitiesContainer.get_children())
+	emit_signal("size_changed", len(body))
+	emit_signal("health_state_changed", false)
+
+
 func _init_controller() -> void:
 	for controller in [$CursorController, $InputController]:
 		controller.set_physics_process(false)

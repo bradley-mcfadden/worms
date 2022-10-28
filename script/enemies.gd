@@ -10,6 +10,11 @@ extends Node
 signal all_enemies_dead
 
 
+func _ready():
+	for enemy in get_children():
+		enemy.connect("died", self, "_on_Enemy_died")
+
+
 func reset_all_enemies() -> void:
 #
 # reset_all_enemies

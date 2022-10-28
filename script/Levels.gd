@@ -8,7 +8,7 @@ extends Node
 # next level available.
 
 const LEVELS_PATH := "res://levels"
-const IMAGE_SUFFIX := "splash.png"
+const IMAGE_SUFFIX := "splash.jpg"
 const SCENE_SUFFIX := "game.tscn"
 const CONFIG_SUFFIX := "config.ini"
 const PROPERTIES_KEY := "properties"

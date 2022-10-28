@@ -56,6 +56,10 @@ func _ready() -> void:
 	ray.global_position = node1.global_position
 	ray.cast_to = node2.global_position - ray.global_position
 
+	var _err := $DepthController.connect("show", self, "_on_show")
+	_err = $DepthController.connect("hide", self, "_on_hide")
+	_err = $Tween.connect("tween_completed", self, "_on_Tween_tween_completed")
+
 
 func _draw() -> void:
 	draw_line(node1.position, node2.position, color, width, true)

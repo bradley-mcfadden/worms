@@ -1,4 +1,4 @@
-[gd_scene load_steps=502 format=2]
+[gd_scene load_steps=494 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -9,17 +9,10 @@
 [ext_resource path="res://music/Danger - no guitar.wav" type="AudioStream" id=7]
 [ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scene/DeathScreen.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scene/UI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://script/background_noise.gd" type="Script" id=11]
-[ext_resource path="res://scene/AllEnemiesDead.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scene/PauseMenu.tscn" type="PackedScene" id=13]
 [ext_resource path="res://img/morgan-padgett-dirt-texture.jpg" type="Texture" id=14]
 [ext_resource path="res://shader/dirt.tres" type="Shader" id=15]
-[ext_resource path="res://scene/HealthBar.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scene/DepthMeter.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scene/AbilitiesDisplay.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scene/NearDeathBorder.tscn" type="PackedScene" id=19]
-[ext_resource path="res://script/near_death_border.gd" type="Script" id=20]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=21]
 [ext_resource path="res://addons/rmsmartshape/shapes/point_array.gd" type="Script" id=22]
 [ext_resource path="res://addons/rmsmartshape/vertex_properties.gd" type="Script" id=23]
@@ -37,7 +30,6 @@
 [ext_resource path="res://script/interactibles.gd" type="Script" id=35]
 [ext_resource path="res://scene/FleshBall.tscn" type="PackedScene" id=36]
 [ext_resource path="res://material/wave.tres" type="Material" id=37]
-[ext_resource path="res://script/black_bars.gd" type="Script" id=38]
 [ext_resource path="res://addons/rmsmartshape/normal_range.gd" type="Script" id=39]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material.gd" type="Script" id=40]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" type="Script" id=41]
@@ -3413,11 +3405,12 @@ radius = 1400.0
 
 [node name="DescendPortalMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 5521, -2325 )
-text = "Areas that can be descended are marked with a green border. "
+text = "Areas that can be descended are marked with a green border"
 
 [node name="AscendPortalMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 9856, -2146 )
-text = "Areas that can be ascended are marked with a red border. Keep an eye out for unmarked, secret areas."
+text = "Areas that can be ascended are marked with a red border
+ Keep an eye out for unmarked, secret areas"
 layer = 1
 radius = 1400.0
 
@@ -3591,10 +3584,6 @@ position = Vector2( 31705, -2096 )
 [node name="FleshBall2" parent="Interactibles" instance=ExtResource( 36 )]
 position = Vector2( 30857, -2232 )
 
-[node name="FleshBall6" parent="Interactibles" instance=ExtResource( 36 )]
-position = Vector2( 8713, -2328 )
-layer = 1
-
 [node name="FleshBall5" parent="Interactibles" instance=ExtResource( 36 )]
 position = Vector2( 29399, -1418 )
 
@@ -3609,97 +3598,7 @@ script = ExtResource( 31 )
 
 [node name="DepthManager" parent="." instance=ExtResource( 8 )]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-pause_mode = 2
-
-[node name="NearDeathBorder" parent="CanvasLayer" instance=ExtResource( 19 )]
-visible = false
-script = ExtResource( 20 )
-
-[node name="BlackBars" type="Control" parent="CanvasLayer"]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 38 )
-
-[node name="Left" type="Panel" parent="CanvasLayer/BlackBars"]
-self_modulate = Color( 0, 0, 0, 1 )
-margin_right = 112.0
-margin_bottom = 600.0
-
-[node name="Right" type="Panel" parent="CanvasLayer/BlackBars"]
-modulate = Color( 0, 0, 0, 1 )
-margin_left = 912.0
-margin_right = 1024.0
-margin_bottom = 600.0
-
-[node name="Tween" type="Tween" parent="CanvasLayer/BlackBars"]
-
-[node name="HealthBar" parent="CanvasLayer" instance=ExtResource( 16 )]
-visible = false
-anchor_top = 1.0
-anchor_right = 0.0
-margin_left = 16.0
-margin_top = -86.0
-margin_right = 1040.0
-margin_bottom = 514.0
-hseperation = -12
-
-[node name="DepthGauge" parent="CanvasLayer" instance=ExtResource( 17 )]
-
-[node name="AllEnemiesDead" parent="CanvasLayer" instance=ExtResource( 12 )]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -228.0
-margin_top = -36.0
-margin_right = 228.0
-margin_bottom = 36.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="DeathScreen" parent="CanvasLayer" instance=ExtResource( 10 )]
-visible = false
-modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -668.0
-margin_top = -336.0
-margin_right = 668.0
-margin_bottom = 336.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 13 )]
-visible = false
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -512.0
-margin_right = 512.0
-
-[node name="AbilitiesDisplay" parent="CanvasLayer" instance=ExtResource( 18 )]
-anchor_left = 0.6
-anchor_top = 0.8
-margin_left = 458.6
-margin_top = 67.0
-margin_right = 49.0
-margin_bottom = -53.0
-
-[node name="Panel" type="Panel" parent="CanvasLayer"]
-visible = false
-modulate = Color( 0, 0, 0, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 1
-input_pass_on_modal_close_click = false
-
-[node name="Tween" type="Tween" parent="CanvasLayer"]
+[node name="UI" parent="." instance=ExtResource( 10 )]
 
 [node name="Background" type="ParallaxBackground" parent="."]
 pause_mode = 1
@@ -3714,41 +3613,3 @@ position = Vector2( 1974, 956 )
 texture = ExtResource( 14 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 4096, 4096 )
-
-[connection signal="all_enemies_dead" from="Enemies" to="." method="_on_all_enemies_dead"]
-[connection signal="bullet_created" from="Enemies/BasicEnemy" to="." method="attach_bullet"]
-[connection signal="died" from="Enemies/BasicEnemy" to="Enemies" method="_on_Enemy_died"]
-[connection signal="noise_produced" from="Enemies/BasicEnemy" to="NoiseManager" method="_on_noise_produced"]
-[connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
-[connection signal="abilities_ready" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_abilities_ready"]
-[connection signal="ability_is_ready_changed" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed"]
-[connection signal="ability_is_ready_changed_cd" from="Players/SpawnKinematic" to="CanvasLayer/AbilitiesDisplay" method="_on_ability_is_ready_changed_cd"]
-[connection signal="died" from="Players/SpawnKinematic" to="Players" method="_on_Player_died"]
-[connection signal="died" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Worm_died"]
-[connection signal="health_state_changed" from="Players/SpawnKinematic" to="Music" method="_on_health_state_changed"]
-[connection signal="health_state_changed" from="Players/SpawnKinematic" to="CanvasLayer/NearDeathBorder" method="_on_health_state_changed"]
-[connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
-[connection signal="noise_produced" from="Players/SpawnKinematic" to="NoiseManager" method="_on_noise_produced"]
-[connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
-[connection signal="segment_took_damage" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Segment_took_damage"]
-[connection signal="size_changed" from="Players/SpawnKinematic" to="CanvasLayer/HealthBar" method="_on_Worm_size_changed"]
-[connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]
-[connection signal="hide" from="Obstacles/StaticBody2D/DepthController" to="Obstacles/StaticBody2D" method="_on_hide"]
-[connection signal="show" from="Obstacles/StaticBody2D/DepthController" to="Obstacles/StaticBody2D" method="_on_show"]
-[connection signal="hide" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_hide"]
-[connection signal="show" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_show"]
-[connection signal="hide" from="Obstacles/StaticBody2D3/DepthController" to="Obstacles/StaticBody2D3" method="_on_hide"]
-[connection signal="show" from="Obstacles/StaticBody2D3/DepthController" to="Obstacles/StaticBody2D3" method="_on_show"]
-[connection signal="hide" from="Obstacles/LaserWire2/DepthController" to="Obstacles/LaserWire2" method="_on_hide"]
-[connection signal="show" from="Obstacles/LaserWire2/DepthController" to="Obstacles/LaserWire2" method="_on_show"]
-[connection signal="tween_completed" from="Obstacles/LaserWire2/Tween" to="Obstacles/LaserWire2" method="_on_Tween_tween_completed"]
-[connection signal="hide" from="Portals/Portal/DepthController" to="Portals/Portal" method="_on_hide"]
-[connection signal="show" from="Portals/Portal/DepthController" to="Portals/Portal" method="_on_show"]
-[connection signal="hide" from="Portals/Portal2/DepthController" to="Portals/Portal2" method="_on_hide"]
-[connection signal="show" from="Portals/Portal2/DepthController" to="Portals/Portal2" method="_on_show"]
-[connection signal="layer_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_layer_changed"]
-[connection signal="layer_changed" from="DepthManager" to="Background" method="_on_layer_changed"]
-[connection signal="layer_peeked" from="DepthManager" to="CanvasLayer/BlackBars" method="_on_layer_peeked"]
-[connection signal="number_of_layers_changed" from="DepthManager" to="CanvasLayer/DepthGauge" method="_on_DepthManager_number_of_layers_changed"]
-[connection signal="lay_eggs" from="CanvasLayer/AllEnemiesDead" to="." method="_on_lay_eggs"]
-[connection signal="restart" from="CanvasLayer/DeathScreen" to="." method="_on_restart"]

@@ -4,34 +4,65 @@ extends Node2D
 
 export(PackedScene) var eggs
 
-var death_screen: Node
-var enemies_dead_screen: Node
-var primary_player: Node
-
+# var death_screen: Node
+# var enemies_dead_screen: Node
+onready var primary_player: Node
+onready var depth_manager: Node = $DepthManager
+onready var ui: Node = $UI
 
 func _ready() -> void:
 	$Music.play()
-	$DepthManager.add_items($Players.get_players())
-	$DepthManager.add_items($Enemies.get_enemies())
-	$DepthManager.add_items($Obstacles.get_obstacles())
-	$DepthManager.add_items($Decorations.get_decorations())
-	$DepthManager.add_items($Interactibles.get_interactibles())
+	depth_manager.add_items($Players.get_players())
+	depth_manager.add_items($Enemies.get_enemies())
+	depth_manager.add_items($Obstacles.get_obstacles())
+	depth_manager.add_items($Decorations.get_decorations())
+	depth_manager.add_items($Interactibles.get_interactibles())
 	var portals := $Portals.get_children()
 	for portal in portals:
-		var _res: int = $DepthManager.connect("layer_changed", portal, "_on_DepthManager_layer_changed")
-		_res = $DepthManager.connect("layer_peeked", portal, "_on_DepthManager_layer_changed")
-	$DepthManager.add_items(portals)
-	$DepthManager.set_current_layer(0)
-	$NoiseManager.listeners.append_array($Enemies.get_enemies())
+		var _res: int = depth_manager.connect("layer_changed", portal, "_on_DepthManager_layer_changed")
+		_res = depth_manager.connect("layer_peeked", portal, "_on_DepthManager_layer_changed")
+	depth_manager.add_items(portals)
+	depth_manager.set_current_layer(0)
+	var enemies := $Enemies.get_children()
+	for enemy in enemies:
+		var _res: int = enemy.connect("noise_produced", $NoiseManager, "_on_noise_produced")
+		_res = enemy.connect("bullet_created", self, "attach_bullet")
+	$NoiseManager.listeners.append_array(enemies)
 	$Background.set_layer(0)
-	$CanvasLayer/DepthGauge.change_depth(0)
-	death_screen = $CanvasLayer/DeathScreen
-	enemies_dead_screen = $CanvasLayer/AllEnemiesDead
+	# $CanvasLayer/DepthGauge.change_depth(0)
+	# death_screen = $CanvasLayer/DeathScreen
+	# enemies_dead_screen = $CanvasLayer/AllEnemiesDead
 	primary_player = $Players/SpawnKinematic
 	primary_player.background = $Background
 
-	$CanvasLayer/Tween.interpolate_property($CanvasLayer/Panel, "modulate", null, Color.transparent, 1.0)
-	$CanvasLayer/Tween.start()
+	$UI.fade_in()
+	_init_connections()
+	primary_player.emit_signals_first_time()
+
+
+func _init_connections() -> void:
+	var _err := $Enemies.connect("all_enemies_dead", self, "_on_all_enemies_dead")
+	_err = $Players.connect("all_players_dead", self, "_on_all_players_dead")
+	_err = ui.get_node("DeathScreen").connect("restart", self, "_on_restart")
+	_err = ui.get_node("AllEnemiesDead").connect("lay_eggs", self, "_on_lay_eggs")
+	_err = $DepthManager.connect("layer_changed", $Background, "_on_layer_changed")
+	var ability_display := ui.get_node("AbilitiesDisplay")
+	_err = primary_player.connect("abilities_ready", ability_display, "_on_abilities_ready")
+	_err = primary_player.connect("ability_is_ready_changed", ability_display, "_on_ability_is_ready_changed")
+	_err = primary_player.connect("ability_is_ready_changed_cd", ability_display, "_on_ability_is_ready_changed_cd")
+	_err = primary_player.connect("died", $Players, "_on_player_died")
+	_err = primary_player.connect("health_state_changed", $Music, "_on_health_state_changed")
+	_err = primary_player.connect("health_state_changed", ui.get_node("NearDeathBorder"), "_on_health_state_changed")
+	_err = primary_player.connect("layer_visibility_changed", depth_manager, "_on_layer_visibility_changed")
+	_err = primary_player.connect("noise_produced", $NoiseManager, "_on_noise_produced")
+	_err = primary_player.connect("segment_changed", depth_manager, "_on_segment_changed")
+	_err = primary_player.connect("switch_layer_pressed", depth_manager, "_on_switch_layer_pressed")
+	var health_bar := ui.get_node("HealthBar")
+	_err = primary_player.connect("segment_took_damage", health_bar, "_on_Segment_took_damage")
+	_err = primary_player.connect("size_changed", health_bar, "_on_Worm_size_changed")
+	_err = primary_player.connect("died", health_bar, "_on_Worm_died")
+
+	ui.connect_to_dm(depth_manager)
 
 
 func _process(_delta: float) -> void:
@@ -49,16 +80,14 @@ func attach_bullet(bullet: Node) -> void:
 #
 	add_child(bullet)
 	var _ret = bullet.connect("bullet_destroyed", self, "_on_bullet_destroyed")
-	$DepthManager.add(bullet.get_layer(), bullet)
+	depth_manager.add(bullet.get_layer(), bullet)
 
 
 func reset() -> void:
 #
 # reset the current scene to its initial state.
 #
-	death_screen.visible = false
-	enemies_dead_screen.visible = false
-	$CanvasLayer/Panel.visible = false
+	ui.reset()
 	$Enemies.reset_all_enemies()
 	$Players.reset_all_players()
 	$Music.play()
@@ -83,10 +112,10 @@ func get_current_camera_2d() -> Camera2D:
 
 func _on_lay_eggs() -> void:
 	$Music.playing = false
-	enemies_dead_screen.visible = false
+	# enemies_dead_screen.visible = false
 	var cpu_con = $CpuController
-	var worm = $Players/SpawnKinematic
-	$Players/SpawnKinematic.set_active_controller(cpu_con)
+	var worm = primary_player
+	worm.set_active_controller(cpu_con)
 	cpu_con.straighten_out(len(worm.body)*0.1+0.2)
 	yield(cpu_con, "command_finished")
 	cpu_con.curl("left", len(worm.body)*0.1+1.0)
@@ -98,24 +127,22 @@ func _on_lay_eggs() -> void:
 	$LayEggs.play()
 	yield(egg_ins, "animation_finished")
 	Levels.next_level_or_main()
-	$CanvasLayer/Panel.visible = true
-	$CanvasLayer/Tween.interpolate_property($CanvasLayer/Panel, "modulate", null, Color.black, 2.0)
-	$CanvasLayer/Tween.start()
+	$UI.fade_out()
 
 
 func _on_all_enemies_dead() -> void:
-	enemies_dead_screen.visible = true
-	enemies_dead_screen.fade_in()
+	ui._on_all_enemies_dead()
 
 
 func _on_all_players_dead() -> void:
 	$Music.playing = false
-	death_screen.visible = true
-	death_screen.fade_in()
+	ui._on_all_players_dead()
+	# death_screen.visible = true
+	# death_screen.fade_in()
 
 
 func _on_bullet_destroyed(bullet: Node) -> void:
-	$DepthManager.remove(bullet)
+	depth_manager.remove(bullet)
 
 
 func _on_restart() -> void:
