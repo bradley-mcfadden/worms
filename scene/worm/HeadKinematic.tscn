@@ -296,6 +296,7 @@ next/mouth_chomp = "chomp_to_idle"
 visible = false
 position = Vector2( 34, 0 )
 collision_layer = 2
+monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BiteHitbox"]

@@ -539,3 +539,8 @@ func _on_segment_took_damage(segment: Node, hurt: bool = false) -> void:
 
 func _on_unpaused() -> void:
 	_init_controller()
+
+
+func set_dirt_color(color: Color) -> void:
+	for segment in body:
+		segment.set_dirt_color(color)

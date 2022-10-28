@@ -183,3 +183,12 @@ func fade_out(duration: float) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.3), duration)
 	$Tween.start()
 	$DirtExplode.emitting = true
+
+
+func set_dirt_color(color: Color) -> void:
+	var dirt_motion := $DirtMotion
+	if not dirt_motion == null:
+		dirt_motion.color = color
+	var dirt_explode := $DirtExplode
+	if not dirt_explode == null:
+		dirt_explode.color = color

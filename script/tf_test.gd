@@ -38,6 +38,7 @@ func _ready() -> void:
 	$UI.fade_in()
 	_init_connections()
 	primary_player.emit_signals_first_time()
+	primary_player.set_dirt_color($Background.sample_colors(16))
 
 
 func _init_connections() -> void:
