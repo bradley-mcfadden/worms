@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://script/entity_state/basic_enemy/dead_state.gd"
 }, {
 "base": "EntityState",
+"class": "BasicEnemyFearState",
+"language": "GDScript",
+"path": "res://script/entity_state/basic_enemy/fear_state.gd"
+}, {
+"base": "EntityState",
 "class": "BasicEnemyMeleeAttackState",
 "language": "GDScript",
 "path": "res://script/entity_state/basic_enemy/melee_attack_state.gd"
@@ -250,6 +255,7 @@ _global_script_class_icons={
 "BasicEnemy": "",
 "BasicEnemyChaseState": "",
 "BasicEnemyDeadState": "",
+"BasicEnemyFearState": "",
 "BasicEnemyMeleeAttackState": "",
 "BasicEnemyPatrolState": "",
 "BasicEnemyRangedAttackState": "",

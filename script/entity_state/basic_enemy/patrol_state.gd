@@ -51,7 +51,10 @@ func _nearest_point(points: Array) -> int:
 
 func _physics_process(delta: float) -> void:
 	if react_to_player():
-		fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+		if entity.has_melee_attack or entity.has_ranged_attack:
+			fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+		else:
+			fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
 		print("reacted to player")
 		return
 	if noise_location != null:

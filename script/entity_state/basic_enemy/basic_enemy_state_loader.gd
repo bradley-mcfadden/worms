@@ -53,9 +53,17 @@ static func search(fsm: Fsm, entity: Node) -> Object:
 	return load("res://script/entity_state/basic_enemy/search_state.gd").new(fsm, entity)
 
 
-static func seek(fsm, entity, position):
+static func seek(fsm, entity, position) -> Object:
 # chase returns an instance of chase_state.gd
 # fsm - FSM to provide the new state
 # entity - Entity controlled by FSM
 # return a chase_state.gd instance
 	return load("res://script/entity_state/basic_enemy/seek_state.gd").new(fsm, entity, position)
+
+
+static func fear(fsm, entity) -> Object:
+# fear returns an instance of fear_state.gd
+# fsm - FSM to provide the new state
+# entity - Entity controlled by FSM
+# return a fear_state.gd instance
+	return load("res://script/entity_state/basic_enemy/fear_state.gd").new(fsm, entity)

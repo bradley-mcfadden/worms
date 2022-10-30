@@ -18,8 +18,8 @@ const PROPERTIES := {
 }
 
 var target: Vector2
-var walk_anim := "walk_gun"
-var idle_anim := "idle_gun"
+var walk_anim := "walk"
+var idle_anim := "idle"
 var noise_location = null # Vector2, usually
 
 
@@ -41,7 +41,10 @@ func on_enter() -> void:
 func _physics_process(delta: float) -> void:
     var player = entity.check_for_player()
     if player != null:
-        fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+        if entity.has_ranged_attack or entity.has_melee_attack:
+            fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+        else:
+            fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
         return
     if noise_location != null:
         fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location))

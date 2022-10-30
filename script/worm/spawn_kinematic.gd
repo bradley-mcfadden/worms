@@ -517,7 +517,7 @@ func _on_segment_died(segment: Node, from: Node, overkill: bool) -> void:
 
 		if (len(body) < minimum_length || segment == head) and is_alive():
 			if active_controller == $CursorController:
-				$CursorController.following = null
+				$CursorController.set_physics_process(false)
 			dead = true
 			emit_signal("died", from, overkill)
 		elif (len(body) < num_segment_for_low_health):

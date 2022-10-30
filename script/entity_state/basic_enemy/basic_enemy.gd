@@ -92,6 +92,7 @@ func _ready() -> void:
 	ent_state_prop[BasicEnemyRangedAttackState.NAME] = BasicEnemyRangedAttackState.PROPERTIES
 	ent_state_prop[BasicEnemySearchState.NAME] = BasicEnemySearchState.PROPERTIES
 	ent_state_prop[BasicEnemySeekState.NAME] = BasicEnemySeekState.PROPERTIES
+	ent_state_prop[BasicEnemyFearState.NAME] = BasicEnemyFearState.PROPERTIES
 	# ent_state_prop[typeof(MeleeAttackState)] = MeleeAttackState.PROPERTIES
 	# ent_state_prop[typeof(RangedAttackState)] = RangedAttackState.PROPERTIES
 
@@ -153,6 +154,8 @@ func _draw() -> void:
 				_draw_semicircle(melee_thresh, f, Color.black)
 				_draw_semicircle(ranged_thresh, f, Color.black)
 	else:
+		if len(idle_patrol) > 0:
+			_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
 		_draw_semicircle(look_distance, f, Color.black)
 		if has_melee_attack:
 			_draw_semicircle(melee_thresh, f, Color.black)
