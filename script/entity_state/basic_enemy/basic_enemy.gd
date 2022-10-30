@@ -262,8 +262,10 @@ func set_danger() -> void:
 		var result := space_state.intersect_ray(
 			position,
 			position + ray_directions[i].rotated(rot) * look_ahead,
-			[self],
-			collision_layer
+			[self, $MeleeAttack],
+			collision_layer,
+			true, # collide_with_bodies
+			true # collide_with_areas
 		)
 		if result:
 			danger[i] = 1.0  #- result.position.distance_to(position) / look_ahead

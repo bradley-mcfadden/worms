@@ -323,4 +323,8 @@ input_pickable = false
 scale = Vector2( 14.7209, -13.8558 )
 shape = SubResource( 8 )
 
+[node name="HitInvul" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
 [connection signal="area_entered" from="BiteHitbox" to="." method="_on_BiteHitbox_area_entered"]

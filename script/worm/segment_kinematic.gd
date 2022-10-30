@@ -111,12 +111,40 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 # from - Damage causer.
 # emit - Whether to notify other nodes that this node took damage or died as a result of this call.
 #
-	if not is_alive():
+	if not is_alive() and not $HitInvul.paused:
 		return
 	var new_health: float = health - how_much
-	health = int(clamp(new_health, 0.0, start_health))
-	if new_health > 0:
+	var adj_health: = int(clamp(new_health, 0.0, start_health))
+	new_health = adj_health
+	var diff := adj_health - health
+	health = adj_health
+	_adjust_gore(float(health) / start_health)
+
+	if new_health > 0 and abs(diff) > 1:
 		if emit: emit_signal("took_damage", self, how_much > 0)
+		var mod: Color
+		if diff < 0:
+			$HitInvul.start()
+			mod = Color.black
+		else:
+			mod = Color.purple.darkened(0.2)
+		$Tween.interpolate_property(
+			$image,
+			"modulate",
+			null,
+			mod,
+			$HitInvul.wait_time * 0.5
+		)
+		$Tween.start()
+		yield($Tween, "tween_completed")
+		$Tween.interpolate_property(
+			$image,
+			"modulate",
+			null,
+			Color.white,
+			$HitInvul.wait_time * 0.5
+		)
+		$Tween.start()
 	if new_health < start_health * -0.25:
 		if emit: emit_signal("segment_died", self, from, true)
 		$BloodExplode.emitting = true
@@ -124,8 +152,7 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 	elif new_health <= 0:
 		if emit: emit_signal("segment_died", self, from, false)
 		$BloodExplode.emitting = true
-		_die_then_cleanup()
-	_adjust_gore(float(health) / start_health)
+		_die_then_cleanup()	
 
 
 func _die_then_cleanup() -> void:

@@ -42,3 +42,7 @@ gore_color = Color( 0.11802, 0.0308, 0.28, 1 )
 [node name="DepthController" parent="." instance=ExtResource( 5 )]
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="HitInvul" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
