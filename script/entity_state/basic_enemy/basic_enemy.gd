@@ -142,7 +142,6 @@ func _draw() -> void:
 	draw_arc(Vector2.ZERO, 20, 0, PI * 2, 20, color)
 	draw_line(Vector2.ZERO, Vector2(20, 0), color)
 	var f = deg2rad(prop["fov"])
-	# print(ent_state_prop)
 	if !Engine.editor_hint:
 		match state:
 			BasicEnemySeekState.NAME:
@@ -161,10 +160,8 @@ func _draw() -> void:
 			_draw_semicircle(melee_thresh, f, Color.black)
 		if has_ranged_attack:
 			_draw_semicircle(ranged_thresh, f, Color.black)
-		# translate(-global_position)
 
 		_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
-		# translate(global_position)
 
 
 # draw a semicircle with radius, which travels around the arc for f,
@@ -356,17 +353,13 @@ func check_ranged_attack(_dist_to_player: float, ppos: Vector2) -> bool:
 # ppos - Player position
 # return - True if a ranged attack would probably succeed.
 # 
-	#print("Check ranged attack")
 	if !has_ranged_attack:
 		return false
 	var space_state = get_world_2d().direct_space_state
 	var hit: Dictionary = space_state.intersect_ray(global_position, global_position+(ppos-global_position)*fsm.top().PROPERTIES["threshold"], [self], collision_mask)
 	if hit.has("collider"):
-		# print(hit)
-		# and $AnimationPlayer.assigned_animation == "idle"
 		if hit["collider"].has_method("take_damage"):
-			#$AnimationPlayer.play("ranged_attack")
-			print("Doing ranged attack!")
+			# print("Doing ranged attack!")
 			look_at(hit["position"])
 			return true
 	return false
@@ -408,10 +401,7 @@ func check_melee_attack(dist_to_player: float, _ppos: Vector2) -> bool:
 	if !has_melee_attack:
 		return false
 	# check if I'm close enough to attack
-	#var current_anim = $AnimationPlayer.current_animation
 	if dist_to_player < melee_thresh:  # and current_anim == "idle":
-		# $AnimationPlayer.play("melee_attack")
-		# print("Doing melee attacK!", dist_to_player)
 		return true
 	return false
 
@@ -449,7 +439,6 @@ func take_damage(how_much: int, from: Node) -> void:
 #
 	if health <= 0:
 		return
-	print("Enemy is taking " + str(how_much) + " damage")
 	health -= how_much
 	$Sounds/Grunt.play()
 	if health < start_health * -0.25:
@@ -543,7 +532,6 @@ func set_collision_mask(mask: int) -> void:
 
 func on_noise_heard(position: Vector2) -> void:
 	if not is_alive(): return
-	print(self, " heard a noise at ", position)
 	var top = fsm.top()
 	if top.has_method("on_noise_heard"):
 		top.on_noise_heard(position)

@@ -56,7 +56,7 @@ func _shrink_to_size(to: int) -> void:
 	if by <= 0 or to < 0:
 		return
 
-	print("_shrink_to_size ", to, " removing ", by)
+	#print("_shrink_to_size ", to, " removing ", by)
 
 	var seg
 	# n-1, n-by-2, by+1 removed
@@ -65,7 +65,7 @@ func _shrink_to_size(to: int) -> void:
 		body.remove(i)
 		remove_child(seg)
 		seg.queue_free()
-		print(str(seg.proportion), " at ", i)
+		#print(str(seg.proportion), " at ", i)
 	if to != 0:
 		var new_tail = tail_widg.instance()
 		new_tail.set_proportion(tail.proportion)
