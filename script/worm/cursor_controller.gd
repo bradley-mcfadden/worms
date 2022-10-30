@@ -16,7 +16,7 @@ var following: Node2D = null
 
 
 func _physics_process(_delta: float) -> void:
-	if not following == null: 
+	if not following == null and not following.is_queued_for_deletion(): 
 		# unit vector between following and self
 		var direction: Vector2 = $Cursor.cursor_position - following.global_position
 		direction = direction.normalized()

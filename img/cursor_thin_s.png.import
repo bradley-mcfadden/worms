@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/packed_dirt_l.jpg-7cc44e5efe26f5f11d27066352daf037.stex"
+path="res://.import/cursor_thin_s.png-e5544df7b3935b394c3b9d16843665ed.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://img/textures/packed_dirt_l.jpg"
-dest_files=[ "res://.import/packed_dirt_l.jpg-7cc44e5efe26f5f11d27066352daf037.stex" ]
+source_file="res://img/cursor_thin_s.png"
+dest_files=[ "res://.import/cursor_thin_s.png-e5544df7b3935b394c3b9d16843665ed.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false

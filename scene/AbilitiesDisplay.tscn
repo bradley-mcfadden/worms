@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://sound/ability_ready.wav" type="AudioStream" id=1]
 [ext_resource path="res://script/abilities_display.gd" type="Script" id=2]
 
 [node name="AbilitiesDisplay" type="Panel"]
@@ -24,3 +25,8 @@ grow_horizontal = 0
 grow_vertical = 0
 rect_scale = Vector2( -1, 1 )
 alignment = 2
+
+[node name="Ready" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -30.0
+bus = "SFX"

@@ -8,7 +8,7 @@ class_name BasicEnemyPatrolState
 
 const NAME := "PatrolState"
 const START_REACTION_TIME := 30
-const PROPERTIES := {color = Color.aquamarine, speed = 250, threshold = 32, fov = 90}
+const PROPERTIES := {color = Color.aquamarine, speed = 500, threshold = 32, fov = 90}
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 var reaction_time: float = START_REACTION_TIME
@@ -26,7 +26,7 @@ func _init(_fsm: Fsm, _entity: Node) -> void:
 func on_enter() -> void:
 	reaction_time = START_REACTION_TIME
 	idle_patrol = entity.idle_patrol
-	patrol_idx = entity.patrol_idx
+	patrol_idx = _nearest_point(idle_patrol)
 	if entity.has_ranged_attack:
 		walk_anim = "walk_gun"
 		idle_anim = "idle_gun"
@@ -34,7 +34,20 @@ func on_enter() -> void:
 		walk_anim = "walk_knife"
 		idle_anim = "idle_knife"
 	entity.animation_player.play(walk_anim)
-	
+
+
+func _nearest_point(points: Array) -> int:
+	var epos: Vector2 = entity.global_position
+	var min_distance := 1000000.0
+	var min_idx := 0
+	for i in range(len(points)):
+		var dist: float = points[i].distance_to(epos)
+		if dist < min_distance:
+			min_distance = dist
+			min_idx = i
+	return min_idx
+
+
 
 func _physics_process(delta: float) -> void:
 	if react_to_player():

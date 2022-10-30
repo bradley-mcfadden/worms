@@ -315,8 +315,9 @@ AsyncLoader="*res://script/AsyncLoader.gd"
 [display]
 
 window/size/resizable=false
-mouse_cursor/custom_image="res://img/cursor_thin.png"
-mouse_cursor/custom_image_hotspot=Vector2( 16, 16 )
+mouse_cursor/custom_image="res://img/cursor_thin_s.png"
+mouse_cursor/custom_image_hotspot=Vector2( 8, 8 )
+mouse_cursor/tooltip_position_offset=Vector2( 8, 8 )
 
 [editor_plugins]
 

@@ -186,7 +186,7 @@ func fade_out(duration: float) -> void:
 
 
 func set_dirt_color(color: Color) -> void:
-	var dirt_motion := $DirtMotion
+	var dirt_motion := get_node_or_null("DirtMotion")
 	if not dirt_motion == null:
 		dirt_motion.color = color
 	var dirt_explode := $DirtExplode

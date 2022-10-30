@@ -12,7 +12,7 @@ enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 const NAME := "SeekState"
 const PROPERTIES := {
 	color = Color.blueviolet,
-	speed = 350,
+	speed = 500,
 	threshold = 32,
 	fov = 90,
 }

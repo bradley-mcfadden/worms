@@ -3398,14 +3398,19 @@ position = Vector2( 1366, -3101 )
 script = ExtResource( 52 )
 text = "Move the mouse to steer"
 
+[node name="SpeedBoostMessage2" parent="Obstacles" instance=ExtResource( 34 )]
+position = Vector2( 3655, -3059 )
+text = "Abilities like the speed burst must cool down after use. When they are ready, a red background appears behind their icon."
+
 [node name="DownwardMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 6917, -2145 )
 script = ExtResource( 48 )
 radius = 1400.0
 
-[node name="DescendPortalMessage" parent="Obstacles" instance=ExtResource( 34 )]
+[node name="DescendPortalMessage2" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 5521, -2325 )
-text = "Areas that can be descended are marked with a green border"
+text = "The worm can change move underground to surprise enemies, and travel to new areas.
+Areas that can be descended are marked with a green border"
 
 [node name="AscendPortalMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 9856, -2146 )

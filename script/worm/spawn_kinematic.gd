@@ -79,6 +79,7 @@ var background: BackgroundNoise
 var active_controller: WormController
 
 onready var body_mut := Mutex.new()
+onready var dirt_color: Color
 
 
 func _ready() -> void:
@@ -335,6 +336,9 @@ func add_segment() -> void:
 	new_tail.connect("segment_died", self, "_on_segment_died")
 	new_tail.connect("took_damage", self, "_on_segment_took_damage")
 
+	new_seg.set_dirt_color(dirt_color)
+	new_tail.set_dirt_color(dirt_color)
+
 	emit_signal("segment_changed", old_tail, SegmentState.DEAD)
 	emit_signal("segment_changed", new_seg, SegmentState.ALIVE)
 	emit_signal("segment_changed", new_tail, SegmentState.ALIVE)
@@ -512,6 +516,8 @@ func _on_segment_died(segment: Node, from: Node, overkill: bool) -> void:
 			call_deferred("add_segment")
 
 		if (len(body) < minimum_length || segment == head) and is_alive():
+			if active_controller == $CursorController:
+				$CursorController.following = null
 			dead = true
 			emit_signal("died", from, overkill)
 		elif (len(body) < num_segment_for_low_health):
@@ -544,3 +550,4 @@ func _on_unpaused() -> void:
 func set_dirt_color(color: Color) -> void:
 	for segment in body:
 		segment.set_dirt_color(color)
+	dirt_color = color

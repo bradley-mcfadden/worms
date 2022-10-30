@@ -51,7 +51,7 @@ func _init_connections() -> void:
 	_err = primary_player.connect("abilities_ready", ability_display, "_on_abilities_ready")
 	_err = primary_player.connect("ability_is_ready_changed", ability_display, "_on_ability_is_ready_changed")
 	_err = primary_player.connect("ability_is_ready_changed_cd", ability_display, "_on_ability_is_ready_changed_cd")
-	_err = primary_player.connect("died", $Players, "_on_player_died")
+	_err = primary_player.connect("died", $Players, "_on_Player_died")
 	_err = primary_player.connect("health_state_changed", $Music, "_on_health_state_changed")
 	_err = primary_player.connect("health_state_changed", ui.get_node("NearDeathBorder"), "_on_health_state_changed")
 	_err = primary_player.connect("layer_visibility_changed", depth_manager, "_on_layer_visibility_changed")

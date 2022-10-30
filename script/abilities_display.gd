@@ -15,6 +15,8 @@ const DISABLED_MOD := Color(0.7, 0.7, 0.7, 0.7)
 var ability_map := {}
 var param_map := {}
 
+onready var rng := RandomNumberGenerator.new()
+
 
 func _ready() -> void:
 	pass
@@ -66,6 +68,8 @@ func _on_ability_is_ready_changed(ability: Ability, is_ready: bool) -> void:
 	$Tween.start()
 	# If ability is ready, flash the ability red a few times
 	if next_mod == 0:
+		if not ability.has_method("bite"):
+			_play_ready_audio()
 		for _i in range(3):
 			yield($Tween, "tween_completed")
 			$Tween.interpolate_property(
@@ -86,6 +90,8 @@ func _on_ability_is_ready_changed_cd(ability: Ability, is_ready: bool, duration:
 		$Tween.interpolate_property(param_map[ability], "param", 1.0, 0.0, duration)
 		$Tween.start()
 	else:
+		if not ability.has_method("bite"):
+			_play_ready_audio()
 		$Tween.interpolate_property(
 			param_map[ability], "param2", 0.0, 1.0, 1.0, Tween.TRANS_SINE
 		)
@@ -93,7 +99,7 @@ func _on_ability_is_ready_changed_cd(ability: Ability, is_ready: bool, duration:
 
 
 # To use me, get rid of Ability typehints and add to _ready()
-func _test_on_ability_is_ready_changed():
+func _test_on_ability_is_ready_changed() -> void:
 	var dummy := []
 	dummy.append(5)
 	dummy.append(10)
@@ -105,12 +111,17 @@ func _test_on_ability_is_ready_changed():
 
 
 # To use me, get rid of Ability typehints and add to _ready()
-func _test_on_ability_is_ready_changed_cd():
+func _test_on_ability_is_ready_changed_cd() -> void:
 	var dummy := [5, 10]
 	_on_abilities_ready(dummy)
 	yield(get_tree().create_timer(2.5), "timeout")
 	_on_ability_is_ready_changed_cd(DummyAbility.new(), false, 10.0)
 	_on_ability_is_ready_changed_cd(DummyAbility.new(), false, 20)
+
+
+func _play_ready_audio() -> void:
+	$Ready.pitch_scale = 1.0 + rng.randfn(0.0, 0.1)
+	$Ready.play()
 
 
 # ShaderParam stores some parameters for a shader, and allows them

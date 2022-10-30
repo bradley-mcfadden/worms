@@ -12,7 +12,7 @@ class_name BasicEnemyChaseState
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
 const NAME := "ChaseState"
-const PROPERTIES := {color = Color.crimson, speed = 350, threshold = 200, fov = 360}
+const PROPERTIES := {color = Color.crimson, speed = 750, threshold = 200, fov = 360}
 # Length of time in seconds before entity will give up its chase
 const INITIAL_INTEREST := 1.0
 

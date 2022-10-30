@@ -28,6 +28,7 @@ func invoke() -> void:
 	if not is_ready:
 		return
 	n_invoke_called += 1
+	emit_signal("is_ready_changed", self, false)
 	is_ready = false
 
 	if n_invoke_called == 1:
@@ -41,7 +42,7 @@ func wind_up() -> void:
 	if anim_player == null: return
 	anim_player.play(MOUTH_OPEN_WIDE)
 	_play_roar_sound()
-	emit_signal("is_ready_changed", self, false)
+	#emit_signal("is_ready_changed", self, false)
 	$Timer.start()
 
 
@@ -50,7 +51,7 @@ func bite() -> void:
 	if anim_player == null: return
 	anim_player.playback_speed = 2.0
 	anim_player.play(MOUTH_CHOMP)
-	emit_signal("is_ready_changed", self, false)
+	# emit_signal("is_ready_changed", self, false)
 	yield(anim_player, "animation_changed")
 	anim_player.playback_speed = 1.0
 
@@ -80,7 +81,7 @@ func _play_roar_sound() -> void:
 func _on_animation_finished(name: String) -> void:
 	if name == MOUTH_OPEN_WIDE:
 		is_ready = true
-		emit_signal("is_ready_changed", self, true)
+		#emit_signal("is_ready_changed", self, true)
 
 
 func _on_animation_changed(from: String, to: String) -> void:
