@@ -3272,6 +3272,7 @@ script = ExtResource( 2 )
 
 [node name="BasicEnemy" parent="Enemies" instance=ExtResource( 6 )]
 position = Vector2( 43493, -2520 )
+look_ahead = 125
 idle_patrol = PoolVector2Array( 43500, -2500 )
 look_distance = 800
 has_ranged_attack = true

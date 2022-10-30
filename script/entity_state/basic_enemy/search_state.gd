@@ -50,10 +50,16 @@ func _physics_process(delta: float) -> void:
 	
 	if search_time <= 0:
 		search_time = rand_range(2.0, 4.0)
-		var angle = rand_range(0, TWO_PI)
-		var length = rand_range(100, 200)
-		search_location = entity.global_position + Vector2.RIGHT.rotated(angle) * length
-		print("New search state at ", search_location)
+		var angle: float = rand_range(0, TWO_PI)
+		var length: float = rand_range(100, 200)
+		var world: Physics2DDirectSpaceState = entity.get_world_2d().direct_space_state
+		var ray := Vector2.RIGHT.rotated(angle) * length
+		var collider := world.intersect_ray(
+			entity.global_position, entity.global_position + ray, [entity], entity.collision_layer
+		)
+		if collider.empty():
+			search_location = entity.global_position + Vector2.RIGHT.rotated(angle) * length
+			print("New search state at ", search_location)
 	else:
 		search_time -= delta
 	

@@ -23,7 +23,7 @@ const DRAW_ME := false
 
 export(int) var radius := 20
 export(float) var steer_force := 0.5
-export(int) var look_ahead := 125
+export(int) var look_ahead := 250
 export(int) var num_rays := 12
 export(PoolVector2Array) var idle_patrol := PoolVector2Array()
 export(float) var fov := 90.0
@@ -93,8 +93,6 @@ func _ready() -> void:
 	ent_state_prop[BasicEnemySearchState.NAME] = BasicEnemySearchState.PROPERTIES
 	ent_state_prop[BasicEnemySeekState.NAME] = BasicEnemySeekState.PROPERTIES
 	ent_state_prop[BasicEnemyFearState.NAME] = BasicEnemyFearState.PROPERTIES
-	# ent_state_prop[typeof(MeleeAttackState)] = MeleeAttackState.PROPERTIES
-	# ent_state_prop[typeof(RangedAttackState)] = RangedAttackState.PROPERTIES
 
 	if has_ranged_attack:
 		ent_state_prop[BasicEnemyChaseState.NAME]["threshold"] = ranged_thresh
@@ -212,6 +210,7 @@ func reset() -> void:
 	set_layer(start_layer)
 	$MeleeAttack.visible = false
 	$MeleeAttack.monitoring = false
+	$Trail.visible = false
 
 
 func set_interest() -> Object: # Return SeekState
