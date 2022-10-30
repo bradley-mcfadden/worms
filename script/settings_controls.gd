@@ -25,6 +25,7 @@ onready var button_to_action := {
 	"PeekDown" : "peek_layer_down",
 	"Restart" : "reset",
 	"Interact" : "lay_eggs",
+	"PeekForward" : "look_ahead"
 }
 
 
@@ -157,6 +158,10 @@ func _on_Restart_pressed() -> void:
 
 func _on_Interact_pressed() -> void:
 	_show_change_bind_for_action("lay_eggs", '"interact"')
+
+
+func _on_PeekAhead_pressed() -> void:
+	_show_change_bind_for_action("look_ahead", '"peek ahead"')
 
 
 func _on_ControlScheme_item_selected(index: int) -> void:

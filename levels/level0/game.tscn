@@ -1,4 +1,4 @@
-[gd_scene load_steps=494 format=2]
+[gd_scene load_steps=495 format=2]
 
 [ext_resource path="res://script/decorations.gd" type="Script" id=1]
 [ext_resource path="res://script/enemies.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scene/UI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://script/background_noise.gd" type="Script" id=11]
+[ext_resource path="res://levels/level0/script/peek_ahead.gd" type="Script" id=12]
 [ext_resource path="res://img/morgan-padgett-dirt-texture.jpg" type="Texture" id=14]
 [ext_resource path="res://shader/dirt.tres" type="Shader" id=15]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=21]
@@ -3446,6 +3447,10 @@ min_width = 700
 [node name="BiteMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 27525, -1903 )
 script = ExtResource( 51 )
+
+[node name="PeekAhead" parent="Obstacles" instance=ExtResource( 34 )]
+position = Vector2( 34943, -2044 )
+script = ExtResource( 12 )
 
 [node name="HealthMessage" parent="Obstacles" instance=ExtResource( 34 )]
 position = Vector2( 26045, -1964 )

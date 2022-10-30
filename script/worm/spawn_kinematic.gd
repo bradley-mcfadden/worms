@@ -192,20 +192,24 @@ func _process(_delta: float) -> void:
 func update_camera_position() -> void:
 #
 # update_camera_position
-# Recenter the camera so it follows the centroid the worm.
+# Recenter the camera so it follows the centroid of the worm,
+# or if "look_ahead" is pressed, pan the camera forward.
 #
-	var sum := Vector2.ZERO
-	if (len(body) == 0) or !is_alive(): return
-	var count := 0
-	for child in get_children():
-		if child is KinematicBody2D and child.is_alive():
-			sum += child.position
-			count += 1
+	var avg: Vector2
+	if not active_controller.is_action_pressed("look_ahead"):
+		var sum := Vector2.ZERO
+		if (len(body) == 0) or !is_alive(): return
+		var count := 0
+		for child in get_children():
+			if child is KinematicBody2D and child.is_alive():
+				sum += child.position
+				count += 1
 
-	if count == 0: return
-	var avg = sum / count
+		if count == 0: return
+		avg = sum / count
+	else:
+		avg = head.position + Vector2.RIGHT.rotated(head.rotation) * 1000.0
 	wide_camera.position = avg
-
 	if background:
 		background.set_noise_offset(avg)
 
@@ -518,6 +522,7 @@ func _on_segment_died(segment: Node, from: Node, overkill: bool) -> void:
 		if (len(body) < minimum_length || segment == head) and is_alive():
 			if active_controller == $CursorController:
 				$CursorController.set_physics_process(false)
+				$CursorController.following = null
 			dead = true
 			emit_signal("died", from, overkill)
 		elif (len(body) < num_segment_for_low_health):

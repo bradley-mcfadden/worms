@@ -13,10 +13,10 @@ extends WormController
 # Difference in head rotation and direction to cursor before steering is applied.
 export (float) var turn_threshold := PI / 16
 var following: Node2D = null
-
+# onready var mutex: Mutex = Mutex.new()
 
 func _physics_process(_delta: float) -> void:
-	if not following == null: 
+	if not (following == null or not is_instance_valid(following)): 
 		# unit vector between following and self
 		var direction: Vector2 = $Cursor.cursor_position - following.global_position
 		direction = direction.normalized()

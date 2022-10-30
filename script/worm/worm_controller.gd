@@ -16,6 +16,7 @@ onready var curr_action_map := {
 	"peek_layer_down" : false,
 	"layer_up" : false,
 	"layer_down" : false,
+	"look_ahead" : false,
 }
 onready var last_action_map := {
 	"move_forward" : false,
@@ -25,6 +26,7 @@ onready var last_action_map := {
 	"peek_layer_down" : false,
 	"layer_up" : false,
 	"layer_down" : false,
+	"look_ahead" : false,
 }
 
 

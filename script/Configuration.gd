@@ -39,7 +39,8 @@ var sections := {
 			"move_right" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_D, "shift" : false, "alt" : false, "ctrl" : false}, 
 			"peek_layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_U, "shift" : true, "alt" : false, "ctrl" : false},
 			"peek_layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_I, "shift" : true, "alt" : false, "ctrl" : false},
-			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_T, "shift" : false, "alt" : false, "ctrl" : false}
+			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_T, "shift" : false, "alt" : false, "ctrl" : false},
+			"look_ahead" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_N, "shift": false, "alt" : false, "ctrl" : false},
 		},
 		"mouse_keyboard" : {
 			"ability1" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_F, "shift" : false, "alt" : false, "ctrl" : false},
@@ -50,11 +51,12 @@ var sections := {
 			"layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_C, "shift" : false, "alt" : false, "ctrl" : false},
 			"layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_V, "shift" : false, "alt" : false, "ctrl" : false},
 			"move_forward" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_SPACE, "shift" : false, "alt" : false, "ctrl" : false},
-			"move_left" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_Q, "shift" : false, "alt" : false, "ctrl" : false},
-			"move_right" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_W, "shift" : false, "alt" : false, "ctrl" : false}, 
+			"move_left" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_F1, "shift" : false, "alt" : false, "ctrl" : false},
+			"move_right" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_F2, "shift" : false, "alt" : false, "ctrl" : false}, 
 			"peek_layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_C, "shift" : true, "alt" : false, "ctrl" : false},
 			"peek_layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_V, "shift" : true, "alt" : false, "ctrl" : false},
-			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_E, "shift" : false, "alt" : false, "ctrl" : false}
+			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_E, "shift" : false, "alt" : false, "ctrl" : false},
+			"look_ahead" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_W, "shift" : false, "alt" : false, "ctrl" : false},
 		}
 	}
 }
