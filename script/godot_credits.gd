@@ -32,8 +32,8 @@ const section_time := 2.0
 const line_time := 0.3
 const base_speed := 100
 const speed_up_multiplier := 10.0
-const title_color := Color.red
-var subtitle_color: Color = Color.red.darkened(0.5)
+const title_color := Color("#ff8a8a")
+var subtitle_color := Color("#ff6161")
 
 var scroll_speed := base_speed
 var speed_up := false
@@ -61,11 +61,16 @@ var credits = [
 		"Original worm controller code based on",
 		"https://github.com/mlokogrgel1/worm/tree/master/worm%20–%20kópia/worm",
 		"",
-		"Credits code",
+		"Credits code based on",
 		"Ben Bishop",
 		"https://github.com/benbishopnz/godot-credits"
 	],[
-		"Art",
+		"Art"
+		"",
+		"Sprites, models, backgrounds",
+		"Bradley McFadden",
+		""
+		"Handdrawn art",
 		"Rhys",
 		"",
 		"Moss texture",
@@ -91,16 +96,18 @@ var credits = [
 		"https://freesound.org/people/Rock%20Savage/sounds/81042/"
 	],[
 		"Play testers",
-		"",
-		"Demetrius",
-		"",
-		"Rhys"
+		"Demitrius",
+		"Rhys",
+		"Celine",
+		"Raphy",
+		"Neil"
 	],[
 		"Tools used",
+		"",
 		"Developed with Godot Engine",
 		"https://godotengine.org/license",
 		"",
-		"Art created with Blender",
+		"Models created with Blender",
 		"https://www.blender.org",
 		"",
 		"Pixel art created with Aseprite",
@@ -109,8 +116,12 @@ var credits = [
 		"Sound effects generated using LabChirp",
 		"http://labbed.net/software/labchirp/",
 		"",
-		"Music created using JuumBox",
+		"Music created using JuumBox and LMMS",
 		"https://jummbus.bitbucket.io/",
+		"https://lmms.io/"
+		"",
+		"Image manipulation with GIMP",
+		"https://www.gimp.org/",
 		"",
 		"Spritesheets packed using TexturePackerPro",
 		"https://www.codeandweb.com/texturepacker",
