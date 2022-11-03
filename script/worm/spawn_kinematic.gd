@@ -413,12 +413,13 @@ func reset_boost_speed() -> void:
 
 
 func scale_camera():
-	if camera:
-		var new_zoom = Vector2(0.1, 0.1) * len(body)
-		new_zoom.x = clamp(new_zoom.x, 3.4, 3.4)
-		new_zoom.y = clamp(new_zoom.y, 3.4, 3.4)
-		if wide_camera.has_method("zoom_to"):
-			wide_camera.zoom_to(new_zoom)
+	pass
+	# if camera:
+	# 	var new_zoom = Vector2(0.1, 0.1) * len(body)
+	# 	new_zoom.x = clamp(new_zoom.x, 3.4, 3.4)
+	# 	new_zoom.y = clamp(new_zoom.y, 3.4, 3.4)
+	# 	if wide_camera.has_method("zoom_to"):
+	# 		wide_camera.zoom_to(new_zoom)
 
 
 func get_entity_positions() -> Array:

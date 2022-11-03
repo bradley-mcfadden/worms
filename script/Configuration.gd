@@ -22,7 +22,17 @@ var sections := {
 		"music_volume" : 100,
 	},
 	"graphics" : {
-		
+		"fullscreen" : false,
+		"borderless" : false,
+		"scale_viewport_to_window" : false,
+		"resolution" : {
+			"x" : 1024,
+			"y" : 600
+		},
+		"window_size" : {
+			"x" : 1024,
+			"y" : 600
+		},
 	},
 	"controls" : {
 		"current_scheme" : "mouse_keyboard",

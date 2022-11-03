@@ -11,10 +11,12 @@ anchor_bottom = 1.0
 script = ExtResource( 2 )
 
 [node name="VSlider" type="VSlider" parent="."]
+anchor_bottom = 0.5
 margin_left = 48.0
 margin_top = 476.0
 margin_right = 64.0
-margin_bottom = 585.0
+margin_bottom = 61.0
+rect_min_size = Vector2( 0, 120 )
 rect_rotation = -180.0
 theme = ExtResource( 3 )
 custom_styles/grabber_area_highlight = ExtResource( 4 )
@@ -41,6 +43,7 @@ margin_left = 26.0
 margin_top = 476.0
 margin_right = 56.0
 margin_bottom = 527.0
+size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 1 )
 text = "1
 "

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=2]
 [ext_resource path="res://script/settings_general.gd" type="Script" id=3]
+[ext_resource path="res://fonts/control_font.tres" type="DynamicFont" id=4]
 
 [node name="general" type="ScrollContainer"]
 anchor_right = 1.0
@@ -36,9 +37,12 @@ custom_fonts/font = ExtResource( 2 )
 [node name="RichText" type="Label" parent="Cols/L"]
 margin_top = 16.0
 margin_right = 474.0
-margin_bottom = 30.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
 text = "use rich text"
 align = 2
+valign = 1
 
 [node name="R" type="VBoxContainer" parent="Cols"]
 margin_left = 498.0

@@ -305,6 +305,7 @@ _global_script_class_icons={
 config/name="worm"
 run/main_scene="res://scene/Splash.tscn"
 boot_splash/image="res://img/splash_w_title_wide.png"
+boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [audio]
@@ -320,10 +321,13 @@ AsyncLoader="*res://script/AsyncLoader.gd"
 
 [display]
 
-window/size/resizable=false
+window/size/borderless=true
+window/size/fullscreen=true
 mouse_cursor/custom_image="res://img/cursor_thin_s.png"
 mouse_cursor/custom_image_hotspot=Vector2( 8, 8 )
 mouse_cursor/tooltip_position_offset=Vector2( 8, 8 )
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 

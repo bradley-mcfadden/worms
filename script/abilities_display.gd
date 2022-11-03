@@ -49,6 +49,9 @@ func _on_ability_added(ability: Ability) -> void:
 	rect.material.set_shader_param("fill_color", DISABLED_MOD)
 
 	$Box.add_child(rect)
+	$Box.move_child(rect, 0)
+	$Box.margin_left = -$Box.rect_min_size.x
+	$Box.margin_top = -$Box.rect_min_size.y
 	ability_map[ability] = rect
 	rect_min_size = $Box.rect_min_size
 	_on_ability_is_ready_changed(ability, ability.is_ready)

@@ -1,11 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=2]
 [ext_resource path="res://script/settings_graphics.gd" type="Script" id=3]
+[ext_resource path="res://fonts/control_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://theme/option_button.tres" type="Theme" id=5]
+[ext_resource path="res://fonts/IM_Fell_English/IMFellEnglish-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 6 )
 
 [node name="graphics" type="ScrollContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
@@ -16,23 +21,125 @@ theme = ExtResource( 1 )
 script = ExtResource( 3 )
 
 [node name="Cols" type="HBoxContainer" parent="."]
-visible = false
 margin_left = 24.0
-margin_right = 28.0
-margin_bottom = 12.0
+margin_right = 996.0
+margin_bottom = 562.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 24
 
 [node name="L" type="VBoxContainer" parent="Cols"]
+margin_right = 474.0
+margin_bottom = 562.0
+size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Cols/L"]
-margin_right = 286.0
+margin_right = 474.0
 margin_bottom = 12.0
 rect_min_size = Vector2( 0, 12 )
 custom_fonts/font = ExtResource( 2 )
+
+[node name="ScaleViewportToWindow" type="Label" parent="Cols/L"]
+margin_top = 16.0
+margin_right = 474.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
+text = "scale viewport to window"
+align = 2
+valign = 1
+
+[node name="Fullscreen" type="Label" parent="Cols/L"]
+margin_top = 44.0
+margin_right = 474.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
+text = "fullscreen"
+align = 2
+valign = 1
+
+[node name="Borderless" type="Label" parent="Cols/L"]
+margin_top = 72.0
+margin_right = 474.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
+text = "borderless"
+align = 2
+valign = 1
+
+[node name="WindowSize" type="Label" parent="Cols/L"]
+margin_top = 100.0
+margin_right = 474.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
+text = "window size"
+align = 2
+valign = 1
+
+[node name="Resolution" type="Label" parent="Cols/L"]
+margin_top = 128.0
+margin_right = 474.0
+margin_bottom = 152.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
+text = "resolution"
+align = 2
+valign = 1
 
 [node name="R" type="VBoxContainer" parent="Cols"]
+margin_left = 498.0
+margin_right = 972.0
+margin_bottom = 562.0
+size_flags_horizontal = 3
 
 [node name="Spacer" type="Label" parent="Cols/R"]
-margin_right = 286.0
+margin_right = 474.0
 margin_bottom = 12.0
 rect_min_size = Vector2( 0, 12 )
 custom_fonts/font = ExtResource( 2 )
+
+[node name="ScaleViewportToWindow" type="CheckBox" parent="Cols/R"]
+margin_top = 16.0
+margin_right = 24.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+pressed = true
+
+[node name="Fullscreen" type="CheckBox" parent="Cols/R"]
+margin_top = 44.0
+margin_right = 24.0
+margin_bottom = 68.0
+size_flags_horizontal = 0
+pressed = true
+
+[node name="Borderless" type="CheckBox" parent="Cols/R"]
+margin_top = 72.0
+margin_right = 24.0
+margin_bottom = 96.0
+size_flags_horizontal = 0
+pressed = true
+
+[node name="WindowSize" type="OptionButton" parent="Cols/R"]
+margin_top = 100.0
+margin_right = 200.0
+margin_bottom = 121.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 0
+theme = ExtResource( 5 )
+custom_fonts/font = SubResource( 1 )
+items = [ "mouse and keyboard", null, false, 0, null, "keyboard", null, false, 1, null ]
+selected = 0
+
+[node name="Resolution" type="OptionButton" parent="Cols/R"]
+margin_top = 125.0
+margin_right = 200.0
+margin_bottom = 146.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 0
+theme = ExtResource( 5 )
+custom_fonts/font = SubResource( 1 )
+items = [ "mouse and keyboard", null, false, 0, null, "keyboard", null, false, 1, null ]
+selected = 0
