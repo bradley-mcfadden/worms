@@ -24,7 +24,7 @@ var sections := {
 	"graphics" : {
 		"fullscreen" : false,
 		"borderless" : false,
-		"scale_viewport_to_window" : false,
+		"scale_viewport_to_window" : STRETCH_MODE_VIEWPORT,
 		"resolution" : {
 			"x" : 1024,
 			"y" : 600
