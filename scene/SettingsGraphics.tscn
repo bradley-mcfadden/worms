@@ -127,8 +127,8 @@ size_flags_horizontal = 0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 4 )
 text = "1920x1080"
-items = [ "3840x2160", null, false, 0, null, "2560x1440", null, false, 1, null, "1920x1080", null, false, 2, null, "1366x768", null, false, 3, null ]
-selected = 2
+items = [ "1920x1080", null, false, 2, null, "1440x900", null, false, 1, null, "1280x720", null, false, 2, null, "1024x600", null, false, 3, null, "640x480", null, false, 4, null, "480x360", null, false, 5, null, "320x240", null, false, 6, null, "160x120", null, false, 7, null, "80x60", null, false, 8, null ]
+selected = 0
 
 [node name="Resolution" type="OptionButton" parent="Cols/R"]
 margin_top = 126.0
@@ -139,7 +139,7 @@ size_flags_horizontal = 0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 4 )
 text = "1920x1080"
-items = [ "1920x1080", null, false, 0, null, "1366x768", null, false, 1, null, "1440x900", null, false, 2, null, "2560x1440", null, false, 3, null, "1280x720", null, false, 4, null, "720x480", null, false, 5, null, "480x360", null, false, 6, null, "320x240", null, false, 7, null, "160x120", null, false, 8, null, "80x60", null, false, 9, null ]
+items = [ "1920x1080", null, false, 0, null, "1366x768", null, false, 1, null, "1280x720", null, false, 4, null, "720x480", null, false, 5, null, "480x360", null, false, 6, null, "320x240", null, false, 7, null, "160x120", null, false, 8, null, "80x60", null, false, 9, null, "1024x600", null, false, 11, null ]
 selected = 0
 
 [connection signal="toggled" from="Cols/R/ScaleViewportToWindow" to="." method="_on_ScaleViewportToWindow_toggled"]
