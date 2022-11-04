@@ -29,6 +29,7 @@ func _ready() -> void:
 	$VBoxContainer/LevelSelect.disabled = false
 	$VBoxContainer/Credits.disabled = false
 	$VBoxContainer/QuitToDesktop.disabled = false
+	GraphicsConfigLoader.use_default_resolution()
 
 
 func init_labels() -> void:

@@ -90,4 +90,4 @@ func _on_Resolution_item_selected(index: int) -> void:
 	var gconfig: Dictionary = Configuration.sections["graphics"]
 	gconfig["resolution"]["x"] = x
 	gconfig["resolution"]["y"] = y
-	GraphicsConfigLoader.apply_resolution()
+	# GraphicsConfigLoader.apply_resolution()

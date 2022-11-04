@@ -5,16 +5,18 @@
 
 extends Node
 
+const DEFAULT_RESOLUTION := Vector2(1024.0, 600.0)
 
 var gconfig: Dictionary
-
+var last_resolution := DEFAULT_RESOLUTION
 
 func _enter_tree() -> void:
 	gconfig = Configuration.sections["graphics"]
 	apply_fullscreen()
 	apply_borderless()
 	apply_scale_viewport_to_window()
-	apply_resolution()
+	# apply_resolution()
+	use_default_resolution()
 	apply_window_size()
 
 
@@ -44,9 +46,23 @@ func apply_resolution() -> void:
 	get_tree().set_screen_stretch(stretch_mode, stretch_aspect, Vector2(x, y))
 	
 	var viewport: Viewport = get_viewport()
-	viewport.global_canvas_transform = viewport.global_canvas_transform.scaled(Vector2(x / 1024.0, y / 600.0))
-	
+	viewport.global_canvas_transform = viewport.global_canvas_transform.scaled(
+		Vector2(x / last_resolution.x, y / last_resolution.y))
+	last_resolution = Vector2(x, y)
 
+
+func use_default_resolution() -> void:
+	var stretch_mode: int = gconfig["scale_viewport_to_window"]
+	var stretch_aspect: int = SceneTree.STRETCH_ASPECT_KEEP
+	get_tree().set_screen_stretch(stretch_mode, stretch_aspect, DEFAULT_RESOLUTION)
+	
+	var viewport: Viewport = get_viewport()
+	viewport.global_canvas_transform = viewport.global_canvas_transform.scaled(
+		Vector2(
+			last_resolution.x / DEFAULT_RESOLUTION.x,
+			last_resolution.y / DEFAULT_RESOLUTION.y
+	)) 
+	last_resolution = DEFAULT_RESOLUTION
 
 func apply_window_size() -> void:
 	OS.window_size = Vector2(

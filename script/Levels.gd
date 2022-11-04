@@ -135,8 +135,11 @@ func next_level_or_main() -> void:
 	print("Changing levels %d" % idx)
 	var scene: String
 	if idx == -1:
+		# Change resolution to 1024x600 but don't save it
+		GraphicsConfigLoader.use_default_resolution()
 		scene = "res://scene/TitleScreen.tscn"
 	else:
+		GraphicsConfigLoader.apply_resolution()
 		scene = Levels.scene_from_index(idx)
 	AsyncLoader.load_resource(scene)
 	loading_path = scene
