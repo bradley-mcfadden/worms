@@ -7,60 +7,87 @@ extends SettingsScrollContainer
 
 
 func _ready() -> void:
-    _init_values()
-    _init_connections()
+	_init_values()
+	_init_connections()
 
 
 func _init_values() -> void:
-    pass
+	var gconfig: Dictionary = Configuration.sections["graphics"]
+	$Cols/R/Borderless.pressed = gconfig["borderless"]
+	$Cols/R/Fullscreen.pressed = gconfig["fullscreen"]
+	$Cols/R/ScaleViewportToWindow.pressed = gconfig["scale_viewport_to_window"]
+
+	var resolution: OptionButton = $Cols/R/Resolution
+	var res_str := "%sx%s" % [gconfig["resolution"]["x"], gconfig["resolution"]["y"]]
+
+	for idx in range(resolution.get_item_count()):
+		if resolution.get_item_text(idx) == res_str:
+			resolution.select(idx)
+			break
+	var window_size: OptionButton = $Cols/R/WindowSize
+	var win_str := "%sx%s" % [gconfig["window_size"]["x"], gconfig["window_size"]["y"]]
+	for idx in range(window_size.get_item_count()):
+		if window_size.get_item_text(idx) == win_str:
+			window_size.select(idx)
+			break
 
 
 func _init_connections() -> void:
-    var buttons := [
-        $Cols/R/Borderless,
-        $Cols/R/Fullscreen,
-        $Cols/R/ScaleViewportToWindow,
-        $Cols/R/Resolution,
-        $Cols/R/WindowSize
-    ]
-    for btn in buttons:
-        btn.connect("focus_entered", self, "_on_control_focus_entered")
-        btn.connect("focus_exited", self, "_on_control_focus_exited")
-        btn.connect("pressed", self, "_on_button_pressed")
+	var buttons := [
+		$Cols/R/Borderless,
+		$Cols/R/Fullscreen,
+		$Cols/R/ScaleViewportToWindow,
+		$Cols/R/Resolution,
+		$Cols/R/WindowSize
+	]
+	for btn in buttons:
+		btn.connect("focus_entered", self, "_on_control_focus_entered")
+		btn.connect("focus_exited", self, "_on_control_focus_exited")
+		btn.connect("pressed", self, "_on_button_pressed")
 
-    var option_btns := [
-        $Cols/R/Resolution,
-        $Cols/R/WindowSize
-    ]
-    for btn in option_btns:
-        btn.connect("item_focused", self, "_on_control_focus_entered")
-        btn.connect("item_selected", self, "_on_button_toggled", true)
+	var option_btns := [
+		$Cols/R/Resolution,
+		$Cols/R/WindowSize
+	]
+	for btn in option_btns:
+		btn.connect("item_focused", self, "_on_control_focus_entered")
 
 
 func _on_ScaleViewportToWindow_toggled(button_pressed: bool) -> void:
-	var stretch_mode: int = STRETCH_MODE_2D if button_pressed else STRETCH_MODE_VIEWPORT
-    Configuration.sections["graphics"]["scale_viewport_to_window"] = stretch_mode
-    var stretch_aspect: int = STRETCH_ASPECT_KEEP
-    var resolution: Vector2 = Vector2(
-        Configuration.sections["graphics"]["resolution"]["x"],
-        Configuration.sections["graphics"]["resolution"]["y"]
-    )
-    OS.set_screen_stretch(stretch_mode, stretch_aspect, resolution)
+	var stretch_mode: int = SceneTree.STRETCH_MODE_2D if button_pressed else SceneTree.STRETCH_MODE_VIEWPORT
+	Configuration.sections["graphics"]["scale_viewport_to_window"] = stretch_mode
+	GraphicsConfigLoader.apply_scale_viewport_to_window()
 
 
 func _on_Fullscreen_toggled(button_pressed: bool) -> void:
-	OS.window_fullscreen = button_pressed
-    Configuration.sections["graphics"]["fullscreen"] = button_pressed
+	Configuration.sections["graphics"]["fullscreen"] = button_pressed
+	GraphicsConfigLoader.apply_fullscreen()
 
 
 func _on_Borderless_toggled(button_pressed: bool) -> void:
-	OS.window_borderless = button_pressed
-    Configuration.sections["graphics"]["borderless"] = button_pressed
+	Configuration.sections["graphics"]["borderless"] = button_pressed
+	GraphicsConfigLoader.apply_borderless()
 
 
 func _on_WindowSize_item_selected(index: int) -> void:
-	pass # Replace with function body.
+	emit_signal("button_enabled")
+	var text: String = $Cols/R/WindowSize.get_item_text(index)
+	var tokens := text.split("x")
+	var x := int(tokens[0])
+	var y := int(tokens[1])
+	var gconfig: Dictionary = Configuration.sections["graphics"]
+	gconfig["window_size"]["x"] = x
+	gconfig["window_size"]["y"] = y
+	GraphicsConfigLoader.apply_window_size()
 
 
 func _on_Resolution_item_selected(index: int) -> void:
-	pass # Replace with function body.
+	emit_signal("button_enabled")
+	var text: String = $Cols/R/Resolution.get_item_text(index)
+	var tokens := text.split("x")
+	var x := int(tokens[0])
+	var y := int(tokens[1])
+	var gconfig: Dictionary = Configuration.sections["graphics"]
+	gconfig["resolution"]["x"] = x
+	gconfig["resolution"]["y"] = y
+	GraphicsConfigLoader.apply_resolution()

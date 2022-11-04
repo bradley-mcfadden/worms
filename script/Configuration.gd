@@ -4,11 +4,6 @@
 extends Node
 
 const CONFIG_FILE_PATH := "user://settings.cfg"
-const MASTER_BUS_NAME := "Master"
-const UI_BUS_NAME := "UI"
-const SFX_BUS_NAME := "SFX"
-const MUSIC_BUS_NAME := "Music"
-
 const CONTROL_KEY_TYPE := "key"
 
 var sections := {
@@ -24,7 +19,7 @@ var sections := {
 	"graphics" : {
 		"fullscreen" : false,
 		"borderless" : false,
-		"scale_viewport_to_window" : STRETCH_MODE_VIEWPORT,
+		"scale_viewport_to_window" : SceneTree.STRETCH_MODE_VIEWPORT,
 		"resolution" : {
 			"x" : 1024,
 			"y" : 600
@@ -50,7 +45,7 @@ var sections := {
 			"peek_layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_U, "shift" : true, "alt" : false, "ctrl" : false},
 			"peek_layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_I, "shift" : true, "alt" : false, "ctrl" : false},
 			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_T, "shift" : false, "alt" : false, "ctrl" : false},
-			"look_ahead" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_N, "shift": false, "alt" : false, "ctrl" : false},
+			"look_ahead" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_N, "shift": false, "alt" : false, "ctrl" : false}
 		},
 		"mouse_keyboard" : {
 			"ability1" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_F, "shift" : false, "alt" : false, "ctrl" : false},
@@ -66,7 +61,7 @@ var sections := {
 			"peek_layer_up" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_C, "shift" : true, "alt" : false, "ctrl" : false},
 			"peek_layer_down" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_V, "shift" : true, "alt" : false, "ctrl" : false},
 			"lay_eggs" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_E, "shift" : false, "alt" : false, "ctrl" : false},
-			"look_ahead" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_W, "shift" : false, "alt" : false, "ctrl" : false},
+			"look_ahead" : {"type" : CONTROL_KEY_TYPE, "scancode" : KEY_W, "shift" : false, "alt" : false, "ctrl" : false}
 		}
 	}
 }
@@ -78,56 +73,6 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
 	save()
-
-
-func set_master_volume(vol: int) -> void:
-#
-# change volume of master bus.
-# vol - Volume in percent
-#
-	print("Changing master volume")
-	var idx = AudioServer.get_bus_index(MASTER_BUS_NAME)
-	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	sections["audio"]["master_volume"] = vol
-
-
-func set_ui_volume(vol: int) -> void:
-#
-# change volume of UI bus.
-# vol - Volume in percent
-#
-	var idx = AudioServer.get_bus_index(UI_BUS_NAME)
-	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	sections["audio"]["ui_volume"] = vol
-
-
-func set_sfx_volume(vol: int) -> void:
-#
-# change volume of master bus.
-# vol - Volume in percent
-#
-	var idx = AudioServer.get_bus_index(SFX_BUS_NAME)
-	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	sections["audio"]["sfx_volume"] = vol
-
-
-func set_music_volume(vol: int) -> void:
-#
-# change volume of music bus.
-# vol - Volume in dB
-#
-	var idx = AudioServer.get_bus_index(MUSIC_BUS_NAME)
-	AudioServer.set_bus_volume_db(idx, vol_percent_to_db(vol))
-	sections["audio"]["music_volume"] = vol
-
-
-func vol_percent_to_db(vol: int) -> float:
-#
-# convert volume from percent to db
-# vol - Volume in percent
-# return - Volume in dB. 0 maps to -60, 100 maps to 0
-	var frac := vol / 100.0
-	return lerp(-60, 0, frac)
 
 
 func save() -> void:

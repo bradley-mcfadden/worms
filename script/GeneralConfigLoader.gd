@@ -7,8 +7,12 @@
 extends Node
 
 
+var gconfig: Dictionary
+
+
 func _enter_tree() -> void:
-    pass
+    gconfig = Configuration.sections["general"]
+    apply_use_text_animations()
 
 
 func apply_use_text_animations() -> void:

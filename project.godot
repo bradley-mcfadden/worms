@@ -315,6 +315,9 @@ default_bus_layout="res://sound/default_bus_layout.tres"
 [autoload]
 
 Configuration="*res://script/Configuration.gd"
+GeneralConfigLoader="*res://script/GeneralConfigLoader.gd"
+GraphicsConfigLoader="*res://script/GraphicsConfigLoader.gd"
+AudioConfigLoader="*res://script/AudioConfigLoader.gd"
 Levels="*res://script/Levels.gd"
 InputLoader="*res://script/InputLoader.gd"
 AsyncLoader="*res://script/AsyncLoader.gd"

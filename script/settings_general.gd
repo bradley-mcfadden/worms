@@ -30,4 +30,6 @@ func _init_connections() -> void:
 
 func _on_RichTextCheck_toggled(state: bool):
 	Configuration.sections["general"]["use_text_animations"] = state
+	GeneralConfigLoader.apply_use_text_animations()
 	emit_signal("update_labels")
+	

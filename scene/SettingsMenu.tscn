@@ -59,10 +59,10 @@ action = "pause"
 shortcut = SubResource( 6 )
 
 [node name="SettingsMenu" type="MarginContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 script = ExtResource( 5 )
 
 [node name="Panel" type="Panel" parent="."]
@@ -109,8 +109,10 @@ custom_styles/panel = ExtResource( 15 )
 visible = false
 
 [node name="graphics" parent="Menu/Tabs" instance=ExtResource( 14 )]
+visible = false
 
 [node name="audio" parent="Menu/Tabs" instance=ExtResource( 16 )]
+visible = false
 
 [node name="CenterContainer" type="HBoxContainer" parent="Menu"]
 margin_top = 514.0
@@ -170,8 +172,6 @@ bus = "UI"
 
 [connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_button_pressed"]
 [connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Tabs_tab_changed"]
-[connection signal="update_labels" from="Menu/Tabs/general" to="." method="_on_update_labels"]
-[connection signal="change_binding_requested" from="Menu/Tabs/controls" to="." method="_on_change_binding_requested"]
 [connection signal="mouse_entered" from="Menu/CenterContainer/ExitButton" to="." method="_on_control_focus_entered"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

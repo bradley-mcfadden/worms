@@ -12,8 +12,10 @@ script = ExtResource( 4 )
 script = ExtResource( 4 )
 
 [node name="AllEnemiesDead" type="VBoxContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 alignment = 1
 script = ExtResource( 1 )
 

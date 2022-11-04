@@ -36,21 +36,25 @@ func _on_master_vol_drag_ended(changed: bool) -> void:
 	if not changed: return
 	var volume: float = $Cols/R/MasterVolumeSlider.value
 	Configuration.set_master_volume(volume)
+	AudioConfigLoader.apply_master_volume()
 
 
 func _on_sfx_vol_drag_ended(changed: bool) -> void:
 	if not changed: return
 	var volume: float = $Cols/R/SoundFXVolumeSlider.value
 	Configuration.set_sfx_volume(volume)
+	AudioConfigLoader.apply_sfx_volume()
 
 
 func _on_ui_vol_drag_ended(changed: bool) -> void:
 	if not changed: return
 	var volume: float = $Cols/R/UISoundVolumeSlider.value
 	Configuration.set_ui_volume(volume)
+	AudioConfigLoader.apply_ui_volume()
 
 
 func _on_music_vol_drag_ended(changed: bool) -> void:
 	if not changed: return
 	var volume: float = $Cols/R/MusicVolumeSlider.value
 	Configuration.set_music_volume(volume)
+	AudioConfigLoader.apply_music_volume()

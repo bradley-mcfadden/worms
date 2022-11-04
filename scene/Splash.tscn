@@ -12,13 +12,19 @@ font_data = ExtResource( 3 )
 
 [node name="Splash" type="Control"]
 modulate = Color( 0, 0, 0, 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
 script = ExtResource( 5 )
 
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = 607.0

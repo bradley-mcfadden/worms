@@ -25,7 +25,7 @@ onready var button_to_action := {
 	"PeekDown" : "peek_layer_down",
 	"Restart" : "reset",
 	"Interact" : "lay_eggs",
-	"PeekForward" : "look_ahead"
+	"PeekAhead" : "look_ahead"
 }
 
 
