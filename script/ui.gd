@@ -8,6 +8,24 @@
 extends CanvasLayer
 
 
+func _ready() -> void:
+	var gconfig: Dictionary = Configuration.sections["graphics"]
+	var res := Vector2(
+		gconfig["resolution"]["x"],
+		gconfig["resolution"]["y"]
+	)
+	var health_bar: Control = $HealthBar
+	var a_display: Control = $AbilitiesDisplay
+	health_bar.rect_position = Vector2(
+		16,
+		-16 + res.y - health_bar.rect_size.y
+	)
+	a_display.rect_position = Vector2(
+		-16 + res.x - a_display.rect_size.x,
+		-16 + res.y - a_display.rect_size.y
+	)
+
+
 func connect_to_dm(depth_manager: Node) -> void:
 #
 # connect_to_dm - Connect nodes to DepthManager.

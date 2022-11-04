@@ -3,6 +3,18 @@
 extends Camera2D
 
 
+func _ready():
+	var gconfig: Dictionary = Configuration.sections["graphics"]
+	var res := Vector2(
+		gconfig["resolution"]["x"],
+		gconfig["resolution"]["y"]
+	)
+	# off_x = 1.58 * res.x - 1566
+	# off_y = 0.9552 * res.y  - 1025
+	offset.x = 1.58 * res.x - 1566.0
+	offset.y = 0.9552 * res.y - 1025.0
+
+
 func zoom_to(new_zoom: Vector2) -> void:
 #
 # zoom_to smoothly interpolates the camera zoom over 2 secs to the
