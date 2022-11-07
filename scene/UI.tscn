@@ -39,8 +39,7 @@ visible = false
 material = SubResource( 2 )
 script = ExtResource( 19 )
 
-[node name="BlackBars" type="Control" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+[node name="BlackBars" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -48,17 +47,26 @@ size_flags_vertical = 3
 script = ExtResource( 20 )
 
 [node name="Left" type="Panel" parent="BlackBars"]
-self_modulate = Color( 0, 0, 0, 1 )
-anchor_bottom = 1.0
-margin_right = 112.0
+modulate = Color( 0, 0, 0, 0 )
+margin_right = 127.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 112, 0 )
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="BlackBars"]
+margin_left = 131.0
+margin_right = 893.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.0
 
 [node name="Right" type="Panel" parent="BlackBars"]
-modulate = Color( 0, 0, 0, 1 )
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -112.0
+modulate = Color( 0, 0, 0, 0 )
+margin_left = 897.0
+margin_right = 1024.0
+margin_bottom = 600.0
 rect_min_size = Vector2( 112, 0 )
+size_flags_horizontal = 3
 
 [node name="Tween" type="Tween" parent="BlackBars"]
 
@@ -74,8 +82,10 @@ hseperation = -12
 anchor_right = 0.0
 
 [node name="AllEnemiesDead" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [node name="DeathScreen" parent="." instance=ExtResource( 10 )]
+visible = false
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 0.0
 anchor_bottom = 0.0

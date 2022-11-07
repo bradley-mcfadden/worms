@@ -6,6 +6,21 @@ extends Node
 const CONFIG_FILE_PATH := "user://settings.cfg"
 const CONTROL_KEY_TYPE := "key"
 
+const DEFAULT_GRAPHICS := {
+	"fullscreen" : false,
+	"borderless" : false,
+	"scale_viewport_to_window" : SceneTree.STRETCH_MODE_VIEWPORT,
+	"resolution" : {
+		"x" : 1024,
+		"y" : 600
+	},
+	"window_size" : {
+		"x" : 1024,
+		"y" : 600
+	},
+	"vsync" : false
+}
+
 var sections := {
 	"general" : {
 		"use_text_animations" : true,
@@ -16,19 +31,7 @@ var sections := {
 		"sfx_volume" : 100,
 		"music_volume" : 100,
 	},
-	"graphics" : {
-		"fullscreen" : false,
-		"borderless" : false,
-		"scale_viewport_to_window" : SceneTree.STRETCH_MODE_VIEWPORT,
-		"resolution" : {
-			"x" : 1024,
-			"y" : 600
-		},
-		"window_size" : {
-			"x" : 1024,
-			"y" : 600
-		},
-	},
+	"graphics" : DEFAULT_GRAPHICS,
 	"controls" : {
 		"current_scheme" : "mouse_keyboard",
 		"keyboard" : {

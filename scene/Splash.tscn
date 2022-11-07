@@ -63,3 +63,6 @@ rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0

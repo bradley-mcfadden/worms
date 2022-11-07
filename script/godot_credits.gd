@@ -65,11 +65,11 @@ var credits = [
 		"Ben Bishop",
 		"https://github.com/benbishopnz/godot-credits"
 	],[
-		"Art"
+		"Art",
 		"",
 		"Sprites, models, backgrounds",
 		"Bradley McFadden",
-		""
+		"",
 		"Handdrawn art",
 		"Rhys",
 		"",
@@ -118,7 +118,7 @@ var credits = [
 		"",
 		"Music created using JuumBox and LMMS",
 		"https://jummbus.bitbucket.io/",
-		"https://lmms.io/"
+		"https://lmms.io/",
 		"",
 		"Image manipulation with GIMP",
 		"https://www.gimp.org/",

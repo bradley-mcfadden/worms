@@ -38,12 +38,23 @@ func _init_connections() -> void:
 		$Cols/R/Fullscreen,
 		$Cols/R/ScaleViewportToWindow,
 		$Cols/R/Resolution,
-		$Cols/R/WindowSize
+		$Cols/R/WindowSize,
+		$Cols/R/Vsync,
+		$Cols/R/RestoreDefaults
 	]
 	for btn in buttons:
 		btn.connect("focus_entered", self, "_on_control_focus_entered")
 		btn.connect("focus_exited", self, "_on_control_focus_exited")
 		btn.connect("pressed", self, "_on_button_pressed")
+
+	var checkboxes := [
+		$Cols/R/Borderless,
+		$Cols/R/Fullscreen,
+		$Cols/R/ScaleViewportToWindow,
+		$Cols/R/Vsync
+	]
+	for btn in checkboxes:
+		btn.connect("toggled", self, "_on_button_toggled")
 
 	var option_btns := [
 		$Cols/R/Resolution,
@@ -91,3 +102,14 @@ func _on_Resolution_item_selected(index: int) -> void:
 	gconfig["resolution"]["x"] = x
 	gconfig["resolution"]["y"] = y
 	# GraphicsConfigLoader.apply_resolution()
+
+
+func _on_Vsync_toggled(state: bool) -> void:
+	var gconfig: Dictionary = Configuration.sections["graphics"]
+	gconfig["vsync"] = state
+	GraphicsConfigLoader.apply_vsync()
+
+
+func _on_RestoreDefaults_pressed() -> void:
+	GraphicsConfigLoader.reset()
+	_init_values()

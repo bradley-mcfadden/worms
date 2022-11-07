@@ -6,6 +6,9 @@
 #
 extends MarginContainer
 
+# Emitted when exit button is pressed
+signal exiting
+
 const ANIMATION_OPEN_HEADER = "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_HEADER = "[/siny]"
 const ANIMATION_OPEN_MSG = "[siny period=4.0 offset=5.0 animate=1.0]"
@@ -79,6 +82,7 @@ func wrap_string(string: String, start: String, end: String) -> String:
 
 func _on_ExitButton_pressed() -> void:
 	hide()
+	emit_signal("exiting")
 	yield(get_tree().create_timer(0.5), "timeout")
 	queue_free()
 

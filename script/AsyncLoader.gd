@@ -87,9 +87,11 @@ func change_scene_to(scene: PackedScene) -> void:
 #
 	var root: Node = get_tree().get_root()
 	var previous_scene: Node = root.get_child(root.get_child_count() - 1)
-	previous_scene.queue_free()
+	# previous_scene.queue_free()
+	print("Freeing ", previous_scene)
 	current_scene = scene.instance()
 	get_node("/root").add_child(current_scene)
+	previous_scene.queue_free()
 
 
 func _exit_tree():

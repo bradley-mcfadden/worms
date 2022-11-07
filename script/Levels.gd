@@ -14,6 +14,8 @@ const CONFIG_SUFFIX := "config.ini"
 const PROPERTIES_KEY := "properties"
 const PREVIOUS_KEY := "previous"
 
+const TITLE_PATH := "res://scene/TitleScreen.tscn"
+
 onready var loading_path: String = ""
 var level_list: Array = get_level_list() setget , get_level_list
 var level_idx: int = -1
@@ -136,10 +138,10 @@ func next_level_or_main() -> void:
 	var scene: String
 	if idx == -1:
 		# Change resolution to 1024x600 but don't save it
-		GraphicsConfigLoader.use_default_resolution()
-		scene = "res://scene/TitleScreen.tscn"
+		# GraphicsConfigLoader.use_default_resolution()
+		scene = TITLE_PATH
 	else:
-		GraphicsConfigLoader.apply_resolution()
+		# GraphicsConfigLoader.apply_resolution()
 		scene = Levels.scene_from_index(idx)
 	AsyncLoader.load_resource(scene)
 	loading_path = scene
@@ -148,6 +150,11 @@ func next_level_or_main() -> void:
 
 func _on_resource_loaded(path: String, resource: Resource) -> void:
 	if path == loading_path:
+		if path == TITLE_PATH:
+			GraphicsConfigLoader.use_default_resolution()
+		else:
+			GraphicsConfigLoader.apply_resolution()
 		AsyncLoader.call_deferred("change_scene_to", resource)
 		AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
 		loading_path = ""
+

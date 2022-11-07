@@ -10,14 +10,16 @@ const DEFAULT_RESOLUTION := Vector2(1024.0, 600.0)
 var gconfig: Dictionary
 var last_resolution := DEFAULT_RESOLUTION
 
+
 func _enter_tree() -> void:
 	gconfig = Configuration.sections["graphics"]
 	apply_fullscreen()
 	apply_borderless()
 	apply_scale_viewport_to_window()
-	# apply_resolution()
 	use_default_resolution()
 	apply_window_size()
+	apply_window_position()
+	apply_vsync()
 
 
 func apply_fullscreen() -> void:
@@ -64,11 +66,28 @@ func use_default_resolution() -> void:
 	)) 
 	last_resolution = DEFAULT_RESOLUTION
 
+
 func apply_window_size() -> void:
 	OS.window_size = Vector2(
 		gconfig["window_size"]["x"], 
 		gconfig["window_size"]["y"]
 	)
+
+
+func apply_window_position() -> void:
+	var screen_size: Vector2 = OS.get_screen_size()
+	var window_size: Vector2 = OS.get_real_window_size()
+	OS.window_position = (screen_size - window_size) * 0.5
+
+
+func apply_vsync() -> void:
+	OS.vsync_enabled = gconfig["vsync"]
+
+
+func reset() -> void:
+	Configuration.sections["graphics"] = Configuration.DEFAULT_GRAPHICS
+	_enter_tree()
+
 
 func get_current_camera_2d() -> Camera2D:
 	#

@@ -9,11 +9,13 @@
 [ext_resource path="res://sound/press_button.wav" type="AudioStream" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 0, 0, 0.117647 )
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+bg_color = Color( 0, 0, 0, 0.596078 )
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color( 0, 0, 0, 1 )
+border_blend = true
 
 [sub_resource type="RichTextEffect" id=2]
 script = ExtResource( 5 )

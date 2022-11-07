@@ -49,14 +49,15 @@ func pause() -> void:
 	emit_signal("paused")
 
 
-func unpause() -> void:
+func unpause(emit: bool = true) -> void:
 	self.hide()
 	get_tree().paused = false
 	var scheme: String = Configuration.sections["controls"]["current_scheme"]
 	if scheme == "mouse_keyboard":
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	InputLoader.load_mappings()
-	emit_signal("unpaused")
+	if emit:
+		emit_signal("unpaused")
 
 
 func _on_Resume_pressed() -> void:
@@ -77,11 +78,25 @@ func _on_Settings_exited() -> void:
 
 
 func _on_QuitToMenu_pressed() -> void:
-	unpause()
-	var _x = get_tree().change_scene(MAIN_MENU_PATH)
+	#var _x = get_tree().change_scene(MAIN_MENU_PATH)
+	#print(_x)
+	print("Quitting to menu")
+	unpause(false)
+	AsyncLoader.load_resource(MAIN_MENU_PATH)
+	var _r: int = AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
 
+
+func _on_resource_loaded(path: String, resource: Resource) -> void:
+	if path == MAIN_MENU_PATH:
+		print("Changing scene to main menu")
+		AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
+		AsyncLoader.change_scene_to(resource)
+		# GraphicsConfigLoader.apply_resolution()
+		print("Done changing to main menu")
+		
 
 func _on_QuitToDesktop_pressed() -> void:
+	print("Quitting to desktop")
 	get_tree().quit()
 
 

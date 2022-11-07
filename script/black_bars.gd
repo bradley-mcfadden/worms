@@ -14,15 +14,17 @@ onready var tween := $Tween
 
 
 func fade_in() -> void:
-	tween.stop(self)
-	tween.interpolate_property(self, "modulate", TRANSPARENT, Color.black, fade_duration)
-	tween.start()
+	for node in [$Left, $Right]:
+		tween.stop(node)
+		tween.interpolate_property(node, "modulate", TRANSPARENT, Color.black, fade_duration)
+		tween.start()
 
 
 func fade_out() -> void:
-	tween.stop(self)
-	tween.interpolate_property(self, "modulate", Color.black, TRANSPARENT, fade_duration)
-	tween.start()
+	for node in [$Left, $Right]:
+		tween.stop(node)
+		tween.interpolate_property(node, "modulate", Color.black, TRANSPARENT, fade_duration)
+		tween.start()
 
 
 func _on_layer_peeked(visible: bool) -> void:

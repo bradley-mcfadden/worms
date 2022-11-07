@@ -19,7 +19,7 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:
-	$Tween.interpolate_property(self, "modulate", null, Color.white, 2.0)
+	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
 	$Tween.start()
 	init_labels()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -33,10 +33,13 @@ func _ready() -> void:
 
 
 func init_labels() -> void:
-	var animate = Configuration.sections["general"]["use_text_animations"]
-	var header = $VBoxContainer/Header
+	var animate: bool = Configuration.sections["general"]["use_text_animations"]
+	var header: RichTextLabel = $VBoxContainer/Header
 	set_text(header, header.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate)
 
+
+func fade_in() -> void:
+	pass
 
 func set_text(
 	label: RichTextLabel, msg: String, start: String, 
@@ -50,7 +53,7 @@ func set_text(
 # center - If the text should should be centered
 # animate - If start and end should be appended
 #
-	var text = msg
+	var text := msg
 	if center:
 		text = wrap_string(msg, "[center]", "[/center]")
 
@@ -77,14 +80,17 @@ func _on_StartGame_pressed() -> void:
 func _on_Settings_pressed() -> void:
 	var settings = load(SETTINGS_PATH)
 	var menu = settings.instance()
-	menu.connect("tree_exited", self, "_on_Settings_exited")
+	menu.connect("exiting", self, "_on_Settings_exiting")
 	get_parent().add_child(menu)
 	$VBoxContainer.hide()
+	$VBoxContainer.modulate = Color.transparent
 
 
-func _on_Settings_exited() -> void:
+func _on_Settings_exiting() -> void:
 	init_labels()
 	$VBoxContainer.show()
+	$Tween.interpolate_property($VBoxContainer, "modulate", null, Color.white, 0.5)
+	$Tween.start()
 
 
 func _on_LevelSelect_pressed() -> void:
@@ -100,6 +106,7 @@ func _on_Credits_pressed() -> void:
 
 
 func _on_QuitToDesktop_pressed() -> void:
+	print("Quit to desktop")
 	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
 	$Tween.start()
 	yield($Tween, "tween_completed")
