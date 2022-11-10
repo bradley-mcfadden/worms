@@ -91,7 +91,6 @@ func _on_resource_loaded(path: String, resource: Resource) -> void:
 		print("Changing scene to main menu")
 		AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
 		AsyncLoader.change_scene_to(resource)
-		# GraphicsConfigLoader.apply_resolution()
 		print("Done changing to main menu")
 		
 

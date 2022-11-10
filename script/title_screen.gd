@@ -19,17 +19,19 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:
+	#GraphicsConfigLoader.use_default_resolution()
 	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
 	$Tween.start()
 	init_labels()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	GraphicsConfigLoader.call_deferred("use_default_resolution")
 	yield($Tween, "tween_completed")
 	$VBoxContainer/StartGame.disabled = false
 	$VBoxContainer/Settings.disabled = false
 	$VBoxContainer/LevelSelect.disabled = false
 	$VBoxContainer/Credits.disabled = false
 	$VBoxContainer/QuitToDesktop.disabled = false
-	GraphicsConfigLoader.use_default_resolution()
+	#GraphicsConfigLoader.use_default_resolution()
 
 
 func init_labels() -> void:

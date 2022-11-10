@@ -47,6 +47,8 @@ func apply_resolution() -> void:
 	var y: int = gconfig["resolution"]["y"]
 	get_tree().set_screen_stretch(stretch_mode, stretch_aspect, Vector2(x, y))
 	
+	print("apply resolution ", last_resolution, " ", Vector2(x, y))
+
 	var viewport: Viewport = get_viewport()
 	viewport.global_canvas_transform = viewport.global_canvas_transform.scaled(
 		Vector2(x / last_resolution.x, y / last_resolution.y))
@@ -54,6 +56,7 @@ func apply_resolution() -> void:
 
 
 func use_default_resolution() -> void:
+	print("apply resolution ", last_resolution, " ", DEFAULT_RESOLUTION)
 	var stretch_mode: int = gconfig["scale_viewport_to_window"]
 	var stretch_aspect: int = SceneTree.STRETCH_ASPECT_KEEP
 	get_tree().set_screen_stretch(stretch_mode, stretch_aspect, DEFAULT_RESOLUTION)
@@ -61,8 +64,8 @@ func use_default_resolution() -> void:
 	var viewport: Viewport = get_viewport()
 	viewport.global_canvas_transform = viewport.global_canvas_transform.scaled(
 		Vector2(
-			last_resolution.x / DEFAULT_RESOLUTION.x,
-			last_resolution.y / DEFAULT_RESOLUTION.y
+			DEFAULT_RESOLUTION.x / last_resolution.x,
+			DEFAULT_RESOLUTION.y / last_resolution.y
 	)) 
 	last_resolution = DEFAULT_RESOLUTION
 
