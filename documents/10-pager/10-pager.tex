@@ -1,0 +1,340 @@
+\documentclass[12pt]{report}
+\usepackage{graphicx}
+\usepackage[letterpaper, margin={1in, 1in}]{geometry}
+
+
+\begin{document}
+
+\pagestyle{plain}
+
+\begin{titlepage}
+    \centering
+    \vfill
+    \includegraphics[width=4in]{img/worm_burst.jpeg}
+    \vfill
+    {\bfseries\Large
+        Ten Page Design Document\\
+        Frenzy or "Worm Game"\\
+        \vskip2cm
+        Bradley McFadden\\
+    }
+    \vfill
+\end{titlepage}
+~
+\subsection*{Story}
+Throughout history, great beasts like dinosaurs and wooly mammoths
+roamed the surface of the Earth. Under the surface, even more 
+intimidating creatures lurked. None were as impressive as the
+sandworm, a colossal creature capable of breaching the suraface of 
+the sand on a whim, and devouring large creatures.
+
+Gaia the worm was one of these creatures, but when out hunting for
+food for her offspring, but tripped up and became flash frozen in 
+an icy vent underground. Millenia later, Gaia wakes in the modern
+world, and ventures out to carve safe places to raise her wormlings.
+Unfortunately for Gaia, apes have started walking upgright and
+building machinery to harvest her underground environment. Will Gaia
+be able to repopulate her race, or will she lose the fight for 
+survival against the modern man?
+
+\subsection*{Gameplay}
+In \emph{Frenzy}, the player must navigate short levels, or habitats
+to clear the out completely of enemies. Most of the enemies are 
+miner-themed humans who will patrol and defend themselves against 
+attack. Gaia is a segmented worm, and taking damage on a body part 
+will split her in half. Losing enough segments or her head will cause 
+her to die, and she must try again. Lucky for Gaia, she has a number
+of abilities to outmanuveur and overcome the enemies infesting her
+habitat, including a speed boost, digging upward or below enemies to 
+use the element of surprise, and healing with a visceral bite.
+Gameplay consists of navigating these levels to defeat each enemy, 
+juggling ability cooldowns, using cover, and finding collectibles to
+enhance her power. The game is player with a top-down camera, and levels
+are divided into layers that Gaia can seamlessly switch between to take
+shortcuts and gain a movement advantage over enemies.
+
+\subsection*{Elevator pitch}
+Hotline Miami meets Carrion.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=2in]{img/worm.png}
+\end{figure}
+
+\subsection*{Game flow}
+As the challenge increase and new enemies arrive, the player grows by
+collecting new abilities by finding a certain unskippable collectible
+and going through a short "molting" animation. Molting permanently adds
+an ability to the player's save file. Players can cycle through their 
+abilities using the ability bar. Up to four abilities can be mapped at
+a single time. Some abilities are mutually exclusive and cannot be used
+together. For example, only one bite related ability can be equipped at
+one time, but players are free to switch their bite ability during a 
+level. Molting will tie into the game's story by being explained as a 
+part of the worm's survival skills. Intense evolutionary pressure makes
+Gaia's cells search for lethal new solutions.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=5in]{img/all.png}
+\end{figure}
+
+Other collectibles are present as well. Power-ups are included in the 
+form of fossils, which can be found throughout levels. The fossils
+provide themed power-ups to Gaia based on the characteristics of the 
+creature that they represent. The hedgehog fossil might make it so that 
+Gaia deals contact damage to enemies, or the turtle fossil might make
+Gaia's segments have one hit of hyper armor before actually taking
+damage. Some fossils could not be hidden, and placed in the middle of a
+level to intentionally boost player powers for a particularly hard combat
+section.
+
+Another collectible is eggs, which are secrets hidden in the layer system 
+or behind breakable walls of the game. Eggs unlock coats for Gaia that 
+change her colour scheme, and perhaps provide minor gameplay boosts. 
+For example, one egg might provide Gaia with a white themed coat that 
+also makes the cooldown of the boost ability half as long.
+
+\pagebreak
+\subsection*{Character}
+The player controls Gaia, a gigantic sandworm. Gaia is from the past, 
+and was transported to the future by being frozen in a block of ice.
+Gaia awoke today, and with no other sandworms around, it's up to her to
+ensure that her species can survive in an underground world overtaken by 
+man and machine. Throughout the main story, the player will exclusively
+control Gaia as she seeks to reclaim her past habitats. Although, it could
+make an interesting future addtion to have an inverse mode, where the player
+controls a miner and defends against Gaia.
+
+Gaia is a giant sandworm, as such she moves a large segmented body around.
+Gaia has a gaping maw that can be used to attack threats and heal herself.
+That's good, since enemies are fast and can quickly defeat Gaia is she is 
+not careful. Gaia can die in two ways, by losing her head or falling under 
+5 segments. Gaia can move up and down in the world in marked areas to attack 
+from cave layers above or below her enemies. Gaia can sense movement above
+her, and peek at layers above and below for an information advantage.
+
+Gameplay is overall a mix of ducking and weaving through enemies, while
+taking breaks to find collectibles.
+
+\subsection*{Controls}
+The game can be played either with a keyboard, or with a mouse and keyboard.
+Mouse and keyboard steers the worm by using the mouse cursor like a carrot on
+a stick, and space to move forward. Keyboard controls place both hands near the
+home row. Mouse and keyboard controls could easily be adapter to also support 
+a controller. The controller stick would move the cursor around for the worm to
+follow. The player must always have easy access to abilities, they use them 
+frequently in game, so these controls stay on A-F.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=3in]{img/kb_60_mouse.png}
+    \includegraphics[width=3in]{img/kb.png}
+\end{figure}
+
+\pagebreak
+\subsection*{Main gameplay concepts}
+The player mainly engages in hit-and-run style combat, where they duck in and
+away from combat while picking off enemies slowly. In this way, the game is a lot
+like Hotline Miami. The player first navigates around their environment using
+stealth, and when they have enough information they make a plan to take out the
+10 or more enemies waiting for them. Execution is important, as they player can
+be killed quickly in the presence of multiple enemies. The player's combat actions
+like biting enemies makes noise, and attracts other enemies to their location,
+so the player must be prepared to keep fighting once they start, or have a plan
+to retreat. The player starts with two abilities to help with the duck and weave combat,
+a bite that kills unarmored enemies and heals the player, and a speed boost to close
+the distance or flee.
+
+There is a system in place where the player can move underground or climb above
+ground in marked areas. Most enemies cannot follow the player, so these areas
+act as gates between two places that the player can use for a break or to jump
+at enemies with. From the above ground or the underground, players can see 
+enemy noises and look at the level geometry to plan their attacks while they
+hide.
+
+The game is split into levels that are themed for different underground environments.
+There are somewhat generic caves, an ice area, volcano, underground jungle, and so
+forth. Each level takes place in one of these environments, until reaching the 
+end of an environment where the player will fight a boss.
+
+\begin{figure}[h]
+    \includegraphics[width=3in]{img/peek.png}
+    \hfill
+    \includegraphics[width=3in]{img/worm_enemy.png}
+\end{figure}
+
+The player wins by defeating all enemies in a level, and the player loses if they 
+die by losing their head or enough body segments. It's not a big deal to die, levels
+are meant to be about a five minute or less expericen each. The levels are also small 
+enough so that the player can press a button to instantly restart without any loading
+at all.
+
+Since the game is 2D, to provide more detail to the normals they are 3D models rendered
+top-down with normal maps. This allows us to light the models in an intersting way
+to provide some depth and cool lighting effects for levels. Additionally, as Gaia eats
+more enemies or takes more damage, her mesh changes to reflect her current health.
+She becomes bruised and purple with more damage, and her mouth is stained red with blood.
+
+\pagebreak
+\subsection*{Game world}
+The world of \emph{Frenzy} is based upon the rich environments envisioned by the likes of 
+Deep Rock Galatic, where there is an alien presence that has invaded a variety of rich and
+beautiful underground environments, to harvest it for gains. Levels are hand designed, no 
+procedural generation is used. The game should reflect that the environment is starting to 
+give way to the men and machinery that are harvesting it. Waters are polluted, wildlife 
+looks ill. Areas with machines have some smog. Digging machines, transportation machines,
+and miner habitats decorate the environment. Environments are a mix of former natural beauty
+and industrialization.
+
+There should be few different types of environments:
+\begin{description}
+    \item [Ice world] \hfill \\ World with vents of ice, chilling breezes that freeze enemies, and patches of ice that cause sliding. Icicles can fall from the ceiling in certain areas.
+    \item [Salt flats] \hfill \\ Reddish areas with a lot of wildlife to eat the salt. Crystals are common with weird interactions.
+    \item [Sandstone caves] \hfill \\ Sandstone caves with occasional storms and sand colored backgrounds. Pits can cause the worm to fall down layers. 
+    \item [Mushroom world] \hfill \\ World overcomes with strange spores and fungus, with some water.
+    \item [Lava world] \hfill \\ Hell world, including lava, fire traps, obsidian.
+    \item [Jungle] \hfill \\ World teeming with wildlife, prey and predator.
+\end{description}
+
+Textures use shaders to warp and warble to look strange. Particle effects are also used
+for snow, fire, spores etc. Some idle wildlife is around, dependent on the environment. 
+Wherever people are, more machines are and more pollution is apparent. Breakable walls and
+hazards are scattered appropriately. Levels do not have to be linear, and can be larger
+islands from time to time. Placement of collectibles encourages the player to explore 
+throughout the map to unlock everything. Secrets include hidden layer switches and breakable
+decorations/walls.
+
+\pagebreak
+\subsection*{Interface}
+
+The interface of the game is fairly standard. Starting with a skippable splash screen,
+the player is brought to the title screen. From the title screen they can continue from 
+the most recent level they unlocked, select a previous level, go to the credits, change 
+settings, or quit out of the game. In game, a pause menu that pauses gameplay is present
+that allows some settings to be changed, the user to quit back to the title screen, or quit
+altogether. 
+
+The title screen should really hint at the story of the game by showing the 
+Gaia's story, from before the ice in prehistoric age, to being encased in ice, to breaking
+free. The mood of the title screen should express the kind of shock of the horrible 
+realization of being sort far out of time as Gaia does.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=5in]{img/game_flow.png}
+\end{figure}
+
+For the level select, I'm torn between a minigame style map like old Mario games, or an 
+easier to navigate interface. To provide the player with some sense of what they're going 
+into, I'd like to show a map of the level, as well as some kind of tally screen level. Since
+the game world is going to divided into "environments" and levels within the environments, 
+it would be neat to dynamically theme the level select based on the current environment.
+I'd like the interface music to be mysterious.
+
+When transitioning between game levels, the name of the current level should fade in, as 
+well as the environment, perhaps with a styled border. I'd like the camera to pan and zoom 
+in across the game world so the player knows about the scale of the level and has some hints
+about the challenge associated with it.
+
+\pagebreak
+\subsection*{Mechanics and power-ups}
+In \emph{Frenzy}, the player controls Gaia through levels with a top-down camera. The camera
+follows Gaia exactly. The player can "peek" the camera ahead by about a screen to look ahead
+of themselves. The player will also navigate through red/green layer exits that bring the 
+layer above or below everything on their current layer. On other layers, there may be
+secrets, enemies, or more collectibles to find. Layers add some space to levels and can
+be used to ambush enemies or as a means of escaping enemies that can't follow.
+
+In \emph{Frenzy}, the player has two main abilities to use to destroy their enemies, a bite 
+and a speed boost. The bite ability will open the player mouth, and it auto-closes if Gaia's
+head collides with an enemy. The bite will restore the player's health and add a segment
+to Gaia's body. The player can track their health via a segmented health bar on the HUD. 
+The bite has no cooldown. The speed boost ability grants players a burst of speed for a 
+short duration. It goes on a long cooldown for several seconds, and is used to quickly 
+close distance or escape. The player can keep track of what abilities are equipped with a 
+abilities bar.
+
+A noise system is present that calls enemies to the source of noises. Enemies can also be
+alerted to the player's presence by Gaia moving in front of them.
+
+Players in \emph{Frenzy} can collect eggs, fossils, and molt to gain permanent upgrades. Eggs 
+are secrets that provide new "skins" for the player with minor gameplay effects. They can 
+be changed out through the level select interface. Fossils grant power-ups to the player 
+that are temporary, and very strong. They are sometimes hidden, and other times in plain 
+sight and intended to be used as part of the challenge. Permanent power-ups are found in 
+certain game levels, and can be used in a variety of ways depending on the situation. The 
+player gains permanent power-ups by proceeding through an unskippable gate mechanic where an
+animation plays, and the player molts. Ideally, it would be nice to see what ability or 
+permanent upgrade the worm has equipped based on their appearance. The
+acid spit power-up is used to melt enemies or enemy built structures,. Gaia is shown with 
+green mouth patches when using the acid spit. Some upgrades only last for a specific level. 
+For example, when killing a Blaster, the player can take its arm to use as a projectile 
+weapon for a few shots. Other props can be interacted with sometimes for special effects. 
+Engineer toolboxes can be used to breakthrough heavy doors.
+
+Certain game levels have hazards, like timed acid traps, or gas spewing plants. Laser wires
+might cut Gaia in half. Enemies can be lured into hazards to be dispatched easier. Some 
+level geometry can be interacted with, such as breakable walls, or collapsible ceilings.
+Certain hazards can displace the player or enemies, like a vent of gas that pushes the 
+player. This could be used to the player's advantage as an additional speed boost to ambush 
+enemies.
+
+\pagebreak
+\subsection*{Enemies and bosses}
+The player faces off against a variety of enemies. Since the player is attacking mines 
+underground, most of the enemies are mining-related, or are armed guards for the mines.
+
+The most basic enemy the player will go up against is a standard grunt, with a knife or a 
+gun. These enemies die in one hit, and are only threatening in large groups. They often 
+patrol areas in a fairly regular path, but respond quickly to noises by running in their
+direction.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=2in]{img/driller.jpeg.jpeg}
+    \includegraphics[width=3in]{img/prospector.jpeg}
+\end{figure}
+
+The Driller is an enemy that Gaia will face that wields large power drills. He is heavily
+armored, and cannot be felled with a bite while protected. He will hold is ground and charge
+up his power drills to track the player and attempt to ram them. If he collides with a wall,
+he will be vulnerable to attack by the player for a short duration. In the environment, he is 
+often spotted using his drills to dig tunnels.
+
+The Prospector is an enemy usually found wandering, looking for veins of ore. He wields a 
+large pickaxe that he can use to deal large damage to Gaia, and his attacks also knock
+debris from the ceiling that can also damage Gaia. He is also armored, and will take one
+hit before losing his armor. When he is armor is destroyed, he will enter a new state, where 
+he can throw sticks of dynamite. On death, he'll explode after a short duration.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=2in]{img/blaster.jpeg}
+    \includegraphics[width=2in]{img/engi.jpeg}
+\end{figure}
+
+The Blaster is an enemy that mines ores with a large arm cannon. He attacks at range, and
+his target is marked by a laser guide. His attacks will pierce Gaia to damage her multiple
+times. If he is left alone, he can upgrade his attacks to bounce off walls. Defeating him
+might allow Gaia to use his arm for herself.
+
+The Engineer is a complicated enemy that prefers to be on the defensive. He builds breakable
+walls to barricade himself in, and provides buffs to his allies, or sets up dangerous 
+machines and traps. He should be targeted as soon as possible.
+
+\pagebreak
+\subsection*{Cutscenes, bonus material and comps}
+There will not really be many cutscenes. A cutscene will be present at the start of any boss
+fights, and at the end, as well as transitions to new worlds. Cutscenes will either be CGI 
+3D renders, or puppet shows with in-game models. 
+
+In the forseeable future, a game mode where the player plays as some of the special enemies 
+could be created. Otherwise, more game worlds could be created for the player.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=4in]{img/dead_grunt.png}
+\end{figure}
+
+\end{document}

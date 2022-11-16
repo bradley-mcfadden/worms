@@ -19,7 +19,6 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:
-	#GraphicsConfigLoader.use_default_resolution()
 	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
 	$Tween.start()
 	init_labels()
@@ -31,7 +30,6 @@ func _ready() -> void:
 	$VBoxContainer/LevelSelect.disabled = false
 	$VBoxContainer/Credits.disabled = false
 	$VBoxContainer/QuitToDesktop.disabled = false
-	#GraphicsConfigLoader.use_default_resolution()
 
 
 func init_labels() -> void:
