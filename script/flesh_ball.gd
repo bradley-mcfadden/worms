@@ -27,6 +27,7 @@ func reset() -> void:
 	$Sprite.visible = true
 	monitorable = true
 	monitoring = true
+	$DepthController.reset()
 
 
 func take_damage(how_much: int, _from: Node) -> void:
