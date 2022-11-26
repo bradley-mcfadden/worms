@@ -14,9 +14,7 @@ const MOUTH_CHOMP := "mouth_chomp"
 const MOUTH_OPEN_WIDE := "mouth_open_wide"
 const CHOMP_TO_IDLE := "chomp_to_idle"
 
-export(int) var bite_damage := 100
 export(int) var max_blood_level := 4
-export(float) var bite_heal_factor := 0.5
 
 onready var layer_checker: Area2D = $LayerCheck
 var anim_player: AnimationPlayer
@@ -98,10 +96,35 @@ func toggle_bite_hitbox(is_on: bool) -> void:
 
 
 func _on_BiteHitbox_area_entered(area: Area2D) -> void:
-	if area.has_method("take_damage"):
-		if not (area.has_method("on_bitten") and area.is_alive()): return
-		area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
-		emit_signal("interactible_bitten")
+	print("Area entered mouth")
+	var worm := get_parent()
+	for ability in worm.active_abilities():
+		if ability.has_method("on_area_entered_mouth"):
+			ability.on_area_entered_mouth(worm, area)
+	# if area.has_method("take_damage"):
+	# 	if not (area.has_method("on_bitten") and area.is_alive()): return
+	# 	area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
+	# 	emit_signal("interactible_bitten")
+
+
+func _on_BiteHitbox_body_entered(body: Node) -> void:
+	print("Body entered mouth")
+	var worm := get_parent()
+	for ability in worm.active_abilities():
+		if ability.has_method("on_body_entered_mouth"):
+			ability.on_body_entered_mouth(worm, body)
+
+
+func find_overlapping_in_mouth() -> void:
+#
+# find_overlapping_in_mouth
+# Check for areas and bodies in the bite hitbox, and call appropriate method
+# on them.
+# 
+	for area in $BiteHitbox.get_overlapping_areas():
+		_on_BiteHitbox_area_entered(area)
+	for body in $BiteHitbox.get_overlapping_bodies():
+		_on_BiteHitbox_body_entered(body)
 
 
 func increment_blood_level() -> void:

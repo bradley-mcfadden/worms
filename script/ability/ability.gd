@@ -16,6 +16,7 @@ signal is_ready_changed_cd(ability, is_ready, duration) # Ability, bool, float
 export(Texture) var texture
 var parent
 var is_ready := false
+var active := false
 
 
 func setup() -> void:
@@ -25,7 +26,8 @@ func setup() -> void:
 
 func invoke() -> void:
 # Called when player uses the ability
-	pass
+	var head = parent.head
+	head.find_overlapping_in_mouth()
 
 
 func get_texture() -> Texture:

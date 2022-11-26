@@ -8,10 +8,14 @@
 [ext_resource path="res://material/mix_shader_no_alpha.tres" type="Material" id=6]
 [ext_resource path="res://addons/rmsmartshape/shapes/point.gd" type="Script" id=7]
 [ext_resource path="res://addons/rmsmartshape/vertex_properties.gd" type="Script" id=8]
-[ext_resource path="res://img/textures/asphalt.png" type="Texture" id=9]
+[ext_resource path="res://img/textures/packed dirt.png" type="Texture" id=9]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material.gd" type="Script" id=10]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" type="Script" id=11]
 [ext_resource path="res://addons/rmsmartshape/normal_range.gd" type="Script" id=12]
+[ext_resource path="res://sound/wall_hit_3.wav" type="AudioStream" id=13]
+[ext_resource path="res://sound/wall_hit_1.wav" type="AudioStream" id=14]
+[ext_resource path="res://sound/wall_hit_2.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound/wall_destroy.wav" type="AudioStream" id=16]
 
 [sub_resource type="Resource" id=19]
 script = ExtResource( 8 )
@@ -21,7 +25,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=20]
 script = ExtResource( 7 )
-position = Vector2( 66.2773, 246.597 )
+position = Vector2( 310.821, 495.798 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 19 )
@@ -34,36 +38,10 @@ width = 1.0
 
 [sub_resource type="Resource" id=22]
 script = ExtResource( 7 )
-position = Vector2( 498.05, 184.688 )
+position = Vector2( 313.199, 203.253 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 21 )
-
-[sub_resource type="Resource" id=23]
-script = ExtResource( 8 )
-texture_idx = 0
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id=24]
-script = ExtResource( 7 )
-position = Vector2( 294.863, 10.0738 )
-point_in = Vector2( 0, 0 )
-point_out = Vector2( 0, 0 )
-properties = SubResource( 23 )
-
-[sub_resource type="Resource" id=25]
-script = ExtResource( 8 )
-texture_idx = 0
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id=26]
-script = ExtResource( 7 )
-position = Vector2( 864.74, 38.647 )
-point_in = Vector2( 0, 0 )
-point_out = Vector2( 0, 0 )
-properties = SubResource( 25 )
 
 [sub_resource type="Resource" id=27]
 script = ExtResource( 8 )
@@ -73,7 +51,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=28]
 script = ExtResource( 7 )
-position = Vector2( 715.816, 432.066 )
+position = Vector2( 895.911, 512.447 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 27 )
@@ -86,7 +64,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=30]
 script = ExtResource( 7 )
-position = Vector2( 515.578, 383.331 )
+position = Vector2( 539.362, 197.815 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 29 )
@@ -99,7 +77,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=32]
 script = ExtResource( 7 )
-position = Vector2( 324.052, 552.319 )
+position = Vector2( 976.771, 679.528 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 31 )
@@ -112,7 +90,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=34]
 script = ExtResource( 7 )
-position = Vector2( 988.663, 584.391 )
+position = Vector2( 204.672, 734.062 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 33 )
@@ -125,7 +103,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=36]
 script = ExtResource( 7 )
-position = Vector2( 204.672, 734.062 )
+position = Vector2( -82.2857, 505.24 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 35 )
@@ -138,7 +116,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=38]
 script = ExtResource( 7 )
-position = Vector2( -82.2857, 505.24 )
+position = Vector2( -157.796, 212.639 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 37 )
@@ -151,7 +129,7 @@ width = 1.0
 
 [sub_resource type="Resource" id=40]
 script = ExtResource( 7 )
-position = Vector2( -157.796, 212.639 )
+position = Vector2( -8.66348, 14.425 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 39 )
@@ -164,59 +142,57 @@ width = 1.0
 
 [sub_resource type="Resource" id=42]
 script = ExtResource( 7 )
-position = Vector2( -8.66348, 14.425 )
+position = Vector2( 448.172, -232.87 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 41 )
 
 [sub_resource type="Resource" id=43]
 script = ExtResource( 8 )
-texture_idx = 0
+texture_idx = 2
 flip = false
 width = 1.0
 
 [sub_resource type="Resource" id=44]
 script = ExtResource( 7 )
-position = Vector2( 448.172, -232.87 )
+position = Vector2( 833.272, -106.391 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 43 )
 
 [sub_resource type="Resource" id=45]
 script = ExtResource( 8 )
-texture_idx = 2
+texture_idx = 0
 flip = false
 width = 1.0
 
 [sub_resource type="Resource" id=46]
 script = ExtResource( 7 )
-position = Vector2( 833.272, -106.391 )
+position = Vector2( 1526.19, 12.9796 )
 point_in = Vector2( 0, 0 )
 point_out = Vector2( 0, 0 )
 properties = SubResource( 45 )
 
-[sub_resource type="Resource" id=47]
+[sub_resource type="Resource" id=49]
 script = ExtResource( 4 )
 _points = {
 0: SubResource( 20 ),
 1: SubResource( 22 ),
-2: SubResource( 24 ),
-3: SubResource( 26 ),
 4: SubResource( 28 ),
 5: SubResource( 30 ),
-6: SubResource( 32 ),
-7: SubResource( 34 ),
-8: SubResource( 36 ),
-9: SubResource( 38 ),
-10: SubResource( 40 ),
-11: SubResource( 42 ),
-12: SubResource( 44 ),
-13: SubResource( 46 )
+7: SubResource( 32 ),
+8: SubResource( 34 ),
+9: SubResource( 36 ),
+10: SubResource( 38 ),
+11: SubResource( 40 ),
+12: SubResource( 42 ),
+13: SubResource( 44 ),
+14: SubResource( 46 )
 }
-_point_order = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ]
+_point_order = [ 5, 1, 0, 4, 7, 8, 9, 10, 11, 12, 13, 14 ]
 _constraints = {
 }
-_next_key = 0
+_next_key = 5
 
 [sub_resource type="Resource" id=16]
 script = ExtResource( 10 )
@@ -261,12 +237,14 @@ render_offset = 0.0
 
 [node name="BreakableWall2" type="StaticBody2D"]
 material = ExtResource( 6 )
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 5 )
 
 [node name="SS2D_Shape_Open" type="Node2D" parent="."]
 material = ExtResource( 6 )
 script = ExtResource( 2 )
-_points = SubResource( 47 )
+_points = SubResource( 49 )
 material_overrides = {
 }
 shape_material = SubResource( 2 )
@@ -274,18 +252,35 @@ tessellation_stages = 5
 tessellation_tolerence = 4.0
 flip_edges = false
 render_edges = true
-collision_size = 32.0
-collision_offset = 0.0
+collision_size = 256.0
+collision_offset = 1.0
 collision_polygon_node_path = NodePath("../CollisionPolygon2D")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 66.2773, 246.597, 489.039, 182.06, 284.818, 6.06162, 870.246, 35.0442, 715.816, 432.066, 685.888, 420.737, 516.013, 385.092, 333.472, 549.015, 1002.74, 583.401, 204.321, 735.482, -82.9781, 505.689, -159.35, 212.33, -8.90345, 14.1464, 448.055, -234.17, 833.272, -106.391, 823.287, -75.9887, 450.913, -202.298, 11.9786, 38.3938, -127.964, 218.569, -56.1256, 488.283, 211.998, 704.416, 970.817, 585.646, 303.275, 559.607, 508.341, 354.026, 693.456, 389.645, 843.469, 52.5653, 314.535, 17.9312, 519.76, 191.019, 70.8191, 278.273 )
+polygon = PoolVector2Array( 542.439, 325.778, 444.272, 332.256, 442.458, 368.89, 965.442, 404.979, 1087.55, 743.658, 166.684, 856.295, -189.696, 574.861, -283.339, 187.682, -92.1918, -82.5648, 436.743, -360.359, 864.191, -230.601, 1547.92, -113.162, 1504.46, 139.121, 802.353, 17.8186, 459.601, -105.381, 74.8648, 111.415, -32.2526, 237.596, 25.1242, 435.619, 242.66, 611.829, 865.995, 615.398, 826.38, 619.915, 179.184, 622.706, 186.466, 366.809, 182.126, 74.2496, 438.118, 76.3304, 536.285, 69.852 )
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="DepthController" parent="." instance=ExtResource( 3 )]
 
-[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+[node name="Hit1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="Hit2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 15 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="Hit3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="Destroy" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 16 )
+volume_db = -10.0
 bus = "SFX"
 
 [connection signal="hide" from="DepthController" to="." method="_on_hide"]

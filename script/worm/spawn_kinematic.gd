@@ -131,6 +131,19 @@ func _ready() -> void:
 	_init_controller()
 
 
+func active_abilities() -> Array:
+#
+# active_actibilities
+# Returns all abilities currently being used.
+# ret - All abilities currenly in use. (not ready, not on cooldown).
+# 
+	var active := []
+	for ability in $AbilitiesContainer.get_children():
+		if ability.active:
+			active.append(ability)
+	return active
+
+
 func emit_signals_first_time() -> void:
 #
 # emit_signals_first_time - Call me to re-emit signals from _ready().

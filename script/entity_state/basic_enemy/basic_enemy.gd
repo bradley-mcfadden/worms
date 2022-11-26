@@ -114,13 +114,13 @@ func move(delta: float) -> void:
 # Move the enemy toward its target.
 # delta - Time since last frame, useful for scaling movement speed.
 # 
+	if target == null: return
 	var reached_target: bool = target.distance_to(global_position) < fsm.top().PROPERTIES["threshold"]
+	if reached_target: return
 	if is_hidden and !fsm.top().NAME == BasicEnemyDeadState.NAME and not reached_target:
 		$echo.set_visible(true)
 	else:
 		$echo.set_visible(false)
-	if (target == null or reached_target):
-		return
 	var speed = fsm.top().PROPERTIES["speed"]
 	var desired_velocity = chosen_dir.rotated(rot) * speed
 	velocity = velocity.linear_interpolate(desired_velocity, steer_force)

@@ -26,18 +26,30 @@ func _ready() -> void:
 
 
 func reset() -> void:
+#
+# reset() puts the object back into its level start state.
+#
 	health = start_health
 	visible = true
 	$CollisionPolygon2D.disabled = false
 	$DepthController.reset()
 	set_crack_texture(crack_textures[0])
+	modulate = Color.white
 
 
-func take_damage(how_much: int, _from: Node) -> void:
+func take_damage(how_much: int, _from: Node, armor: bool = true) -> void:
+#
+# take_damage
+# Make the object take damage. Unless armor is false, the amount of damage is reduce to 1
+# how_much - Amount of damage for wall to take, reduced to 1 if armor is true.
+# _from - Unused.
+# armor - If true, reduce how_much to 1. 
+#
+	if armor: how_much = 1
 	var new_health: int = int(clamp(health - how_much, 0, start_health))
 	if new_health <= 0:
 		play_death_effects()
-		$CollisionPolygon2D.disabled = true
+		$CollisionPolygon2D.call_deferred("set_disabled", true)
 	else:
 		play_hit_effects()
 		if new_health <= start_health * 0.66:
@@ -45,31 +57,56 @@ func take_damage(how_much: int, _from: Node) -> void:
 		elif new_health <= start_health * 0.33:
 			set_crack_texture(crack_textures[2])
 	health = new_health
+	$CollisionPolygon2D.call_deferred("set_disabled", true)
+	yield(get_tree().create_timer(0.2), "timeout")
+	if is_alive():
+		$CollisionPolygon2D.call_deferred("set_disabled", false)
 
 
 func play_hit_effects() -> void:
-	$Hit.play()
-	$Tween.interpolate_property(self, "modulate", null, Color.black, 0.1)
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 0.5)
 	$Tween.start()
 	yield($Tween, "tween_completed")
-	$Tween.interpolate_property(self, "modulate", null, Color.white, 0.1)
+	$Tween.interpolate_property(self, "modulate", null, Color.white, 0.5)
 	$Tween.start()
+	var idx := int(rand_range(1, 4))
+	var node := "Hit%d" % idx
+	get_node(node).play()
 
 
 func play_death_effects() -> void:
 	$Tween.stop(self)
-	$Tween.interpolate_property(self, "modulate", null, Color.transparent, 0.1)
+	$Tween.interpolate_property(self, "modulate", null, Color.transparent, 1.0)
 	$Tween.start()
+	$Destroy.play()
+	yield(get_tree().create_timer(1.0), "timeout")
+	visible = false
 
 
 func on_slammed() -> void:
-	call_deferred("take_damage", health, null)
+	call_deferred("take_damage", health, null, false)
 
 
 func set_crack_texture(texture: Texture) -> void:
 	material.set_shader_param("mix_over", texture)
 	shape.shape_material._edge_meta_materials[0].edge_material.material = material
 
+
+func on_bitten(worm: Node, bite_damage: int, _bite_heal_factor: float) -> void:
+#
+# on_bitten - A callback for a event when this flesh ball is hit by bite.
+# bite_damage - Amount of damage the flesh ball should take.
+# bite_heal_factor - Unused
+#	
+	call_deferred("take_damage", bite_damage, worm)
+
+
+func is_alive() -> bool:
+#
+# is_alive
+# Return true if object can still be damaged.
+#
+	return health > 0
 
 ## Mostly boilerplate below this line
 #
@@ -105,12 +142,12 @@ func get_depth_controllers() -> Array:
 	]
 
 
-func _on_hide() -> void:
+func _on_hide(_new_layer: int) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 0.1)
 	$Tween.start()
 
 
-func _on_show() -> void:
+func _on_show(_new_layer: int) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.0), Color(1, 1, 1, 1), 0.1)
 	$Tween.start()
 

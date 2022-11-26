@@ -9,6 +9,9 @@ const CHOMP_TO_IDLE := "chomp_to_idle"
 const MOUTH_CHOMP := "mouth_chomp"
 const MOUTH_OPEN_WIDE := "mouth_open_wide"
 
+export(float) var bite_heal_factor := 0.5
+export(int) var bite_damage := 100
+
 onready var n_invoke_called := 0
 onready var anim_player: AnimationPlayer = null
 
@@ -27,6 +30,7 @@ func invoke() -> void:
 # State machine that executes wind up and snap
 	if not is_ready:
 		return
+	active = true
 	n_invoke_called += 1
 	emit_signal("is_ready_changed", self, false)
 	is_ready = false
@@ -35,6 +39,9 @@ func invoke() -> void:
 		wind_up()
 	elif n_invoke_called == 2:
 		bite()
+
+	var head = parent.head
+	head.find_overlapping_in_mouth()
 
 
 func wind_up() -> void:
@@ -90,9 +97,24 @@ func _on_animation_changed(from: String, to: String) -> void:
 		emit_signal("is_ready_changed", self, true)
 		n_invoke_called = 0
 		$Timer.stop()
+		active = false
 
 
 func _on_interactible_bitten() -> void:
 	n_invoke_called = 2
 	bite()
 	$Timer.stop()
+
+
+func on_area_entered_mouth(worm: Node2D, area: Area2D) -> void:
+	if area.has_method("take_damage"):
+		if not (area.has_method("on_bitten") and area.is_alive()): return
+		area.on_bitten(worm, bite_damage, bite_heal_factor)
+		_on_interactible_bitten()
+
+
+func on_body_entered_mouth(worm: Node2D, body: Node) -> void:
+	if body.has_method("take_damage"):
+		if not (body.has_method("on_bitten") and body.is_alive()): return
+		body.on_bitten(worm, bite_damage, bite_heal_factor)
+		_on_interactible_bitten()
