@@ -45,18 +45,15 @@ func _physics_process(delta: float) -> void:
 		current_interest = INITIAL_INTEREST
 		var dist: float = entity.global_position.distance_to(player.global_position) - player.radius - entity.radius
 		if entity.check_melee_attack(dist, player.global_position):
-			print("Doing a melee attack!")
 			fsm.push(BasicEnemyStateLoader.melee_attack(fsm, entity))
 			return
 		if entity.check_ranged_attack(dist, player.global_position):
-			print("Doing a ranged attack!")
 			fsm.push(BasicEnemyStateLoader.ranged_attack(fsm, entity))
 			return
 	
 	else:
 		current_interest -= delta
 		if current_interest < 0.0:
-			print("Switch to search state")
 			fsm.replace(BasicEnemyStateLoader.search(fsm, entity))
 			return
 	entity.set_target(last_player_location)

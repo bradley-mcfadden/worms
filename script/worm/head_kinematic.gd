@@ -96,19 +96,13 @@ func toggle_bite_hitbox(is_on: bool) -> void:
 
 
 func _on_BiteHitbox_area_entered(area: Area2D) -> void:
-	print("Area entered mouth")
 	var worm := get_parent()
 	for ability in worm.active_abilities():
 		if ability.has_method("on_area_entered_mouth"):
 			ability.on_area_entered_mouth(worm, area)
-	# if area.has_method("take_damage"):
-	# 	if not (area.has_method("on_bitten") and area.is_alive()): return
-	# 	area.on_bitten(get_parent(), bite_damage, bite_heal_factor)
-	# 	emit_signal("interactible_bitten")
 
 
 func _on_BiteHitbox_body_entered(body: Node) -> void:
-	print("Body entered mouth")
 	var worm := get_parent()
 	for ability in worm.active_abilities():
 		if ability.has_method("on_body_entered_mouth"):

@@ -98,6 +98,8 @@ func _ready() -> void:
 		ent_state_prop[BasicEnemyChaseState.NAME]["threshold"] = ranged_thresh
 	else:
 		ent_state_prop[BasicEnemyChaseState.NAME]["threshold"] = melee_thresh
+	
+	_init_colors()
 
 
 func _physics_process(delta: float) -> void:
@@ -106,6 +108,22 @@ func _physics_process(delta: float) -> void:
 	var current_estate = fsm.top()
 	if current_estate != null:
 		current_estate._physics_process(delta)
+
+
+func _init_colors() -> void:
+	var material = ShaderMaterial.new()
+	material.shader = $Sprite.material.shader
+	material.set_shader_param("target_hue", 0.6)
+	material.set_shader_param("threshold", 0.1)
+	if has_ranged_attack and has_melee_attack:
+		material.set_shader_param("replace_hue", 0.9)
+	elif has_melee_attack:
+		material.set_shader_param("replace_hue", 0.7)
+	elif has_ranged_attack:
+		material.set_shader_param("replace_hue", 0.3)
+	else:
+		material.set_shader_param("sat_adjust", 0.0)
+	$Sprite.material = material
 
 
 func move(delta: float) -> void:
