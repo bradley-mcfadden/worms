@@ -194,6 +194,7 @@ texture = ExtResource( 3 )
 normal_map = ExtResource( 1 )
 hframes = 11
 vframes = 7
+frame = 71
 
 [node name="blood" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )

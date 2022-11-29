@@ -30,7 +30,6 @@ func invoke() -> void:
 # State machine that executes wind up and snap
 	if not is_ready:
 		return
-	active = true
 	n_invoke_called += 1
 	emit_signal("is_ready_changed", self, false)
 	is_ready = false
@@ -51,6 +50,10 @@ func wind_up() -> void:
 	_play_roar_sound()
 	#emit_signal("is_ready_changed", self, false)
 	$Timer.start()
+	yield(get_tree().create_timer(0.4), "timeout")
+	active = true
+	var head = parent.head
+	head.find_overlapping_in_mouth()
 
 
 func bite() -> void:

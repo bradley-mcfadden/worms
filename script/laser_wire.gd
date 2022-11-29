@@ -29,7 +29,7 @@ export (Dictionary) var state_properties := {
 	DetectState.FIRE : {
 		"width" : 16.0,
 		"color" : Color(1.0, 0.3, 0.3, 0.8),
-		"time" : 0.25
+		"time" : 0.5
 	},
 	DetectState.COOLDOWN : {
 		"width" : 0.0,
@@ -66,26 +66,28 @@ func _draw() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	#print(tween.is_active(), " ", ray.is_colliding(), " ", state)
 	if ray.is_colliding():
 		if state == DetectState.WAIT and not tween.is_active():
 			next_state = DetectState.PREFIRE 
 			var _res := tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
 			_res = tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
-			_res = tween.stop(self, "width")
-			_res = tween.stop(self, "color")
 			_res = tween.start()
 		if state == DetectState.FIRE:
 			# process the collider as a hit
 			var collider: Object = ray.get_collider()
+			# print(collider, collider.has_method("take_damage"))
 			if collider.has_method("take_damage") and collider.is_alive():
+				# print("collider is going to take damage")
 				collider.take_damage(damage, self)
+
 
 func _process(_delta: float) -> void:
 	update()
 
 
-func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
+func _on_Tween_tween_completed(_obj: Object, key: NodePath):
+	if (next_state < state and next_state != DetectState.WAIT) or (str(key) != ":width"): return
+	print("From %d to %d with %s key" % [state, next_state, key])
 	state = next_state
 	match state:
 		DetectState.PREFIRE:
@@ -106,8 +108,8 @@ func _on_Tween_tween_completed(_obj: Object, _key: NodePath):
 	if next_state != state:
 		var _res := tween.interpolate_property(self, "width", null, state_properties[next_state]["width"], state_properties[state]["time"], Tween.TRANS_CUBIC)
 		_res = tween.interpolate_property(self, "color", null, state_properties[next_state]["color"], state_properties[state]["time"])
-		_res = tween.stop(self, "width")
-		_res = tween.stop(self, "color")
+		# _res = tween.stop(self, "width")
+		# _res = tween.stop(self, "color")
 		_res = tween.start()
 
 

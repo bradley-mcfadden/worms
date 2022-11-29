@@ -8,7 +8,7 @@
 [ext_resource path="res://material/mix_shader_no_alpha.tres" type="Material" id=6]
 [ext_resource path="res://addons/rmsmartshape/shapes/point.gd" type="Script" id=7]
 [ext_resource path="res://addons/rmsmartshape/vertex_properties.gd" type="Script" id=8]
-[ext_resource path="res://img/textures/packed dirt.png" type="Texture" id=9]
+[ext_resource path="res://img/textures/dust3.png" type="Texture" id=9]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material.gd" type="Script" id=10]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" type="Script" id=11]
 [ext_resource path="res://addons/rmsmartshape/normal_range.gd" type="Script" id=12]

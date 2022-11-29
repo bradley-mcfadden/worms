@@ -15,6 +15,7 @@ export (Array, Texture) var crack_textures = [
 export (int) var start_health := 4
 export (int) var layer := 1
 export (float) var peek_alpha := 1.0
+export (Resource) var shape_material
 
 var health := start_health
 onready var shape: SS2D_Shape_Open = $SS2D_Shape_Open
@@ -22,6 +23,8 @@ onready var shape: SS2D_Shape_Open = $SS2D_Shape_Open
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	shape.shape_material = shape_material.duplicate()
+	shape.shape_material.render_offset = 0
 	reset()
 
 

@@ -19,8 +19,7 @@ signal noise_produced(position, audible_radius) # Vector2, float
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 
-const DRAW_ME := false
-
+export(bool) var draw_me := false setget set_draw_me
 export(int) var radius := 20
 export(float) var steer_force := 0.5
 export(int) var look_ahead := 250
@@ -62,6 +61,7 @@ var ent_state_prop := {}
 func _ready() -> void:
 	set_layer(layer)
 	if Engine.editor_hint:
+		update()
 		return
 
 	animation_player = $AnimationPlayer
@@ -101,6 +101,10 @@ func _ready() -> void:
 	
 	_init_colors()
 
+
+func set_draw_me(_draw_me: bool) -> void:
+	draw_me = _draw_me
+	update()
 
 func _physics_process(delta: float) -> void:
 	if Engine.editor_hint:
@@ -147,37 +151,37 @@ func move(delta: float) -> void:
 
 
 func _draw() -> void:
-	if not DRAW_ME or fsm == null:
+	if not draw_me: #or fsm == null:
 		return
-	var current_state = fsm.top()
-	if current_state == null:
-		return
-	var prop = current_state.PROPERTIES
-	var state = current_state.NAME
-	var color = prop["color"]
-	draw_arc(Vector2.ZERO, 20, 0, PI * 2, 20, color)
-	draw_line(Vector2.ZERO, Vector2(20, 0), color)
-	var f = deg2rad(prop["fov"])
-	if !Engine.editor_hint:
-		match state:
-			BasicEnemySeekState.NAME:
-				continue
-			BasicEnemyPatrolState.NAME:
-				_draw_semicircle(look_distance, f, Color.black)
-			BasicEnemyChaseState.NAME:
-				_draw_semicircle(look_distance, f, Color.black)
-				_draw_semicircle(melee_thresh, f, Color.black)
-				_draw_semicircle(ranged_thresh, f, Color.black)
-	else:
-		if len(idle_patrol) > 0:
-			_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
-		_draw_semicircle(look_distance, f, Color.black)
-		if has_melee_attack:
-			_draw_semicircle(melee_thresh, f, Color.black)
-		if has_ranged_attack:
-			_draw_semicircle(ranged_thresh, f, Color.black)
+	# var current_state = fsm.top()
+	# if current_state == null:
+	# 	return
+	# var prop = current_state.PROPERTIES
+	# var state = current_state.NAME
+	# var color = prop["color"]
+	# draw_arc(Vector2.ZERO, 20, 0, PI * 2, 20, color)
+	# draw_line(Vector2.ZERO, Vector2(20, 0), color)
+	# var f = deg2rad(prop["fov"])
+	# if !Engine.editor_hint:
+	# 	match state:
+	# 		BasicEnemySeekState.NAME:
+	# 			continue
+	# 		BasicEnemyPatrolState.NAME:
+	# 			_draw_semicircle(look_distance, f, Color.black)
+	# 		BasicEnemyChaseState.NAME:
+	# 			_draw_semicircle(look_distance, f, Color.black)
+	# 			_draw_semicircle(melee_thresh, f, Color.black)
+	# 			_draw_semicircle(ranged_thresh, f, Color.black)
+	# else:
+	
+	_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
+		# _draw_semicircle(look_distance, f, Color.black)
+		# if has_melee_attack:
+		# 	_draw_semicircle(melee_thresh, f, Color.black)
+		# if has_ranged_attack:
+		# 	_draw_semicircle(ranged_thresh, f, Color.black)
 
-		_draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
+		# _draw_polyline(idle_patrol, Color.black, transform.affine_inverse())
 
 
 # draw a semicircle with radius, which travels around the arc for f,

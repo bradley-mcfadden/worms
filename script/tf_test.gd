@@ -93,6 +93,7 @@ func reset() -> void:
 	$Players.reset_all_players()
 	$Music.play()
 	$Interactibles.reset()
+	$Obstacles.reset()
 
 
 func get_current_camera_2d() -> Camera2D:

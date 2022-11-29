@@ -14,3 +14,9 @@ func get_obstacles() -> Array:
 			obs.append(child)
 
 	return obs
+
+
+func reset() -> void:
+	for child in get_children():
+		if child.has_method("reset"):
+			child.reset()

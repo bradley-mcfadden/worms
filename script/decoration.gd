@@ -29,11 +29,11 @@ func get_depth_controllers() -> Array:
 	]
 
 
-func _on_hide() -> void:
+func _on_hide(_new_layer: int) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.1)
 	$Tween.start()
 
 
-func _on_show() -> void:
+func _on_show(_new_layer: int) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 0.1)
 	$Tween.start()

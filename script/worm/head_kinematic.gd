@@ -49,7 +49,7 @@ func move(vel: Vector2, oscvel: Vector2, _delta: float) -> Vector2:
 
 	var collider := move_and_collide(next_pos - position, true)
 	if collider != null:
-		vel.x = 0
+		vel = -(collider.position - position).normalized()
 	rotation = rot
 	var osc_offset = oscvel * int(sin(theta) * vel.length())
 	j1 += vel.rotated(rot)

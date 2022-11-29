@@ -29,8 +29,16 @@ func _ready() -> void:
 	if parent.has_method("set_collision_mask"):
 		start_layer = parent.get_collision_layer()
 		start_mask = parent.get_collision_mask()
-		
 		set_layer(parent.layer)
+
+	if parent.has_method("_on_hide"):
+		if not is_connected("hide", parent, "_on_hide"):
+			var _ret := connect("hide", parent, "_on_hide")
+
+	if parent.has_method("_on_show"):
+		if not is_connected("show", parent, "_on_show"):
+			var _ret := connect("show", parent, "_on_show")
+		
 
 
 func set_active(is_active: bool, new_layer: int) -> void:
