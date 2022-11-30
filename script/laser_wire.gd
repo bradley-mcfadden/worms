@@ -56,9 +56,7 @@ func _ready() -> void:
 	ray.global_position = node1.global_position
 	ray.cast_to = node2.global_position - ray.global_position
 
-	var _err := $DepthController.connect("show", self, "_on_show")
-	_err = $DepthController.connect("hide", self, "_on_hide")
-	_err = $Tween.connect("tween_completed", self, "_on_Tween_tween_completed")
+	var _err = $Tween.connect("tween_completed", self, "_on_Tween_tween_completed")
 
 
 func _draw() -> void:
@@ -87,7 +85,7 @@ func _process(_delta: float) -> void:
 
 func _on_Tween_tween_completed(_obj: Object, key: NodePath):
 	if (next_state < state and next_state != DetectState.WAIT) or (str(key) != ":width"): return
-	print("From %d to %d with %s key" % [state, next_state, key])
+	# print("From %d to %d with %s key" % [state, next_state, key])
 	state = next_state
 	match state:
 		DetectState.PREFIRE:
