@@ -21,8 +21,6 @@ var active: bool
 
 func _ready() -> void:
 	set_layer(layer)
-	var _err := $DepthController.connect("show", self, "_on_show")
-	_err = $DepthController.connect("hide", self, "_on_hide")
 
 
 func get_collision_layer() -> int:
