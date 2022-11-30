@@ -25,15 +25,15 @@ func _ready():
 
 
 func _draw() -> void:
-	var v_rect: Rect2 = get_viewport_transform().affine_inverse().xform(get_viewport_rect())
-	var vpos = Vector2()
-	vpos.x = clamp(pos.x, v_rect.position.x, v_rect.position.x + v_rect.size.x)
-	vpos.y = clamp(pos.y, v_rect.position.y, v_rect.position.y + v_rect.size.y)
-	view_pos = get_viewport_transform() * get_global_transform() * vpos
-	xpos = pos
+	# var v_rect: Rect2 = get_viewport_transform().affine_inverse().xform(get_viewport_rect())
+	# var vpos = Vector2()
+	# vpos.x = clamp(pos.x, v_rect.position.x, v_rect.position.x + v_rect.size.x)
+	# vpos.y = clamp(pos.y, v_rect.position.y, v_rect.position.y + v_rect.size.y)
+	# view_pos = get_viewport_transform() * get_global_transform() * vpos
+	# xpos = pos
 
 	color.a *= 1 - decay
-	draw_arc(vpos, average + tdelta * amplitude, 0, PI * 2, 30, color, 10)
+	draw_arc(pos, average + tdelta * amplitude, 0, PI * 2, 30, color, 10)
 	# draw_arc(pos, average + (1 + cos(tdelta)) * amplitude, 0, PI*2, 20, Color.red)
 	tdelta += speed
 
