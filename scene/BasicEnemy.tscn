@@ -426,6 +426,7 @@ polygon = PoolVector2Array( 0, 0, -8.02359, -15.3749, 6.18324, -24 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="echo" parent="." instance=ExtResource( 1 )]
+visible = false
 pos = Vector2( 0, 0 )
 speed = 2.0
 decay = 0.05

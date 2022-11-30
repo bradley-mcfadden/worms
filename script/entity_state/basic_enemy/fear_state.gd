@@ -12,7 +12,7 @@ const NAME := "FearState"
 const PROPERTIES := {
 	color = Color.blue,
 	speed = 750,
-	threshold = 200,
+	threshold = 20,
 	fov = 360,
 }
 const FEAR_TIME := 10.0
@@ -56,7 +56,9 @@ func _physics_process(delta: float) -> void:
 			fsm.replace(BasicEnemyStateLoader.patrol(fsm, entity))
 	
 	var dir_player_to_me: Vector2 = entity.global_position-last_player_location	
-	entity.set_target(dir_player_to_me.normalized().rotated(randf() - 0.5) * 100.0)
+	var fear_target := dir_player_to_me.normalized().rotated(randf() - 0.5) * 100.0
+	# print("Running away to ", fear_target)
+	entity.set_target(entity.global_position + fear_target)
 	var ss = entity.set_interest()
 	if ss == SeekState.SEEK_TARGET:
 		if entity.animation_player.current_animation != walk_anim:
