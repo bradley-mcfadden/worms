@@ -48,6 +48,7 @@ position = Vector2( 271, 25 )
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
 collision_mask = 3
+collide_with_areas = true
 
 [node name="Tween" type="Tween" parent="."]
 

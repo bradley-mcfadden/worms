@@ -55,6 +55,7 @@ func _ready() -> void:
 	node2.look_at(node1.global_position)
 	ray.global_position = node1.global_position
 	ray.cast_to = node2.global_position - ray.global_position
+	ray.collide_with_areas = true
 
 	var _err = $Tween.connect("tween_completed", self, "_on_Tween_tween_completed")
 
