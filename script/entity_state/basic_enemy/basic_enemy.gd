@@ -233,6 +233,7 @@ func reset() -> void:
 	$MeleeAttack.visible = false
 	$MeleeAttack.monitoring = false
 	$Trail.visible = false
+	$CollisionShape2D.call_deferred("set_disabled", true)
 
 
 func set_interest() -> Object: # Return SeekState
@@ -469,11 +470,13 @@ func take_damage(how_much: int, from: Node) -> void:
 		# animation_player.disconnect()
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
 		$Sounds/Gib.play()
+		$CollisionShape2D.call_deferred("set_disabled", true)
 	elif health <= 0:
 		# animation_player.disconnect_all()
 		emit_signal("died", self, from, false)
 		fsm.replace(BasicEnemyStateLoader.dead(fsm, self))
 		$Sounds/Gib.play()
+		$CollisionShape2D.call_deferred("set_disabled", true)
 
 
 func is_alive() -> bool:
