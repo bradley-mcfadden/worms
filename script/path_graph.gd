@@ -44,3 +44,35 @@ func _draw() -> void:
         var neighbours := astar.get_point_connections(i)
         for n in neighbours:
             draw_line(pt, itform.xform(astar.get_point_position(n)), Color.pink)
+
+
+func closest_unobs_to(point: Vector2, collision_layer: int = 2^32) -> Vector2:
+#
+# closest_unobs_to 
+# Return the closest unobstructed point to @point, or @point if all points are obstructed.
+# @point - Point to compare graph points to for distance and obstruction.
+# @collision_layer - Layer collision checks occur on.
+# @return - Closest unobstructed point or input point if nothing is obstructed.
+#
+    var space := get_world_2d().direct_space_state
+    var min_distance := float(2^32)
+    var closest := point
+    for pt in all_points():
+        if space.intersect_ray(point, pt, [], collision_layer) != {}:
+            var dist: float = pt.distance_to(point)
+            if dist < min_distance:
+                closest = pt
+                min_distance = dist
+    return closest
+
+
+func all_points() -> PoolVector2Array:
+#
+# Return all points or the graph in an unordered fashion.
+#
+    var arr := PoolVector2Array()
+    arr.resize(astar.get_point_count())
+    for i in range(astar.get_point_count()):
+        var pt := astar.get_point_position(i)
+        arr.append(pt)
+    return arr
