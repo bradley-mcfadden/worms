@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://script/path_graph.gd" type="Script" id=2]
+
+[node name="PathGraph" type="Node2D"]
+position = Vector2( 311, -72 )
+script = ExtResource( 2 )
