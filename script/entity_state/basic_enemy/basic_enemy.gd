@@ -249,9 +249,9 @@ func set_interest() -> Object: # Return SeekState
 		set_default_interest()
 		return SeekState.NO_TARGET
 	var threshold = ent_state_prop[fsm.top().NAME]["threshold"]
-	if position.distance_to(target) < threshold:
+	if global_position.distance_to(target) < threshold:
 		return SeekState.REACHED_TARGET
-	var path_direction = target - position
+	var path_direction = target - global_position
 	rot = path_direction.angle()
 	for i in num_rays:
 		var d = ray_directions[i].rotated(rot).dot(path_direction)

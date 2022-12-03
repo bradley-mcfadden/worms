@@ -29,6 +29,7 @@ func _ready() -> void:
 		_res = enemy.connect("bullet_created", self, "attach_bullet")
 	$NoiseManager.listeners.append_array(enemies)
 	$Background.set_layer(0)
+	$Enemies.paths = $Paths
 	# $CanvasLayer/DepthGauge.change_depth(0)
 	# death_screen = $CanvasLayer/DeathScreen
 	# enemies_dead_screen = $CanvasLayer/AllEnemiesDead

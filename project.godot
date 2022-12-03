@@ -99,6 +99,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/laser_node.gd"
 }, {
+"base": "Node2D",
+"class": "PathGraph",
+"language": "GDScript",
+"path": "res://script/path_graph.gd"
+}, {
 "base": "Resource",
 "class": "RMS2D_Material",
 "language": "GDScript",
@@ -268,6 +273,7 @@ _global_script_class_icons={
 "Fsm": "",
 "Iterator": "",
 "LaserNode": "",
+"PathGraph": "",
 "RMS2D_Material": "",
 "RMS2D_VertexProperties": "",
 "RMS2D_VertexPropertiesArray": "",

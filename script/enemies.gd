@@ -10,6 +10,9 @@ extends Node
 signal all_enemies_dead
 
 
+var paths: Node 
+
+
 func _ready():
 	for enemy in get_children():
 		enemy.connect("died", self, "_on_Enemy_died")
@@ -55,6 +58,13 @@ func get_players() -> Array:
 # return - Get an array of all the players in the level.
 #
 	return get_parent().get_players()
+
+
+func get_path_at_layer(layer: int) -> PathGraph:
+	for path in paths.get_children():
+		if path.layer == layer:
+			return path
+	return null
 
 
 func _on_Enemy_died(node: Node, _from: Node, _overkill: bool) -> void:

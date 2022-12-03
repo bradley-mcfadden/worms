@@ -58,7 +58,8 @@ func _physics_process(delta: float) -> void:
 		print("reacted to player")
 		return
 	if noise_location != null:
-		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location))
+		var path_graph = entity.get_parent().get_path_at_layer(entity.layer)
+		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location, path_graph))
 		print("Going to chase noise!")
 		return
 	entity.set_target(get_target())

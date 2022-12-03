@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	if noise_location != null:
-		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location))
+		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location, entity.get_parent().get_path_at_layer(entity.layer)))
 		return
 	
 	if search_time <= 0:
