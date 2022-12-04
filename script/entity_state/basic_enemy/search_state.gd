@@ -23,6 +23,7 @@ var noise_location = null # Mostly a Vector2
 var walk_anim: String
 var search_location = null # Mostly a Vector2
 var search_time: float = -1.0
+var search_attempts: int = 10
 
 
 func _init(_fsm: Fsm, _entity) -> void:
@@ -55,11 +56,16 @@ func _physics_process(delta: float) -> void:
 		var world: Physics2DDirectSpaceState = entity.get_world_2d().direct_space_state
 		var ray := Vector2.RIGHT.rotated(angle) * length
 		var collider := world.intersect_ray(
-			entity.global_position, entity.global_position + ray, [entity], entity.collision_layer
+			entity.global_position, entity.global_position + ray, [entity], entity.collision_mask, true, true
 		)
 		if collider.empty():
 			search_location = entity.global_position + Vector2.RIGHT.rotated(angle) * length
 			print("New search state at ", search_location)
+			if search_attempts <= 0:
+				fsm.replace(BasicEnemyStateLoader.patrol(fsm, entity))
+				return
+			else:
+				search_attempts -= 1
 	else:
 		search_time -= delta
 	

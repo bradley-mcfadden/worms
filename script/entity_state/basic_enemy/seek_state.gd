@@ -42,15 +42,27 @@ func on_enter() -> void:
 		walk_anim = "walk_knife"
 		idle_anim = "idle_knife"
 
+	var space = entity.get_world_2d().direct_space_state
 	if path_graph != null:
 		var from: int = path_graph.closest_unobs_to_id(entity.global_position, entity.collision_mask)
 		var to: int = path_graph.closest_unobs_to_id(target, entity.collision_mask)
-		print(entity, " Moving between %d to %d" % [from, to])
-		path = path_graph.astar.get_point_path(from, to)
-		print("My path is ", path)
-		path.append(target)
-		path_idx += 1
-		path_target = path[path_idx]
+
+		# Check that current position to from is unobstructed
+		# Check that 'to' and path_target is unobstructed
+		var from_pt: Vector2 = path_graph.astar.get_point_position(from)
+		var to_pt: Vector2 = path_graph.astar.get_point_position(to)
+		if (space.intersect_ray(entity.global_position, from_pt, [], entity.collision_mask).empty()
+			and space.intersect_ray(to_pt, path_target, [], entity.collision_mask).empty()):	
+			print(entity, " Moving between %d to %d" % [from, to])
+			path = path_graph.astar.get_point_path(from, to)
+			print("My path is ", path)
+			path.append(target)
+			path_idx += 1
+			path_target = path[path_idx]
+		else:
+			fsm.replace(BasicEnemySearchState.new(fsm, entity))
+	else:
+		fsm.replace(BasicEnemySearchState.new(fsm, entity))
 
 
 func _physics_process(delta: float) -> void:
