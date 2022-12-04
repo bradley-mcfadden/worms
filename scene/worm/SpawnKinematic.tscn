@@ -35,34 +35,34 @@ speed_decay = 0.9
 wait_time = 0.05
 one_shot = true
 
-[node name="Sounds" type="Node2D" parent="."]
+[node name="Sounds" type="Node" parent="."]
 
-[node name="SegmentTakeDamage" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="SegmentTakeDamage" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 12 )
 volume_db = -30.0
 bus = "SFX"
 
-[node name="ChangeLayerUp" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="ChangeLayerUp" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 14 )
 volume_db = -30.0
 bus = "SFX"
 
-[node name="ChangeLayerDown" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="ChangeLayerDown" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 13 )
 volume_db = -30.0
 bus = "SFX"
 
-[node name="Slither" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="Slither" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 2 )
-volume_db = -30.0
+volume_db = -40.0
 bus = "SFX"
 
-[node name="SegmentDeath" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="SegmentDeath" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 10 )
 volume_db = -30.0
 bus = "SFX"
 
-[node name="HeadDeath" type="AudioStreamPlayer2D" parent="Sounds"]
+[node name="HeadDeath" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource( 11 )
 volume_db = -30.0
 bus = "SFX"

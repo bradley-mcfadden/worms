@@ -14,6 +14,7 @@ export (int) var layer := 0
 
 onready var astar := AStar2D.new()
 export (Font) var font: Font = null
+export (bool) var draw_in_game = false
 
 func _ready() -> void:
 	update_graph()
@@ -38,6 +39,7 @@ func update_graph() -> void:
 			astar.add_point(next_id, child_pos)
 			print("Adding point ", child_pos, " at ", next_id)
 		else:
+			print("Did not add point ", child_pos)
 			next_id = closest_id
 		for path in child.neighbours:
 			var neighbour = child.get_node(path)
@@ -46,6 +48,7 @@ func update_graph() -> void:
 			var closest_point = astar.get_point_position(closest_point_id)
 			print("Closest pt ", closest_point, " neighbour_pos ", neighbour_pos)
 			if close_enough(closest_point, neighbour_pos):
+				astar.connect_points(next_id, closest_point_id, true)
 				continue
 			var neigh_id := astar.get_available_point_id()
 			print("Adding neighbour ", neighbour_pos, " at ", neigh_id)
@@ -58,7 +61,7 @@ func close_enough(vec1: Vector2, vec2: Vector2) -> bool:
 
 
 func _draw() -> void:
-	if !Engine.editor_hint:
+	if !Engine.editor_hint and !draw_in_game:
 		return
 	var itform := global_transform.affine_inverse()
 	for i in range(astar.get_point_count()):
