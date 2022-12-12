@@ -75,7 +75,7 @@ var free_later_list := []
 var start_transform: Transform2D
 var start_layer: int
 var is_switch_depth := false
-var background: BackgroundNoise
+var background
 var active_controller: WormController
 
 onready var body_mut := Mutex.new()

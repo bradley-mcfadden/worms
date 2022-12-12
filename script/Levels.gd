@@ -78,15 +78,20 @@ func scene_from_index(idx: int) -> String:
 
 func config_from_index(idx: int) -> Dictionary:
 # config_from_index returns a dictionary with config info for a level index
+
 # [properties]
 # completed: int
 # name: String
-# nenemies: int
-# ncollectibles: int
+# world: String
+# nfossils: int
+# neggs: int
 # [previous]
 # score: int
 # nslain: int
-# ncollected: int
+# nfossils: int
+# neggs: int
+# time: int
+#
 # return - Dictionary of the above info
 	var path = "%s/level%d/%s" % [LEVELS_PATH, idx, CONFIG_SUFFIX]
 	var config = ConfigFile.new()

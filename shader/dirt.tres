@@ -73,7 +73,7 @@ void fragment() {
 	float l_off = float(layer) * 0.05 + 0.025;
 	// float n = 0.5 + 0.5 * psrdnoise(v + offset * 0.01, p, TIME*2.5, g);
 	vec3 ncolor = vec3(g, 0.0);
-	vec3 texcol = texture(TEXTURE, newv).xyz;
+	vec3 texcol = texture(TEXTURE, newv + g * 0.01).xyz;
 	texcol -= l_off;
 	// color = texcol;
 	vec3 xcolor = vec3(texcol + l_off);
