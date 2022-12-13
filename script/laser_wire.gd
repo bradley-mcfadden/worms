@@ -61,7 +61,8 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	draw_line(node1.position, node2.position, color, width, true)
+	if not (node1 == null or node2 == null):
+		draw_line(node1.position, node2.position, color, width, true)
 
 
 func _physics_process(_delta: float) -> void:

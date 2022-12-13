@@ -11,7 +11,7 @@ const ANIMATION_OPEN_MSG := "[siny period=4.0 offset=5.0 animate=1.0]"
 const ANIMATION_CLOSE_MSG := "[/siny]"
 
 # Path to "level select" scene
-const LEVEL_SELECT_PATH := ""
+const LEVEL_SELECT_PATH := "res://scene/LevelSelect.tscn"
 # Path to "credits" scene
 const CREDITS_PATH := "res://scene/GodotCredits.tscn"
 # Path to "settings" scene
@@ -94,8 +94,17 @@ func _on_Settings_exiting() -> void:
 
 
 func _on_LevelSelect_pressed() -> void:
-	# get_tree.change_scene(LEVEL_SELECT_PATH)
-	pass
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")
+	# var _ret = get_tree().change_scene(LEVEL_SELECT_PATH)
+	var _ret = AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
+	AsyncLoader.load_resource(LEVEL_SELECT_PATH)
+
+
+func _on_resource_loaded(_path: String, resource: Resource) -> void:
+	AsyncLoader.call_deferred("change_scene_to", resource)
+	AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
 
 
 func _on_Credits_pressed() -> void:

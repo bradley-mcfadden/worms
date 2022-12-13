@@ -8,7 +8,7 @@ extends Node
 # next level available.
 
 const LEVELS_PATH := "res://levels"
-const IMAGE_SUFFIX := "splash.jpg"
+const IMAGE_SUFFIX := "splash.png"
 const SCENE_SUFFIX := "game.tscn"
 const CONFIG_SUFFIX := "config.ini"
 const PROPERTIES_KEY := "properties"
@@ -112,8 +112,8 @@ func config_from_index(idx: int) -> Dictionary:
 
 	if not dict.has(PROPERTIES_KEY):
 		return {}
-	if not dict.has(PREVIOUS_KEY):
-		return {}
+	# if not dict.has(PREVIOUS_KEY):
+	# 	return {}
 
 	return dict
 

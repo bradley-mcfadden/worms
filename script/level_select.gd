@@ -9,14 +9,25 @@ const ANIMATION_CLOSE_MSG := "[/siny]"
 const SKIN_SELECT_PATH := "res://scene/SkinSelect.tscn"
 const TITLE_SCREEN_PATH := "res://scene/TitleScreen.tscn"
 
+const world_idx := {
+	0 : "ancestral home",
+}
+
+const world_materials := {
+	"ancestral home" : "res://material/world1.tres",
+}
 
 func _ready() -> void:
 	Levels.level_idx = 0
-	
+	yield(get_tree().create_timer(0.1), "timeout")
+	_init_from_level_config()
 	_init_connections()
 	var label := $LevelInfo/Title
 	set_text(label, label.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")
 
 
 func _init_connections() -> void:
@@ -80,8 +91,8 @@ func _init_from_level_config() -> void:
 	var level_title: String = config['properties']['name']
 	var world_title: String = config['properties']['world']
 	
-	$LevelInfo/Level/Name.text = level_title
-	$LevelInfo/World/Name.text = world_title
+	set_text($LevelInfo/Level/Name, level_title.to_lower(), "", "")
+	set_text($LevelInfo/World/Name, world_title.to_lower(), "", "")
 	
 	var total_eggs: int = config['properties']['neggs']
 	var total_fossils: int = config['properties']['nfossils']
@@ -97,24 +108,50 @@ func _init_from_level_config() -> void:
 		n_eggs = 0
 		n_fossils = 0
 		
-	$Tally/Eggs.text = "%d/%d" % [n_eggs, total_eggs]
-	$Tally/Fossils.text = "%d/%d" % [n_fossils, total_fossils]
-	$Tally/Time.text = time_str
+	$Tally/Eggs.text = "eggs: %d/%d" % [n_eggs, total_eggs]
+	$Tally/Fossils.text = "fossils: %d/%d" % [n_fossils, total_fossils]
+	$Tally/Time.text = "time: " + time_str
+
+	$TextureRect.texture = load(Levels.image_from_index(Levels.level_idx))
+	$Background.material = load(world_materials[world_title.to_lower()])
 
 
 func _on_prev_world_pressed() -> void:
 	$Sounds/NavigateBackward.play()
+	var curr_idx := 0
+	var world_name: String = $LevelInfo/World/Name.to_lower()
+	for key in world_idx.keys():
+		if world_idx[key] == world_name:
+			curr_idx = key
+	curr_idx = int(abs(curr_idx - 1 % len(world_idx.keys)))
+	Levels.level_idx = 0
+	for level in Levels.level_list:
+		if level["properties"]["world"] == world_name:
+			break
+		Levels.level_idx += 1 
+	_init_from_level_config()
 
 
 func _on_next_world_pressed() -> void:
 	$Sounds/NavigateForward.play()
+	var curr_idx := 0
+	var world_name: String = $LevelInfo/World/Name.to_lower()
+	for key in world_idx.keys():
+		if world_idx[key] == world_name:
+			curr_idx = key
+	curr_idx = int(abs(curr_idx + 1 % len(world_idx.keys)))
+	Levels.level_idx = 0
+	for level in Levels.level_list:
+		if level["properties"]["world"] == world_name:
+			break
+		Levels.level_idx += 1 
+	_init_from_level_config()
 
 
 func _on_prev_level_pressed() -> void:
 	$Sounds/NavigateBackward.play()
 	var prev_idx: int = Levels.level_idx
-	Levels.level_idx = Levels.level_idx - 1 % len(Levels.get_level_list())
-	
+	Levels.level_idx = int(abs(prev_idx - 1 % len(Levels.level_list)))
 	if prev_idx != Levels.level_idx:
 		_init_from_level_config()
 
@@ -122,7 +159,7 @@ func _on_prev_level_pressed() -> void:
 func _on_next_level_pressed() -> void:
 	$Sounds/NavigateForward.play()
 	var prev_idx: int = Levels.level_idx
-	Levels.level_idx = Levels.level_idx + 1 % len(Levels.get_level_list())
+	Levels.level_idx = (prev_idx + 1) % len(Levels.get_level_list())
 	
 	if prev_idx != Levels.level_idx:
 		_init_from_level_config()
@@ -136,6 +173,9 @@ func _on_skins_pressed() -> void:
 func _on_back_pressed() -> void:
 	$Sounds/PressButton.play()
 	change_to_scene(TITLE_SCREEN_PATH)
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 1.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")
 
 
 func change_to_scene(path: String) -> void:
@@ -143,8 +183,9 @@ func change_to_scene(path: String) -> void:
 	AsyncLoader.load_resource(path)
 
 
-func _on_resource_loaded(path: String, resource: Resource) -> void:
-	AsyncLoader.change_scene_to(resource)
+func _on_resource_loaded(_path: String, resource: Resource) -> void:
+	GraphicsConfigLoader.apply_resolution()
+	AsyncLoader.call_deferred("change_scene_to", resource)
 	AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
 
 
@@ -157,4 +198,7 @@ func _on_worm_ready() -> void:
 func _on_start_button_pressed() -> void:
 	$Sounds/PressButton.play()
 	change_to_scene(Levels.scene_from_index(Levels.level_idx))
+	$Tween.interpolate_property(self, "modulate", null, Color.black, 1.0)
+	$Tween.start()
+	yield($Tween, "tween_completed")
 	
