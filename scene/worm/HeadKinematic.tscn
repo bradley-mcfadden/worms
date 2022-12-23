@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://img/worm/ss_full_n.png" type="Texture" id=1]
-[ext_resource path="res://material/worm.tres" type="Material" id=2]
 [ext_resource path="res://img/worm/ss_full.png" type="Texture" id=3]
 [ext_resource path="res://script/worm/head_kinematic.gd" type="Script" id=4]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=5]
@@ -178,6 +177,7 @@ radius = 10.714
 [sub_resource type="CircleShape2D" id=8]
 
 [node name="HeadKinematic" type="KinematicBody2D"]
+use_parent_material = true
 collision_layer = 2
 script = ExtResource( 4 )
 damage_textures = [ "res://img/worm/ss_full.png", "res://img/worm/ss_gore1_full.png", "res://img/worm/ss_gore2_full.png" ]
@@ -189,7 +189,7 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="image" type="Sprite" parent="."]
-material = ExtResource( 2 )
+use_parent_material = true
 texture = ExtResource( 3 )
 normal_map = ExtResource( 1 )
 hframes = 11

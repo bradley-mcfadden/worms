@@ -325,6 +325,7 @@ GeneralConfigLoader="*res://script/GeneralConfigLoader.gd"
 GraphicsConfigLoader="*res://script/GraphicsConfigLoader.gd"
 AudioConfigLoader="*res://script/AudioConfigLoader.gd"
 Levels="*res://script/Levels.gd"
+Skins="*res://script/Skins.gd"
 InputLoader="*res://script/InputLoader.gd"
 AsyncLoader="*res://script/AsyncLoader.gd"
 

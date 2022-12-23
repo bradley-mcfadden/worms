@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://script/worm/segment_kinematic.gd" type="Script" id=1]
 [ext_resource path="res://img/worm/segment_full_n.png" type="Texture" id=2]
-[ext_resource path="res://material/worm.tres" type="Material" id=3]
 [ext_resource path="res://img/worm/segment_full.png" type="Texture" id=4]
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scene/particles/DirtMotion.tscn" type="PackedScene" id=6]
@@ -17,6 +16,7 @@ height = 46.0
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1 )
 
 [node name="SegmentKinematic" type="KinematicBody2D"]
+use_parent_material = true
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -33,7 +33,7 @@ scale_amount_random = 0.0
 color_ramp = SubResource( 2 )
 
 [node name="image" type="Sprite" parent="."]
-material = ExtResource( 3 )
+use_parent_material = true
 rotation = 3.14159
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 4 )

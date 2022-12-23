@@ -19,8 +19,7 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 
 
 func _ready() -> void:
-	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
-	$Tween.start()
+	fade_in()
 	init_labels()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	GraphicsConfigLoader.call_deferred("use_default_resolution")
@@ -39,7 +38,8 @@ func init_labels() -> void:
 
 
 func fade_in() -> void:
-	pass
+	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
+	$Tween.start()
 
 func set_text(
 	label: RichTextLabel, msg: String, start: String, 

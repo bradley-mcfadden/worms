@@ -1,0 +1,11 @@
+{"skins" : [
+  {
+    "id" : 0,
+    "material" : "classic.tres",
+    "name" : "classic"
+  },
+  { "id" : 1,
+    "material" : "blue.tres",
+    "name" : "ice-nine"
+  }
+]}

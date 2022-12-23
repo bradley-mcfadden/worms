@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=1]
+[ext_resource path="res://img/worm/tail_full.png" type="Texture" id=3]
+[ext_resource path="res://material/worm_skins/blue.tres" type="Material" id=4]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SpawnKinematic" parent="." instance=ExtResource( 1 )]
+material = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 4 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_editor_description_": ""
+}
