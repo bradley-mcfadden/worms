@@ -25,7 +25,7 @@ func _ready() -> void:
 	var label := $LevelInfo/Title
 	set_text(label, label.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
+	$Tween.interpolate_property(self, "modulate", null, Color.white, 1.0)
 	$Tween.start()
 	yield($Tween, "tween_completed")
 

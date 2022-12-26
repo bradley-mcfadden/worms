@@ -49,9 +49,11 @@ var layer := 0
 var health: int = start_health
 var last_osc_offset := Vector2.ZERO
 var current_gore: int = GoreState.NONE
+var collider = null
 
 func _ready() -> void:
 	health = start_health
+	collider = $colision
 
 
 func add_camera(cam: Camera2D) -> void:
@@ -75,7 +77,8 @@ func move(vel: Vector2, oscvel: Vector2, _delta: float) -> Vector2:
 	var delta_j2 = Vector2(vel.x + base - sqrt(base * base - vel.y * vel.y), 0).rotated(rot)
 	j2 += delta_j2
 
-	$colision.position = osc_offset  #.rotated(rot)
+	collider.position = osc_offset
+	# $colision.position = osc_offset  #.rotated(rot)
 	$image.position = osc_offset
 
 	last_osc_offset = osc_offset

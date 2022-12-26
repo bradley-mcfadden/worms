@@ -357,7 +357,7 @@ func check_for_player() -> Node:
 				angle_to_player < f * 0.5
 				#and 
 				and ent.get_layer() == get_layer()
-				# and dist_to_player < look_distance
+				and dist_to_player < look_distance
 				and ent.is_alive()
 			
 				and hit.has("collider")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=2]
@@ -37,6 +37,12 @@
 [sub_resource type="RichTextEffect" id=1]
 script = ExtResource( 3 )
 
+[sub_resource type="InputEventAction" id=5]
+action = "ui_left"
+
+[sub_resource type="ShortCut" id=6]
+shortcut = SubResource( 5 )
+
 [sub_resource type="AnimatedTexture" id=2]
 flags = 4
 frames = 15
@@ -70,6 +76,12 @@ frame_13/texture = ExtResource( 31 )
 frame_13/delay_sec = 0.0
 frame_14/texture = ExtResource( 18 )
 frame_14/delay_sec = 0.0
+
+[sub_resource type="InputEventAction" id=7]
+action = "ui_right"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
 
 [sub_resource type="InputEventAction" id=3]
 action = "ui_cancel"
@@ -160,6 +172,7 @@ margin_bottom = 64.0
 focus_neighbour_right = NodePath("../Next")
 focus_mode = 0
 theme = ExtResource( 6 )
+shortcut = SubResource( 6 )
 icon = ExtResource( 12 )
 
 [node name="Spinner" type="TextureRect" parent="Skin/EggRow"]
@@ -185,6 +198,7 @@ focus_neighbour_right = NodePath("../../../Back")
 focus_neighbour_bottom = NodePath("../../../Back")
 focus_mode = 0
 theme = ExtResource( 6 )
+shortcut = SubResource( 8 )
 icon = ExtResource( 11 )
 
 [node name="Label2" type="Label" parent="Skin/EggRow"]
@@ -197,7 +211,7 @@ size_flags_horizontal = 3
 [node name="InfoRow" type="HBoxContainer" parent="Skin"]
 margin_top = 117.0
 margin_right = 1024.0
-margin_bottom = 142.0
+margin_bottom = 141.0
 
 [node name="Label4" type="Label" parent="Skin/InfoRow"]
 margin_top = 5.0
@@ -205,18 +219,16 @@ margin_right = 433.0
 margin_bottom = 19.0
 size_flags_horizontal = 3
 
-[node name="Name" type="RichTextLabel" parent="Skin/InfoRow"]
+[node name="Name" type="Label" parent="Skin/InfoRow"]
 margin_left = 437.0
 margin_right = 587.0
-margin_bottom = 25.0
+margin_bottom = 24.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
-custom_fonts/normal_font = ExtResource( 1 )
-bbcode_enabled = true
-bbcode_text = "[center]skin name[/center]"
+custom_fonts/font = ExtResource( 1 )
 text = "skin name"
-fit_content_height = true
+align = 1
 
 [node name="Label3" type="Label" parent="Skin/InfoRow"]
 margin_left = 591.0

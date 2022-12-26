@@ -14,6 +14,9 @@ const LEVEL_SELECT_PATH := "res://scene/LevelSelect.tscn"
 
 var current_skin_idx := 0
 var skins: Array = []
+var worm: Node2D = null
+var egg: TextureRect = null
+
 
 func _ready() -> void:
 	fade_in()
@@ -21,25 +24,41 @@ func _ready() -> void:
 	_init_connections()
 	# initialize current_skin_idx to saved skin
 	skins = Skins.skins()
-	_load_next_skin()
+	worm = $ViewportContainer/Viewport/SpawnKinematic
+	worm.background = $Background
+	egg = $Skin/EggRow/Spinner
+	_load_current_skin()
 
 
 func _load_next_skin() -> void:
-	current_skin_idx = (current_skin_idx + 1) % len(skins) 
+	current_skin_idx = (current_skin_idx + 1) % len(skins)
+	_load_current_skin()
 
 
 func _load_previous_skin() -> void:
 	current_skin_idx = int(abs((current_skin_idx - 1) % len(skins)))
+	_load_current_skin()
 
 
 func _load_current_skin() -> void:
 	var current_skin: Dictionary = skins[current_skin_idx]
-	$Skin/InfoRow/Name.text = current_skin["name"]
-	$Skin/Spinner.material = load(current_skin["material"])
+	var skin_name: String = current_skin["name"]
+	$Skin/InfoRow/Name.text = skin_name
+
+	var skin_material: Material = load(current_skin["material"])
+	egg.material = skin_material
+	worm.material = skin_material
+
+	if true: #PlayerSave.get_collectibles().find(skin_name) != -1:
+		egg.modulate = Color.darkgray
+		worm.modulate = Color.darkgray
+	else:
+		egg.modulate = Color.white
+		worm.modulate = Color.white
 
 
 func _init_connections() -> void:
-	var next_skin_button := $Skin/EggRow/Back
+	var next_skin_button := $Skin/EggRow/Next
 	var prev_skin_button := $Skin/EggRow/Previous
 	var back_button = $Back
 
@@ -61,6 +80,7 @@ func _on_prev_skin_button_pressed() -> void:
 func _on_back_button_pressed() -> void:
 	$Sounds/PressButton.play()
 	var _ret := AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
+	worm.paused = true
 	AsyncLoader.load_resource(LEVEL_SELECT_PATH)
 
 

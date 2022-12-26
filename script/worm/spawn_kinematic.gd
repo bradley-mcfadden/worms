@@ -77,6 +77,7 @@ var start_layer: int
 var is_switch_depth := false
 var background
 var active_controller: WormController
+var paused := false
 
 onready var body_mut := Mutex.new()
 onready var dirt_color: Color
@@ -198,6 +199,7 @@ func _draw() -> void:
 
 
 func _process(_delta: float) -> void:
+	if paused: return
 	update()
 	update_camera_position()
 
@@ -208,10 +210,12 @@ func update_camera_position() -> void:
 # Recenter the camera so it follows the centroid of the worm,
 # or if "look_ahead" is pressed, pan the camera forward.
 #
+	if active_controller == null:
+		return
 	var avg: Vector2
 	if not active_controller.is_action_pressed("look_ahead"):
 		var sum := Vector2.ZERO
-		if (len(body) == 0) or !is_alive(): return
+		if !is_alive(): return
 		var count := 0
 		for child in get_children():
 			if child is KinematicBody2D and child.is_alive():
@@ -228,6 +232,8 @@ func update_camera_position() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if paused: return
+
 	_control(delta)
 	# Move each segment to its proper position
 	if vel.length() > 0:
@@ -266,7 +272,7 @@ func _control(delta: float) -> void:
 # adjust the worm's state to account for that.
 # delta - Time since last physics frame.
 #
-	if not is_alive():
+	if not is_alive() or active_controller == null:
 		return
 	if active_controller.is_action_pressed("move_forward"):
 		vel.x += acceleration

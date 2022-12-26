@@ -65,6 +65,7 @@ func _load_resource(_userdata) -> void:
 		if err == ERR_FILE_EOF: # Finished loading
 			var resource: Resource = loader.get_resource()
 			loader = null
+			yield(get_tree().create_timer(0.01), "timeout")
 			emit_signal("resource_loaded", resource_path, resource)
 			resource_path = ""
 			print("Done loading")

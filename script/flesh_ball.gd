@@ -13,8 +13,6 @@ onready var health := start_health
 
 
 func _ready():
-	var _err: int = $DepthController.connect("show", self, "_on_show")
-	_err = $DepthController.connect("hide", self, "_on_hide")
 	reset()
 
 
