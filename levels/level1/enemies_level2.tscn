@@ -1,0 +1,302 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scene/BasicEnemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://script/enemies.gd" type="Script" id=3]
+
+[node name="Enemies" type="Node"]
+pause_mode = 1
+script = ExtResource( 3 )
+
+[node name="Unarmed1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 5361, 200 )
+look_ahead = 125
+fov = 180.0
+look_distance = 1000
+reaction_time = 2
+melee_damage = 30
+hear_radius = 1000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="Unarmed2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 5945, 644 )
+rotation = -2.31203
+look_ahead = 125
+fov = 180.0
+look_distance = 1000
+reaction_time = 2
+melee_damage = 30
+hear_radius = 1000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="Unarmed3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6035, 32.9998 )
+rotation = -3.52925
+look_ahead = 125
+fov = 360.0
+look_distance = 1000
+reaction_time = 2
+ranged_damage = 50
+hear_radius = 1000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6249, -1723 )
+look_ahead = 125
+idle_patrol = PoolVector2Array( 6200, -1700, 7500, -2200, 9400, -2250 )
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTopRight" parent="." instance=ExtResource( 1 )]
+position = Vector2( 9443, -1846 )
+look_ahead = 125
+idle_patrol = PoolVector2Array( 9100, -2300, 9800, -500, 9700, 1300, 9800, -500 )
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTopBottom" parent="." instance=ExtResource( 1 )]
+position = Vector2( 5849, 1430 )
+look_ahead = 125
+idle_patrol = PoolVector2Array( 6000, 1300, 6200, 2500, 9000, 2200, 9700, 1400, 9000, 2200, 6200, 2500 )
+fov = 360.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyHouse" parent="." instance=ExtResource( 1 )]
+position = Vector2( 8289, 14 )
+look_ahead = 50
+fov = 360.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyHouse2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 7373, 959 )
+look_ahead = 50
+fov = 360.0
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyHouseGun" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6919, 1759 )
+look_ahead = 125
+fov = 180.0
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="PokerTop" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6847, 4939 )
+rotation = 1.52421
+look_ahead = 50
+fov = 180.0
+look_distance = 1000
+reaction_time = 2
+melee_damage = 30
+start_health = 300
+hear_radius = 1000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="PokerBottom" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6879, 5367 )
+rotation = -1.59972
+look_ahead = 50
+fov = 180.0
+look_distance = 1000
+reaction_time = 2
+melee_damage = 30
+hear_radius = 300
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyMidGun" parent="." instance=ExtResource( 1 )]
+position = Vector2( 7937, 3548 )
+rotation = 0.0107296
+look_ahead = 125
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyMidGun2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 10514, 4105 )
+rotation = 2.41827
+look_ahead = 125
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 9681, 2893 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 10139, 4847 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 9160, 4321 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 11751, 8335 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 11728, 9184 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 13437, 7549 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 13951, 9314 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop11" parent="." instance=ExtResource( 1 )]
+position = Vector2( 11620, 11226 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 10230, 9701 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 12821, 10869 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="KnifeEnemyTop12" parent="." instance=ExtResource( 1 )]
+position = Vector2( 8668, 10642 )
+look_ahead = 125
+fov = 180.0
+look_distance = 2000
+ranged_damage = 50
+hear_radius = 5000
+melee_thresh = 125
+ranged_thresh = 800
+layer = 1
+
+[node name="EnemyMidGun3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 12465, 7539 )
+rotation = 1.69075
+look_ahead = 125
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyMidGun4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 15157, 8386 )
+rotation = 2.93821
+look_ahead = 125
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyMidGun5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 13368, 8900 )
+rotation = -0.675109
+look_ahead = 125
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="EnemyMidGun6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 12493, 9832 )
+rotation = 2.41827
+look_ahead = 125
+look_distance = 4000
+ranged_damage = 50
+hear_radius = 0
+melee_thresh = 125
+ranged_thresh = 800

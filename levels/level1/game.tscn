@@ -7585,6 +7585,7 @@ position = Vector2( 7489, -290 )
 rotation = -0.0870231
 z_index = -10
 frames = SubResource( 3485 )
+frame = 5
 speed_scale = 0.1
 playing = true
 script = ExtResource( 47 )
@@ -8035,7 +8036,6 @@ region_rect = Rect2( 0, 0, 4096, 4096 )
 
 [node name="0" parent="Paths" instance=ExtResource( 31 )]
 font = SubResource( 2638 )
-draw_in_game = null
 
 [node name="PathNode" parent="Paths/0" instance=ExtResource( 32 )]
 position = Vector2( -890, 59 )
