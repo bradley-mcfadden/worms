@@ -7,6 +7,9 @@
 extends StaticBody2D
 
 
+signal broke(is_broken) # boolean
+
+
 export (Array, Texture) var crack_textures = [
 	load("res://img/textures/cracks1.png"),
 	load("res://img/textures/cracks2.png"),
@@ -38,6 +41,7 @@ func reset() -> void:
 	$DepthController.reset()
 	set_crack_texture(crack_textures[0])
 	modulate = Color.white
+	emit_signal("broke", false)
 
 
 func take_damage(how_much: int, _from: Node, armor: bool = true) -> void:
@@ -52,6 +56,7 @@ func take_damage(how_much: int, _from: Node, armor: bool = true) -> void:
 	var new_health: int = int(clamp(health - how_much, 0, start_health))
 	if new_health <= 0:
 		play_death_effects()
+		emit_signal("broke", true)
 		$CollisionPolygon2D.call_deferred("set_disabled", true)
 	else:
 		play_hit_effects()
