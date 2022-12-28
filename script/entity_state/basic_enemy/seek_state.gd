@@ -55,8 +55,10 @@ func on_enter() -> void:
 		# Check that 'to' and path_target is unobstructed
 		var from_pt: Vector2 = path_graph.astar.get_point_position(from)
 		var to_pt: Vector2 = path_graph.astar.get_point_position(to)
-		if (space.intersect_ray(entity.global_position, from_pt, [], entity.collision_mask).empty()
-			and space.intersect_ray(to_pt, path_target, [], entity.collision_mask).empty()):	
+		var from_collision: Dictionary = space.intersect_ray(entity.global_position, from_pt, [], entity.collision_mask)
+		var to_collision: Dictionary = space.intersect_ray(to_pt, path_target, [], entity.collision_mask)
+		if (!(from_collision.has("collider") and from_collision["collider"] is StaticBody2D)
+			and !(to_collision.has("collider") and to_collision["collider"] is StaticBody2D)):	
 			print(entity, " Moving between %d to %d" % [from, to])
 			path = path_graph.astar.get_point_path(from, to)
 			print("My path is ", path)
@@ -64,6 +66,7 @@ func on_enter() -> void:
 			path_idx += 1
 			path_target = path[path_idx]
 		else:
+			print("Seek state could not find a path to the location")
 			fsm.replace(BasicEnemySearchState.new(fsm, entity))
 	else:
 		fsm.replace(BasicEnemySearchState.new(fsm, entity))
