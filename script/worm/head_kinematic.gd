@@ -21,6 +21,7 @@ var anim_player: AnimationPlayer
 var curr_blood_level := 0
 
 func _ready() -> void:
+	._ready()
 	anim_player = $AnimationPlayer
 	anim_player.play(IDLE)
 

@@ -15,10 +15,17 @@ export (float) var turn_threshold := PI / 16
 var following: Node2D = null
 # onready var mutex: Mutex = Mutex.new()
 
+var cursor: Node = null
+
+
+func _ready() -> void:
+	cursor = $Cursor
+
+
 func _physics_process(_delta: float) -> void:
 	if not (following == null or not is_instance_valid(following)): 
 		# unit vector between following and self
-		var direction: Vector2 = $Cursor.cursor_position - following.global_position
+		var direction: Vector2 = cursor.cursor_position - following.global_position
 		direction = direction.normalized()
 
 		var following_dir := Vector2.RIGHT.rotated(following.global_rotation)
@@ -42,6 +49,6 @@ func correct_angle(angle: float) -> float:
 # angle - Potentially negative angle.
 # return - Angle in range [0, 2PI)
 # 
-	if angle < 0:
+	if angle < 0.0:
 		angle += 2 * PI
 	return angle

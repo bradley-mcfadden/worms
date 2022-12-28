@@ -78,6 +78,7 @@ var is_switch_depth := false
 var background
 var active_controller: WormController
 var paused := false
+var abilities_container: Node = null
 
 onready var body_mut := Mutex.new()
 onready var dirt_color: Color
@@ -128,8 +129,11 @@ func _ready() -> void:
 	emit_signal("size_changed", len(body))
 	emit_signal("health_state_changed", false)
 
+	abilities_container = $AbilitiesContainer
 	# Connect the controller so we can query about what we should do.
 	_init_controller()
+
+	#abilities_container = $AbilitiesContainer
 
 
 func active_abilities() -> Array:
@@ -139,7 +143,7 @@ func active_abilities() -> Array:
 # ret - All abilities currenly in use. (not ready, not on cooldown).
 # 
 	var active := []
-	for ability in $AbilitiesContainer.get_children():
+	for ability in abilities_container.get_children():
 		if ability.active:
 			active.append(ability)
 	return active
@@ -151,7 +155,7 @@ func emit_signals_first_time() -> void:
 #
 	for segm in body:
 		emit_signal("segment_changed", segm, SegmentState.ALIVE)
-	emit_signal("abilities_ready", $AbilitiesContainer.get_children())
+	emit_signal("abilities_ready", abilities_container.get_children())
 	emit_signal("size_changed", len(body))
 	emit_signal("health_state_changed", false)
 
@@ -167,7 +171,7 @@ func _init_controller() -> void:
 			active_controller = $CursorController
 			$CursorController.following = head
 	active_controller.set_physics_process(true)
-	active_controller.set_abilities_count(len($AbilitiesContainer.get_children()))
+	active_controller.set_abilities_count(len(abilities_container.get_children()))
 
 
 func reset() -> void:
@@ -237,17 +241,17 @@ func _physics_process(delta: float) -> void:
 	_control(delta)
 	# Move each segment to its proper position
 	if vel.length() > 0:
-		var vel_ = vel.rotated(heading) * delta
-		var ivel = Vector2(vel.y, vel.x).normalized()
+		var vel_: Vector2 = vel.rotated(heading) * delta
+		var ivel := Vector2(vel.y, vel.x).normalized()
 
-		var i = osc_counter
-		var speed_rate = vel.x / max_speed
+		var i := osc_counter
+		var speed_rate: float = vel.x / max_speed
 		var slither_sound = $Sounds/Slither
 		body_mut.lock()
 		for segment in body:
 			vel_ = Vector2(vel_.length(), 0).rotated((segment.j1 - segment.j2).angle_to(vel_))
 			segment.theta = i
-			var j2 = segment.move(vel_, ivel, delta)
+			var j2: Vector2 = segment.move(vel_, ivel, delta)
 			vel_ = j2
 			i += tdelta
 			if segment.has_node("DirtMotion"):
@@ -259,9 +263,9 @@ func _physics_process(delta: float) -> void:
 		osc_counter += 0.2
 	# Free any dead segments
 	for _i in range(len(free_later_list)):
-		var _node = free_later_list.pop_back()
+		var _node: Node = free_later_list.pop_back()
 		_node.queue_free()
-		var idx = body.find(_node)
+		var idx: int = body.find(_node)
 		if idx != -1: body.remove(idx)
 
 
@@ -301,8 +305,8 @@ func _control(delta: float) -> void:
 			if not head.overlaps_above():
 				$Sounds/ChangeLayerUp.play()
 				emit_signal("switch_layer_pressed", layer - 1, self)
-	for i in range(0, $AbilitiesContainer.get_child_count()):
-		var ability = $AbilitiesContainer.get_child(i)
+	for i in range(0, abilities_container.get_child_count()):
+		var ability = abilities_container.get_child(i)
 		if (ability != null and ability.is_ready and active_controller.is_action_just_pressed("ability" + str(i + 1))):
 			ability.invoke()
 
@@ -463,7 +467,7 @@ func get_layer() -> int:
 
 func set_active(is_active: bool) -> void:
 	for segment in body:
-		segment.set_modulate(Color(1, 1, 1, 1) if is_active else Color(1, 1, 1, 0.3))
+		segment.set_modulate(Color.white if is_active else Color(1, 1, 1, 0.3))
 
 
 func set_layer(new_layer: int) -> void:
