@@ -31,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _on_animation_finished(_name: String) -> void:
-	print("Done melee attack")
+	# print("Done melee attack")
 	if fsm.top().NAME == NAME:
 		fsm.pop()
 

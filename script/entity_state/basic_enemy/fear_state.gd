@@ -17,12 +17,14 @@ const PROPERTIES := {
 }
 const FEAR_TIME := 10.0
 const ACQUIRE_TIMEOUT := 1.0
+const CHECK_PLAYER_PERIOD := 0.25
 
 var interest := FEAR_TIME
 var acquire_ctr := 0.0
 var last_player_location: Vector2 = Vector2.ZERO
 var walk_anim := "walk"
 var idle_anim := "idle"
+var check_player_dx := CHECK_PLAYER_PERIOD
 
 func _init(_fsm: Fsm, _entity: Node) -> void:
 	fsm = _fsm
@@ -37,25 +39,28 @@ func _init(_fsm: Fsm, _entity: Node) -> void:
 
 # on_enter calls code once when switching to this state
 func on_enter() -> void:
-	pass
+	print(self, " Entering fear state!")
 
 
 # called every _physics_process in parent
 func _physics_process(delta: float) -> void:
-	var player = entity.check_for_player()
-	if player != null:
-		if acquire_ctr <= 0.0:
-			last_player_location = player.global_position
-			interest = FEAR_TIME
-			acquire_ctr = ACQUIRE_TIMEOUT
+	check_player_dx += delta
+	if check_player_dx >= CHECK_PLAYER_PERIOD:
+		check_player_dx = 0.0
+		var player = entity.check_for_player()
+		if player != null:
+			if acquire_ctr <= 0.0:
+				last_player_location = player.global_position
+				interest = FEAR_TIME
+				acquire_ctr = ACQUIRE_TIMEOUT
+			else:
+				acquire_ctr -= delta
 		else:
-			acquire_ctr -= delta
-	else:
-		interest -= delta
-		if interest < 0:
-			fsm.replace(BasicEnemyStateLoader.patrol(fsm, entity))
+			interest -= delta
+			if interest < 0:
+				fsm.replace(BasicEnemyStateLoader.patrol(fsm, entity))
 	
-	var dir_player_to_me: Vector2 = entity.global_position-last_player_location	
+	var dir_player_to_me: Vector2 = entity.global_position - last_player_location	
 	var fear_target := dir_player_to_me.normalized().rotated(randf() - 0.5) * 100.0
 	# print("Running away to ", fear_target)
 	entity.set_target(entity.global_position + fear_target)

@@ -16,6 +16,8 @@ const PROPERTIES := {
 	threshold = 100,
 	fov = 90,
 }
+const CHECK_PLAYER_PERIOD := 0.15
+const UPDATE_MOVEMENT_PERIOD := 0.15
 
 var target: Vector2
 var walk_anim := "walk"
@@ -25,6 +27,8 @@ var path_graph: PathGraph
 var path_target: Vector2 = Vector2.ZERO
 var path: Array = []
 var path_idx: int = -1
+var check_player_dx := 0.0
+var update_movement_dx := UPDATE_MOVEMENT_PERIOD
 
 
 func _init(_fsm: Fsm, _entity: Node, _target: Vector2, _path_graph: PathGraph) -> void:
@@ -66,13 +70,16 @@ func on_enter() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var player = entity.check_for_player()
-	if player != null:
-		if entity.has_ranged_attack or entity.has_melee_attack:
-			fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
-		else:
-			fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
-		return
+	check_player_dx += delta
+	if check_player_dx >= CHECK_PLAYER_PERIOD:
+		check_player_dx = 0.0
+		var player = entity.check_for_player()
+		if player != null:
+			if entity.has_ranged_attack or entity.has_melee_attack:
+				fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+			else:
+				fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
+			return
 	if noise_location != null:
 		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location, path_graph))
 		print("Going to chase noise!")
@@ -82,25 +89,27 @@ func _physics_process(delta: float) -> void:
 		entity.set_target(path_target)
 	else:
 		entity.set_target(target)
-	var ss = entity.set_interest()
-	if ss == SeekState.SEEK_TARGET:
-		if entity.animation_player.current_animation != walk_anim:
-			entity.animation_player.play(walk_anim)
-	elif ss == SeekState.REACHED_TARGET:
-		path_idx += 1
-		if path_idx < len(path):
-			path_target = path[path_idx]
-			print("Going to ", path_target, " idx ", path_idx)
-	else:
-		if entity.animation_player.current_animation != idle_anim:
-			entity.animation_player.play(idle_anim)
-			fsm.replace(BasicEnemySearchState.new(fsm, entity))
-			return
-	
-	
 
-	entity.set_danger()
-	entity.choose_direction()
+	update_movement_dx += delta
+	if update_movement_dx >= UPDATE_MOVEMENT_PERIOD:
+		update_movement_dx = 0.0
+		var ss = entity.set_interest()
+		if ss == SeekState.SEEK_TARGET:
+			if entity.animation_player.current_animation != walk_anim:
+				entity.animation_player.play(walk_anim)
+		elif ss == SeekState.REACHED_TARGET:
+			path_idx += 1
+			if path_idx < len(path):
+				path_target = path[path_idx]
+				print("Going to ", path_target, " idx ", path_idx)
+		else:
+			if entity.animation_player.current_animation != idle_anim:
+				entity.animation_player.play(idle_anim)
+				fsm.replace(BasicEnemySearchState.new(fsm, entity))
+				return
+		
+		entity.set_danger()
+		entity.choose_direction()
 	entity.move(delta)
 
 

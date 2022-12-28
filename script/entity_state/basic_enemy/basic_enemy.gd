@@ -345,7 +345,8 @@ func check_for_player() -> Node:
 				continue
 			var position_diff = ent.global_position - global_position
 			var angle_to_player = abs((position_diff).angle() - rotation)
-			var dist_to_player = position_diff.length() - ent.radius - radius
+			# var dist_to_player = position_diff.length() - ent.radius - radius
+			var dist_to_player: float = manhattan(ent.global_position, global_position) - ent.radius - radius
 			var f = deg2rad(fsm.top().PROPERTIES["fov"])
 			var hit = space_state.intersect_ray(
 				global_position, global_position + (position_diff).normalized() * look_distance, [self],
@@ -367,6 +368,13 @@ func check_for_player() -> Node:
 					min_dist = dist_to_player
 					closest_ent = ent
 	return closest_ent
+
+
+func manhattan(v1: Vector2, v2: Vector2) -> float:
+	var v := v1 - v2
+	var dx := abs(v.x)
+	var dy := abs(v.y)
+	return dx + dy
 
 
 func check_ranged_attack(_dist_to_player: float, ppos: Vector2) -> bool:

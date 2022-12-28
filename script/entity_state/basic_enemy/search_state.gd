@@ -24,6 +24,7 @@ var walk_anim: String
 var search_location = null # Mostly a Vector2
 var search_time: float = -1.0
 var search_attempts: int = 10
+var check_player_dx := 0.0
 
 
 func _init(_fsm: Fsm, _entity) -> void:
@@ -42,7 +43,10 @@ func on_enter() -> void:
 func _physics_process(delta: float) -> void:
 	var player = entity.check_for_player()
 	if player != null:
-		fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+		if entity.has_melee_attack or entity.has_ranged_attack:
+			fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+		else:
+			fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
 		return
 
 	if noise_location != null:
@@ -66,10 +70,10 @@ func _physics_process(delta: float) -> void:
 				return
 			else:
 				search_attempts -= 1
+		entity.set_target(search_location)
 	else:
 		search_time -= delta
 	
-	entity.set_target(search_location)
 	var ss = entity.set_interest()
 	if ss == SeekState.SEEK_TARGET:
 		if entity.animation_player.current_animation != walk_anim:

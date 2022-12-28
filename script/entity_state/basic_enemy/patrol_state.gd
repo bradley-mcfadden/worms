@@ -7,8 +7,10 @@ extends EntityState
 class_name BasicEnemyPatrolState
 
 const NAME := "PatrolState"
-const START_REACTION_TIME := 30
+const START_REACTION_TIME := 0
 const PROPERTIES := {color = Color.aquamarine, speed = 500, threshold = 32, fov = 90}
+const CHECK_PLAYER_PERIOD := 1.0
+const UPDATE_MOVEMENT_PERIOD := 0.15
 
 enum SeekState { REACHED_TARGET, NO_TARGET, SEEK_TARGET }
 var reaction_time: float = START_REACTION_TIME
@@ -17,6 +19,9 @@ var patrol_idx: int
 var noise_location = null # Vector2, usually
 var walk_anim: String = "walk"
 var idle_anim: String = "idle"
+var check_player_dx := 0.0
+var update_movement_dx := 0.0
+
 
 func _init(_fsm: Fsm, _entity: Node) -> void:
 	fsm = _fsm
@@ -48,28 +53,34 @@ func _nearest_point(points: Array) -> int:
 	return min_idx
 
 
-
 func _physics_process(delta: float) -> void:
-	if react_to_player():
-		if entity.has_melee_attack or entity.has_ranged_attack:
-			fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+	check_player_dx += delta
+	if check_player_dx >= CHECK_PLAYER_PERIOD:
+		check_player_dx = 0.0
+		if react_to_player():
+			if entity.has_melee_attack or entity.has_ranged_attack:
+				fsm.replace(BasicEnemyStateLoader.chase(fsm, entity))
+			else:
+				fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
+			print("reacted to player")
+			return
+		if noise_location != null:
+			var path_graph = entity.get_parent().get_path_at_layer(entity.layer)
+			fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location, path_graph))
+			print("Going to chase noise!")
+			return
+	
+	update_movement_dx += delta
+	if update_movement_dx >= UPDATE_MOVEMENT_PERIOD:
+		update_movement_dx = 0.0
+		entity.set_target(get_target())
+		var ss = entity.set_interest()
+		if ss == SeekState.REACHED_TARGET or ss == SeekState.NO_TARGET:
+			entity.animation_player.play(idle_anim)
 		else:
-			fsm.replace(BasicEnemyStateLoader.fear(fsm, entity))
-		print("reacted to player")
-		return
-	if noise_location != null:
-		var path_graph = entity.get_parent().get_path_at_layer(entity.layer)
-		fsm.replace(BasicEnemyStateLoader.seek(fsm, entity, noise_location, path_graph))
-		print("Going to chase noise!")
-		return
-	entity.set_target(get_target())
-	var ss = entity.set_interest()
-	if ss == SeekState.REACHED_TARGET or ss == SeekState.NO_TARGET:
-		entity.animation_player.play(idle_anim)
-	else:
-		entity.animation_player.play(walk_anim)
-	entity.set_danger()
-	entity.choose_direction()
+			entity.animation_player.play(walk_anim)
+		entity.set_danger()
+		entity.choose_direction()
 	entity.move(delta)
 
 
@@ -93,9 +104,18 @@ func get_target() -> Vector2:
 	if n == 0:
 		return entity.global_position
 	var threshold = PROPERTIES["threshold"]
-	if entity.position.distance_to(idle_patrol[patrol_idx]) < threshold:
+	var current_point: Vector2 = idle_patrol[patrol_idx]
+	if manhattan(entity.position, current_point) < threshold:
+	# if entity.position.distance_to(current_point) < threshold:
 		patrol_idx = patrol_idx + 1 if patrol_idx < n - 1 else 0
-	return idle_patrol[patrol_idx]
+	return current_point
+
+
+func manhattan(x1: Vector2, x2: Vector2) -> float:
+	var v := x1 - x2
+	var dx := abs(v.x)
+	var dy := abs(v.y)
+	return dx + dy
 
 
 func on_exit() -> void:
