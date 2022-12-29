@@ -7,6 +7,9 @@
 extends StaticBody2D
 
 
+class_name BreakableWall, "res://icons/breakable_wall.svg"
+
+
 signal broke(is_broken) # boolean
 
 

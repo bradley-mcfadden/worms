@@ -8,6 +8,10 @@
 
 extends Position2D
 
+
+class_name SpawnKinematic, "res://icons/worm.svg"
+
+
 const MAX_SPEED := 400
 const ACC := 20
 

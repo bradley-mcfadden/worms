@@ -5,6 +5,9 @@
 extends Node2D
 
 
+class_name LaserWire, "res://icons/laser_wire.svg"
+
+
 enum DetectState { WAIT, PREFIRE, ANTICIPATE, FIRE, COOLDOWN }
 
 export (Color) var invisible_mod := Color(1.0, 1.0, 1.0, 0.0)

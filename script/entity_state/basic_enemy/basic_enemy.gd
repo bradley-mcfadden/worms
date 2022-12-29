@@ -7,7 +7,7 @@
 tool
 extends Area2D
 
-class_name BasicEnemy
+class_name BasicEnemy, "res://icons/basic_enemy.svg"
 
 # Emitted when the enemy has a bullet that should attach to the level.
 signal bullet_created(bullet) # instance of bullet.tscn

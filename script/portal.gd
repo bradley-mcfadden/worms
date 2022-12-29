@@ -8,6 +8,9 @@
 extends Area2D
 
 
+class_name Portal2, "res://icons/portal.svg"
+
+
 export var layer := 0
 export(float) var peek_alpha := 1.0
 export(bool) var downward := true

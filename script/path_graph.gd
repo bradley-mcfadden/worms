@@ -8,7 +8,7 @@
 tool
 extends Node2D
 
-class_name PathGraph
+class_name PathGraph, "res://icons/path_graph.svg"
 
 export (int) var layer := 0
 
