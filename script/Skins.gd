@@ -13,6 +13,7 @@ var _skins := []
 func _enter_tree() -> void:
 	_load_from_data_file()
 
+
 func _load_from_data_file() -> void:
 	var file := File.new()
 	if file.open(SKINS_FILE_PATH, File.READ) == OK:
@@ -24,4 +25,10 @@ func _load_from_data_file() -> void:
 
 func skins() -> Array:
 	return _skins
-	
+
+
+func skin_by_name(name: String) -> Dictionary:
+	for skin in _skins:
+		if skin["name"] == name:
+			return skin
+	return {} 

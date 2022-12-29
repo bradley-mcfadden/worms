@@ -74,10 +74,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/entity_state/boiler_state.gd"
 }, {
+"base": "StaticBody2D",
+"class": "BreakableWall",
+"language": "GDScript",
+"path": "res://script/breakable_wall2.gd"
+}, {
 "base": "Ability",
 "class": "DummyAbility",
 "language": "GDScript",
 "path": "res://script/ability/dummy_ability.gd"
+}, {
+"base": "Area2D",
+"class": "EggCollectible",
+"language": "GDScript",
+"path": "res://script/egg_collectible.gd"
 }, {
 "base": "Object",
 "class": "EntityState",
@@ -100,9 +110,19 @@ _global_script_classes=[ {
 "path": "res://script/laser_node.gd"
 }, {
 "base": "Node2D",
+"class": "LaserWire",
+"language": "GDScript",
+"path": "res://script/laser_wire.gd"
+}, {
+"base": "Node2D",
 "class": "PathGraph",
 "language": "GDScript",
 "path": "res://script/path_graph.gd"
+}, {
+"base": "Area2D",
+"class": "Portal2",
+"language": "GDScript",
+"path": "res://script/portal.gd"
 }, {
 "base": "Resource",
 "class": "RMS2D_Material",
@@ -249,6 +269,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://script/settings_scroll_container.gd"
 }, {
+"base": "Position2D",
+"class": "SpawnKinematic",
+"language": "GDScript",
+"path": "res://script/worm/spawn_kinematic.gd"
+}, {
 "base": "Node",
 "class": "WormController",
 "language": "GDScript",
@@ -257,7 +282,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Ability": "",
 "BackgroundNoise": "",
-"BasicEnemy": "",
+"BasicEnemy": "res://icons/basic_enemy.svg",
 "BasicEnemyChaseState": "",
 "BasicEnemyDeadState": "",
 "BasicEnemyFearState": "",
@@ -268,12 +293,16 @@ _global_script_class_icons={
 "BasicEnemySeekState": "",
 "BasicEnemyStateLoader": "",
 "BoilerState": "",
+"BreakableWall": "res://icons/breakable_wall.svg",
 "DummyAbility": "",
+"EggCollectible": "res://icons/egg.svg",
 "EntityState": "",
 "Fsm": "",
 "Iterator": "",
 "LaserNode": "",
-"PathGraph": "",
+"LaserWire": "res://icons/laser_wire.svg",
+"PathGraph": "res://icons/path_graph.svg",
+"Portal2": "res://icons/portal.svg",
 "RMS2D_Material": "",
 "RMS2D_VertexProperties": "",
 "RMS2D_VertexPropertiesArray": "",
@@ -303,6 +332,7 @@ _global_script_class_icons={
 "SS2D_VertexProperties": "",
 "Segment": "",
 "SettingsScrollContainer": "",
+"SpawnKinematic": "res://icons/worm.svg",
 "WormController": ""
 }
 
