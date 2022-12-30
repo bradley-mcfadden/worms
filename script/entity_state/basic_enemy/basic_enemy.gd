@@ -234,6 +234,8 @@ func reset() -> void:
 	$MeleeAttack.monitoring = false
 	$Trail.visible = false
 	$CollisionShape2D.call_deferred("set_disabled", false)
+	monitorable = true
+	monitoring = true
 
 
 func set_interest() -> Object: # Return SeekState
