@@ -24,11 +24,16 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	GraphicsConfigLoader.call_deferred("use_default_resolution")
 	yield($Tween, "tween_completed")
-	$VBoxContainer/StartGame.disabled = false
-	$VBoxContainer/Settings.disabled = false
-	$VBoxContainer/LevelSelect.disabled = false
-	$VBoxContainer/Credits.disabled = false
-	$VBoxContainer/QuitToDesktop.disabled = false
+	set_ui_disabled(false)
+
+
+func set_ui_disabled(is_disabled: bool) -> void:
+	# Make all controls on screen interactible or not
+	$VBoxContainer/StartGame.disabled = is_disabled
+	$VBoxContainer/Settings.disabled = is_disabled
+	$VBoxContainer/LevelSelect.disabled = is_disabled
+	$VBoxContainer/Credits.disabled = is_disabled
+	$VBoxContainer/QuitToDesktop.disabled = is_disabled
 
 
 func init_labels() -> void:
@@ -40,6 +45,7 @@ func init_labels() -> void:
 func fade_in() -> void:
 	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
 	$Tween.start()
+
 
 func set_text(
 	label: RichTextLabel, msg: String, start: String, 
@@ -94,9 +100,8 @@ func _on_Settings_exiting() -> void:
 
 
 func _on_LevelSelect_pressed() -> void:
-	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
-	$Tween.start()
-	yield($Tween, "tween_completed")
+	set_ui_disabled(true)
+	fade_out()
 	# var _ret = get_tree().change_scene(LEVEL_SELECT_PATH)
 	var _ret = AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
 	AsyncLoader.load_resource(LEVEL_SELECT_PATH)
@@ -108,14 +113,14 @@ func _on_resource_loaded(_path: String, resource: Resource) -> void:
 
 
 func _on_Credits_pressed() -> void:
-	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
-	$Tween.start()
-	yield($Tween, "tween_completed")
-	var _ret = get_tree().change_scene(CREDITS_PATH)
+	fade_out()
+	var _ret = AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
+	AsyncLoader.load_resource(CREDITS_PATH)
 
 
 func _on_QuitToDesktop_pressed() -> void:
 	print("Quit to desktop")
+	set_ui_disabled(true)
 	$Tween.interpolate_property(self, "modulate", null, Color.black, 2.0)
 	$Tween.start()
 	yield($Tween, "tween_completed")
