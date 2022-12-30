@@ -16,6 +16,14 @@ const INITIAL_SAVE_DATA := {
 }
 const NULL_TIME := -1
 
+const KEY_CURRENT_SKIN := "current_skin"
+const KEY_HIGHEST_LEVEL := "highest_level_completed"
+const KEY_LEVEL_PROGRESS := "level_progress"
+const KEY_UPGRADES := "upgrades"
+const KEY_COLLECTED := "collected"
+const KEY_LEVEL_TIME := "time"
+const KEY_LEVEL_COLLECTED := "collected"
+
 var save_data := INITIAL_SAVE_DATA
 
 
@@ -70,8 +78,8 @@ func cload() -> void:
 	# Initialize all levels to have zero progress
 	for _i in range(len(Levels.get_level_list())):
 		save_data.level_progress.append({
-			"time" : NULL_TIME,
-			"collected" : []
+			KEY_LEVEL_TIME : NULL_TIME,
+			KEY_LEVEL_COLLECTED : []
 		})
 
 
@@ -103,7 +111,7 @@ func update_level_progress(level_idx: int, progress: Dictionary) -> int:
 	if not (level_idx >= 0 and level_idx < number_of_levels):
 		print("level index %d out of range 0 to %d" % [level_idx, number_of_levels])
 		return ERR_PARAMETER_RANGE_ERROR
-	if not (progress.has("collected") and progress.has("time") and progress.collected is Array and progress.time is int):
+	if not (progress.has(KEY_LEVEL_COLLECTED) and progress.has(KEY_LEVEL_TIME) and progress.collected is Array and progress.time is int):
 		print("malformed level progress")
 		return ERR_PARAMETER_RANGE_ERROR
 	save_data.level_progress[level_idx] = progress
