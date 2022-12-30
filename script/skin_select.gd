@@ -65,6 +65,14 @@ func _init_connections() -> void:
 	var _ret := next_skin_button.connect("pressed", self, "_on_next_skin_button_pressed")
 	_ret = prev_skin_button.connect("pressed", self, "_on_prev_skin_button_pressed")
 	_ret = back_button.connect("pressed", self, "_on_back_button_pressed")
+	
+	# Add handler for focus
+	for btn in [next_skin_button, prev_skin_button, back_button]:
+		_ret = btn.connect("focus_entered", self, "_on_button_focused")
+
+
+func _on_button_focused() -> void:
+	$Sounds/FocusIn.play()
 
 
 func _on_next_skin_button_pressed() -> void:

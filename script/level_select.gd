@@ -55,6 +55,16 @@ func _init_connections() -> void:
 	
 	var start_btn: Button = $Start
 	_ret = start_btn.connect("pressed", self, "_on_start_button_pressed")
+	
+	for btn in [
+		previous_world_btn, next_world_btn, prev_level_btn, next_level_btn,
+		back_btn, skins_btn, start_btn
+	]:
+		_ret = btn.connect("focus_entered", self, "_on_button_focus_entered")
+
+
+func _on_button_focus_entered() -> void:
+	$Sounds/FocusIn.play()
 
 
 func set_text(
