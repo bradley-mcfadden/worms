@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
@@ -114,6 +114,12 @@ seamless = true
 
 [sub_resource type="RichTextEffect" id=2]
 script = ExtResource( 1 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "ui_cancel"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
 
 [node name="TitleScreen" type="MarginContainer"]
 modulate = Color( 0, 0, 0, 1 )
@@ -241,6 +247,7 @@ theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
 disabled = true
 enabled_focus_mode = 0
+shortcut = SubResource( 8 )
 text = "quit to desktop"
 
 [node name="Tween" type="Tween" parent="."]

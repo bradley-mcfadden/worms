@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=2]
@@ -13,13 +13,19 @@
 [ext_resource path="res://img/textures/concrete.png" type="Texture" id=11]
 [ext_resource path="res://theme/red_panel.tres" type="Theme" id=12]
 [ext_resource path="res://theme/button.tres" type="Theme" id=13]
-[ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=14]
 [ext_resource path="res://script/texture_sampler.gd" type="Script" id=15]
 [ext_resource path="res://sound/unset_button.wav" type="AudioStream" id=16]
 [ext_resource path="res://music/short-drum loop.wav" type="AudioStream" id=17]
+[ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=18]
 
 [sub_resource type="RichTextEffect" id=1]
 script = ExtResource( 7 )
+
+[sub_resource type="InputEventAction" id=2]
+action = "ui_cancel"
+
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
 
 [node name="LevelSelect" type="Control"]
 modulate = Color( 0, 0, 0, 1 )
@@ -34,19 +40,6 @@ anchor_bottom = 1.0
 texture = ExtResource( 11 )
 expand = true
 script = ExtResource( 15 )
-
-[node name="ViewportContainer" type="ViewportContainer" parent="."]
-visible = false
-margin_right = 1024.0
-margin_bottom = 600.0
-
-[node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 1024, 600 )
-transparent_bg = true
-handle_input_locally = false
-render_target_update_mode = 0
-
-[node name="SpawnKinematic" parent="ViewportContainer/Viewport" instance=ExtResource( 14 )]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -234,6 +227,7 @@ margin_bottom = -16.0
 focus_neighbour_top = NodePath("../LevelInfo/Level/Next")
 focus_neighbour_right = NodePath("../Start")
 theme = ExtResource( 13 )
+shortcut = SubResource( 3 )
 text = "back"
 
 [node name="Start" type="Button" parent="."]
@@ -283,7 +277,12 @@ stream = ExtResource( 16 )
 volume_db = -20.0
 bus = "UI"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="FocusIn" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 18 )
+volume_db = -20.0
+bus = "UI"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
 volume_db = -20.0
 autoplay = true

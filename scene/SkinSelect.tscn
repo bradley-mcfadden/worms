@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/header_font.tres" type="DynamicFont" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://img/spinning_egg/0052.png" type="Texture" id=31]
 [ext_resource path="res://img/spinning_egg/0001.png" type="Texture" id=32]
 [ext_resource path="res://script/skin_select.gd" type="Script" id=33]
+[ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=34]
 
 [sub_resource type="RichTextEffect" id=1]
 script = ExtResource( 3 )
@@ -267,7 +268,12 @@ stream = ExtResource( 10 )
 volume_db = -20.0
 bus = "UI"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="FocusIn" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 34 )
+volume_db = -20.0
+bus = "UI"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 volume_db = -20.0
 autoplay = true

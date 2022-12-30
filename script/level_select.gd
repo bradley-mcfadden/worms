@@ -1,3 +1,8 @@
+#
+# level_select.gd
+# Script handling appropriate actions to take for binding level data to
+# the UI, and allowing for the launching of levels.
+#
 extends Control
 
 
@@ -48,10 +53,6 @@ func _init_connections() -> void:
 	
 	var skins_btn: Button = $Skins
 	_ret = skins_btn.connect("pressed", self, "_on_skins_pressed")
-
-	var worm = $ViewportContainer/Viewport/SpawnKinematic
-	_ret = worm.connect("ready", self, "_on_worm_ready")
-	worm.background = $Background
 	
 	var start_btn: Button = $Start
 	_ret = start_btn.connect("pressed", self, "_on_start_button_pressed")
@@ -197,12 +198,6 @@ func _on_resource_loaded(_path: String, resource: Resource) -> void:
 	GraphicsConfigLoader.apply_resolution()
 	AsyncLoader.call_deferred("change_scene_to", resource)
 	AsyncLoader.disconnect("resource_loaded", self, "_on_resource_loaded")
-
-
-func _on_worm_ready() -> void:
-	var color: Color = $Background.sample_colors(16)
-	var worm = $ViewportContainer/Viewport/SpawnKinematic
-	worm.set_dirt_color(color)
 
 
 func _on_start_button_pressed() -> void:
