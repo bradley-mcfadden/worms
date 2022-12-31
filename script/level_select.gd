@@ -108,13 +108,25 @@ func _init_from_level_config() -> void:
 	var total_eggs: int = config['properties']['neggs']
 	var total_fossils: int = config['properties']['nfossils']
 	
-	var n_eggs: int
-	var n_fossils: int
+	var n_eggs: int = 0
+	var n_fossils: int = 0
 	var time_str: String = "not cleared"
-	if config.has('previous'): 
-		n_eggs = config['previous']['neggs']
-		n_fossils = config['previous']['nfossils']
-		time_str = config['previous']['time']
+	var level_progress: Dictionary = PlayerSave.save_data[PlayerSave.KEY_LEVEL_PROGRESS][Levels.level_idx]
+	var best_time: int = level_progress[PlayerSave.KEY_LEVEL_TIME]
+	if best_time != -1:
+		var collected: Array = level_progress[PlayerSave.KEY_LEVEL_COLLECTED]
+		for item_name in collected:
+			if item_name.find("egg_") != -1:
+				n_eggs += 1
+			if item_name.find("fossil_") != -1:
+				n_fossils += 1
+		
+#warning-ignore:integer-division
+		var hours := int(best_time / 3600)
+#warning-ignore:integer-division
+		var minutes := int(best_time / 60)
+		var seconds := int(ceil(best_time)) % 60
+		time_str = "%02d:%02d:%02d" % [hours, minutes, seconds]
 	else:
 		n_eggs = 0
 		n_fossils = 0

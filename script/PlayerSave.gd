@@ -12,7 +12,7 @@ const INITIAL_SAVE_DATA := {
 	"highest_level_completed" : -1,
 	"level_progress" : [],
 	"upgrades" : [],
-	"collected" : []
+	"collected" : ["egg_classic"]
 }
 const NULL_TIME := -1
 

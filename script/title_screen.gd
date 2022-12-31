@@ -21,6 +21,7 @@ const SETTINGS_PATH = "res://scene/SettingsMenu.tscn"
 func _ready() -> void:
 	fade_in()
 	init_labels()
+	init_button_text()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	GraphicsConfigLoader.call_deferred("use_default_resolution")
 	yield($Tween, "tween_completed")
@@ -40,6 +41,13 @@ func init_labels() -> void:
 	var animate: bool = Configuration.sections["general"]["use_text_animations"]
 	var header: RichTextLabel = $VBoxContainer/Header
 	set_text(header, header.text, ANIMATION_OPEN_HEADER, ANIMATION_CLOSE_HEADER, true, animate)
+
+
+func init_button_text() -> void:
+	var highest_level_completed: int = PlayerSave.save_data[PlayerSave.KEY_HIGHEST_LEVEL]
+	if highest_level_completed != -1:
+		$VBoxContainer/StartGame.text = "Continue"
+		Levels.level_idx = highest_level_completed
 
 
 func fade_in() -> void:

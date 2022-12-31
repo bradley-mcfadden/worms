@@ -42,6 +42,14 @@ func _ready() -> void:
 	_init_connections()
 	primary_player.emit_signals_first_time()
 	primary_player.set_dirt_color($Background.sample_colors(16))
+	_init_player_skin()
+
+
+func _init_player_skin() -> void:
+	var current_skin_name: String = PlayerSave.save_data[PlayerSave.KEY_CURRENT_SKIN]
+	var player_skin := Skins.skin_by_name(current_skin_name)
+	var skin_material: Resource = load(player_skin["material"])
+	primary_player.material = skin_material
 
 
 func _init_connections() -> void:

@@ -43,18 +43,21 @@ func _load_previous_skin() -> void:
 func _load_current_skin() -> void:
 	var current_skin: Dictionary = skins[current_skin_idx]
 	var skin_name: String = current_skin["name"]
-	$Skin/InfoRow/Name.text = skin_name
 
 	var skin_material: Material = load(current_skin["material"])
 	egg.material = skin_material
 	worm.material = skin_material
 
-	if true: #PlayerSave.get_collectibles().find(skin_name) != -1:
-		egg.modulate = Color.darkgray
-		worm.modulate = Color.darkgray
-	else:
+	if PlayerSave.has_collected(current_skin["id"]):
+		print("Player has collected skin %s" % current_skin["id"])
 		egg.modulate = Color.white
 		worm.modulate = Color.white
+		$Skin/InfoRow/Name.text = skin_name
+	else:
+		print("Player has not collected skin %s" % current_skin["id"])
+		egg.modulate = Color.black
+		worm.modulate = Color.black
+		$Skin/InfoRow/Name.text = "???"
 
 
 func _init_connections() -> void:
