@@ -9,6 +9,8 @@ export(PackedScene) var eggs
 onready var primary_player: Node
 onready var depth_manager: Node = $DepthManager
 onready var ui: Node = $UI
+onready var elapsed_time := 0.0
+onready var count_elapsed_time := true
 
 func _ready() -> void:
 	$Music.play()
@@ -67,8 +69,10 @@ func _init_connections() -> void:
 	ui.connect_to_dm(depth_manager)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	update()
+	if count_elapsed_time:
+		elapsed_time += delta
 
 
 func get_players() -> Array:
@@ -89,6 +93,9 @@ func reset() -> void:
 #
 # reset the current scene to its initial state.
 #
+	count_elapsed_time = true
+	elapsed_time = 0.0
+
 	ui.reset()
 	$Enemies.reset_all_enemies()
 	$Players.reset_all_players()
@@ -114,6 +121,18 @@ func get_current_camera_2d() -> Camera2D:
 
 
 func _on_lay_eggs() -> void:
+	# write elapsed time to the save file
+	var level_idx := Levels.level_idx
+	var level_progress: Dictionary = PlayerSave.save_data[PlayerSave.KEY_LEVEL_PROGRESS][level_idx]
+	var previous_time: float = level_progress[PlayerSave.KEY_LEVEL_TIME]
+	if elapsed_time < previous_time or previous_time < 0:
+		level_progress[PlayerSave.KEY_LEVEL_TIME] = elapsed_time
+		var _ret := PlayerSave.update_level_progress(level_idx, level_progress)
+	# write current index as "highest level completed"
+	var prev_highest_level: int = PlayerSave.save_data[PlayerSave.KEY_HIGHEST_LEVEL]
+	if level_idx > prev_highest_level:
+		var _ret := PlayerSave.set_highest_level_completed(level_idx)
+
 	$Music.playing = false
 	# enemies_dead_screen.visible = false
 	var cpu_con = $CpuController
@@ -134,10 +153,12 @@ func _on_lay_eggs() -> void:
 
 
 func _on_all_enemies_dead() -> void:
+	count_elapsed_time = false
 	ui._on_all_enemies_dead()
 
 
 func _on_all_players_dead() -> void:
+	count_elapsed_time = false
 	$Music.playing = false
 	ui._on_all_players_dead()
 	# death_screen.visible = true

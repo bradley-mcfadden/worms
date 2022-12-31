@@ -86,8 +86,14 @@ func _on_prev_skin_button_pressed() -> void:
 
 
 func _on_back_button_pressed() -> void:
+	# Commit current skin to player's save file
+	var current_skin: Dictionary = skins[current_skin_idx]
+	var skin_name: String = current_skin["name"]
+	var _ret := PlayerSave.set_current_skin(skin_name)
+	
 	$Sounds/PressButton.play()
-	var _ret := AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
+	# Load level select
+	_ret = AsyncLoader.connect("resource_loaded", self, "_on_resource_loaded")
 	worm.paused = true
 	AsyncLoader.load_resource(LEVEL_SELECT_PATH)
 

@@ -57,10 +57,11 @@ func cload() -> void:
 # can take a look at it.
 #
 	var save_file := File.new()
+	var file_text: String = ''
 	if save_file.open(PLAYER_SAVE_FILE_NAME, File.READ) != OK:
 		print("could not open save file for reading")
-		return
-	var file_text := save_file.get_as_text()
+	else:
+		file_text = save_file.get_as_text()
 	save_file.close()
 	
 	var json_result := JSON.parse(file_text)
@@ -76,11 +77,15 @@ func cload() -> void:
 	else:
 		save_data = json_result.result
 	# Initialize all levels to have zero progress
-	for _i in range(len(Levels.get_level_list())):
-		save_data.level_progress.append({
-			KEY_LEVEL_TIME : NULL_TIME,
-			KEY_LEVEL_COLLECTED : []
-		})
+	var n_levels := len(Levels.get_level_list())
+	var n_saved_levels := len(save_data.level_progress)
+	if n_saved_levels < n_levels:
+		for _i in range(n_levels - n_saved_levels):
+			print("Loaded level progress for level %d" % _i)
+			save_data.level_progress.append({
+				KEY_LEVEL_TIME : NULL_TIME,
+				KEY_LEVEL_COLLECTED : []
+			})
 
 
 func delete() -> void:
@@ -107,7 +112,7 @@ func update_level_progress(level_idx: int, progress: Dictionary) -> int:
 # @progress - Dictionary containing time integer, and array of collectibles.
 # @return - Error.OK if successfully recorded, ERR_PARAMETER_RANGE_ERROR if some error occurred.
 #
-	var number_of_levels :=  len(Levels.get_level_list)
+	var number_of_levels :=  len(Levels.get_level_list())
 	if not (level_idx >= 0 and level_idx < number_of_levels):
 		print("level index %d out of range 0 to %d" % [level_idx, number_of_levels])
 		return ERR_PARAMETER_RANGE_ERROR

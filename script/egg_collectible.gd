@@ -11,6 +11,7 @@ class_name EggCollectible, "res://icons/egg.svg"
 
 export (int) var layer := 0
 export (String) var unlocks_skin := "classic"
+export (String) var unlock_name := "egg_classic"
 
 
 func _ready() -> void:
@@ -47,3 +48,8 @@ func collect_skin() -> void:
 	$Collected.play()
 	visible = false
 	# write name of skin to player save file
+	var _ret := PlayerSave.add_collectible(unlock_name)
+	var level_idx := Levels.level_idx
+	var level_progress: Dictionary = PlayerSave.save_data[PlayerSave.KEY_LEVEL_PROGRESS][level_idx]
+	level_progress[PlayerSave.KEY_LEVEL_COLLECTED].append(unlock_name)
+	_ret = PlayerSave.update_level_progress(level_idx, level_progress)
