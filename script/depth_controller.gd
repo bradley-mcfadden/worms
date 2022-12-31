@@ -6,6 +6,10 @@
 # inactive.
 extends Node
 
+
+class_name DepthController, "res://icons/depth_controller.svg"
+
+
 # Emitted when the node is hidden
 signal hide(new_layer) # int
 # Emitted when the node is shown

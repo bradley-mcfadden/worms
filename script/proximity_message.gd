@@ -6,6 +6,9 @@
 extends Area2D
 
 
+class_name ProximityMessage, "res://icons/proximity_message.svg"
+
+
 export (Color) var invisible_mod := Color(1.0, 1.0, 1.0, 0.0)
 export (Color) var visible_mod := Color(1.0, 1.0, 1.0, 1.0)
 export (String, MULTILINE) var text := "sample text"

@@ -116,6 +116,8 @@ func _init_labels() -> void:
 func fade_in() -> void:
 	$Tween.interpolate_property(self, "modulate", Color.black, Color.white, 1.0)
 	$Tween.start()
+	yield($Tween, "tween_completed")
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func set_text(

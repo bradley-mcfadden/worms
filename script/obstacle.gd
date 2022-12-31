@@ -7,6 +7,10 @@
 tool
 extends StaticBody2D
 
+
+class_name Obstacle, "res://icons/obstacle.svg"
+
+
 export var layer := 0
 export(float) var peek_alpha := 1.0
 

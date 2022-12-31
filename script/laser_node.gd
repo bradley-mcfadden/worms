@@ -5,7 +5,7 @@
 extends Sprite
 
 
-class_name LaserNode
+class_name LaserNode, "res://icons/laser_node.svg"
 
 
 func fire() -> void:

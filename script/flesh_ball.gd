@@ -6,6 +6,9 @@
 extends Area2D
 
 
+class_name FleshBall, "res://icons/flesh_ball.svg"
+
+
 export(int) var start_health := 1
 export(int) var layer := 0
 

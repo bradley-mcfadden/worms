@@ -1,1 +1,48 @@
-<svg height="16mm" viewBox="0 0 16 16" width="16mm" xmlns="http://www.w3.org/2000/svg"><g fill="#0ff" stroke="#000" stroke-width=".264583"><circle cx="9.493151" cy="9.32363" r=".001884"/><ellipse cx="2.175514" cy="1.525685" rx=".819349" ry=".847603"/><ellipse cx="3.995638" cy="1.977841" rx=".819349" ry=".847603"/><ellipse cx="5.334177" cy="3.336357" rx=".819349" ry=".847603"/><ellipse cx="4.135485" cy="4.794765" rx=".819349" ry=".847603"/><ellipse cx="2.53723" cy="5.773696" rx=".819349" ry=".847603"/><ellipse cx="2.017797" cy="7.451864" rx=".819349" ry=".847603"/><ellipse cx="2.697055" cy="9.050119" rx=".819349" ry=".847603"/><ellipse cx="4.195419" cy="10.009072" rx=".819349" ry=".847603"/><ellipse cx="5.813653" cy="10.208855" rx=".819349" ry=".847603"/><ellipse cx="7.292038" cy="9.189966" rx=".819349" ry=".847603"/><ellipse cx="8.151101" cy="7.631668" rx=".819349" ry=".847603"/><ellipse cx="9.689422" cy="6.712671" rx=".819349" ry=".847603"/><ellipse cx="11.14783" cy="7.771515" rx=".819349" ry=".847603"/><ellipse cx="12.106782" cy="9.15001" rx=".819349" ry=".847603"/><ellipse cx="11.64041" cy="10.877569" rx=".819349" ry=".847603"/><ellipse cx="11.866439" cy="12.62928" rx=".819349" ry=".847603"/><ellipse cx="13.137842" cy="13.702911" rx=".819349" ry=".847603"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="16mm"
+   viewBox="0 0 16 16"
+   width="16mm"
+   version="1.1"
+   id="svg6048"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6052" />
+  <path
+     style="fill:#ffd42a;stroke:#a4b44b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 14.465754,4.7732114 13.929985,7.8417047"
+     id="path8344" />
+  <path
+     style="fill:#ffd42a;stroke:#a4b44b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 14.392694,11.957382 13.856925,8.8888889"
+     id="path8344-31" />
+  <path
+     style="fill:#ffd42a;stroke:#a4b44b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 12.006089,11.519026 11.47032,8.4505327"
+     id="path8344-31-6" />
+  <path
+     style="fill:#ffd42a;stroke:#a4b44b;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 12.152207,4.5540334 11.616438,7.6225267"
+     id="path8344-3" />
+  <path
+     style="fill:none;stroke:#4bb4b4;stroke-width:1.94442;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 8.3078494,1.1411606 C -0.98577897,2.7263978 -0.79961523,13.595588 8.0327299,15.078016"
+     id="path7368" />
+  <path
+     style="fill:none;stroke:#4bb4b4;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 8.3774731,1.217656 C 12.153041,1.2585281 13.374174,3.0471717 14.757991,4.7245052 10.154542,4.3129447 7.3149349,2.9131873 2.9710807,4.5783864"
+     id="path8096" />
+  <path
+     style="fill:none;stroke:#4bb4b4;stroke-width:1.98027;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 8.6911186,14.998451 C 12.37343,14.957368 13.564401,13.159433 14.914037,11.473387 10.424294,11.887086 6.4672458,12.85348 2.2306852,11.179632"
+     id="path8096-1" />
+  <path
+     style="fill:none;stroke:#4bb4b4;stroke-width:1.95672;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 1.4395462,7.9601099 C 5.5052595,7.8105307 9.5842979,7.6466587 13.172318,8.0094622 12.040702,6.4458607 10.470408,4.9058742 5.9946229,4.7028666 2.6714797,5.9366709 1.9449629,6.7263056 1.4395462,7.9601099"
+     id="path8140" />
+  <path
+     style="fill:none;stroke:#4bb4b4;stroke-width:1.95571;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="M 1.4634454,8.1610941 C 5.3747075,8.1446615 -1.7223356,9.035418 13.197232,8.1117965 12.065517,9.6736438 9.1606568,11.606278 4.6844851,11.809057 L 1.4634454,8.1610941"
+     id="path8140-1" />
+</svg>
