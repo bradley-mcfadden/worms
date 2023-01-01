@@ -3624,3 +3624,5 @@ position = Vector2( 1974, 956 )
 texture = ExtResource( 14 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 4096, 4096 )
+
+[node name="Paths" type="Node" parent="."]

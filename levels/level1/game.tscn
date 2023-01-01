@@ -1,4 +1,4 @@
-[gd_scene load_steps=1003 format=2]
+[gd_scene load_steps=1004 format=2]
 
 [ext_resource path="res://addons/rmsmartshape/shapes/shape_open.gd" type="Script" id=1]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material.gd" type="Script" id=2]
@@ -60,6 +60,7 @@
 [ext_resource path="res://levels/level1/hidden_area.gd" type="Script" id=58]
 [ext_resource path="res://img/textures/cracked concrete.png" type="Texture" id=59]
 [ext_resource path="res://levels/level1/dirt_floor.tres" type="Resource" id=60]
+[ext_resource path="res://scene/EggCollectible.tscn" type="PackedScene" id=61]
 
 [sub_resource type="Resource" id=4898]
 script = ExtResource( 12 )
@@ -5958,7 +5959,7 @@ script = ExtResource( 3 )
 _edge_meta_materials = [  ]
 fill_textures = [ ExtResource( 59 ) ]
 fill_texture_normals = [  ]
-fill_texture_z_index = -10
+fill_texture_z_index = 0
 fill_mesh_offset = 0.0
 render_offset = 0.0
 
@@ -7289,6 +7290,9 @@ polygon = PoolVector2Array( 3963.34, 1294.07, 4281.77, 1291.33, 4848.62, 1601.01
 
 [node name="Tween" type="Tween" parent="Portals/PortalMid3"]
 
+[node name="Interactibles" type="Node" parent="."]
+script = ExtResource( 49 )
+
 [node name="Obstacles" type="Node" parent="."]
 pause_mode = 1
 script = ExtResource( 42 )
@@ -7801,7 +7805,7 @@ position = Vector2( 7489, -290 )
 rotation = -0.0870231
 z_index = -10
 frames = SubResource( 3485 )
-frame = 1
+frame = 5
 speed_scale = 0.1
 playing = true
 script = ExtResource( 47 )
@@ -8191,6 +8195,9 @@ polygon = PoolVector2Array( 10152.7, 3199.44, 10575.7, 3132.29, 10803.9, 3349.1,
 
 [node name="DepthController" parent="Obstacles/Boulder14" instance=ExtResource( 33 )]
 
+[node name="EggCollectible" parent="Obstacles" instance=ExtResource( 61 )]
+position = Vector2( 6780, -1082 )
+
 [node name="HouseHiddenArea" type="Node2D" parent="Obstacles"]
 position = Vector2( 1, -4 )
 script = ExtResource( 58 )
@@ -8240,9 +8247,6 @@ polygon = PoolVector2Array( 5502.33, 10763.7, 5183.58, 9007.79, 5841.49, 7930.03
 [node name="DepthController" parent="GlobalWalls/WallTopArea" instance=ExtResource( 33 )]
 
 [node name="Tween" type="Tween" parent="GlobalWalls/WallTopArea"]
-
-[node name="Interactibles" type="Node" parent="."]
-script = ExtResource( 49 )
 
 [node name="NoiseManager" type="Node" parent="."]
 script = ExtResource( 51 )
