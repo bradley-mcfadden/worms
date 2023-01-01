@@ -103,10 +103,12 @@ size_flags_horizontal = 3
 margin_left = 401.0
 margin_right = 433.0
 margin_bottom = 32.0
+hint_tooltip = "Navigate to previous world"
 focus_neighbour_right = NodePath("../Next")
 focus_neighbour_bottom = NodePath("../../Level/Previous")
 theme = ExtResource( 2 )
 disabled = true
+shortcut_in_tooltip = false
 icon = ExtResource( 9 )
 
 [node name="Name" type="RichTextLabel" parent="LevelInfo/World"]
@@ -127,11 +129,13 @@ fit_content_height = true
 margin_left = 591.0
 margin_right = 623.0
 margin_bottom = 32.0
+hint_tooltip = "Navigate to next world"
 focus_neighbour_left = NodePath("../Previous")
 focus_neighbour_bottom = NodePath("../../Level/Next")
 focus_mode = 0
 theme = ExtResource( 2 )
 disabled = true
+shortcut_in_tooltip = false
 icon = ExtResource( 8 )
 
 [node name="Label2" type="Label" parent="LevelInfo/World"]
@@ -156,9 +160,11 @@ size_flags_horizontal = 3
 margin_left = 401.0
 margin_right = 433.0
 margin_bottom = 32.0
+hint_tooltip = "Navigate to previous level"
 focus_neighbour_top = NodePath("../../World/Previous")
 focus_neighbour_right = NodePath("../../World/Next")
 theme = ExtResource( 2 )
+shortcut_in_tooltip = false
 icon = ExtResource( 9 )
 
 [node name="Name" type="RichTextLabel" parent="LevelInfo/Level"]
@@ -178,9 +184,11 @@ fit_content_height = true
 margin_left = 591.0
 margin_right = 623.0
 margin_bottom = 32.0
+hint_tooltip = "Navigate to next level"
 focus_neighbour_left = NodePath("../Previous")
 focus_neighbour_top = NodePath("../../World/Next")
 theme = ExtResource( 2 )
+shortcut_in_tooltip = false
 icon = ExtResource( 8 )
 
 [node name="Label3" type="Label" parent="LevelInfo/Level"]
@@ -224,9 +232,11 @@ margin_left = 16.0
 margin_top = -44.0
 margin_right = 12.0
 margin_bottom = -16.0
+hint_tooltip = "Return to level select"
 focus_neighbour_top = NodePath("../LevelInfo/Level/Next")
 focus_neighbour_right = NodePath("../Start")
 theme = ExtResource( 13 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 3 )
 text = "back"
 
@@ -240,10 +250,12 @@ margin_top = -44.0
 margin_right = 75.0
 margin_bottom = -16.0
 rect_min_size = Vector2( 150, 0 )
+hint_tooltip = "Start selected level"
 focus_neighbour_left = NodePath("../Back")
 focus_neighbour_top = NodePath("../LevelInfo/Level/Next")
 focus_neighbour_right = NodePath("../Skins")
 theme = ExtResource( 13 )
+shortcut_in_tooltip = false
 text = "start"
 
 [node name="Skins" type="Button" parent="."]
@@ -255,9 +267,11 @@ margin_left = -61.0
 margin_top = -44.0
 margin_right = -16.0
 margin_bottom = -16.0
+hint_tooltip = "View or change Gaia's skin"
 focus_neighbour_left = NodePath("../Start")
 focus_neighbour_top = NodePath("../LevelInfo/Level/Next")
 theme = ExtResource( 13 )
+shortcut_in_tooltip = false
 text = "skins"
 
 [node name="Sounds" type="Node" parent="."]

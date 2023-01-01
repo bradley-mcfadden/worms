@@ -109,6 +109,7 @@ margin_bottom = 600.0
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1024, 600 )
+size_override_stretch = true
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
@@ -170,9 +171,11 @@ size_flags_horizontal = 3
 margin_left = 444.0
 margin_right = 476.0
 margin_bottom = 64.0
+hint_tooltip = "Previous skin"
 focus_neighbour_right = NodePath("../Next")
 focus_mode = 0
 theme = ExtResource( 6 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 6 )
 icon = ExtResource( 12 )
 
@@ -194,11 +197,13 @@ stretch_mode = 1
 margin_left = 548.0
 margin_right = 580.0
 margin_bottom = 64.0
+hint_tooltip = "Next skin"
 focus_neighbour_left = NodePath("../Previous")
 focus_neighbour_right = NodePath("../../../Back")
 focus_neighbour_bottom = NodePath("../../../Back")
 focus_mode = 0
 theme = ExtResource( 6 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 8 )
 icon = ExtResource( 11 )
 
@@ -245,11 +250,16 @@ margin_left = 16.0
 margin_top = -44.0
 margin_right = 12.0
 margin_bottom = -16.0
+hint_tooltip = "Return to level select"
 focus_neighbour_top = NodePath("../Skin/EggRow/Previous")
 focus_mode = 0
 theme = ExtResource( 7 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 4 )
 text = "back"
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="Sounds" type="Node" parent="."]
 

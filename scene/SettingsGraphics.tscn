@@ -130,6 +130,7 @@ margin_bottom = 40.0
 hint_tooltip = "Turn off to cause resolution to be scaled to window size, which can make lower resolution games look better. Turn on with low resolution for a pixelated effect in game."
 focus_neighbour_bottom = NodePath("../Fullscreen")
 size_flags_horizontal = 0
+shortcut_in_tooltip = false
 pressed = true
 
 [node name="Fullscreen" type="CheckBox" parent="Cols/R"]
@@ -140,6 +141,7 @@ hint_tooltip = "Render fullscreen to the device. Use fullscreen and borderless f
 focus_neighbour_top = NodePath("../ScaleViewportToWindow")
 focus_neighbour_bottom = NodePath("../Borderless")
 size_flags_horizontal = 0
+shortcut_in_tooltip = false
 pressed = true
 
 [node name="Borderless" type="CheckBox" parent="Cols/R"]
@@ -150,6 +152,7 @@ hint_tooltip = "Render the window with or without a border. Use fullscreen and b
 focus_neighbour_top = NodePath(".")
 focus_neighbour_bottom = NodePath("../WindowSize")
 size_flags_horizontal = 0
+shortcut_in_tooltip = false
 pressed = true
 
 [node name="WindowSize" type="OptionButton" parent="Cols/R"]
@@ -161,6 +164,7 @@ hint_tooltip = "Size of the game window. The game window can also be resized."
 size_flags_horizontal = 0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 4 )
+shortcut_in_tooltip = false
 text = "1920x1080"
 items = [ "1920x1080", null, false, 2, null, "1440x900", null, false, 1, null, "1280x720", null, false, 2, null, "1024x600", null, false, 3, null, "640x480", null, false, 4, null, "480x360", null, false, 5, null, "320x240", null, false, 6, null, "160x120", null, false, 7, null, "80x60", null, false, 8, null ]
 selected = 0
@@ -176,6 +180,7 @@ focus_neighbour_bottom = NodePath("../Vsync")
 size_flags_horizontal = 0
 theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 4 )
+shortcut_in_tooltip = false
 text = "1920x1080"
 items = [ "1920x1080", null, true, 0, null, "1366x768", null, true, 1, null, "1280x720", null, true, 4, null, "720x480", null, false, 5, null, "480x360", null, false, 6, null, "320x240", null, false, 7, null, "160x120", null, false, 8, null, "80x60", null, false, 9, null, "1024x600", null, false, 11, null ]
 selected = 0
@@ -189,6 +194,7 @@ hint_tooltip = "Synchronize game framerate with monitor refresh rate. If you not
 focus_neighbour_top = NodePath("../Resolution")
 focus_neighbour_bottom = NodePath("../RestoreDefaults")
 size_flags_horizontal = 0
+shortcut_in_tooltip = false
 pressed = true
 
 [node name="HSeparator2" type="HSeparator" parent="Cols/R"]
@@ -202,7 +208,9 @@ margin_top = 192.0
 margin_right = 474.0
 margin_bottom = 216.0
 rect_min_size = Vector2( 0, 24 )
+hint_tooltip = "Reset all graphics settings to defaults"
 theme = ExtResource( 6 )
+shortcut_in_tooltip = false
 text = "do it!"
 align = 0
 

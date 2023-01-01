@@ -187,11 +187,13 @@ margin_top = 57.0
 margin_right = 587.0
 margin_bottom = 81.0
 rect_min_size = Vector2( 150, 0 )
+hint_tooltip = "Resume your adventure from last level"
 focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
 disabled = true
+shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "start game"
 
@@ -201,11 +203,13 @@ margin_top = 85.0
 margin_right = 587.0
 margin_bottom = 109.0
 rect_min_size = Vector2( 150, 0 )
+hint_tooltip = "Replay completed levels"
 focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
 disabled = true
+shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "level select"
 
@@ -215,9 +219,11 @@ margin_top = 113.0
 margin_right = 587.0
 margin_bottom = 137.0
 rect_min_size = Vector2( 150, 0 )
+hint_tooltip = "Configure the game"
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 disabled = true
+shortcut_in_tooltip = false
 text = "settings"
 
 [node name="Credits" type="Button" parent="VBoxContainer"]
@@ -226,11 +232,13 @@ margin_top = 141.0
 margin_right = 587.0
 margin_bottom = 165.0
 rect_min_size = Vector2( 150, 0 )
+hint_tooltip = "View the contributors and creators of the game"
 focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
 disabled = true
+shortcut_in_tooltip = false
 enabled_focus_mode = 0
 text = "credits"
 
@@ -241,11 +249,13 @@ margin_right = 587.0
 margin_bottom = 193.0
 grow_horizontal = 2
 rect_min_size = Vector2( 150, 0 )
+hint_tooltip = "Exit the game"
 focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 4 )
 custom_fonts/font = ExtResource( 2 )
 disabled = true
+shortcut_in_tooltip = false
 enabled_focus_mode = 0
 shortcut = SubResource( 8 )
 text = "quit to desktop"
@@ -253,8 +263,8 @@ text = "quit to desktop"
 [node name="Tween" type="Tween" parent="."]
 
 [connection signal="mouse_entered" from="VBoxContainer/StartGame" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/LevelSelect" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
@@ -262,8 +272,8 @@ text = "quit to desktop"
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Credits" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
