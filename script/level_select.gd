@@ -136,6 +136,14 @@ func _init_from_level_config() -> void:
 	$Tally/Time.text = "time: " + time_str
 
 	$TextureRect.texture = load(Levels.image_from_index(Levels.level_idx))
+	
+	if PlayerSave.save_data[PlayerSave.KEY_HIGHEST_LEVEL] + 1 < Levels.level_idx :
+		$TextureRect.modulate = Color.black
+		$Start.disabled = true
+	else:
+		$TextureRect.modulate = Color.white
+		$Start.disabled = false
+	
 	$Background.material = load(world_materials[world_title.to_lower()])
 
 
