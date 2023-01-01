@@ -20,8 +20,10 @@ func _ready() -> void:
 
 func apply_style() -> void:
 	var skin_data := Skins.skin_by_name(unlocks_skin)
-	if skin_data.empty(): return
-	material = load(skin_data["material"])
+	if skin_data.empty(): 
+		return
+	var skin_material: Resource = load(skin_data.material)
+	material = skin_material
 
 
 func reset() -> void:
