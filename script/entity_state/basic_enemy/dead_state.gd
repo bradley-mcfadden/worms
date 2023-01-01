@@ -17,8 +17,8 @@ func on_enter() -> void:
 	entity.animation_player.play("gib")
 	entity.get_node("BloodExplode").emitting = true
 	entity.get_parent().move_child(entity, 0)
-	entity.monitoring = false
-	entity.monitorable = false
+	entity.call_deferred("set_monitoring", false)
+	entity.call_deferred("set_monitorable", false)
 
 
 func _physics_process(_delta: float) -> void:
