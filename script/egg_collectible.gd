@@ -55,3 +55,6 @@ func collect_skin() -> void:
 	var level_progress: Dictionary = PlayerSave.save_data[PlayerSave.KEY_LEVEL_PROGRESS][level_idx]
 	level_progress[PlayerSave.KEY_LEVEL_COLLECTED].append(unlock_name)
 	_ret = PlayerSave.update_level_progress(level_idx, level_progress)
+	_on_hide(layer)
+	yield($Tween, "tween_completed")
+	visible = false
