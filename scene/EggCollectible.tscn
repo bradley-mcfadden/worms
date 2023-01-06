@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://img/spinning_egg/0005.png" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://img/spinning_egg/0025.png" type="Texture" id=14]
 [ext_resource path="res://img/spinning_egg/0041.png" type="Texture" id=15]
 [ext_resource path="res://script/egg_collectible.gd" type="Script" id=16]
+[ext_resource path="res://sound/collect_egg.wav" type="AudioStream" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -37,13 +38,16 @@ unlock_name = "egg_ice-nine"
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 use_parent_material = true
 frames = SubResource( 1 )
-frame = 5
+frame = 11
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
 [node name="Collected" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 17 )
+volume_db = -20.0
+bus = "SFX"
 
 [node name="DepthController" parent="." instance=ExtResource( 1 )]
 
