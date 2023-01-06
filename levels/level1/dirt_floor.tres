@@ -5,7 +5,7 @@
 [ext_resource path="res://addons/rmsmartshape/normal_range.gd" type="Script" id=3]
 [ext_resource path="res://addons/rmsmartshape/materials/edge_material.gd" type="Script" id=4]
 [ext_resource path="res://img/textures/dust3.png" type="Texture" id=5]
-[ext_resource path="res://material/wave.tres" type="Material" id=6]
+[ext_resource path="res://material/ice.tres" type="Material" id=6]
 
 [sub_resource type="Resource" id=878]
 script = ExtResource( 4 )
@@ -22,6 +22,7 @@ texture_normals_taper_right = [  ]
 use_corner_texture = true
 use_taper_texture = true
 fit_mode = 0
+material = ExtResource( 6 )
 
 [sub_resource type="Resource" id=879]
 script = ExtResource( 3 )

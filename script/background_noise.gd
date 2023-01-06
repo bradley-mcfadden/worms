@@ -56,4 +56,5 @@ func sample_colors(samples: int) -> Color:
 	image.unlock()
 	var col := Color(r_sum / samples, g_sum / samples, b_sum / samples, 1.0)
 	col.v *= 0.8
-	return col
+	var modulate = $ParallaxLayer/Sprite.modulate
+	return Color(col.r * modulate.r, col.g * modulate.g, col.b * modulate.b, col.a * modulate.a)
