@@ -79,6 +79,7 @@ size_flags_vertical = 2
 hseperation = -12
 
 [node name="DepthGauge" parent="." instance=ExtResource( 6 )]
+visible = false
 anchor_right = 0.0
 
 [node name="AllEnemiesDead" parent="." instance=ExtResource( 7 )]
