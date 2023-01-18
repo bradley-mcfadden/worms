@@ -62,7 +62,7 @@ func _physics_process(delta: float) -> void:
 		var collider := world.intersect_ray(
 			entity.global_position, entity.global_position + ray, [entity], entity.collision_mask, true, true
 		)
-		if collider.empty():
+		if collider.empty() or collider.position.distance_squared_to(entity.global_position) < 2500:
 			search_location = entity.global_position + Vector2.RIGHT.rotated(angle) * length
 			print("New search state at ", search_location)
 			if search_attempts <= 0:

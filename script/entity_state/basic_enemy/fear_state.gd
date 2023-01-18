@@ -61,9 +61,8 @@ func _physics_process(delta: float) -> void:
 				fsm.replace(BasicEnemyStateLoader.patrol(fsm, entity))
 	
 	var dir_player_to_me: Vector2 = entity.global_position - last_player_location	
-	var fear_target := dir_player_to_me.normalized().rotated(randf() - 0.5) * 100.0
-	# print("Running away to ", fear_target)
-	entity.set_target(entity.global_position + fear_target)
+	var fear_target := find_safe_location(dir_player_to_me)
+	entity.set_target(fear_target)
 	var ss = entity.set_interest()
 	if ss == SeekState.SEEK_TARGET:
 		if entity.animation_player.current_animation != walk_anim:
@@ -75,6 +74,28 @@ func _physics_process(delta: float) -> void:
 	entity.set_danger()
 	entity.choose_direction()
 	entity.move(delta)
+
+
+func find_safe_location(dir_player_to_me: Vector2) -> Vector2:
+#
+# find_safe_location
+# Check relative forward, left and right directions to see if they are free from
+# obstacles. Return one of these points, or position of the entity if none are free.
+#
+	var world2d: Physics2DDirectSpaceState = entity.get_world_2d().direct_space_state
+	var away_player_norm: Vector2 = dir_player_to_me.normalized()
+
+	var possible_dirs := [away_player_norm, away_player_norm.rotated(PI / 2), away_player_norm.rotated(-PI / 2)]
+	for dir in possible_dirs:
+		var possible_safe: Vector2 = entity.global_position + dir * 100.0
+		var collider: Dictionary = world2d.intersect_ray(
+			entity.global_position, possible_safe,
+			[entity], entity.collision_mask,
+			true, false
+		)
+		if collider.empty():
+			return possible_safe
+	return entity.global_position
 
 
 # on_exit is called when switching out of this state
