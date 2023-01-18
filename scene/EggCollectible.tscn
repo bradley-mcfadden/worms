@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://img/spinning_egg/0005.png" type="Texture" id=2]
@@ -30,6 +30,11 @@ animations = [ {
 radius = 47.0
 height = 48.0
 
+[sub_resource type="Curve" id=3]
+min_value = -360.0
+max_value = 360.0
+_data = [ Vector2( 0, 27.8182 ), 0.0, -1048.66, 0, 0, Vector2( 1, 8.18182 ), -951.726, 0.0, 0, 0 ]
+
 [node name="EggCollectible" type="Area2D"]
 script = ExtResource( 16 )
 unlocks_skin = "ice-nine"
@@ -38,7 +43,7 @@ unlock_name = "egg_ice-nine"
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 use_parent_material = true
 frames = SubResource( 1 )
-frame = 11
+frame = 6
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -52,5 +57,25 @@ bus = "SFX"
 [node name="DepthController" parent="." instance=ExtResource( 1 )]
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 24
+lifetime = 1.5
+one_shot = true
+speed_scale = 1.79
+explosiveness = 0.88
+randomness = 0.12
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 30.0
+initial_velocity_random = 1.0
+linear_accel = 6.0
+linear_accel_random = 1.0
+angle_curve = SubResource( 3 )
+scale_amount = 6.0
+color = Color( 0.258824, 0.235294, 0.235294, 1 )
+hue_variation = 1.0
+hue_variation_random = 1.0
 
 [connection signal="body_entered" from="." to="." method="_on_EggCollectible_body_entered"]

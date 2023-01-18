@@ -47,8 +47,8 @@ func _on_EggCollectible_body_entered(body):
 
 
 func collect_skin() -> void:
+	$Particles.emitting = true
 	$Collected.play()
-	visible = false
 	# write name of skin to player save file
 	var _ret := PlayerSave.add_collectible(unlock_name)
 	var level_idx := Levels.level_idx
