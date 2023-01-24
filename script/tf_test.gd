@@ -4,6 +4,13 @@ extends Node2D
 
 export(PackedScene) var eggs
 
+
+enum GameState {
+	NORMAL,
+	PLAYERS_DEAD,
+	ENEMIES_DEAD,
+}
+
 # var death_screen: Node
 # var enemies_dead_screen: Node
 onready var primary_player: Node
@@ -11,6 +18,7 @@ onready var depth_manager: Node = $DepthManager
 onready var ui: Node = $UI
 onready var elapsed_time := 0.0
 onready var count_elapsed_time := true
+onready var game_state: int = GameState.NORMAL
 
 func _ready() -> void:
 	$Music.play()
@@ -103,6 +111,7 @@ func reset() -> void:
 #
 	count_elapsed_time = true
 	elapsed_time = 0.0
+	game_state = GameState.NORMAL
 
 	ui.reset()
 	$Enemies.reset_all_enemies()
@@ -161,14 +170,18 @@ func _on_lay_eggs() -> void:
 
 
 func _on_all_enemies_dead() -> void:
-	count_elapsed_time = false
-	ui._on_all_enemies_dead()
+	if game_state == GameState.NORMAL:
+		count_elapsed_time = false
+		ui._on_all_enemies_dead()
+		game_state = GameState.ENEMIES_DEAD
 
 
 func _on_all_players_dead() -> void:
+	ui.reset()
 	count_elapsed_time = false
 	$Music.playing = false
 	ui._on_all_players_dead()
+	game_state = GameState.PLAYERS_DEAD
 	# death_screen.visible = true
 	# death_screen.fade_in()
 

@@ -16,7 +16,24 @@ func _ready() -> void:
 		-16 + 600 - health_bar.rect_size.y
 	)
 	a_display.rect_position = Vector2(
-		-16 - a_display.rect_size.x + 1024, #res.x - a_display.rect_size.x,
+		-16 - a_display.rect_size.x + 1024,
+		-16 - a_display.rect_size.y + 600
+	)
+
+
+func transform_components() -> void:
+	var health_bar: Control = $HealthBar
+	var a_display: Control = $AbilitiesDisplay
+
+	var ui_scale: float = Configuration.sections.graphics.ui_scale
+	health_bar.scale *= ui_scale
+	health_bar.rect_position = Vector2(
+		16,
+		-16 + 600 - health_bar.rect_size.y
+	)
+	a_display.scale *= ui_scale
+	a_display.rect_position = Vector2(
+		-16 - a_display.rect_size.x + 1024,
 		-16 - a_display.rect_size.y + 600
 	)
 

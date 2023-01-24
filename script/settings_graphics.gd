@@ -12,20 +12,21 @@ func _ready() -> void:
 
 
 func _init_values() -> void:
-	var gconfig: Dictionary = Configuration.sections["graphics"]
-	$Cols/R/Borderless.pressed = gconfig["borderless"]
-	$Cols/R/Fullscreen.pressed = gconfig["fullscreen"]
-	$Cols/R/ScaleViewportToWindow.pressed = gconfig["scale_viewport_to_window"]
+	var gconfig: Dictionary = Configuration.sections.graphics
+	$Cols/R/Borderless.pressed = gconfig.borderless
+	$Cols/R/Fullscreen.pressed = gconfig.fullscreen
+	$Cols/R/ScaleViewportToWindow.pressed = gconfig.scale_viewport_to_window
+	$Cols/R/UiScale.value = gconfig.ui_scale
 
 	var resolution: OptionButton = $Cols/R/Resolution
-	var res_str := "%sx%s" % [gconfig["resolution"]["x"], gconfig["resolution"]["y"]]
+	var res_str := "%sx%s" % [gconfig.resolution.x, gconfig.resolution.y]
 
 	for idx in range(resolution.get_item_count()):
 		if resolution.get_item_text(idx) == res_str:
 			resolution.select(idx)
 			break
 	var window_size: OptionButton = $Cols/R/WindowSize
-	var win_str := "%sx%s" % [gconfig["window_size"]["x"], gconfig["window_size"]["y"]]
+	var win_str := "%sx%s" % [gconfig.window_size.x, gconfig.window_size.y]
 	for idx in range(window_size.get_item_count()):
 		if window_size.get_item_text(idx) == win_str:
 			window_size.select(idx)
@@ -66,17 +67,17 @@ func _init_connections() -> void:
 
 func _on_ScaleViewportToWindow_toggled(button_pressed: bool) -> void:
 	var stretch_mode: int = SceneTree.STRETCH_MODE_2D if button_pressed else SceneTree.STRETCH_MODE_VIEWPORT
-	Configuration.sections["graphics"]["scale_viewport_to_window"] = stretch_mode
+	Configuration.sections.graphics.scale_viewport_to_window = stretch_mode
 	GraphicsConfigLoader.apply_scale_viewport_to_window()
 
 
 func _on_Fullscreen_toggled(button_pressed: bool) -> void:
-	Configuration.sections["graphics"]["fullscreen"] = button_pressed
+	Configuration.sections.graphics.fullscreen = button_pressed
 	GraphicsConfigLoader.apply_fullscreen()
 
 
 func _on_Borderless_toggled(button_pressed: bool) -> void:
-	Configuration.sections["graphics"]["borderless"] = button_pressed
+	Configuration.sections.graphics.borderless = button_pressed
 	GraphicsConfigLoader.apply_borderless()
 
 
@@ -86,9 +87,9 @@ func _on_WindowSize_item_selected(index: int) -> void:
 	var tokens := text.split("x")
 	var x := int(tokens[0])
 	var y := int(tokens[1])
-	var gconfig: Dictionary = Configuration.sections["graphics"]
-	gconfig["window_size"]["x"] = x
-	gconfig["window_size"]["y"] = y
+	var gconfig: Dictionary = Configuration.sections.graphics
+	gconfig.window_size.x = x
+	gconfig.window_size.y = y
 	GraphicsConfigLoader.apply_window_size()
 
 
@@ -98,18 +99,24 @@ func _on_Resolution_item_selected(index: int) -> void:
 	var tokens := text.split("x")
 	var x := int(tokens[0])
 	var y := int(tokens[1])
-	var gconfig: Dictionary = Configuration.sections["graphics"]
-	gconfig["resolution"]["x"] = x
-	gconfig["resolution"]["y"] = y
+	var gconfig: Dictionary = Configuration.sections.graphics
+	gconfig.resolution.x = x
+	gconfig.resolution.y = y
 	# GraphicsConfigLoader.apply_resolution()
 
 
 func _on_Vsync_toggled(state: bool) -> void:
-	var gconfig: Dictionary = Configuration.sections["graphics"]
-	gconfig["vsync"] = state
+	var gconfig: Dictionary = Configuration.sections.graphics
+	gconfig.vsync = state
 	GraphicsConfigLoader.apply_vsync()
 
 
 func _on_RestoreDefaults_pressed() -> void:
 	GraphicsConfigLoader.reset()
 	_init_values()
+
+
+func _on_UiScale_value_changed(value: float) -> void:
+	emit_signal("slider_handle_moved")
+	Configuration.sections.graphics.ui_scale = value
+	GraphicsConfigLoader.apply_ui_scale()

@@ -15,11 +15,13 @@ onready var main_menu_resource: Resource = preload("res://scene/TitleScreen.tscn
 
 
 func _ready() -> void:
-	var _res = tween.interpolate_property(self, "modulate", null, Color.white, 1.0)
-	_res = tween.start()
-	yield(tween, "tween_completed")
-	$Timer.start()
-	yield($Timer, "timeout")
+	var _res := 0
+	if Configuration.sections.general.show_splash_startup:
+		_res = tween.interpolate_property(self, "modulate", null, Color.white, 1.0)
+		_res = tween.start()
+		yield(tween, "tween_completed")
+		$Timer.start()
+		yield($Timer, "timeout")
 	_res = tween.interpolate_property(self, "modulate", null, Color.black, 1.0)
 	_res = tween.start()
 	yield(tween, "tween_completed")

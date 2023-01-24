@@ -20,6 +20,7 @@ func _enter_tree() -> void:
 	apply_window_size()
 	apply_window_position()
 	apply_vsync()
+	apply_ui_scale()
 
 
 func apply_fullscreen() -> void:
@@ -85,6 +86,10 @@ func apply_window_position() -> void:
 
 func apply_vsync() -> void:
 	OS.vsync_enabled = gconfig["vsync"]
+
+
+func apply_ui_scale() -> void:
+	pass
 
 
 func reset() -> void:

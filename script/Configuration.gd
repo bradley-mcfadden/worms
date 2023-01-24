@@ -18,12 +18,18 @@ const DEFAULT_GRAPHICS := {
 		"x" : 1024,
 		"y" : 600
 	},
-	"vsync" : false
+	"vsync" : false,
+	"ui_scale" : 1.0
 }
 
 var sections := {
 	"general" : {
 		"use_text_animations" : true,
+		"show_splash_startup" : false,
+		"particle_effects" : 0,
+		"show_enemy_blood_effects" : true,
+		"show_player_blood_effects" : true,
+
 	},
 	"audio" : {
 		"master_volume" : 100,
