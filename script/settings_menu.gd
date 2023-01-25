@@ -123,3 +123,25 @@ func _on_Tabs_tab_changed(tab: int) -> void:
 
 func _on_Controls_shown() -> void:
 	$Menu/Tabs/controls.show()
+
+
+func connect_to_confirm(node: Control, confirm_callback: String,
+	deny_callback: String) -> void:
+	var _ret = $ConfirmDialog.connect("confirmed", node, confirm_callback)
+	_ret = $ConfirmDialog.connect("denied", node, deny_callback)
+
+
+func disconnect_from_confirm(node: Control, confirm_callback: String, 
+	deny_callback: String) -> void:
+	var _ret = $ConfirmDialog.disconnect("confirmed", node, confirm_callback)
+	_ret = $ConfirmDialog.disconnect("denied", node, deny_callback)
+
+
+func _on_general_confirm_dialog_rejected(node: Control, confirm_callback: String,
+	deny_callback: String) -> void:
+	disconnect_from_confirm(node, confirm_callback, deny_callback)
+
+
+func _on_general_confirm_dialog_requested(node: Control, confirm_callback: String,
+	deny_callback: String) -> void:
+	connect_to_confirm(node, confirm_callback, deny_callback)

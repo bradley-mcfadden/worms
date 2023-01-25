@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://fonts/control_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://theme/option_button.tres" type="Theme" id=5]
 [ext_resource path="res://theme/menu_button.tres" type="Theme" id=6]
+[ext_resource path="res://theme/hslider.tres" type="Theme" id=7]
 
 [node name="graphics" type="ScrollContainer"]
 anchor_right = 1.0
@@ -96,15 +97,25 @@ text = "v-sync"
 align = 2
 valign = 1
 
-[node name="HSeparator" type="HSeparator" parent="Cols/L"]
+[node name="UiScale" type="Label" parent="Cols/L"]
 margin_top = 184.0
 margin_right = 474.0
-margin_bottom = 188.0
+margin_bottom = 208.0
+rect_min_size = Vector2( 0, 24 )
+custom_fonts/font = ExtResource( 4 )
+text = "ui scale"
+align = 2
+valign = 1
 
-[node name="RestoreDefaults" type="Label" parent="Cols/L"]
-margin_top = 192.0
+[node name="HSeparator" type="HSeparator" parent="Cols/L"]
+margin_top = 212.0
 margin_right = 474.0
 margin_bottom = 216.0
+
+[node name="RestoreDefaults" type="Label" parent="Cols/L"]
+margin_top = 220.0
+margin_right = 474.0
+margin_bottom = 244.0
 rect_min_size = Vector2( 0, 24 )
 custom_fonts/font = ExtResource( 4 )
 text = "restore defaults"
@@ -197,16 +208,23 @@ size_flags_horizontal = 0
 shortcut_in_tooltip = false
 pressed = true
 
-[node name="HSeparator2" type="HSeparator" parent="Cols/R"]
+[node name="UiScale" type="HSlider" parent="Cols/R"]
 margin_top = 184.0
 margin_right = 474.0
-margin_bottom = 188.0
+margin_bottom = 208.0
+rect_min_size = Vector2( 100, 24 )
+theme = ExtResource( 7 )
+
+[node name="HSeparator2" type="HSeparator" parent="Cols/R"]
+margin_top = 212.0
+margin_right = 474.0
+margin_bottom = 216.0
 rect_min_size = Vector2( 0, 4 )
 
 [node name="RestoreDefaults" type="Button" parent="Cols/R"]
-margin_top = 192.0
+margin_top = 220.0
 margin_right = 474.0
-margin_bottom = 216.0
+margin_bottom = 244.0
 rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Reset all graphics settings to defaults"
 theme = ExtResource( 6 )
@@ -220,4 +238,5 @@ align = 0
 [connection signal="item_selected" from="Cols/R/WindowSize" to="." method="_on_WindowSize_item_selected"]
 [connection signal="item_selected" from="Cols/R/Resolution" to="." method="_on_Resolution_item_selected"]
 [connection signal="toggled" from="Cols/R/Vsync" to="." method="_on_Vsync_toggled"]
+[connection signal="value_changed" from="Cols/R/UiScale" to="." method="_on_UiScale_value_changed"]
 [connection signal="pressed" from="Cols/R/RestoreDefaults" to="." method="_on_RestoreDefaults_pressed"]

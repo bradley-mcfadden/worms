@@ -7,6 +7,8 @@ extends SettingsScrollContainer
 
 
 signal update_labels
+signal confirm_dialog_requested(node, confirm_callback, deny_callback)
+signal confirm_dialog_rejected(node, confirm_callback, deny_callback)
 
 
 func _ready() -> void:
@@ -31,6 +33,7 @@ func _init_connections() -> void:
 		$Cols/R/ProgressivePlayerModelButton,
 		$Cols/R/ParticleEffectsButton,
 		$Cols/R/PlayerSaveButton,
+		$Cols/R/ShowSplashesCheck,
 	]
 	for btn in check_buttons:
 		btn.connect("toggled", self, "_on_button_toggled")
@@ -64,9 +67,23 @@ func _on_PlayerSaveButton_pressed() -> void:
 
 
 func show_delete_save_confirm() -> void:
-	$ConfirmDialog.popup_with_message("Delete save data?", "Are you sure?")
+	emit_signal(
+		"confirm_dialog_requested", self, 
+		"_on_ConfirmDialog_confirmed", "_on_ConfirmDialog_denied"
+	)	
 
 
-func _on_ConfirmDialog_confirmed():
+func _on_ConfirmDialog_confirmed() -> void:
 	PlayerSave.delete()
+	emit_signal(
+		"confirm_dialog_rejected", self, 
+		"_on_ConfirmDialog_confirmed", "_on_ConfirmDialog_denied"
+	)	
 	get_tree().quit()
+
+
+func _on_ConfirmDialog_denied() -> void: 
+	emit_signal(
+		"confirm_dialog_rejected", self, 
+		"_on_ConfirmDialog_confirmed", "_on_ConfirmDialog_denied"
+	)
