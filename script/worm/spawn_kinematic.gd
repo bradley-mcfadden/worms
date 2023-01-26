@@ -578,6 +578,17 @@ func _on_segment_took_damage(segment: Node, hurt: bool = false) -> void:
 
 func _on_unpaused() -> void:
 	_init_controller()
+	# Apply show player_blood_effects
+	if Configuration.sections.general.show_player_blood_effects:
+		for segment in body:
+			segment._adjust_gore(float(segment.health / segment.start_health))
+	else:
+		for segment in body:
+			segment._adjust_gore(1.0)
+	# Apply show enemy_blood_effects
+	if not Configuration.sections.general.show_enemy_blood_effects:
+		head.curr_blood_level = -1
+		head.increment_blood_level()
 
 
 func set_dirt_color(color: Color) -> void:

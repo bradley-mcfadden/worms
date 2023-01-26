@@ -126,9 +126,10 @@ func increment_blood_level() -> void:
 # 
 # increment_blood_level causes the sprite to change to the next bloodstain level.
 #
-	var step = 1.0 / max_blood_level
-	curr_blood_level = curr_blood_level + 1 if curr_blood_level < max_blood_level else curr_blood_level
-	$blood.modulate = Color(1.0, 1.0, 1.0, curr_blood_level * step)
+	if Configuration.sections.general.show_enemy_blood_effects:
+		var step = 1.0 / max_blood_level
+		curr_blood_level = curr_blood_level + 1 if curr_blood_level < max_blood_level else curr_blood_level
+		$blood.modulate = Color(1.0, 1.0, 1.0, curr_blood_level * step)
 
 
 func overlaps_above() -> bool:

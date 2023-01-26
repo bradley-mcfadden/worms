@@ -124,7 +124,8 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 	new_health = adj_health
 	var diff := adj_health - health
 	health = adj_health
-	_adjust_gore(float(health) / start_health)
+	if Configuration.sections.general.show_player_blood_effects:
+		_adjust_gore(float(health) / start_health)
 
 	if new_health > 0 and abs(diff) > 1:
 		if emit: emit_signal("took_damage", self, how_much > 0)
