@@ -14,11 +14,13 @@ var yoff := 0
 var tail: Node
 var head: Node
 var body := []
+var scale_factor := 1.0
 
 
 func _ready() -> void:
+	scale_factor = Configuration.sections.graphics.ui_scale
 	#_test_shrink()
-	pass
+	
 
 
 func _on_Segment_took_damage(position: int, segment: Object) -> void:
@@ -83,6 +85,8 @@ func _shrink_to_size(to: int) -> void:
 		head = null
 		hide()
 
+	yield(get_tree(), "idle_frame")
+
 	_reorder_children()
 	_position_segments()
 
@@ -100,6 +104,7 @@ func _grow_to_size(to: int) -> void:
 	add_child(new_tail)
 	for _i in range(by):
 		seg = segm_widg.instance()
+		# seg.rect_scale.x = scale_factor
 		new_body.append(seg)
 		add_child(seg)
 	tail = new_tail
@@ -111,6 +116,8 @@ func _grow_to_size(to: int) -> void:
 	new_body.append_array(body)
 	body = new_body
 
+	yield(get_tree(), "idle_frame")
+
 	_reorder_children()
 	_position_segments()
 
@@ -121,6 +128,7 @@ func _init_health_bar(size: int) -> void:
 	body.append(tail)
 	for _i in range(1, size - 1):
 		var segm = segm_widg.instance()
+		# segm.rect_scale.x = scale_factor
 		body.append(segm)
 	head = head_widg.instance()
 	body.append(head)
@@ -129,6 +137,8 @@ func _init_health_bar(size: int) -> void:
 		add_child(seg)
 		if seg == tail:
 			yoff = 25 + amplitude
+	
+	yield(get_tree(), "idle_frame")
 
 	_position_segments()
 	_fill_segments()
@@ -143,9 +153,10 @@ func _reorder_children() -> void:
 func _position_segments() -> void:
 	var xoff := 0
 	for seg in body:
+		seg.rect_scale *= scale_factor
 		seg.rect_position.x = xoff
-		seg.rect_position.y = yoff - seg.rect_size.y / 2
-		xoff += seg.rect_size.x + hseperation
+		seg.rect_position.y = yoff - seg.rect_size.y * scale_factor / 2
+		xoff += (seg.rect_size.x + hseperation) * scale_factor
 
 
 func _fill_segments() -> void:
@@ -161,7 +172,7 @@ func _process(_delta: float) -> void:
 	var pow_term := pow(1.5, -(sqr_size - 3))
 	for i in range(body.size()):
 		seg = body[i]
-		offset = yoff - seg.rect_size.y * 0.5 + sin((msec + i * 0.5) * 4 * pow_term) * amplitude
+		offset = yoff - seg.rect_size.y * 0.5 + sin((msec + i * 0.5) * 4 * pow_term) * amplitude * scale_factor
 		seg.rect_position.y = offset
 
 

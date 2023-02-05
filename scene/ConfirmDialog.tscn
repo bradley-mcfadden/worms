@@ -6,7 +6,7 @@
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=5]
 [ext_resource path="res://sound/press_button.wav" type="AudioStream" id=6]
-[ext_resource path="res://theme/menu_panel_stylebox.tres" type="StyleBox" id=7]
+[ext_resource path="res://theme/popup_menu_panel.tres" type="StyleBox" id=7]
 [ext_resource path="res://theme/popup_menu.tres" type="Theme" id=8]
 [ext_resource path="res://theme/button.tres" type="Theme" id=9]
 

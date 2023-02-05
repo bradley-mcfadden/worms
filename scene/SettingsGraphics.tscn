@@ -210,9 +210,10 @@ pressed = true
 
 [node name="UiScale" type="HSlider" parent="Cols/R"]
 margin_top = 184.0
-margin_right = 474.0
+margin_right = 200.0
 margin_bottom = 208.0
-rect_min_size = Vector2( 100, 24 )
+rect_min_size = Vector2( 200, 24 )
+size_flags_horizontal = 0
 theme = ExtResource( 7 )
 
 [node name="HSeparator2" type="HSeparator" parent="Cols/R"]
@@ -223,10 +224,11 @@ rect_min_size = Vector2( 0, 4 )
 
 [node name="RestoreDefaults" type="Button" parent="Cols/R"]
 margin_top = 220.0
-margin_right = 474.0
+margin_right = 200.0
 margin_bottom = 244.0
-rect_min_size = Vector2( 0, 24 )
+rect_min_size = Vector2( 200, 24 )
 hint_tooltip = "Reset all graphics settings to defaults"
+size_flags_horizontal = 0
 theme = ExtResource( 6 )
 shortcut_in_tooltip = false
 text = "do it!"

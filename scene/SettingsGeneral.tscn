@@ -125,9 +125,11 @@ pressed = true
 
 [node name="PlayerSaveButton" type="Button" parent="Cols/R"]
 margin_top = 72.0
-margin_right = 476.0
+margin_right = 200.0
 margin_bottom = 96.0
+rect_min_size = Vector2( 200, 0 )
 hint_tooltip = "Delete the save file, gets rid of all unlocks and level progress, but not custom settings and controls."
+size_flags_horizontal = 0
 theme = ExtResource( 5 )
 text = "do it!"
 align = 0

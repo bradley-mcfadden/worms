@@ -7,7 +7,7 @@ extends SettingsScrollContainer
 
 
 signal update_labels
-signal confirm_dialog_requested(node, confirm_callback, deny_callback)
+signal confirm_dialog_requested(node, confirm_callback, deny_callback, msg, title)
 signal confirm_dialog_rejected(node, confirm_callback, deny_callback)
 
 
@@ -69,7 +69,8 @@ func _on_PlayerSaveButton_pressed() -> void:
 func show_delete_save_confirm() -> void:
 	emit_signal(
 		"confirm_dialog_requested", self, 
-		"_on_ConfirmDialog_confirmed", "_on_ConfirmDialog_denied"
+		"_on_ConfirmDialog_confirmed", "_on_ConfirmDialog_denied",
+		"Save cannot be recovered!", "Are you sure?"
 	)	
 
 

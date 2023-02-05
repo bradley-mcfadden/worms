@@ -27,7 +27,7 @@ func _init_connections() -> void:
 	]
 
 	for slider in sliders:
-		slider.connect("value_changed", self, "_on_slider_value_changed")
+		slider.connect("value_changed", self, "_on_slider_handle_moved")
 		slider.connect("focus_entered", self, "_on_control_focus_entered")
 		slider.connect("focus_exited", self, "_on_control_focus_exited")
 

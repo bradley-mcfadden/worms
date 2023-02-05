@@ -383,7 +383,7 @@ ranged_thresh = 500
 [node name="MuzzleFlash" parent="." instance=ExtResource( 9 )]
 position = Vector2( 167, 10 )
 rotation = -0.230383
-one_shot = true
+emitting = true
 
 [node name="Trail" parent="." instance=ExtResource( 10 )]
 visible = false

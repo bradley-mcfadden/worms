@@ -129,12 +129,13 @@ func connect_to_confirm(node: Control, confirm_callback: String,
 	deny_callback: String) -> void:
 	var _ret = $ConfirmDialog.connect("confirmed", node, confirm_callback)
 	_ret = $ConfirmDialog.connect("denied", node, deny_callback)
+	$ConfirmDialog.popup()
 
 
 func disconnect_from_confirm(node: Control, confirm_callback: String, 
 	deny_callback: String) -> void:
-	var _ret = $ConfirmDialog.disconnect("confirmed", node, confirm_callback)
-	_ret = $ConfirmDialog.disconnect("denied", node, deny_callback)
+	$ConfirmDialog.disconnect("confirmed", node, confirm_callback)
+	$ConfirmDialog.disconnect("denied", node, deny_callback)
 
 
 func _on_general_confirm_dialog_rejected(node: Control, confirm_callback: String,
@@ -143,5 +144,6 @@ func _on_general_confirm_dialog_rejected(node: Control, confirm_callback: String
 
 
 func _on_general_confirm_dialog_requested(node: Control, confirm_callback: String,
-	deny_callback: String) -> void:
+	deny_callback: String, msg: String, title: String) -> void:
 	connect_to_confirm(node, confirm_callback, deny_callback)
+	$ConfirmDialog.popup_with_message(title, msg)

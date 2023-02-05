@@ -189,6 +189,7 @@ bus = "UI"
 [connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_button_pressed"]
 [connection signal="tab_changed" from="Menu/Tabs" to="." method="_on_Tabs_tab_changed"]
 [connection signal="confirm_dialog_rejected" from="Menu/Tabs/general" to="." method="_on_general_confirm_dialog_rejected"]
+[connection signal="confirm_dialog_requested" from="Menu/Tabs/general" to="." method="_on_general_confirm_dialog_requested"]
 [connection signal="mouse_entered" from="Menu/CenterContainer/ExitButton" to="." method="_on_control_focus_entered"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/CenterContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

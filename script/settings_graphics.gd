@@ -16,7 +16,7 @@ func _init_values() -> void:
 	$Cols/R/Borderless.pressed = gconfig.borderless
 	$Cols/R/Fullscreen.pressed = gconfig.fullscreen
 	$Cols/R/ScaleViewportToWindow.pressed = gconfig.scale_viewport_to_window
-	$Cols/R/UiScale.value = gconfig.ui_scale
+	$Cols/R/UiScale.value = int(gconfig.ui_scale * 100)
 
 	var resolution: OptionButton = $Cols/R/Resolution
 	var res_str := "%sx%s" % [gconfig.resolution.x, gconfig.resolution.y]
@@ -118,5 +118,5 @@ func _on_RestoreDefaults_pressed() -> void:
 
 func _on_UiScale_value_changed(value: float) -> void:
 	emit_signal("slider_handle_moved")
-	Configuration.sections.graphics.ui_scale = value
+	Configuration.sections.graphics.ui_scale = value * 0.01
 	GraphicsConfigLoader.apply_ui_scale()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://theme/scroll_menu.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/spacer_12.tres" type="DynamicFont" id=2]
 [ext_resource path="res://script/settings_audio.gd" type="Script" id=3]
 [ext_resource path="res://fonts/control_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://theme/hslider.tres" type="Theme" id=5]
 
 [node name="audio" type="ScrollContainer"]
 anchor_right = 1.0
@@ -75,12 +76,14 @@ valign = 1
 
 [node name="R" type="VBoxContainer" parent="Cols"]
 margin_left = 494.0
-margin_right = 972.0
+margin_right = 694.0
 margin_bottom = 124.0
-size_flags_horizontal = 3
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 2
+theme = ExtResource( 5 )
 
 [node name="Spacer" type="Label" parent="Cols/R"]
-margin_right = 478.0
+margin_right = 200.0
 margin_bottom = 12.0
 rect_min_size = Vector2( 0, 12 )
 size_flags_horizontal = 3
@@ -88,7 +91,7 @@ custom_fonts/font = ExtResource( 2 )
 
 [node name="MasterVolumeSlider" type="HSlider" parent="Cols/R"]
 margin_top = 16.0
-margin_right = 478.0
+margin_right = 200.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Volume of all sounds"
@@ -98,7 +101,7 @@ tick_count = 20
 
 [node name="SoundFXVolumeSlider" type="HSlider" parent="Cols/R"]
 margin_top = 44.0
-margin_right = 478.0
+margin_right = 200.0
 margin_bottom = 68.0
 rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Relative volume of in-game sounds like enemy sounds, damage sounds, power-up noises"
@@ -108,7 +111,7 @@ tick_count = 20
 
 [node name="UISoundVolumeSlider" type="HSlider" parent="Cols/R"]
 margin_top = 72.0
-margin_right = 478.0
+margin_right = 200.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Relative volume of user interface sound effects like button clicks, mouse over, and moving slider handles."
@@ -118,7 +121,7 @@ tick_count = 20
 
 [node name="MusicVolumeSlider" type="HSlider" parent="Cols/R"]
 margin_top = 100.0
-margin_right = 478.0
+margin_right = 200.0
 margin_bottom = 124.0
 rect_min_size = Vector2( 0, 24 )
 hint_tooltip = "Relative volume of all music tracks"

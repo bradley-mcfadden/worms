@@ -19,7 +19,8 @@ onready var rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
-	pass
+	var ui_scale_factor: float = Configuration.sections.graphics.ui_scale
+	$Box.rect_scale *= ui_scale_factor
 
 
 func _reset() -> void:
