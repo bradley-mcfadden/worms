@@ -532,7 +532,7 @@ func _on_MeleeAttack_body_entered(body: PhysicsBody2D) -> void:
 		return
 	if body.has_method("take_damage"):
 		body.take_damage(melee_damage, self)
-		$AttackHit.emitting = true
+		$AttackHit.set_emit_particles(true)
 
 
 func _on_hide(_new_layer: int) -> void:

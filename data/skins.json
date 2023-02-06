@@ -1,7 +1,7 @@
 {"skins" : [
   {
     "id" : "egg_classic",
-    "material" : "res://material/worm_skins/none.tres",
+    "material" : "res://material/worm_skins/blue.tres",
     "name" : "classic"
   },
   { "id" : "egg_ice-nine",

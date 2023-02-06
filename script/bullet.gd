@@ -62,7 +62,7 @@ func _on_Bullet_body_entered(body: PhysicsBody2D) -> void:
 	if body.has_method("take_damage") and body != shot_by:
 		body.take_damage(damage, shot_by)
 		$Timer.stop()
-		$AttackHit.emitting = true
+		$AttackHit.set_emit_particles(true)
 		velocity = Vector2.ZERO
 		$Timer.wait_time = $AttackHit.lifetime
 		$Timer.start()

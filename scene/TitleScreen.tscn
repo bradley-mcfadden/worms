@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://script/rich_text_siny.gd" type="Script" id=1]
 [ext_resource path="res://fonts/message_font.tres" type="DynamicFont" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://sound/focus_in.wav" type="AudioStream" id=6]
 [ext_resource path="res://music/short-drum loop.wav" type="AudioStream" id=7]
 [ext_resource path="res://sound/press_button.wav" type="AudioStream" id=8]
-[ext_resource path="res://script/loop_audio.gd" type="Script" id=9]
 
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
@@ -144,7 +143,6 @@ stream = ExtResource( 7 )
 volume_db = -30.0
 autoplay = true
 bus = "Music"
-script = ExtResource( 9 )
 
 [node name="Panel" type="TextureRect" parent="."]
 material = SubResource( 3 )
@@ -263,17 +261,17 @@ text = "quit to desktop"
 [node name="Tween" type="Tween" parent="."]
 
 [connection signal="mouse_entered" from="VBoxContainer/StartGame" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_StartGame_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/LevelSelect" to="." method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelect" to="." method="_on_LevelSelect_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Settings" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Credits" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitToDesktop" to="." method="_on_QuitToDesktop_pressed"]

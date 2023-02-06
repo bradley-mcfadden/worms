@@ -9,15 +9,25 @@ extends CPUParticles2D
 onready var base_amount: int = amount 
 
 
-func set_emitting(is_emitting: bool) -> void:
+func _ready() -> void:
+	set_emitting(emitting)
+
+
+func set_emit_particles(is_emitting: bool) -> void:
 #
 # set_emitting
 # is_emitting - Should the particle system be emitting right now?
 # An override for set_emitting that scales the amount of particles to
 # be emitted.
 #
-    amount = int(base_amount * amount_factor())
-    .set_emitting(is_emitting)
+	var factor := amount_factor()    
+	if factor > 0:
+		# print(self, " Emitting particles!")
+		amount = int(base_amount * factor)
+		.set_emitting(is_emitting)
+	else:
+		print(self, " Not emitting particles : ( ")
+		.set_emitting(false)
 
 
 func amount_factor() -> float:
@@ -26,15 +36,15 @@ func amount_factor() -> float:
 # return - Factor that particles should be multiplied by from Confiuration.
 # (all/half/none) -> (1.0/0.5/0.0)
 #
-    var factor := 1.0
-    match Configuration.sections.general.particle_effects:
-        0: 
-            factor = 1.0
-        1: 
-            factor = 0.5
-        #2: 
-        _:
-            factor = 0.0
-    return factor
+	var factor := 1.0
+	match Configuration.sections.general.particle_effects:
+		0: 
+			factor = 1.0
+		1: 
+			factor = 0.5
+		#2: 
+		_:
+			factor = 0.0
+	return factor
 
-    
+	

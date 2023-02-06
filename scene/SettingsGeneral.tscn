@@ -118,7 +118,7 @@ pressed = true
 margin_top = 44.0
 margin_right = 24.0
 margin_bottom = 68.0
-hint_tooltip = "Toggle rich text effects like moving text on or off"
+hint_tooltip = "Show studio and tool splash screens when launching the game."
 size_flags_horizontal = 0
 shortcut_in_tooltip = false
 pressed = true
@@ -139,6 +139,7 @@ margin_top = 100.0
 margin_right = 200.0
 margin_bottom = 124.0
 rect_min_size = Vector2( 200, 0 )
+hint_tooltip = "Reduce the amount of visible particle effects. May help speed up a slow game."
 size_flags_horizontal = 0
 theme = ExtResource( 6 )
 text = "All"
@@ -149,12 +150,14 @@ selected = 0
 margin_top = 128.0
 margin_right = 476.0
 margin_bottom = 152.0
+hint_tooltip = "Turn off the damage to the player's model. May reduce memory usage."
 pressed = true
 
 [node name="EnemyBloodstainEffectsButton" type="CheckBox" parent="Cols/R"]
 margin_top = 156.0
 margin_right = 476.0
 margin_bottom = 180.0
+hint_tooltip = "Turn off the player becoming covered in enemy blood. May reduce memory usage."
 pressed = true
 
 [connection signal="pressed" from="Cols/R/PlayerSaveButton" to="." method="_on_PlayerSaveButton_pressed"]

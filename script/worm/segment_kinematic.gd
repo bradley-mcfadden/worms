@@ -154,16 +154,16 @@ func take_damage(how_much: float, from: Node, emit: bool=true) -> void:
 		$Tween.start()
 	if new_health < start_health * -0.25:
 		if emit: emit_signal("segment_died", self, from, true)
-		$BloodExplode.emitting = true
+		# $BloodExplode.set_emit_particles(true)
 		_die_then_cleanup()
 	elif new_health <= 0:
 		if emit: emit_signal("segment_died", self, from, false)
-		$BloodExplode.emitting = true
+		# $BloodExplode.set_emit_particles(true)
 		_die_then_cleanup()	
 
 
 func _die_then_cleanup() -> void:
-	$BloodExplode.emitting = true
+	$BloodExplode.set_emit_particles(true)
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.0), 2.0)
 	$Tween.start()
 	yield(get_tree().create_timer(2.0), "timeout")
@@ -208,13 +208,13 @@ func get_depth_controllers() -> Array:
 func fade_in(duration: float) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 0.3), Color(1, 1, 1, 1), duration)
 	$Tween.start()
-	$DirtExplode.emitting = true
+	$DirtExplode.set_emit_particles(true)
 
 
 func fade_out(duration: float) -> void:
 	$Tween.interpolate_property(self, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0.3), duration)
 	$Tween.start()
-	$DirtExplode.emitting = true
+	$DirtExplode.set_emit_particles(true)
 
 
 func set_dirt_color(color: Color) -> void:

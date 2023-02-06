@@ -15,7 +15,7 @@ func _init(_fsm: Fsm, _entity: Node) -> void:
 
 func on_enter() -> void:
 	entity.animation_player.play("gib")
-	entity.get_node("BloodExplode").emitting = true
+	entity.get_node("BloodExplode").set_emit_particles(true)
 	entity.get_parent().move_child(entity, 0)
 	entity.call_deferred("set_monitoring", false)
 	entity.call_deferred("set_monitorable", false)

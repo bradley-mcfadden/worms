@@ -298,7 +298,7 @@ bus = "UI"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
-volume_db = -20.0
+volume_db = -30.0
 autoplay = true
 bus = "Music"
 

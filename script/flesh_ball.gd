@@ -43,7 +43,7 @@ func take_damage(how_much: int, _from: Node) -> void:
 		monitorable = false
 		monitoring = false
 		$Gib.play()
-		$BloodExplode.emitting = true
+		$BloodExplode.set_emit_particles(true)
 		$Sprite.visible = false
 		yield(get_tree().create_timer($BloodExplode.lifetime), "timeout")
 		visible = false

@@ -13,7 +13,7 @@ func fire() -> void:
 # fire
 # Fire this node, calling any animations or effects that it should use.
 #
-	$MuzzleFlash.emitting = true
+	$MuzzleFlash.set_emit_particles(true)
 	$AnimationPlayer.play("fire")
 
 
