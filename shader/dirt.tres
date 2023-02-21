@@ -66,13 +66,14 @@ void fragment() {
 	const float scale = 12.0;
 	vec2 v = scale * UV.xy;
 	const vec2 p = vec2(0.0);
-	float alpha = 0.0;
-	vec2 g;
+	float alpha = sin(TIME) * 0.5 + 0.5;
+	vec2 g = vec2(alpha, 1.0 - alpha);
 	vec2 newv = v + offset * 0.01;
-	float n = psrdnoise(newv, p, TIME*0.5, g);
+	// float n = psrdnoise(newv, p, TIME*0.5, g);
+	vec3 ncolor = texture(NORMAL_TEXTURE, fract(newv)).rgb;
 	float l_off = float(layer) * 0.05 + 0.025;
 	// float n = 0.5 + 0.5 * psrdnoise(v + offset * 0.01, p, TIME*2.5, g);
-	vec3 ncolor = vec3(g, 0.0);
+	//vec3 ncolor = vec3(n);
 	vec3 texcol = texture(TEXTURE, newv + g * 0.01).xyz;
 	texcol -= l_off;
 	// color = texcol;
@@ -82,5 +83,6 @@ void fragment() {
 	mixcol = mix(mixcol, ycolor, aastep(0.6, g.y));
 	// vec3 ncolor = vec3(n);
 	// ncolor = max(ncolor, vec3(0.1)) * color + l_off;
-	COLOR = vec4(mixcol, 1.0);
+	COLOR = vec4(mix(mixcol, ncolor, 0.5), 1.0);
+	//COLOR = vec4(ncolor, 1.0);
 }"
