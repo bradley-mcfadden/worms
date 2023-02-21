@@ -3,7 +3,7 @@
 # User can see what action they're changing, and what key they
 # will change it to. Can cancel by pressing clicking off dialog.
 
-extends "res://script/message_dialog.gd"
+extends "res://script/ui/message_dialog.gd"
 
 
 onready var current_action := ""

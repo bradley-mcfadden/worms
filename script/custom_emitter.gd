@@ -10,7 +10,7 @@ onready var base_amount: int = amount
 
 
 func _ready() -> void:
-	set_emitting(emitting)
+	set_emit_particles(emitting)
 
 
 func set_emit_particles(is_emitting: bool) -> void:
@@ -26,7 +26,7 @@ func set_emit_particles(is_emitting: bool) -> void:
 		amount = int(base_amount * factor)
 		.set_emitting(is_emitting)
 	else:
-		print(self, " Not emitting particles : ( ")
+		# print(self, " Not emitting particles : ( ")
 		.set_emitting(false)
 
 
