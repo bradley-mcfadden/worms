@@ -1,0 +1,519 @@
+[gd_scene load_steps=72 format=2]
+
+[ext_resource path="res://script/decorations.gd" type="Script" id=1]
+[ext_resource path="res://script/enemies.gd" type="Script" id=2]
+[ext_resource path="res://script/tf_test.gd" type="Script" id=3]
+[ext_resource path="res://script/obstacles.gd" type="Script" id=4]
+[ext_resource path="res://script/players.gd" type="Script" id=5]
+[ext_resource path="res://scene/BasicEnemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://music/Danger - no guitar.wav" type="AudioStream" id=7]
+[ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scene/ui/UI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://script/background_noise.gd" type="Script" id=11]
+[ext_resource path="res://img/morgan-padgett-dirt-texture.jpg" type="Texture" id=14]
+[ext_resource path="res://shader/dirt.tres" type="Shader" id=15]
+[ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=21]
+[ext_resource path="res://addons/rmsmartshape/shapes/point_array.gd" type="Script" id=22]
+[ext_resource path="res://addons/rmsmartshape/vertex_properties.gd" type="Script" id=23]
+[ext_resource path="res://addons/rmsmartshape/shapes/point.gd" type="Script" id=24]
+[ext_resource path="res://addons/rmsmartshape/materials/shape_material.gd" type="Script" id=25]
+[ext_resource path="res://addons/rmsmartshape/shapes/shape_closed.gd" type="Script" id=26]
+[ext_resource path="res://script/obstacle_ssd.gd" type="Script" id=27]
+[ext_resource path="res://img/dirt.jpg" type="Texture" id=28]
+[ext_resource path="res://script/bg_music.gd" type="Script" id=29]
+[ext_resource path="res://sound/lay_eggs.wav" type="AudioStream" id=30]
+[ext_resource path="res://script/noise_manager.gd" type="Script" id=31]
+[ext_resource path="res://scene/worm/CpuController.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scene/EggAnimation.tscn" type="PackedScene" id=33]
+[ext_resource path="res://scene/ProximityMessage.tscn" type="PackedScene" id=34]
+[ext_resource path="res://script/interactibles.gd" type="Script" id=35]
+[ext_resource path="res://scene/FleshBall.tscn" type="PackedScene" id=36]
+[ext_resource path="res://scene/BreakableWall2.tscn" type="PackedScene" id=38]
+
+
+[sub_resource type="Resource" id=94]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=95]
+script = ExtResource( 24 )
+position = Vector2( 237, -392.628 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 94 )
+
+[sub_resource type="Resource" id=96]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=97]
+script = ExtResource( 24 )
+position = Vector2( 218, -332.628 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 96 )
+
+[sub_resource type="Resource" id=98]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=99]
+script = ExtResource( 24 )
+position = Vector2( 237, -392.628 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 98 )
+
+[sub_resource type="Resource" id=100]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=101]
+script = ExtResource( 24 )
+position = Vector2( 502.818, -477.019 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 100 )
+
+[sub_resource type="Resource" id=102]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=103]
+script = ExtResource( 24 )
+position = Vector2( 303.02, -494.978 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 102 )
+
+[sub_resource type="Resource" id=104]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=105]
+script = ExtResource( 24 )
+position = Vector2( 727.311, -447.835 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 104 )
+
+[sub_resource type="Resource" id=106]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=107]
+script = ExtResource( 24 )
+position = Vector2( 716.086, -191.914 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 106 )
+
+[sub_resource type="Resource" id=108]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=109]
+script = ExtResource( 24 )
+position = Vector2( 463.532, -116.709 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 108 )
+
+[sub_resource type="Resource" id=110]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=111]
+script = ExtResource( 24 )
+position = Vector2( 705.984, -60.5856 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 110 )
+
+[sub_resource type="Resource" id=112]
+script = ExtResource( 22 )
+_points = {
+0: SubResource( 95 ),
+1: SubResource( 97 ),
+3: SubResource( 99 ),
+5: SubResource( 101 ),
+6: SubResource( 103 ),
+7: SubResource( 105 ),
+8: SubResource( 107 ),
+9: SubResource( 109 ),
+10: SubResource( 111 )
+}
+_point_order = [ 3, 6, 5, 7, 8, 10, 9, 1, 0 ]
+_constraints = {
+[ 0, 3 ]: 15
+}
+_next_key = 4
+
+[sub_resource type="Resource" id=22]
+script = ExtResource( 25 )
+_edge_meta_materials = [  ]
+fill_textures = [ ExtResource( 28 ) ]
+fill_texture_normals = [  ]
+fill_texture_z_index = -10
+fill_mesh_offset = 0.0
+render_offset = 0.0
+
+[sub_resource type="Resource" id=113]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=114]
+script = ExtResource( 24 )
+position = Vector2( 493.732, 705.885 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 113 )
+
+[sub_resource type="Resource" id=115]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=116]
+script = ExtResource( 24 )
+position = Vector2( 1036.79, 841.65 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 115 )
+
+[sub_resource type="Resource" id=117]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=118]
+script = ExtResource( 24 )
+position = Vector2( 915.167, 547.493 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 117 )
+
+[sub_resource type="Resource" id=119]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=120]
+script = ExtResource( 24 )
+position = Vector2( 493.732, 705.885 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 119 )
+
+[sub_resource type="Resource" id=121]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=122]
+script = ExtResource( 24 )
+position = Vector2( 612.526, 451.327 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 121 )
+
+[sub_resource type="Resource" id=123]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=124]
+script = ExtResource( 24 )
+position = Vector2( 636.368, 879.599 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 123 )
+
+[sub_resource type="Resource" id=125]
+script = ExtResource( 22 )
+_points = {
+0: SubResource( 114 ),
+1: SubResource( 116 ),
+2: SubResource( 118 ),
+3: SubResource( 120 ),
+4: SubResource( 122 ),
+5: SubResource( 124 )
+}
+_point_order = [ 0, 4, 2, 1, 5, 3 ]
+_constraints = {
+[ 0, 3 ]: 15
+}
+_next_key = 4
+
+[sub_resource type="Resource" id=55]
+script = ExtResource( 25 )
+_edge_meta_materials = [  ]
+fill_textures = [ ExtResource( 28 ) ]
+fill_texture_normals = [  ]
+fill_texture_z_index = -10
+fill_mesh_offset = 0.0
+render_offset = 0.0
+
+[sub_resource type="Resource" id=126]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=127]
+script = ExtResource( 24 )
+position = Vector2( 1339.84, 594.178 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 126 )
+
+[sub_resource type="Resource" id=128]
+script = ExtResource( 23 )
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id=129]
+script = ExtResource( 24 )
+position = Vector2( 1526.19, 12.9796 )
+point_in = Vector2( 0, 0 )
+point_out = Vector2( 0, 0 )
+properties = SubResource( 128 )
+
+[sub_resource type="Resource" id=130]
+script = ExtResource( 22 )
+_points = {
+5: SubResource( 127 ),
+14: SubResource( 129 )
+}
+_point_order = [ 14, 5 ]
+_constraints = {
+}
+_next_key = 5
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 15 )
+shader_param/layer = 1
+shader_param/offset = null
+
+[sub_resource type="CircleShape2D" id=93]
+radius = 131.18
+
+[node name="TestLevel2" type="Node2D"]
+position = Vector2( 1, -4 )
+script = ExtResource( 3 )
+eggs = ExtResource( 33 )
+
+[node name="CpuController" parent="." instance=ExtResource( 32 )]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -30.0
+bus = "Music"
+script = ExtResource( 29 )
+
+[node name="LayEggs" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 30 )
+volume_db = -30.0
+bus = "SFX"
+
+[node name="Enemies" type="Node" parent="."]
+pause_mode = 1
+script = ExtResource( 2 )
+
+[node name="BasicEnemy" parent="Enemies" instance=ExtResource( 6 )]
+idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+look_distance = 800
+has_ranged_attack = true
+has_melee_attack = false
+melee_damage = 30
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="BasicEnemy2" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -1057, 317 )
+idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+look_distance = 800
+melee_damage = 30
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="BasicEnemy3" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -408, 1000 )
+idle_patrol = PoolVector2Array( 50, 50, 500, 50, 500, 500, 50, 500 )
+look_distance = 800
+melee_damage = 30
+melee_thresh = 125
+ranged_thresh = 800
+
+[node name="Players" type="Node" parent="."]
+pause_mode = 1
+script = ExtResource( 5 )
+
+[node name="SpawnKinematic" parent="Players" instance=ExtResource( 9 )]
+pause_mode = 1
+position = Vector2( -246, -377 )
+max_speed = 600
+
+[node name="Obstacles" type="Node" parent="."]
+pause_mode = 1
+script = ExtResource( 4 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Obstacles"]
+position = Vector2( -495, -198 )
+script = ExtResource( 27 )
+
+[node name="SS2D_Shape_Closed" type="Node2D" parent="Obstacles/StaticBody2D"]
+script = ExtResource( 26 )
+_points = SubResource( 112 )
+material_overrides = {
+}
+shape_material = SubResource( 22 )
+tessellation_stages = 5
+tessellation_tolerence = 4.0
+flip_edges = false
+render_edges = true
+collision_size = 32.0
+collision_offset = 0.0
+collision_polygon_node_path = NodePath("../CollisionPolygon2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D"]
+visible = false
+modulate = Color( 1, 1, 1, 0.3 )
+polygon = PoolVector2Array( 236.872, -392.688, 302.008, -497.052, 502.818, -477.022, 730.537, -450.546, 716.088, -191.914, 709.28, -56.0956, 463.31, -116.277, 215.495, -331.931 )
+
+[node name="DepthController" parent="Obstacles/StaticBody2D" instance=ExtResource( 21 )]
+
+[node name="Tween" type="Tween" parent="Obstacles/StaticBody2D"]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Obstacles"]
+script = ExtResource( 27 )
+layer = 1
+
+[node name="SS2D_Shape_Closed" type="Node2D" parent="Obstacles/StaticBody2D2"]
+script = ExtResource( 26 )
+_points = SubResource( 125 )
+material_overrides = {
+}
+shape_material = SubResource( 55 )
+tessellation_stages = 5
+tessellation_tolerence = 4.0
+flip_edges = false
+render_edges = true
+collision_size = 32.0
+collision_offset = 0.0
+collision_polygon_node_path = NodePath("../CollisionPolygon2D")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Obstacles/StaticBody2D2"]
+visible = false
+modulate = Color( 1, 1, 1, 0.3 )
+polygon = PoolVector2Array( 491.29, 706.193, 610.927, 447.681, 916.178, 546.393, 1042.35, 844.998, 635.648, 881.33 )
+
+[node name="DepthController" parent="Obstacles/StaticBody2D2" instance=ExtResource( 21 )]
+
+[node name="Tween" type="Tween" parent="Obstacles/StaticBody2D2"]
+
+[node name="ProximityMessage" parent="Obstacles" instance=ExtResource( 34 )]
+position = Vector2( 90, -942 )
+
+[node name="BreakableWall2" parent="Obstacles" instance=ExtResource( 38 )]
+layer = 0
+
+[node name="SS2D_Shape_Open" parent="Obstacles/BreakableWall2" index="0"]
+_points = SubResource( 130 )
+
+[node name="CollisionPolygon2D" parent="Obstacles/BreakableWall2" index="1"]
+polygon = PoolVector2Array( 1648.08, 52.0606, 1461.73, 633.259, 1217.95, 555.097, 1404.3, -26.1014 )
+
+[node name="Decorations" type="Node" parent="."]
+pause_mode = 1
+script = ExtResource( 1 )
+
+[node name="Interactibles" type="Node" parent="."]
+script = ExtResource( 35 )
+
+[node name="FleshBall" parent="Interactibles" instance=ExtResource( 36 )]
+position = Vector2( 626, 162 )
+
+[node name="NoiseManager" type="Node" parent="."]
+script = ExtResource( 31 )
+
+[node name="DepthManager" parent="." instance=ExtResource( 8 )]
+
+[node name="Portals" type="Node" parent="."]
+
+[node name="UI" parent="." instance=ExtResource( 10 )]
+
+[node name="Background" type="ParallaxBackground" parent="."]
+pause_mode = 1
+script = ExtResource( 11 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background"]
+motion_mirroring = Vector2( 0.5, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="Background/ParallaxLayer"]
+material = SubResource( 2 )
+position = Vector2( 1974, 956 )
+texture = ExtResource( 14 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 4096, 2048 )
+
+[node name="StaticBody2D" type="RigidBody2D" parent="."]
+position = Vector2( 1670, -571 )
+collision_layer = 986895
+collision_mask = 986895
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 3, 3 )
+shape = SubResource( 93 )
+
+[connection signal="all_enemies_dead" from="Enemies" to="." method="_on_all_enemies_dead"]
+[connection signal="bullet_created" from="Enemies/BasicEnemy" to="." method="attach_bullet"]
+[connection signal="died" from="Enemies/BasicEnemy" to="Enemies" method="_on_Enemy_died"]
+[connection signal="noise_produced" from="Enemies/BasicEnemy" to="NoiseManager" method="_on_noise_produced"]
+[connection signal="bullet_created" from="Enemies/BasicEnemy2" to="." method="attach_bullet"]
+[connection signal="died" from="Enemies/BasicEnemy2" to="Enemies" method="_on_Enemy_died"]
+[connection signal="noise_produced" from="Enemies/BasicEnemy2" to="NoiseManager" method="_on_noise_produced"]
+[connection signal="bullet_created" from="Enemies/BasicEnemy3" to="." method="attach_bullet"]
+[connection signal="died" from="Enemies/BasicEnemy3" to="Enemies" method="_on_Enemy_died"]
+[connection signal="noise_produced" from="Enemies/BasicEnemy3" to="." method="_on_noise_produced"]
+[connection signal="all_players_dead" from="Players" to="." method="_on_all_players_dead"]
+[connection signal="died" from="Players/SpawnKinematic" to="Players" method="_on_Player_died"]
+[connection signal="health_state_changed" from="Players/SpawnKinematic" to="Music" method="_on_health_state_changed"]
+[connection signal="layer_visibility_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_layer_visibility_changed"]
+[connection signal="noise_produced" from="Players/SpawnKinematic" to="NoiseManager" method="_on_noise_produced"]
+[connection signal="segment_changed" from="Players/SpawnKinematic" to="DepthManager" method="_on_segment_changed"]
+[connection signal="switch_layer_pressed" from="Players/SpawnKinematic" to="DepthManager" method="_on_switch_layer_pressed"]
+[connection signal="hide" from="Obstacles/StaticBody2D/DepthController" to="Obstacles/StaticBody2D" method="_on_hide"]
+[connection signal="show" from="Obstacles/StaticBody2D/DepthController" to="Obstacles/StaticBody2D" method="_on_show"]
+[connection signal="hide" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_hide"]
+[connection signal="show" from="Obstacles/StaticBody2D2/DepthController" to="Obstacles/StaticBody2D2" method="_on_show"]
+[connection signal="layer_changed" from="DepthManager" to="Background" method="_on_layer_changed"]
+
+[editable path="Obstacles/BreakableWall2"]

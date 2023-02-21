@@ -174,10 +174,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/rmsmartshape/RMSmartShapeAnchor2D.gd"
 }, {
-"base": "RichTextEffect",
+"base": "Reference",
 "class": "RichTextSinY",
 "language": "GDScript",
-"path": "res://script/rich_text_siny.gd"
+"path": "res://script/ui/rich_text_siny.gd"
 }, {
 "base": "Node",
 "class": "SS2D_Common_Functions",
@@ -292,7 +292,7 @@ _global_script_classes=[ {
 "base": "ScrollContainer",
 "class": "SettingsScrollContainer",
 "language": "GDScript",
-"path": "res://script/settings_scroll_container.gd"
+"path": "res://script/ui/settings_scroll_container.gd"
 }, {
 "base": "Position2D",
 "class": "SpawnKinematic",
@@ -380,15 +380,15 @@ default_bus_layout="res://sound/default_bus_layout.tres"
 
 [autoload]
 
-Configuration="*res://script/Configuration.gd"
-GeneralConfigLoader="*res://script/GeneralConfigLoader.gd"
-GraphicsConfigLoader="*res://script/GraphicsConfigLoader.gd"
-AudioConfigLoader="*res://script/AudioConfigLoader.gd"
-Levels="*res://script/Levels.gd"
-Skins="*res://script/Skins.gd"
-PlayerSave="*res://script/PlayerSave.gd"
-InputLoader="*res://script/InputLoader.gd"
-AsyncLoader="*res://script/AsyncLoader.gd"
+Configuration="*res://script/global/Configuration.gd"
+GeneralConfigLoader="*res://script/global/GeneralConfigLoader.gd"
+GraphicsConfigLoader="*res://script/global/GraphicsConfigLoader.gd"
+AudioConfigLoader="*res://script/global/AudioConfigLoader.gd"
+Levels="*res://script/global/Levels.gd"
+Skins="*res://script/global/Skins.gd"
+PlayerSave="*res://script/global/PlayerSave.gd"
+InputLoader="*res://script/global/InputLoader.gd"
+AsyncLoader="*res://script/global/AsyncLoader.gd"
 
 [display]
 

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shader/partial_fill.tres" type="Shader" id=1]
+[ext_resource path="res://img/head_health.png" type="Texture" id=2]
+[ext_resource path="res://script/ui/segment_health.gd" type="Script" id=3]
+
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/fillColor = Color( 0.701961, 0.313726, 0.313726, 1 )
+shader_param/gradColor = Color( 0.47, 0.2115, 0.2115, 1 )
+shader_param/proportion = 0.608
+shader_param/lowerLimit = 0.01
+
+[node name="HeadHealth" type="TextureRect"]
+material = SubResource( 2 )
+margin_right = 35.0
+margin_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource( 2 )
+script = ExtResource( 3 )

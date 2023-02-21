@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scene/worm/CpuController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://script/test/cpu_controller_test.gd" type="Script" id=3]
+
+
+[node name="CpuControllerTest" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="SpawnKinematic" parent="." instance=ExtResource( 1 )]
+segment_number = 15
+num_segment_for_low_health = 10
+
+[node name="CpuController" parent="." instance=ExtResource( 2 )]
+
+[connection signal="command_finished" from="CpuController" to="." method="_on_command_finished"]
