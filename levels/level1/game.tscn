@@ -35,7 +35,7 @@
 [ext_resource path="res://scene/DepthController.tscn" type="PackedScene" id=33]
 [ext_resource path="res://scene/BasicEnemy.tscn" type="PackedScene" id=34]
 [ext_resource path="res://scene/worm/CpuController.tscn" type="PackedScene" id=35]
-[ext_resource path="res://scene/UI.tscn" type="PackedScene" id=36]
+[ext_resource path="res://scene/ui/UI.tscn" type="PackedScene" id=36]
 [ext_resource path="res://scene/EggAnimation.tscn" type="PackedScene" id=37]
 [ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=38]
 [ext_resource path="res://script/enemies.gd" type="Script" id=39]
@@ -7810,7 +7810,7 @@ position = Vector2( 7489, -290 )
 rotation = -0.0870231
 z_index = -10
 frames = SubResource( 3485 )
-frame = 3
+frame = 6
 speed_scale = 0.1
 playing = true
 script = ExtResource( 47 )

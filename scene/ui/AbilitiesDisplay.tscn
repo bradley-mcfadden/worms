@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sound/ability_ready.wav" type="AudioStream" id=1]
+[ext_resource path="res://script/ui/abilities_display.gd" type="Script" id=2]
+
+
+[node name="AbilitiesDisplay" type="Panel"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Box" type="HBoxContainer" parent="."]
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="Ready" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -30.0
+bus = "SFX"

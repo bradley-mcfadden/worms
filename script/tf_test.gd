@@ -55,7 +55,7 @@ func _ready() -> void:
 
 func _init_player_skin() -> void:
 	var current_skin_name: String = PlayerSave.save_data[PlayerSave.KEY_CURRENT_SKIN]
-	var player_skin := Skins.skin_by_name(current_skin_name)
+	var player_skin = Skins.skin_by_name(current_skin_name)
 	var skin_material: Resource = load(player_skin["material"])
 	primary_player.material = skin_material
 
@@ -139,16 +139,16 @@ func get_current_camera_2d() -> Camera2D:
 
 func _on_lay_eggs() -> void:
 	# write elapsed time to the save file
-	var level_idx := Levels.level_idx
+	var level_idx: int = Levels.level_idx
 	var level_progress: Dictionary = PlayerSave.save_data[PlayerSave.KEY_LEVEL_PROGRESS][level_idx]
 	var previous_time: float = level_progress[PlayerSave.KEY_LEVEL_TIME]
 	if elapsed_time < previous_time or previous_time < 0:
 		level_progress[PlayerSave.KEY_LEVEL_TIME] = elapsed_time
-		var _ret := PlayerSave.update_level_progress(level_idx, level_progress)
+		var _ret: int = PlayerSave.update_level_progress(level_idx, level_progress)
 	# write current index as "highest level completed"
 	var prev_highest_level: int = PlayerSave.save_data[PlayerSave.KEY_HIGHEST_LEVEL]
 	if level_idx > prev_highest_level:
-		var _ret := PlayerSave.set_highest_level_completed(level_idx)
+		var _ret : int = PlayerSave.set_highest_level_completed(level_idx)
 
 	$Music.playing = false
 	# enemies_dead_screen.visible = false

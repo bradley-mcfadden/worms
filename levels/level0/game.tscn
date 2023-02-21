@@ -9,7 +9,7 @@
 [ext_resource path="res://music/Danger - no guitar.wav" type="AudioStream" id=7]
 [ext_resource path="res://scene/DepthManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scene/worm/SpawnKinematic.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scene/UI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scene/ui/UI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://script/background_noise.gd" type="Script" id=11]
 [ext_resource path="res://levels/level0/script/peek_ahead.gd" type="Script" id=12]
 [ext_resource path="res://material/dirt.tres" type="Material" id=13]
