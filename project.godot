@@ -174,7 +174,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/rmsmartshape/RMSmartShapeAnchor2D.gd"
 }, {
-"base": "Reference",
+"base": "RichTextEffect",
 "class": "RichTextSinY",
 "language": "GDScript",
 "path": "res://script/ui/rich_text_siny.gd"
@@ -369,7 +369,7 @@ _global_script_class_icons={
 [application]
 
 config/name="worm"
-run/main_scene="res://scene/Splash.tscn"
+run/main_scene="res://scene/ui/Splash.tscn"
 boot_splash/image="res://img/splash_w_title_wide.png"
 boot_splash/use_filter=false
 config/icon="res://icon.png"
@@ -389,6 +389,10 @@ Skins="*res://script/global/Skins.gd"
 PlayerSave="*res://script/global/PlayerSave.gd"
 InputLoader="*res://script/global/InputLoader.gd"
 AsyncLoader="*res://script/global/AsyncLoader.gd"
+
+[debug]
+
+settings/fps/force_fps=60
 
 [display]
 
