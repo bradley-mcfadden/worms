@@ -19,8 +19,6 @@ var scale_factor := 1.0
 
 func _ready() -> void:
 	scale_factor = Configuration.sections.graphics.ui_scale
-	#_test_shrink()
-	
 
 
 func _on_Segment_took_damage(position: int, segment: Object) -> void:
@@ -153,9 +151,10 @@ func _reorder_children() -> void:
 func _position_segments() -> void:
 	var xoff := 0
 	for seg in body:
+		seg.rect_scale = Vector2(1.0, 1.0)
 		seg.rect_scale *= scale_factor
 		seg.rect_position.x = xoff
-		seg.rect_position.y = yoff - seg.rect_size.y * scale_factor / 2
+		seg.rect_position.y = yoff - seg.rect_size.y * scale_factor # / 2
 		xoff += (seg.rect_size.x + hseperation) * scale_factor
 
 
