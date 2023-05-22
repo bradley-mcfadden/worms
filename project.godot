@@ -380,6 +380,7 @@ default_bus_layout="res://sound/default_bus_layout.tres"
 
 [autoload]
 
+Logger="*res://script/global/Logger.gd"
 Configuration="*res://script/global/Configuration.gd"
 GeneralConfigLoader="*res://script/global/GeneralConfigLoader.gd"
 GraphicsConfigLoader="*res://script/global/GraphicsConfigLoader.gd"
