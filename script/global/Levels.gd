@@ -14,7 +14,7 @@ const CONFIG_SUFFIX := "config.ini"
 const PROPERTIES_KEY := "properties"
 const PREVIOUS_KEY := "previous"
 
-const TITLE_PATH := "res://scene/TitleScreen.tscn"
+const TITLE_PATH := "res://scene/ui/TitleScreen.tscn"
 
 onready var loading_path: String = ""
 var level_list: Array = get_level_list() setget , get_level_list
