@@ -27,34 +27,26 @@ func _init_connections() -> void:
 	]
 
 	for slider in sliders:
-		slider.connect("value_changed", self, "_on_slider_handle_moved")
+		slider.connect("changed", self, "_on_slider_handle_moved")
 		slider.connect("focus_entered", self, "_on_control_focus_entered")
 		slider.connect("focus_exited", self, "_on_control_focus_exited")
 
 
-func _on_master_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume: float = $Cols/R/MasterVolumeSlider.value
+func _on_master_vol_drag_ended(volume: float) -> void:
 	Configuration.set_master_volume(volume)
 	AudioConfigLoader.apply_master_volume()
 
 
-func _on_sfx_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume: float = $Cols/R/SoundFXVolumeSlider.value
+func _on_sfx_vol_drag_ended(volume: float) -> void:
 	Configuration.set_sfx_volume(volume)
 	AudioConfigLoader.apply_sfx_volume()
 
 
-func _on_ui_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume: float = $Cols/R/UISoundVolumeSlider.value
+func _on_ui_vol_drag_ended(volume: float) -> void:
 	Configuration.set_ui_volume(volume)
 	AudioConfigLoader.apply_ui_volume()
 
 
-func _on_music_vol_drag_ended(changed: bool) -> void:
-	if not changed: return
-	var volume: float = $Cols/R/MusicVolumeSlider.value
+func _on_music_vol_drag_ended(volume: float) -> void:
 	Configuration.set_music_volume(volume)
 	AudioConfigLoader.apply_music_volume()

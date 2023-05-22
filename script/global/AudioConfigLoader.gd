@@ -41,7 +41,9 @@ func apply_sfx_volume() -> void:
 
 func apply_music_volume() -> void:
 	var idx: int = AudioServer.get_bus_index(MUSIC_BUS_NAME)
-	var vol: float = vol_percent_to_db(aconfig["music_volume"])
+	var frac: float = aconfig.music_volume
+	print("Setting music volume to ", frac)
+	var vol: float = vol_percent_to_db(frac)
 	AudioServer.set_bus_volume_db(idx, vol)
 
 
